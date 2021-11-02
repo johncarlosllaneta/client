@@ -1,0 +1,32 @@
+#wrappers::-webkit-scrollbar{
+    width: 5;
+}
+
+
+#wrappers #item{
+    width: 500px;
+    height: 200px;
+    border-radius: 50;
+    background-color: "#EFF1F7";
+    margin-right: 50px;
+    text-align: left;
+    font-family: 'Nunito Sans', sans-serif;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+ /* Handle */
+ #wrappers::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  #wrappers:-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  /* Handle on hover */
+  #wrappers::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+} 
+

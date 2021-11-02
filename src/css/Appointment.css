@@ -1,0 +1,53 @@
+#petContainer::-webkit-scrollbar{
+    width: 5px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+#petContainer::-webkit-scrollbar-track{
+    background-color: rgb(185, 185, 185);
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+#petContainer::-webkit-scrollbar-thumb{
+    background-color: rgb(99, 98, 98);
+    border-radius: 50px;
+    cursor: pointer;
+}
+#petContainer #item{
+    width: 500px;
+    height: 200px;
+    border-radius: 50;
+    background-color: "#EFF1F7";
+    margin-right: 50px;
+    text-align: left;
+    font-family: 'Nunito Sans', sans-serif;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+
+#wrapper::-webkit-scrollbar{
+    width: 10px;
+    border-radius: 25px;
+}
+
+#wrapper::-webkit-scrollbar-track{
+    background-color: rgb(185, 185, 185);
+}
+
+#wrapper::-webkit-scrollbar-thumb{
+    background-color: rgb(99, 98, 98);
+    border-radius: 25px;
+}
+#wrapper #item{
+    width: 500px;
+    height: 200px;
+    border-radius: 50;
+    background-color: "#EFF1F7";
+    margin-right: 50px;
+    text-align: left;
+    font-family: 'Nunito Sans', sans-serif;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

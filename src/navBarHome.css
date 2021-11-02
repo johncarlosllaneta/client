@@ -1,0 +1,19 @@
+.nav-link{
+    color: black;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown-menu {
+    min-width: 20rem;
+    background-color:aliceblue;
+    
+}
+
+#talktovet:hover{
+   
+        color: #0056b3;
+    
+}

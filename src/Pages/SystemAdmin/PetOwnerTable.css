@@ -1,0 +1,25 @@
+#petContainer::-webkit-scrollbar{
+    width: 10px;
+    border-radius: 25px;
+}
+
+#petContainer::-webkit-scrollbar-track{
+    background-color: rgb(185, 185, 185);
+}
+
+#petContainer::-webkit-scrollbar-thumb{
+    background-color: black;
+    border-radius: 25px;
+}
+
+.fgINsU{
+    text-align: left;
+}
+
+.bs-popover-top {
+    font-size: 15px;
+    font-weight: bold;
+    padding: 5px 20px 5px 20px;
+    background-color: white;
+    color: teal;
+}

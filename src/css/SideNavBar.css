@@ -1,0 +1,87 @@
+#sideNavBar{
+    position: fixed;
+    width: 300px;
+    height: 100vh;
+    background-color: #314051;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    
+    overflow-x: hidden;
+}
+
+#ContainerNavItem{
+    height: 5%;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: left;
+    align-content: center;
+    padding: 10px;
+    border: green ;
+}
+
+
+
+#ContainerNavItem #anchorTag{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    text-align: left;
+    font-family: 'Nunito Sans', sans-serif;   
+    font-weight: bold;  
+}
+
+#ContainerNavItem #icons{
+    font-size: 25px;
+    color: white;
+    margin-top: 2px;
+    margin-right: 30px;
+    margin-left: 30px;
+
+}
+
+#anchorTag:hover {
+    color: white;
+  }
+
+  #ContainerNavItem:hover {
+    background-color: #32465c;
+  }
+
+  
+  #ContainerNavItemDropDown{
+    height: 5%;
+   
+    display: flex;
+    justify-content: left;
+    align-content: center;
+    padding: 10px;
+    border: green ;
+    border-bottom: black solid 1px;
+}
+
+#ContainerNavItemDropDown #anchorTag{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    text-align: left;
+    font-family: 'Nunito Sans', sans-serif;   
+    font-weight: bold;  
+}
+
+#ContainerNavItemDropDown #icons{
+    font-size: 25px;
+    color: white;
+    margin-top: 2px;
+    margin-right: 30px;
+    margin-left: 60px;
+
+}
+
+#anchorTag:hover {
+    color: white;
+  }
+
+  #ContainerNavItemDropDown:hover {
+    background-color: #32465c;
+  }
