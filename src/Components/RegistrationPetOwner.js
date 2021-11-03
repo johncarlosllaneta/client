@@ -633,7 +633,7 @@ function RegistrationPetOwner() {
                     height: 50,
                     backgroundColor: "white",
                   }}
-                  type="text  "
+                  type="text"
                   placeholder="09** *** ****"
                   required
                   pattern="\d{11}"

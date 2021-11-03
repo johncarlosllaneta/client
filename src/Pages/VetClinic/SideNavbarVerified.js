@@ -31,7 +31,7 @@ function SideNavbarVerified(props) {
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
   useEffect(() => {
-    if (counter < 4) {
+    if (counter < 10) {
       var token = localStorage.getItem("ajwt");
       Axios.get(`${hostUrl}/home`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -184,7 +184,7 @@ function SideNavbarVerified(props) {
         }}
       >
         <MdPets id="icons" />
-        <a id="anchorTag" href={`/pets/${vetID}`}>
+        <a id="anchorTag" href={`/pets/${user.vetid}`}>
           Pets
         </a>
       </Container>

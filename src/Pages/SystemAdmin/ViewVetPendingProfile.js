@@ -7,9 +7,7 @@ import { MdClear } from "react-icons/md";
 import Axios from "axios";
 import { hostUrl } from "../../Components/Host";
 
-import Viewer, { Worker } from "@phuocng/react-pdf-viewer";
 
-import "@phuocng/react-pdf-viewer/cjs/react-pdf-viewer.css";
 function ViewVetPendingProfile(props) {
   const [show, setShow] = useState(false);
   const [showAccept, setShowAccept] = useState(false);
@@ -91,11 +89,7 @@ function ViewVetPendingProfile(props) {
         </Modal.Header>
         <Modal.Body style={{ width: "auto", height: "auto" }}>
           <Container>
-            <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.4.456/build/pdf.worker.min.js">
-              <div style={{ height: "750px" }}>
-                <Viewer fileUrl={props.viewProfileVetData.vet_permit} />
-              </div>
-            </Worker>
+
           </Container>
         </Modal.Body>
       </Modal>

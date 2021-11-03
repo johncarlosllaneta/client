@@ -234,6 +234,20 @@ const PharmacyTab = (props) => {
     setValidated(true);
   };
 
+
+  const updateMedicineConfirmation = (e) => {
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    } else {
+      e.preventDefault();
+      handleShowConfirmationUpdate();
+    }
+
+    setValidated(true);
+  };
+
   function insertMedicines() {
     var id = vetid.toString().replace("10##01", "/");
     Axios.post(`${hostUrl}/pharmacy/insert/${id}`, {
@@ -242,8 +256,16 @@ const PharmacyTab = (props) => {
       insertMedicineDescription: updateMedicineDescription,
       insertMedicinePrice: updateMedicinePrice,
     });
+
+    setimageUploadedUrl('');
+    setPreview(null);
+    setUpdateMedicineName('');
+    setUpdateMedicineDescription('');
+    setUpdateMedicinePrice('');
     handleClose2();
-    refreshTable();
+    Axios.get(`${hostUrl}/pharmacy/${id}`).then((response) => {
+      setpharmacy(response.data);
+    });
   }
 
   const deleteMedicine = () => {
@@ -254,35 +276,25 @@ const PharmacyTab = (props) => {
     });
   };
 
-  const updateMedicine = (e) => {
-    setValidated(false);
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    } else {
-      var id = vetid.toString().replace("10##01", "/");
-      Axios.post(`${hostUrl}/pharmacy/update/${pharmacyUpdateId}`, {
-        vetid: id,
-        medicine_image: pharmacyUpdateImage,
-        medicine_name: pharmacyUpdateName,
-        medicine_description: pharmacyUpdateDescription,
-        medicine_price: pharmacyUpdatePrice,
-        status: pharmacyUpdateStatus,
-      });
+  const updateMedicine = () => {
 
-      setpharmacyUpdateId();
-      setpharmacyUpdateImage();
-      setpharmacyUpdateName();
-      setpharmacyUpdateDescription();
-      setpharmacyUpdatePrice();
-      setpharmacyUpdateStatus();
-      handleCloseUpdate();
-      refreshTable();
-      e.preventDefault();
-    }
+    Axios.put(`${hostUrl}/pharmacy/update/${pharmacyUpdateId}`, {
+      vetid: vetid,
+      medicine_image: pharmacyUpdateImage,
+      medicine_name: pharmacyUpdateName,
+      medicine_description: pharmacyUpdateDescription,
+      medicine_price: pharmacyUpdatePrice,
+      status: pharmacyUpdateStatus,
+    });
 
-    setValidated(true);
+
+    Axios.get(`${hostUrl}/pharmacy/${vetid}`).then((response) => {
+      setpharmacy(response.data);
+    });
+    handleCloseUpdate();
+
+
+
   };
 
   // Modal Delete
@@ -295,6 +307,11 @@ const PharmacyTab = (props) => {
   const [showConfirmationInsert, setshowConfirmationInsert] = useState(false);
   const handleCloseConfirmationInsert = () => setshowConfirmationInsert(false);
   const handleShowConfirmationInsert = () => setshowConfirmationInsert(true);
+
+  // Modal Confirmation Update
+  const [showConfirmationUpdate, setshowConfirmationUpdate] = useState(false);
+  const handleCloseConfirmationUpdate = () => setshowConfirmationUpdate(false);
+  const handleShowConfirmationUpdate = () => setshowConfirmationUpdate(true);
 
   // Modal Update
   const [showUpdate, setShowUpdate] = useState(false);
@@ -347,6 +364,32 @@ const PharmacyTab = (props) => {
         </Modal.Footer>
       </Modal>
 
+      {/* Confirmation Updating */}
+      <Modal
+        show={showConfirmationUpdate}
+        onHide={handleCloseConfirmationUpdate}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Warning</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to update this product? </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseConfirmationUpdate}>
+            No
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              updateMedicine();
+              handleCloseConfirmationUpdate();
+              refreshTable();
+            }}
+          >
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       {/* Confirmation Inserting */}
       <Modal
         show={showConfirmationInsert}
@@ -376,18 +419,225 @@ const PharmacyTab = (props) => {
       {/* //Add */}
       <Modal show={show2} onHide={handleClose2} size="xl" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Insert Product</Modal.Title>
+          <Modal.Title>Insert Medicine</Modal.Title>
         </Modal.Header>
-        <Form
-          noValidate
-          validated={validated}
-          onSubmit={insertMedicineConfirmation}
-        >
-          <Modal.Body>
-            <Row>
-              <Col>
-                <Form.Group onClick={onClickProfile}>
-                  {preview ? (
+        <Row>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={insertMedicineConfirmation}
+          >
+            <Modal.Body>
+              <Row>
+                <Col>
+                  <Form.Group onClick={onClickProfile}>
+                    {preview ? (
+                      <Image
+                        style={{
+                          border: "1px solid grey",
+                          backgroundColor: "lightblue",
+                          height: 400,
+                          width: 500,
+                          objectFit: "fill",
+                        }}
+                        src={preview}
+                        alt={"preview"}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          border: "1px solid grey",
+                          backgroundColor: "#FAFAFA",
+                          height: 200,
+                          width: 300,
+                          cursor: "pointer",
+                          position: "relative",
+                        }}
+                      >
+                        <Container
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            msTransform: "translate(-50%, -50%)",
+                            transform: "translate(-50%, -50%)",
+                          }}
+                        >
+                          <p>
+                            Upload Image File
+                            <br />
+                            <BsFillImageFill
+                              style={{
+                                fontSize: 80,
+                                color: "#57D4FF",
+                                marginLeft: 20,
+                              }}
+                            />
+                          </p>
+                        </Container>
+                      </div>
+                    )}
+                    <input
+                      type="file"
+                      id="file"
+                      ref={inputFile}
+                      style={{ display: "none" }}
+                      accept="image/*"
+                      required
+                      name="profile_pet"
+                      // value={profile}
+                      // key='profile_petowner'
+                      onChange={(event) => {
+                        const file = event.target.files[0];
+                        if (file && file.type.substr(0, 5) === "image") {
+                          console.log(event.target.value);
+                          // setprofile(event.target.value)
+                          setimageUrl(file);
+                          uploadImage(file);
+                        } else {
+                          setimageUrl(null);
+                        }
+                      }}
+                    />
+                    <Form.Control.Feedback type="valid">
+                      You've input a valid image.
+                    </Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      Image is required in this form.
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group
+                    controlId="formBasicProduct"
+                    style={{
+                      marginTop: 10,
+                    }}
+                  >
+                    <FloatingLabel
+                      controlId="floatingInputPrice"
+                      label="Medicine Name"
+                    >
+                      <Form.Control
+                        type="text"
+                        value={updateMedicineName}
+                        placeholder="Sample Medicine"
+                        required
+                        onChange={(e) => {
+                          setUpdateMedicineName(e.target.value);
+                        }}
+                        minLength={5}
+                      />
+
+                      <Form.Control.Feedback type="valid">
+                        You've input a valid name.
+                      </Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">
+                        Please input a valid medicine name.
+                      </Form.Control.Feedback>
+                    </FloatingLabel>
+                  </Form.Group>
+
+                  <Form.Group
+                    controlId="formBasicMedicineD"
+                    style={{
+                      marginTop: 10,
+                    }}
+                  >
+                    <FloatingLabel
+                      controlId="floatingInputPrice"
+                      label="Description"
+                    >
+                      <Form.Control
+                        type="text"
+                        as="textarea"
+                        style={{ height: 200 }}
+                        value={updateMedicineDescription}
+                        placeholder="Sample Medicine Description"
+                        required
+                        onChange={(e) => {
+                          setUpdateMedicineDescription(e.target.value);
+                        }}
+                        minLength={10}
+                      />
+
+                      <Form.Control.Feedback type="valid">
+                        You've input a valid description.
+                      </Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">
+                        Please input a valid medicine description.
+                      </Form.Control.Feedback>
+                    </FloatingLabel>
+                  </Form.Group>
+
+                  <Form.Group
+                    controlId="formBasicMedicineQ"
+                    style={{
+                      marginTop: 10,
+                    }}
+                  >
+                    <FloatingLabel controlId="floatingInputPrice" label="Price">
+                      <Form.Control
+                        type="text"
+                        value={updateMedicinePrice}
+                        pattern="\d*"
+                        maxLength={5}
+                        required
+                        onChange={(e) => {
+                          setUpdateMedicinePrice(e.target.value);
+                        }}
+                        minLength={1}
+                      />
+
+                      <Form.Control.Feedback type="valid">
+                        You've input a valid price .
+                      </Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">
+                        Please input a valid medicine price.
+                      </Form.Control.Feedback>
+                      <Form.Text id="passwordHelpBlock" muted>
+                        Price should be exact. ex. ₱ 100
+                      </Form.Text>
+                    </FloatingLabel>
+                  </Form.Group>
+                </Col>
+              </Row>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose2}>
+                Close
+              </Button>
+              <Button variant="primary" type='submit'>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Row>
+      </Modal>
+
+
+
+
+
+
+      {/* //Edit Medicine Details*/}
+      <Modal show={showUpdate} onHide={handleCloseUpdate} size="xl" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>{viewTitle}</Modal.Title>
+        </Modal.Header>
+        <Row>
+
+          <Form noValidate validated={validated} onSubmit={updateMedicineConfirmation} >
+            <Modal.Body>
+
+
+              <Row
+
+              >
+                <Col sm={6}>
+                  <Form.Group >
                     <Image
                       style={{
                         border: "1px solid grey",
@@ -395,356 +645,165 @@ const PharmacyTab = (props) => {
                         height: 400,
                         width: 500,
                         objectFit: "fill",
+                        cursor: "pointer",
                       }}
-                      src={preview}
+                      src={pharmacyUpdateImage}
                       alt={"preview"}
                     />
-                  ) : (
-                    <div
-                      style={{
-                        border: "1px solid grey",
-                        backgroundColor: "#FAFAFA",
-                        height: 400,
-                        width: 500,
-                        cursor: "pointer",
-                        position: "relative",
+
+                    <input
+                      type="file"
+                      id="file"
+                      ref={inputFile}
+                      style={{ display: "none" }}
+                      accept="image/*"
+                      name="profile_pet"
+                      disabled={viewDisableField}
+                      onChange={(event) => {
+                        const file = event.target.files[0];
+                        if (file && file.type.substr(0, 5) === "image") {
+                          console.log(event.target.value);
+                          // setprofile(event.target.value)
+                          setimageUrl(file);
+                          uploadImage(file);
+                        } else {
+                          setimageUrl(null);
+                        }
+                      }}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col sm={6}>
+                  <Form.Group controlId="formBasicProduct">
+                    <FloatingLabel
+                      controlId="floatingInputPrice"
+                      label="Medicine Name"
+                    >
+                      <Form.Control
+                        type="text"
+                        value={pharmacyUpdateName}
+                        required
+                        disabled={viewDisableField}
+                        onChange={(e) => {
+                          setpharmacyUpdateName(e.target.value);
+                        }}
+                        minLength={5}
+                      />
+
+                      <Form.Control.Feedback type="valid">
+                        You've input a valid name.
+                      </Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">
+                        Please input a valid medicine name.
+                      </Form.Control.Feedback>
+                    </FloatingLabel>
+                  </Form.Group>
+
+                  <Form.Group
+                    controlId="formBasicMedicineD"
+                    style={{
+                      marginTop: 10,
+                    }}
+                  >
+                    <FloatingLabel
+                      controlId="floatingInputPrice"
+                      label="Description"
+                    >
+                      <Form.Control
+                        type="text"
+                        as="textarea"
+                        style={{ height: 200 }}
+                        disabled={viewDisableField}
+                        value={pharmacyUpdateDescription}
+                        placeholder="Sample Medicine Description"
+                        required
+                        onChange={(e) => {
+                          setpharmacyUpdateDescription(e.target.value);
+                        }}
+                        minLength={10}
+                      />
+
+                      <Form.Control.Feedback type="valid">
+                        You've input a valid description.
+                      </Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">
+                        Please input a valid medicine description.
+                      </Form.Control.Feedback>
+                    </FloatingLabel>
+                  </Form.Group>
+
+                  <FloatingLabel
+                    controlId="floatingSelect"
+                    label="Status"
+                    style={{
+                      marginTop: 10,
+                    }}
+                  >
+                    <Form.Select
+                      aria-label="Floating label select example"
+                      defaultValue={pharmacyUpdateStatus}
+                      disabled={viewDisableField}
+                      onChange={(e) => {
+                        setpharmacyUpdateStatus(e.target.value);
                       }}
                     >
-                      <Container
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          position: "absolute",
-                          top: "50%",
-                          left: "50%",
-                          msTransform: "translate(-50%, -50%)",
-                          transform: "translate(-50%, -50%)",
-                        }}
-                      >
-                        <p>
-                          Upload Image File
-                          <br />
-                          <BsFillImageFill
-                            style={{
-                              fontSize: 80,
-                              color: "#57D4FF",
-                              marginLeft: 20,
-                            }}
-                          />
-                        </p>
-                      </Container>
-                    </div>
-                  )}
-                  <input
-                    type="file"
-                    id="file"
-                    ref={inputFile}
-                    style={{ display: "none" }}
-                    accept="image/*"
-                    required
-                    name="profile_pet"
-                    // value={profile}
-                    // key='profile_petowner'
-                    onChange={(event) => {
-                      const file = event.target.files[0];
-                      if (file && file.type.substr(0, 5) === "image") {
-                        console.log(event.target.value);
-                        // setprofile(event.target.value)
-                        setimageUrl(file);
-                        uploadImage(file);
-                      } else {
-                        setimageUrl(null);
-                      }
-                    }}
-                  />
-                  <Form.Control.Feedback type="valid">
-                    You've input a valid image.
-                  </Form.Control.Feedback>
-                  <Form.Control.Feedback type="invalid">
-                    Image is required in this form.
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group
-                  controlId="formBasicProduct"
-                  style={{
-                    marginTop: 10,
-                  }}
-                >
-                  <FloatingLabel
-                    controlId="floatingInputPrice"
-                    label="Medicine Name"
-                  >
-                    <Form.Control
-                      type="text"
-                      value={updateMedicineName}
-                      placeholder="Sample Medicine"
-                      required
-                      onChange={(e) => {
-                        setUpdateMedicineName(e.target.value);
-                      }}
-                      minLength={5}
-                    />
-
-                    <Form.Control.Feedback type="valid">
-                      You've input a valid name.
-                    </Form.Control.Feedback>
-                    <Form.Control.Feedback type="invalid">
-                      Please input a valid medicine name.
-                    </Form.Control.Feedback>
+                      <option value="1">Available</option>
+                      <option value="0">Not Available</option>
+                    </Form.Select>
                   </FloatingLabel>
-                </Form.Group>
 
-                <Form.Group
-                  controlId="formBasicMedicineD"
-                  style={{
-                    marginTop: 10,
-                  }}
-                >
-                  <FloatingLabel
-                    controlId="floatingInputPrice"
-                    label="Description"
-                  >
-                    <Form.Control
-                      type="text"
-                      as="textarea"
-                      style={{ height: 200 }}
-                      value={updateMedicineDescription}
-                      placeholder="Sample Medicine Description"
-                      required
-                      onChange={(e) => {
-                        setUpdateMedicineDescription(e.target.value);
-                      }}
-                      minLength={10}
-                    />
-
-                    <Form.Control.Feedback type="valid">
-                      You've input a valid description.
-                    </Form.Control.Feedback>
-                    <Form.Control.Feedback type="invalid">
-                      Please input a valid medicine description.
-                    </Form.Control.Feedback>
-                  </FloatingLabel>
-                </Form.Group>
-
-                <Form.Group
-                  controlId="formBasicMedicineQ"
-                  style={{
-                    marginTop: 10,
-                  }}
-                >
-                  <FloatingLabel controlId="floatingInputPrice" label="Price">
-                    <Form.Control
-                      type="text"
-                      value={updateMedicinePrice}
-                      pattern="\d*"
-                      maxLength={5}
-                      required
-                      onChange={(e) => {
-                        setUpdateMedicinePrice(e.target.value);
-                      }}
-                      minLength={1}
-                    />
-
-                    <Form.Control.Feedback type="valid">
-                      You've input a valid price .
-                    </Form.Control.Feedback>
-                    <Form.Control.Feedback type="invalid">
-                      Please input a valid medicine price.
-                    </Form.Control.Feedback>
-                    <Form.Text id="passwordHelpBlock" muted>
-                      Price should be exact. ex. ₱ 100
-                    </Form.Text>
-                  </FloatingLabel>
-                </Form.Group>
-              </Col>
-            </Row>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose2}>
-              Close
-            </Button>
-            <Button variant="primary" type="submit">
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Form>
-      </Modal>
-
-      {/* //Edit Medicine Details*/}
-      <Modal show={showUpdate} onHide={handleCloseUpdate} size="xl" centered>
-        <Modal.Header closeButton>
-          <Modal.Title>{viewTitle}</Modal.Title>
-        </Modal.Header>
-        <Form noValidate validated={validated} onSubmit={updateMedicine}>
-          <Modal.Body>
-            <Row>
-              <Col>
-                <Form.Group onClick={onClickProfile}>
-                  <Image
+                  <Form.Group
+                    controlId="formBasicMedicineQ"
                     style={{
-                      border: "1px solid grey",
-                      backgroundColor: "lightblue",
-                      height: 400,
-                      width: 500,
-                      objectFit: "fill",
-                      cursor: "pointer",
-                    }}
-                    src={pharmacyUpdateImage}
-                    alt={"preview"}
-                  />
-
-                  <input
-                    type="file"
-                    id="file"
-                    ref={inputFile}
-                    style={{ display: "none" }}
-                    accept="image/*"
-                    name="profile_pet"
-                    disabled={viewDisableField}
-                    onChange={(event) => {
-                      const file = event.target.files[0];
-                      if (file && file.type.substr(0, 5) === "image") {
-                        console.log(event.target.value);
-                        // setprofile(event.target.value)
-                        setimageUrl(file);
-                        uploadImage(file);
-                      } else {
-                        setimageUrl(null);
-                      }
-                    }}
-                  />
-                </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="formBasicProduct">
-                  <FloatingLabel
-                    controlId="floatingInputPrice"
-                    label="Medicine Name"
-                  >
-                    <Form.Control
-                      type="text"
-                      value={pharmacyUpdateName}
-                      required
-                      disabled={viewDisableField}
-                      onChange={(e) => {
-                        setpharmacyUpdateName(e.target.value);
-                      }}
-                      minLength={5}
-                    />
-
-                    <Form.Control.Feedback type="valid">
-                      You've input a valid name.
-                    </Form.Control.Feedback>
-                    <Form.Control.Feedback type="invalid">
-                      Please input a valid medicine name.
-                    </Form.Control.Feedback>
-                  </FloatingLabel>
-                </Form.Group>
-
-                <Form.Group
-                  controlId="formBasicMedicineD"
-                  style={{
-                    marginTop: 10,
-                  }}
-                >
-                  <FloatingLabel
-                    controlId="floatingInputPrice"
-                    label="Description"
-                  >
-                    <Form.Control
-                      type="text"
-                      as="textarea"
-                      style={{ height: 200 }}
-                      disabled={viewDisableField}
-                      value={pharmacyUpdateDescription}
-                      placeholder="Sample Medicine Description"
-                      required
-                      onChange={(e) => {
-                        setpharmacyUpdateDescription(e.target.value);
-                      }}
-                      minLength={10}
-                    />
-
-                    <Form.Control.Feedback type="valid">
-                      You've input a valid description.
-                    </Form.Control.Feedback>
-                    <Form.Control.Feedback type="invalid">
-                      Please input a valid medicine description.
-                    </Form.Control.Feedback>
-                  </FloatingLabel>
-                </Form.Group>
-
-                <FloatingLabel
-                  controlId="floatingSelect"
-                  label="Status"
-                  style={{
-                    marginTop: 10,
-                  }}
-                >
-                  <Form.Select
-                    aria-label="Floating label select example"
-                    defaultValue={pharmacyUpdateStatus}
-                    disabled={viewDisableField}
-                    onChange={(e) => {
-                      setpharmacyUpdateStatus(e.target.value);
+                      marginTop: 10,
                     }}
                   >
-                    <option value="1">Available</option>
-                    <option value="0">Not Available</option>
-                  </Form.Select>
-                </FloatingLabel>
+                    <FloatingLabel controlId="floatingInputPrice" label="Price">
+                      <Form.Control
+                        type="text"
+                        disabled={viewDisableField}
+                        value={pharmacyUpdatePrice}
+                        pattern="\d*"
+                        maxLength={5}
+                        required
+                        onChange={(e) => {
+                          setpharmacyUpdatePrice(e.target.value);
+                        }}
+                        minLength={1}
+                      />
 
-                <Form.Group
-                  controlId="formBasicMedicineQ"
-                  style={{
-                    marginTop: 10,
-                  }}
-                >
-                  <FloatingLabel controlId="floatingInputPrice" label="Price">
-                    <Form.Control
-                      type="text"
-                      disabled={viewDisableField}
-                      value={pharmacyUpdatePrice}
-                      pattern="\d*"
-                      maxLength={5}
-                      required
-                      onChange={(e) => {
-                        setpharmacyUpdatePrice(e.target.value);
-                      }}
-                      minLength={1}
-                    />
+                      <Form.Control.Feedback type="valid">
+                        You've input a valid price .
+                      </Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">
+                        Please input a valid medicine price.
+                      </Form.Control.Feedback>
+                      <Form.Text id="passwordHelpBlock" muted>
+                        Price should be exact. ex. ₱ 100
+                      </Form.Text>
+                    </FloatingLabel>
+                  </Form.Group>
+                </Col>
+              </Row>
 
-                    <Form.Control.Feedback type="valid">
-                      You've input a valid price .
-                    </Form.Control.Feedback>
-                    <Form.Control.Feedback type="invalid">
-                      Please input a valid medicine price.
-                    </Form.Control.Feedback>
-                    <Form.Text id="passwordHelpBlock" muted>
-                      Price should be exact. ex. ₱ 100
-                    </Form.Text>
-                  </FloatingLabel>
-                </Form.Group>
-              </Col>
-            </Row>
-          </Modal.Body>
-          <div
-            style={{
-              display: viewMedicine,
-            }}
-          >
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseUpdate}>
-                Close
-              </Button>
-              <Button variant="primary" type="submit">
-                Save Changes
-              </Button>
-            </Modal.Footer>
-          </div>
-        </Form>
+            </Modal.Body>
+
+            <div
+              style={{
+                display: viewMedicine,
+              }}
+            >
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseUpdate}>
+                  Close
+                </Button>
+                <Button variant="primary" type='submit'>
+                  Save Changes
+                </Button>
+              </Modal.Footer>
+            </div>
+          </Form>
+        </Row>
       </Modal>
 
       {/* Data Table */}

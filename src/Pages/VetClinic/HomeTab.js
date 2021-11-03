@@ -8,23 +8,24 @@ import PetPopulationGraph from "./PetPopulationGraph";
 import RatingsAndFeedback from "./RatingsAndFeedback";
 import { hostUrl } from "../../Components/Host";
 import { isEmptyObject } from "jquery";
+import ReactApexChart from "react-apexcharts";
 
 function HomeTab(props) {
   const [user, setuser] = useState([]);
   const [counter, setcounter] = useState(0);
   useEffect(() => {
-    if (counter < 6) {
-      if (user.length === 0) {
-        var token = localStorage.getItem("ajwt");
-        axios
-          .get(`${hostUrl}/home`, {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          .then((response) => {
-            setuser(response.data.result[0]);
-            // console.log(user);
-          });
-      }
+    if (counter < 10) {
+
+      var token = localStorage.getItem("ajwt");
+      axios
+        .get(`${hostUrl}/home`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          setuser(response.data.result[0]);
+          // console.log(user);
+        });
+
       setcounter(counter + 1);
     }
   }, [user]);
@@ -59,7 +60,7 @@ function HomeTab(props) {
   useEffect(() => {
     if (counter < 6) {
       axios
-        .get(`${hostUrl}/reserved/vetclinic/length/:${user.vetid}`)
+        .get(`${hostUrl}/reserved/vetclinic/length/${user.vetid}`)
         .then((response) => {
           setnumberOfPendingReserved(response.data.reserved);
         });
@@ -69,7 +70,7 @@ function HomeTab(props) {
   useEffect(() => {
     if (counter < 6) {
       axios
-        .get(`${hostUrl}/pending/vetclinic/length/:${user.vetid}`)
+        .get(`${hostUrl}/pending/vetclinic/length/${user.vetid}`)
         .then((response) => {
           setNumberOfPendingRequest(response.data.pending);
         });
@@ -90,6 +91,81 @@ function HomeTab(props) {
     return Math.round(ratess * 10) / 10;
   }
   var screenh = window.screen.height - 300;
+
+
+
+  const [numberOfDog, setnumberOfDog] = useState("");
+  const [numberOfCat, setnumberOfCat] = useState("");
+
+
+  // alert(props.clinic.vetid);
+  useEffect(() => {
+
+    // setTimeout(() => {
+    if (counter < 10) {
+      axios
+        .get(`${hostUrl}/vetclinic/dog/length/${user.vetid}`)
+        .then((response) => {
+          setnumberOfDog(response.data.dog);
+        });
+
+
+    }
+    // }, 1000);
+  }, [numberOfDog]);
+
+  useEffect(() => {
+    // setTimeout(() => {
+    if (counter < 10) {
+      axios
+        .get(`${hostUrl}/vetclinic/cat/length/${user.vetid}`)
+        .then((response) => {
+          setnumberOfCat(response.data.cat);
+        });
+    }
+    // }, 1000);
+  }, [numberOfCat]);
+
+  const series = [
+    {
+      data: [numberOfDog, numberOfCat],
+    },
+  ];
+  const options = {
+    chart: {
+      height: 350,
+      type: "bar",
+      events: {
+        click: function (chart, w, e) {
+          // console.log(chart, w, e)
+        },
+      },
+    },
+
+    plotOptions: {
+      bar: {
+        columnWidth: "45%",
+        distributed: true,
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    legend: {
+      show: false,
+    },
+    xaxis: {
+      categories: [["Dog"], ["Cat"]],
+      title: {
+        text: "Animal Population",
+      },
+      labels: {
+        style: {
+          fontSize: "12px",
+        },
+      },
+    },
+  };
   return (
     <div
       style={{
@@ -201,7 +277,17 @@ function HomeTab(props) {
 
       <Row>
         <Col sm={8}>
-          <PetPopulationGraph clinic={user} />
+          <div>
+            <Card
+              style={{
+                marginLeft: 60,
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+              }}
+            >
+              <ReactApexChart options={options} series={series} type="bar" />
+            </Card>
+          </div>
         </Col>
 
         <Col sm={4} style={{ display: "flex" }}>

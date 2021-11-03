@@ -150,7 +150,7 @@ const VetSettings = (props) => {
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
   useEffect(() => {
-    if (counter < 6) {
+    if (counter < 2) {
       var token = localStorage.getItem("ajwt");
       Axios.get(`${hostUrl}/home`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -163,33 +163,45 @@ const VetSettings = (props) => {
     }
   }, [counter, user]);
 
-  function UpdateVetClinic() {
-    Axios.put(`${hostUrl}/vetclinic/update/${vetId}`, {
-      vet_name: vetName,
-      email: vetEmail,
-      vet_address: vetAddress,
-      vet_contact_number: vetContactNumber,
-    }).then((response) => {
-      if (response.data.message === "Update Successfully") {
-        Axios.get(`${hostUrl}/vet/uploads`, {
-          params: {
-            email: user.email,
-          },
-        }).then((response) => {
-          if (response.data.message === "Correct") {
-            localStorage.setItem("ajwt", response.data.accessToken);
-            localStorage.setItem("rjwt", response.data.refreshToken);
-            localStorage.setItem("isLogin", true);
-            localStorage.setItem("role", response.data.role);
-            if (response.data.role === 2) {
-              localStorage.setItem("vetStatus", response.data.vetStatus);
-              localStorage.setItem("id", response.data.id);
+  function UpdateVetClinic(e) {
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    } else {
+      Axios.put(`${hostUrl}/vetclinic/update/${vetId}`, {
+        vet_name: vetName,
+        email: vetEmail,
+        vet_address: vetAddress,
+        vet_contact_number: vetContactNumber,
+        oldnumber: user.vet_contact_number
+      }).then((response) => {
+        // alert(response.data.message);
+        if (response.data.message === "Update Successfully") {
+          // alert('logging in')
+          Axios.get(`${hostUrl}/vet/uploads`, {
+            params: {
+              email: user.email,
+            },
+          }).then((response) => {
+            if (response.data.message === "Correct") {
+              localStorage.setItem("ajwt", response.data.accessToken);
+              localStorage.setItem("rjwt", response.data.refreshToken);
+              localStorage.setItem("isLogin", true);
+              localStorage.setItem("role", response.data.role);
+              if (response.data.role === 2) {
+                localStorage.setItem("vetStatus", response.data.vetStatus);
+                localStorage.setItem("id", response.data.id);
+              }
+              window.location.href = `/vet/settings`;
             }
-            window.location.href = `${hostUrlWeb}/vet/settings`;
-          }
-        });
-      }
-    });
+          });
+        }
+      });
+    }
+    setValidated(true);
+
+
   }
 
   function editVetHours() {
@@ -360,7 +372,7 @@ const VetSettings = (props) => {
               localStorage.setItem("vetStatus", response.data.vetStatus);
               localStorage.setItem("id", response.data.id);
             }
-            window.location.href = `${hostUrlWeb}/vet/settings`;
+            window.location.href = `/vet/settings`;
           }
         });
       }
@@ -448,7 +460,7 @@ const VetSettings = (props) => {
               localStorage.setItem("vetStatus", response.data.vetStatus);
               localStorage.setItem("id", response.data.id);
             }
-            window.location.href = `${hostUrlWeb}/vet/settings`;
+            window.location.href = `/vet/settings`;
           }
         });
       }
@@ -501,7 +513,7 @@ const VetSettings = (props) => {
       if (response.data.message === "Successfully") {
         Axios.get(`${hostUrl}/vet/uploads`, {
           params: {
-            email: vetEmail,
+            email: user.email,
           },
         }).then((response) => {
           if (response.data.message === "Correct") {
@@ -738,12 +750,15 @@ const VetSettings = (props) => {
                         noValidate
                         validated={validated}
                         onSubmit={changePassword}
+                        style={{
+                          width: 800
+                        }}
                       >
                         <Form.Group as={Row} style={{ rowGap: 10 }}>
                           <Form.Label column sm="4">
                             New Password
                           </Form.Label>
-                          <Col sm="7">
+                          <Col sm="8">
                             <Form.Group
                               style={{
                                 textAlign: "left",
@@ -765,6 +780,7 @@ const VetSettings = (props) => {
                                   title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                                   required
                                   onChange={(e) => {
+                                    setValidated(true);
                                     setnewPass(e.target.value);
                                   }}
                                 />
@@ -783,7 +799,7 @@ const VetSettings = (props) => {
                           <Form.Label column sm="4">
                             Confirm New Password
                           </Form.Label>
-                          <Col sm="7">
+                          <Col sm="8">
                             <Form.Group
                               style={{
                                 textAlign: "left",
@@ -805,6 +821,7 @@ const VetSettings = (props) => {
                                   title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                                   required
                                   onChange={(e) => {
+                                    setValidated(true);
                                     setconfirmPass(e.target.value);
                                   }}
                                 />
@@ -871,16 +888,17 @@ const VetSettings = (props) => {
                       style={{
                         paddingTop: 10,
                         display: changeVetHours,
+
                       }}
                     >
-                      <Form onSubmit={UpdateVetHours}>
-                        <Form.Group as={Row}>
+                      <Form onSubmit={UpdateVetHours} >
+                        <Form.Group style={{ width: 700 }}>
                           {/* Sunday */}
                           <Row>
                             <Col sm="2">
                               <Form.Label>Sunday</Form.Label>
                             </Col>
-                            <Col sm="2">
+                            <Col sm="3">
                               <Form.Control
                                 type="time"
                                 value={OpeningSunday}
@@ -890,7 +908,7 @@ const VetSettings = (props) => {
                                 }}
                               />
                             </Col>
-                            <Col sm="2">
+                            <Col sm="3">
                               <Form.Control
                                 type="time"
                                 value={ClosingSunday}
@@ -926,7 +944,7 @@ const VetSettings = (props) => {
                             <Col sm="2">
                               <Form.Label>Monday</Form.Label>
                             </Col>
-                            <Col sm="2">
+                            <Col sm="3">
                               <Form.Control
                                 type="time"
                                 value={OpeningMonday}
@@ -936,7 +954,7 @@ const VetSettings = (props) => {
                                 }}
                               />
                             </Col>
-                            <Col sm="2">
+                            <Col sm="3">
                               <Form.Control
                                 type="time"
                                 value={ClosingMonday}
@@ -971,7 +989,7 @@ const VetSettings = (props) => {
                             <Col sm="2">
                               <Form.Label>Tuesday</Form.Label>
                             </Col>
-                            <Col sm="2">
+                            <Col sm="3">
                               <Form.Control
                                 type="time"
                                 value={OpeningTuesday}
@@ -981,7 +999,7 @@ const VetSettings = (props) => {
                                 }}
                               />
                             </Col>
-                            <Col sm="2">
+                            <Col sm="3">
                               <Form.Control
                                 type="time"
                                 value={ClosingTuesday}
@@ -1016,7 +1034,7 @@ const VetSettings = (props) => {
                             <Col sm="2">
                               <Form.Label>Wednesday</Form.Label>
                             </Col>
-                            <Col sm="2">
+                            <Col sm="3">
                               <Form.Control
                                 type="time"
                                 value={OpeningWednesday}
@@ -1026,7 +1044,7 @@ const VetSettings = (props) => {
                                 }}
                               />
                             </Col>
-                            <Col sm="2">
+                            <Col sm="3">
                               <Form.Control
                                 type="time"
                                 value={ClosingWednesday}
@@ -1062,7 +1080,7 @@ const VetSettings = (props) => {
                             <Col sm="2">
                               <Form.Label>Thursday</Form.Label>
                             </Col>
-                            <Col sm="2">
+                            <Col sm="3">
                               <Form.Control
                                 type="time"
                                 value={OpeningThursday}
@@ -1072,7 +1090,7 @@ const VetSettings = (props) => {
                                 }}
                               />
                             </Col>
-                            <Col sm="2">
+                            <Col sm="3">
                               <Form.Control
                                 type="time"
                                 value={ClosingThursday}
@@ -1108,7 +1126,7 @@ const VetSettings = (props) => {
                             <Col sm="2">
                               <Form.Label>Friday</Form.Label>
                             </Col>
-                            <Col sm="2">
+                            <Col sm="3">
                               <Form.Control
                                 type="time"
                                 value={OpeningFriday}
@@ -1118,7 +1136,7 @@ const VetSettings = (props) => {
                                 }}
                               />
                             </Col>
-                            <Col sm="2">
+                            <Col sm="3">
                               <Form.Control
                                 type="time"
                                 value={ClosingFriday}
@@ -1155,7 +1173,7 @@ const VetSettings = (props) => {
                             <Col sm="2">
                               <Form.Label>Saturday</Form.Label>
                             </Col>
-                            <Col sm="2">
+                            <Col sm="3">
                               <Form.Control
                                 type="time"
                                 value={OpeningSaturday}
@@ -1165,7 +1183,7 @@ const VetSettings = (props) => {
                                 }}
                               />
                             </Col>
-                            <Col sm="2">
+                            <Col sm="3">
                               <Form.Control
                                 type="time"
                                 value={ClosingSaturday}
@@ -1264,7 +1282,7 @@ const VetSettings = (props) => {
                         display: editCred,
                       }}
                     >
-                      <Form>
+                      <Form validated={true} onSubmit={UpdateVetClinic}>
                         <Form.Group as={Row} style={{ rowGap: 10 }}>
                           <Form.Label column sm="4">
                             Veterinary Name
@@ -1274,6 +1292,10 @@ const VetSettings = (props) => {
                               type="text"
                               value={vetName}
                               placeholder="Vet Name"
+
+                              pattern="[a-zA-Z ]*$"
+                              minLength={5}
+                              required
                               onChange={(e) => {
                                 setvetName(e.target.value);
                               }}
@@ -1288,6 +1310,8 @@ const VetSettings = (props) => {
                               type="text"
                               value={vetAddress}
                               placeholder="Address"
+                              required
+                              minLength={10}
                               onChange={(e) => {
                                 setvetAddress(e.target.value);
                               }}
@@ -1300,6 +1324,10 @@ const VetSettings = (props) => {
                           <Col sm="7">
                             <Form.Control
                               type="text"
+                              required
+                              pattern="\d{11}"
+                              maxLength="11"
+                              minLength='11'
                               placeholder="Contact Number"
                               value={vetContactNumber}
                               onChange={(e) => {
@@ -1322,27 +1350,26 @@ const VetSettings = (props) => {
                             />
                           </Col>
 
-                          <div
+
+                        </Form.Group>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Button
+                            type='submit'
                             style={{
-                              display: "flex",
-                              justifyContent: "center",
+                              borderRadius: 30,
+                              paddingLeft: 120,
+                              paddingRight: 120,
+                              backgroundColor: "#19B9CC",
                             }}
                           >
-                            <Button
-                              style={{
-                                borderRadius: 30,
-                                paddingLeft: 120,
-                                paddingRight: 120,
-                                backgroundColor: "#19B9CC",
-                              }}
-                              onClick={() => {
-                                UpdateVetClinic();
-                              }}
-                            >
-                              SAVE
-                            </Button>
-                          </div>
-                        </Form.Group>
+                            SAVE
+                          </Button>
+                        </div>
                       </Form>
                     </div>
                   </div>
