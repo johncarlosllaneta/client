@@ -317,7 +317,9 @@ const PetAppointment = () => {
         </Modal.Footer>
       </Modal>
 
-      <Row>
+      <Row
+        style={{ marginBottom: 10 }}
+      >
         <Col>
           <Container style={{ display: "flex", flexDirection: "row" }}>
             <h1
@@ -403,7 +405,7 @@ const PetAppointment = () => {
           <Container
             style={{
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: "space-evenly",
             }}
           >
             <Button
@@ -415,6 +417,9 @@ const PetAppointment = () => {
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 display: "inline",
+                width: '10vw',
+                minWidth: 200,
+                fontSize: '1em'
               }}
             >
               Add appointment
@@ -429,10 +434,10 @@ const PetAppointment = () => {
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 display: "inline",
-                marginLeft: 25,
 
-                paddingLeft: 50,
-                paddingRight: 50,
+                width: '10vw',
+                minWidth: 200,
+                fontSize: '1em'
               }}
             >
               History

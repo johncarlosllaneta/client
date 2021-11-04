@@ -54,127 +54,128 @@ const TabHome = (props) => {
       style={{
         width: "77vw",
         marginLeft: 40,
-        marginTop: 70,
+
       }}
     >
       <Row style={{ backgroundColor: "transparent" }}>
-        <Col sm={8}>
-          <Container style={{ margin: 10 }}>
-            <Row style={{ marginTop: 10 }}>
-              <Row
-                className="mb-3"
-                style={{
-                  backgroundColor: "white",
-                  height: 375,
-                  borderRadius: 30,
-                }}
-              >
-                <Container
-                  style={{
-                    borderRadius: 30,
-                    width: 970,
-                    boxShadow:
-                      "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                    padding: 20,
-                    marginBottom: 20,
-                  }}
-                >
-                  <h4 style={{ color: "#19B9CC", textAlign: "left" }}>Pets</h4>
 
-                  <Carousel responsive={responsive}>
-                    {pet.length != 0 ? (
-                      pet.map((val) => {
-                        return <PetCarouselHome data={val} />;
-                      })
-                    ) : (
-                      <Spinner
-                        animation="border"
-                        role="status"
-                        style={{ marginLeft: 450, marginTop: 100 }}
-                      >
-                        <span className="visually-hidden"></span>
-                      </Spinner>
-                    )}
-                  </Carousel>
-                </Container>
-              </Row>
-              <Row
-                style={{
-                  backgroundColor: "white",
-                  borderRadius: 30,
-                  marginTop: 40,
-                }}
-              >
-                <Container
-                  style={{
-                    borderRadius: 30,
-                    backgroundColor: "white",
-                    padding: 20,
-                    boxShadow:
-                      "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                    marginTop: 20,
-                  }}
-                >
-                  <div className="news">
-                    <h3
+        <Container style={{ margin: 10 }}>
+          <Row style={{ marginTop: 10 }}>
+
+            <Container
+              style={{
+                borderRadius: 30,
+                width: '50vw',
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                padding: 20,
+                marginBottom: 20,
+              }}
+            >
+              <h4 style={{ color: "#19B9CC", textAlign: "left" }}>Pets</h4>
+
+              <Carousel responsive={responsive}>
+                {pet.length != 0 ? (
+                  pet.map((val) => {
+                    return <PetCarouselHome data={val} />;
+                  })
+                ) : (
+                  <Spinner
+                    animation="border"
+                    role="status"
+                    style={{ marginLeft: 450, marginTop: 100 }}
+                  >
+                    <span className="visually-hidden"></span>
+                  </Spinner>
+                )}
+              </Carousel>
+            </Container>
+
+            <Container
+              style={{
+                minWidth: '40vw',
+                maxWidth: '100vw',
+                width: '50vw',
+                borderRadius: 30,
+                backgroundColor: "white",
+                padding: 20,
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                marginTop: 20,
+                justifyContent: 'center'
+              }}
+            >
+              <div>
+                <Row className="mb-2">
+                  <Col>
+                    <h5
+                      style={{ color: "#19B9CC", textAlign: "left" }}
+                      className="mt-2"
+                    >
+                      Appointment
+                    </h5>
+                  </Col>
+
+                  <Col>
+                    <Button
+                      onClick={() => {
+                        window.location.href = "/appointment";
+                      }}
                       style={{
-                        fontWeight: "bold",
-                        color: "#19B9CC",
-                        textAlign: "left",
+                        display: "inline-flex",
+                        justifyContent: "flex-end",
+                        alignItems: "flex-end",
+                        float: "right",
                       }}
                     >
-                      Animal Information
-                    </h3>
+                      Set Appointment
+                    </Button>
+                  </Col>
+                </Row>
 
-                    <p>{facts[randomFacts]["fact"]}</p>
-                  </div>
-                </Container>
-              </Row>
-            </Row>
-          </Container>
-        </Col>
-        <Col sm={4}>
-          <Container
-            style={{
-              marginLeft: 40,
-              borderRadius: 30,
-              backgroundColor: "white",
-              height: 700,
-              padding: 30,
-              boxShadow:
-                "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-            }}
-          >
-            <Row className="mb-2">
-              <Col>
-                <h5
-                  style={{ color: "#19B9CC", textAlign: "left" }}
-                  className="mt-2"
-                >
-                  Appointment
-                </h5>
-              </Col>
+                <AppointmentHomePage data={props.data} />
+              </div>
+            </Container>
 
-              <Col>
-                <Button
-                  onClick={() => {
-                    window.location.href = "/appointment";
-                  }}
+            <Container
+              style={{
+                minWidth: '40vw',
+                maxWidth: '100vw',
+                width: '50vw',
+                borderRadius: 30,
+                backgroundColor: "white",
+                padding: 20,
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                marginTop: 20,
+                justifyContent: 'center'
+              }}
+            >
+              <div>
+                <h3
                   style={{
-                    display: "inline-flex",
-                    justifyContent: "flex-end",
-                    alignItems: "flex-end",
-                    float: "right",
+                    fontWeight: "bold",
+                    color: "#19B9CC",
+                    textAlign: "left",
+                    fontSize: '3vh',
                   }}
                 >
-                  Set Appointment
-                </Button>
-              </Col>
-            </Row>
+                  Animal Information
+                </h3>
 
-            <AppointmentHomePage data={props.data} />
-          </Container>
-        </Col>
+                <p
+                  style={{
+                    fontSize: '2vh',
+
+                  }}
+                >{facts[randomFacts]["fact"]}</p>
+              </div>
+            </Container>
+
+          </Row>
+        </Container>
+
+
       </Row>
     </div>
   );

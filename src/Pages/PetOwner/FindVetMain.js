@@ -1,8 +1,9 @@
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import NavBarHome from "../../Components/navBarHome/NavBarHome";
 import SideNavBar from "./SideNavBar";
 import PetFindVetMain from "./PetFindVetMain";
+import HomePage from "./HomePage";
 
 function FindVetMain() {
   var aspectratioheight = window.screen.height;
@@ -15,26 +16,32 @@ function FindVetMain() {
   }
   return (
     <div style={{ zoom: value }}>
-      <div>
+      {/* <div>
         <SideNavBar active={"appointment"} />
-      </div>
+      </div> */}
 
       <div
         style={{
           backgroundColor: "#F1F9FC",
-          height: "100vh",
+          height: "auto",
         }}
       >
-        <Container
-          style={{
-            padding: 0,
-          }}
-        >
-          <NavBarHome />
-        </Container>
-        <Container>
-          <PetFindVetMain />
-        </Container>
+
+        <NavBarHome />
+
+        <Row>
+          <Container
+            style={{
+              display: 'flex',
+              justifyContent: 'center'
+            }}
+          >
+            <PetFindVetMain />
+          </Container>
+        </Row>
+
+        <HomePage page={1} />
+
       </div>
     </div>
   );

@@ -200,9 +200,10 @@ function PetDetailsInformation(props) {
   return (
     <div
       style={{
-        width: "77vw",
-        marginLeft: 40,
+        width: "100vw",
+        height: 'auto',
         marginTop: 70,
+        backgroundColor: "#F1F9FC",
       }}
     >
       {/* Vaccination Guide */}

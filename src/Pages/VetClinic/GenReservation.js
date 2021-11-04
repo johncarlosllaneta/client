@@ -8,6 +8,7 @@ import {
   Popover,
   Overlay,
   FloatingLabel,
+  Row
 } from "react-bootstrap";
 import { AiOutlineSearch, AiOutlineFileDone } from "react-icons/ai";
 
@@ -300,109 +301,112 @@ const GenReservation = (props) => {
         <Modal.Header closeButton>
           <Modal.Title>Pet Health Record</Modal.Title>
         </Modal.Header>
-        <Form
-          noValidate
-          validated={validated}
-          onSubmit={insertVaccineInformation}
-        >
-          <Modal.Body>
-            <FloatingLabel
-              controlId="floatingInput"
-              label="Weight (Kg)"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="Weight"
-                required
-                minLength={1}
-                maxLength={2}
-                onChange={(e) => {
-                  setweight(e.target.value);
-                }}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid weight.
-              </Form.Control.Feedback>
-              <Form.Control.Feedback>Valid weight</Form.Control.Feedback>
-            </FloatingLabel>
+        <Row>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={insertVaccineInformation}
+          >
+            <Modal.Body>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Weight (Kg)"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="number"
+                  placeholder="Weight"
+                  required
+                  min={1}
+                  max={100}
+                  onChange={(e) => {
+                    setweight(e.target.value);
+                  }}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please provide a valid weight.
+                </Form.Control.Feedback>
+                <Form.Control.Feedback>Valid weight</Form.Control.Feedback>
+              </FloatingLabel>
 
-            <FloatingLabel
-              controlId="floatingInput"
-              label="Vaccine Name"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="vaccine"
-                required
-                minLength={5}
-                onChange={(e) => {
-                  setvaccineName(e.target.value);
-                }}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid vaccine name.
-              </Form.Control.Feedback>
-              <Form.Control.Feedback>Valid vaccine name</Form.Control.Feedback>
-            </FloatingLabel>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Vaccine Name"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="text"
+                  placeholder="vaccine"
+                  required
+                  minLength={5}
+                  pattern="[a-zA-Z ]*$"
+                  onChange={(e) => {
+                    setvaccineName(e.target.value);
+                  }}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please provide a valid vaccine name.
+                </Form.Control.Feedback>
+                <Form.Control.Feedback>Valid vaccine name</Form.Control.Feedback>
+              </FloatingLabel>
 
-            <FloatingLabel
-              controlId="floatingInput"
-              label="Manufacturer"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="manufacturer"
-                required
-                minLength={5}
-                onChange={(e) => {
-                  setmanufacturer(e.target.value);
-                }}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid manufacturer.
-              </Form.Control.Feedback>
-              <Form.Control.Feedback>Valid information</Form.Control.Feedback>
-            </FloatingLabel>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Manufacturer"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="text"
+                  placeholder="manufacturer"
+                  required
+                  minLength={5}
+                  onChange={(e) => {
+                    setmanufacturer(e.target.value);
+                  }}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please provide a valid manufacturer.
+                </Form.Control.Feedback>
+                <Form.Control.Feedback>Valid information</Form.Control.Feedback>
+              </FloatingLabel>
 
-            <FloatingLabel
-              controlId="floatingInput"
-              label="Vaccine Number/Lot.No."
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="lotno"
-                required
-                minLength={5}
-                onChange={(e) => {
-                  setvaccineNumber(e.target.value);
-                }}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid information.
-              </Form.Control.Feedback>
-              <Form.Control.Feedback>Valid information</Form.Control.Feedback>
-            </FloatingLabel>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Vaccine Number/Lot.No."
+                className="mb-3"
+              >
+                <Form.Control
+                  type="text"
+                  pattern="\d*"
+                  placeholder="lotno"
+                  required
+                  minLength={5}
+                  onChange={(e) => {
+                    setvaccineNumber(e.target.value);
+                  }}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please provide a valid information.
+                </Form.Control.Feedback>
+                <Form.Control.Feedback>Valid information</Form.Control.Feedback>
+              </FloatingLabel>
 
-            <FloatingLabel
-              controlId="floatingInput"
-              label="Against"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="againts"
-                required
-                minLength={5}
-                onChange={(e) => {
-                  setagaints(e.target.value);
-                }}
-              />
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Against"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="text"
+                  placeholder="againts"
+                  required
+                  minLength={5}
+                  onChange={(e) => {
+                    setagaints(e.target.value);
+                  }}
+                />
 
-              {/* <Form.Text id="passwordHelpBlock" muted>
+                {/* <Form.Text id="passwordHelpBlock" muted>
                 Legends:
                 <br />
                 <p>
@@ -435,21 +439,22 @@ const GenReservation = (props) => {
                   <strong>P </strong>(Parainfluenza)
                 </p>
               </Form.Text> */}
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid information.
-              </Form.Control.Feedback>
-              <Form.Control.Feedback>Valid information</Form.Control.Feedback>
-            </FloatingLabel>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseVaccinationModal}>
-              Close
-            </Button>
-            <Button variant="primary" type="submit">
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Form>
+                <Form.Control.Feedback type="invalid">
+                  Please provide a valid information.
+                </Form.Control.Feedback>
+                <Form.Control.Feedback>Valid information</Form.Control.Feedback>
+              </FloatingLabel>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseVaccinationModal}>
+                Close
+              </Button>
+              <Button variant="primary" type="submit">
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Row>
       </Modal>
 
       {/* Finish appointment */}

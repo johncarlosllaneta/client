@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import NavBarHome from "../../Components/navBarHome/NavBarHome";
 import SideNavBar from "./SideNavBar";
 import Axios from "axios";
 import { hostUrl } from "../../Components/Host";
 import PetAppointment from "./PetAppointment";
+import HomePage from "./HomePage";
 
 function AppointmentMain() {
   const [counter, setcounter] = useState(0);
@@ -32,9 +33,9 @@ function AppointmentMain() {
   }
   return (
     <div style={{ zoom: value }}>
-      <div>
+      {/* <div>
         <SideNavBar active={"appointment"} />
-      </div>
+      </div> */}
 
       <div
         style={{
@@ -42,16 +43,22 @@ function AppointmentMain() {
           height: "100vh",
         }}
       >
-        <Container
-          style={{
-            padding: 0,
-          }}
-        >
-          <NavBarHome />
-        </Container>
-        <Container>
-          <PetAppointment data={user} />
-        </Container>
+
+        <NavBarHome />
+
+        <Row>
+          <Container
+            style={{
+              display: 'flex',
+              justifyContent: 'center'
+            }}
+          >
+            <PetAppointment data={user} />
+          </Container>
+        </Row>
+
+        <HomePage page={1} />
+
       </div>
     </div>
   );

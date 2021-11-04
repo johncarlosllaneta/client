@@ -56,8 +56,8 @@ function PetFindVetMain() {
   return (
     <div
       style={{
-        width: "77vw",
-        marginLeft: 40,
+        width: "100vw",
+
         marginTop: 30,
       }}
     >
@@ -66,6 +66,7 @@ function PetFindVetMain() {
           backgroundColor: "white",
           width: "100vw",
           height: "80vh",
+          borderRadius: 30
         }}
       >
         <div>
@@ -73,10 +74,10 @@ function PetFindVetMain() {
             <Button
               href="/appointment"
               style={{
+                minWidth: 150,
+                fontSize: '2vh',
                 width: "5vw",
                 backgroundColor: "#3BD2E3",
-                paddingLeft: 30,
-                paddingRight: 30,
                 borderRadius: 30,
                 borderColor: "#FFFFFF",
                 marginLeft: 30,
@@ -116,7 +117,8 @@ function PetFindVetMain() {
             <hr />
             <div
               style={{
-                width: "100%",
+                minWidth: 200,
+                width: "100vw",
                 height: 300,
                 backgroundColor: "grey",
                 marginTop: 10,
@@ -125,49 +127,58 @@ function PetFindVetMain() {
                 overflowY: "auto",
                 maxWidth: "100%",
                 flexWrap: "wrap",
-                justifyContent: "space-between",
-                padding: 10,
+                flexDirection: 'row',
+                justifyContent: "space-evenly",
+                padding: 5,
               }}
             >
               {search(vetclinic).map((val) => {
                 return (
                   <div>
                     <Container
+
+                      onClick={() => {
+                        window.location.href = `/petOwner/Appointment/vetdetails/${val.vetid}`;
+                      }}
                       fluid="md"
                       style={{
-                        display: "flex",
-                        paddingTop: 10,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        padding: 15,
+                        cursor: 'pointer',
+
                       }}
                     >
                       <Card
                         style={{
-                          width: 600,
-                          height: 100,
+                          minWidth: 150,
+                          width: '25vw',
+
                           borderRadius: 20,
                           borderWidth: 5,
                           backgroundColor: "#FFFF",
                           borderColor: "#19B9CC",
-                          padding: 10,
+
                         }}
                       >
-                        <Row style={{ grid: 0 }}>
+                        <Row style={{ display: 'flex', justifyContent: 'center' }}>
                           <Col
-                            className="col-md-2"
-                            style={{ marginTop: 6, marginLeft: 10 }}
+
+                            style={{ marginTop: 6 }}
                           >
                             <Avatar
+
                               src={val.vet_picture}
-                              size={50}
+                              size={'5vh'}
                               round
                               name={val.vet_name}
                             />
-                          </Col>
-                          <Col className="col-md-1">
-                            <Container style={{ width: 300, marginLeft: -40 }}>
+                            <Container style={{}}>
                               <Card.Title
                                 style={{
                                   marginTop: 5,
-                                  fontSize: 17,
+                                  fontSize: '2vh',
                                   marginLeft: 1,
                                 }}
                               >
@@ -175,7 +186,7 @@ function PetFindVetMain() {
                               </Card.Title>
                               <p
                                 style={{
-                                  fontSize: 10,
+                                  fontSize: '1vh',
                                   marginTop: -13,
                                   fontWeight: "bold",
                                   marginLeft: 3,
@@ -187,33 +198,27 @@ function PetFindVetMain() {
                                 style={{
                                   color: "#707070",
                                   marginTop: -17,
-                                  fontSize: 12,
                                   marginLeft: 3,
+                                  fontSize: '1.5vh'
                                 }}
                               >
                                 {val.vet_address}
                               </Card.Subtitle>
-                            </Container>
-                          </Col>
-                          <Col className="col-md-8">
-                            <Link
-                              to={`/petOwner/Appointment/vetdetails/${val.vetid}`}
-                            >
-                              <Button
+
+                              <Card.Subtitle
                                 style={{
-                                  marginTop: 12,
-                                  borderRadius: 30,
-                                  backgroundColor: "#3BD2E3",
-                                  paddingLeft: 20,
-                                  paddingRight: 20,
-                                  borderColor: "transparent",
-                                  marginLeft: 200,
+                                  color: "gray",
+                                  marginTop: '1vh',
+                                  fontSize: 12,
+
                                 }}
                               >
-                                View Vet
-                              </Button>
-                            </Link>
+                                See more
+                              </Card.Subtitle>
+                            </Container>
                           </Col>
+
+
                         </Row>
                       </Card>
                     </Container>

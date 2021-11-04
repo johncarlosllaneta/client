@@ -38,6 +38,11 @@ app.post('/video/token', (req, res) => {
   sendTokenResponse(token, res);
 });
 
-app.listen(3002, () =>
-  console.log('Express server is running on localhost:3001')
+
+// serve the react app files
+app.use(express.static(`${__dirname}/client/build`));
+
+const port = process.env.PORT || 3002;
+app.listen(port, () =>
+  console.log(`Express server is running on localhost:${port}`)
 );

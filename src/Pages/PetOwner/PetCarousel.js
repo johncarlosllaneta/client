@@ -43,12 +43,17 @@ function PetCarousel(props) {
 
   return (
     <div>
-      <Container style={{ margin: 20, padding: 30 }}>
+      <Container style={{}}>
         <Carousel responsive={responsive}>
           {pet.length != 0 ? (
             pet.map((val) => {
               return (
-                <div>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
+                >
                   <Card
                     onClick={() => {
                       window.location.href = `/pets/${val.pet_id}`;
@@ -61,14 +66,15 @@ function PetCarousel(props) {
                       borderColor: "white",
                       padding: 0,
                       cursor: "pointer",
-                      width: 350,
-                      height: 500,
+                      minWidth: 200,
+                      width: '20vw',
+                      height: 'auto',
                     }}
                   >
                     <Card.Img
                       variant="top"
                       src={val.pet_picture}
-                      style={{ height: 350 }}
+                      style={{ height: '30vh' }}
                     />
                     <Card.Body
                       style={{

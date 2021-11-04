@@ -57,12 +57,16 @@ function AppointmentHomePage(props) {
     <div>
       <Card
         id="divContainer"
-        style={{ overflow: "auto", height: 600, width: "100%" }}
+        style={{ overflowX: "auto", height: 'auto', width: "100%" }}
       >
         {appointment.map((val) => {
           return (
-            <div>
-              <Card id="item" style={{ margin: 10 }}>
+            <div
+              style={{
+                width: '20vw'
+              }}
+            >
+              <Card id="item" style={{ margin: 10, width: '20vw', minWidth: '10vw' }}>
                 <h3 className="ml-4 mt-4">{val.service_name}</h3>
                 <p className="ml-5 ">
                   <strong>Date: </strong>{" "}

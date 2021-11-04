@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import NavBarHome from "../../Components/navBarHome/NavBarHome";
 import SideNavBar from "./SideNavBar";
 import TabHome from "./TabHome";
 import Axios from "axios";
 import { hostUrl } from "../../Components/Host";
+import HomePage from "./HomePage";
 function HomeMain() {
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
@@ -31,26 +32,32 @@ function HomeMain() {
   }
   return (
     <div style={{ zoom: value }}>
-      <div>
+      {/* <div>
         <SideNavBar active={"dashboard"} />
-      </div>
+      </div> */}
 
       <div
         style={{
           backgroundColor: "#F1F9FC",
-          height: "100vh",
+          height: "auto",
         }}
       >
-        <Container
-          style={{
-            padding: 0,
-          }}
-        >
-          <NavBarHome />
-        </Container>
-        <Container>
-          <TabHome data={user} />
-        </Container>
+
+        <NavBarHome />
+
+        <Row>
+          <Container
+            style={{
+              display: 'flex',
+              justifyContent: 'center'
+            }}
+          >
+            <TabHome data={user} />
+          </Container>
+        </Row>
+
+        <HomePage page={0} />
+
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Badge, Col, Nav, Navbar, NavDropdown, Row } from "react-bootstrap";
+import { Badge, Col, Nav, Navbar, NavDropdown, Row, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { BsChatDotsFill } from "react-icons/bs";
@@ -8,6 +8,7 @@ import "../../navBarHome.css";
 import Notification from "../Notification";
 import { hostUrl } from "../Host";
 import Avatar from "react-avatar";
+import logo from "../../Images/logo.png";
 
 function NavBarHome() {
   const [user, setuser] = useState([]);
@@ -154,6 +155,7 @@ function NavBarHome() {
   var landingPageName = {
     fontWeight: "bold",
     color: colors.Blue,
+    marginLeft: 50
   };
 
   const logoutUser = () => {
@@ -223,14 +225,12 @@ function NavBarHome() {
       style={{
         backgroundColor: "white",
         padding: 0,
-        width: "85vw",
-        marginLeft: 20,
       }}
     >
-      {/* <Navbar.Brand className='ml-3' href="/" style={landingPageName}>
+      <Navbar.Brand href="/" style={landingPageName}>
         {" "}
         <Image src={logo} style={logocss} /> TERRAVET
-      </Navbar.Brand> */}
+      </Navbar.Brand>
 
       <Navbar.Collapse className="justify-content-end">
         <a

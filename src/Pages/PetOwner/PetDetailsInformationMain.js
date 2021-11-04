@@ -11,6 +11,7 @@ import PetAppointment from "./PetAppointment";
 import PetFindVetMain from "./PetFindVetMain";
 import PetDetailsInformation from "./PetDetailsInformation";
 import { useParams, BrowserRouter as Router, Link } from "react-router-dom";
+import HomePage from "./HomePage";
 function PetDetailsInformationMain() {
   let { pet_id } = useParams();
   // alert(pet_id)
@@ -23,27 +24,42 @@ function PetDetailsInformationMain() {
     value = "100%";
   }
   return (
-    <div style={{ zoom: value }}>
-      <div>
+    <div style={{
+
+    }}>
+      {/* <div>
         <SideNavBar active={"pets"} />
-      </div>
+      </div> */}
 
       <div
         style={{
           backgroundColor: "#F1F9FC",
-          height: "100vh",
+          height: "auto",
         }}
       >
-        <Container
-          style={{
-            padding: 0,
-          }}
+
+
+
+        <NavBarHome />
+
+        <Row
+
         >
-          <NavBarHome />
-        </Container>
-        <Container>
-          <PetDetailsInformation data={pet_id} />
-        </Container>
+          <Container
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              backgroundColor: "#F1F9FC",
+              height: "auto",
+            }}
+          >
+            <PetDetailsInformation data={pet_id} />
+          </Container>
+        </Row>
+
+        <HomePage page={3} />
+
+
       </div>
     </div>
   );

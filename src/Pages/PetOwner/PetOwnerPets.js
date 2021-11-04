@@ -136,8 +136,7 @@ const PetOwnerPets = () => {
   return (
     <div
       style={{
-        width: "77vw",
-        marginLeft: 40,
+        width: "100vw",
         marginTop: 70,
       }}
     >
@@ -341,31 +340,37 @@ const PetOwnerPets = () => {
         </Form>
       </Modal>
 
-      <Container style={{ margin: 30 }}>
+      <Container >
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
-            margin: 10,
+
           }}
         >
-          <h2>My Pets</h2>
-          <Button
-            style={{
-              borderRadius: 30,
-              borderColor: "white",
-              borderWidth: 5,
-              backgroundColor: "#3BD2E3",
-              paddingLeft: 60,
-              paddingRight: 60,
-              letterSpacing: 5,
-            }}
-            onClick={() => {
-              handleShow2();
-            }}
-          >
-            Add Pet
-          </Button>
+          <div>
+            <h2>My Pets</h2>
+          </div>
+          <div>
+            <Button
+              style={{
+                borderRadius: 30,
+                borderColor: "white",
+                borderWidth: 5,
+                backgroundColor: "#3BD2E3",
+                width: '10vw',
+                minWidth: 100,
+                height: 'auto',
+
+                fontSize: '2vh'
+              }}
+              onClick={() => {
+                handleShow2();
+              }}
+            >
+              Add Pet
+            </Button>
+          </div>
         </div>
         <PetCarousel petOwnerId={user.pet_owner_id} />
       </Container>

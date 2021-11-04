@@ -34,6 +34,7 @@ import VideoChat from "./Pages/PetOwner/VideoChat";
 import AppointmentHistoryMain from "./Pages/PetOwner/AppointmentHistoryMain";
 import CartHistoryMain from "./Pages/PetOwner/CartHistoryMain";
 import Calling from "./Components/video-call/Calling";
+import HomePage from "./Pages/PetOwner/HomePage";
 
 function App() {
   const [isLogin, setisLogin] = useState("");
@@ -59,7 +60,7 @@ function App() {
           console.log(res.data);
           setRole(res.data.result[0].password);
         })
-        .catch((error) => {});
+        .catch((error) => { });
       setcounter(counter + 1);
     }
   }, []);
@@ -68,8 +69,10 @@ function App() {
   if (role === 1) {
     loginContent = (
       <Switch>
+        {/* <Route path="/" exact component={HomeMain} />
+        <Route path="/home" exact component={HomeMain} /> */}
         <Route path="/" exact component={HomeMain} />
-        <Route path="/home" exact component={HomeMain} />
+
         <Route path="/pets" exact component={PetsMain} />
         <Route
           path="/pets/:pet_id"
@@ -143,7 +146,12 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App"
+      style={{
+        backgroundColor: "#F1F9FC",
+        height: "100vh",
+      }}
+    >
       <Router>
         {!isLogin ? (
           <div>
