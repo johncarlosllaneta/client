@@ -3,6 +3,7 @@ import { Row, Col, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import firstPng from "../../Images/thirdPane.png";
 // import fourthPng from "../../Images/fourthPane.png";
+import "../../css/Screen.css";
 
 const TalkVet = () => {
   var colors = {
@@ -11,9 +12,11 @@ const TalkVet = () => {
   };
 
   var firstPane = {
-    textAlign: "left",
-    marginLeft: "15%",
-    marginTop: "20%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    padding: 30,
   };
 
   var secondPane = {
@@ -29,14 +32,39 @@ const TalkVet = () => {
     <div id="talkvet" style={{ height: "100%" }}>
       <Row>
         <Col style={firstPane}>
-          <h1 style={{ color: colors.Blue, fontSize: "400%" }}>Talk To Vet</h1>
-          <p style={{ fontSize: "150%" }}>
+          <h1
+            style={{
+              color: colors.Blue,
+              fontSize: 60,
+              padding: 0,
+              margin: 0,
+            }}
+            id="labelH1"
+          >
+            Talk To Vet
+          </h1>
+          <p style={{ fontSize: 25 }} id="labelP">
             Friendly professional care for your pets.
           </p>
         </Col>
 
-        <Col style={{ marginRight: "10%", marginTop: "14%" }}>
-          <Image src={firstPng} style={imageCss} />
+        <Col
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 30,
+          }}
+        >
+          <Image
+            src={firstPng}
+            style={{
+              height: "40rem",
+              width: "45rem",
+              minWidth: "15rem",
+              minHeight: "10rem",
+            }}
+          />
         </Col>
       </Row>
     </div>

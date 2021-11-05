@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Button, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import firstPng from "../../Images/secondPane.png";
+import "../../css/Screen.css";
 
 const FindVet = () => {
   var colors = {
@@ -10,9 +11,11 @@ const FindVet = () => {
   };
 
   var firstPane = {
-    textAlign: "left",
-    marginLeft: "5%",
-    marginTop: "18%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    padding: 30,
   };
 
   var imageCss = {
@@ -23,27 +26,61 @@ const FindVet = () => {
 
   var landingPageButton = {
     backgroundColor: colors.Blue,
-    width: "25%",
+    width: "35%",
+    minWidth: "20%",
     borderRadius: 50,
     borderColor: "white",
     fontWeight: "bold",
-    alignContent: "center",
   };
   return (
     <div id="findvet" style={{ height: "100%" }}>
       <Row>
-        <Col style={{ marginTop: "10%" }}>
-          <Image src={firstPng} style={imageCss} />
+        <Col
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 30,
+          }}
+        >
+          <Image
+            src={firstPng}
+            style={{
+              height: "40rem",
+              width: "45rem",
+              minWidth: "15rem",
+              minHeight: "10rem",
+            }}
+          />
         </Col>
 
         <Col style={firstPane}>
-          <h1 style={{ color: colors.Blue, fontSize: "400%" }}>
-            Find Veterinary Clinic <br /> for your pet.
+          <h1
+            style={{
+              color: colors.Blue,
+              fontSize: 60,
+              padding: 0,
+              margin: 0,
+            }}
+            id="labelH1"
+          >
+            Find Veterinary Clinic
           </h1>
-          <p style={{ fontSize: "150%" }}>
+          <p
+            style={{
+              color: colors.Blue,
+              fontSize: 60,
+              padding: 0,
+              margin: 0,
+            }}
+            id="labelH1"
+          >
+            for your pet.
+          </p>
+          <p style={{ fontSize: 25 }} id="labelP">
             Find Veterinary Clinic nearest and available <br /> around your area
           </p>
-          <Button className="mr-5" href="/register" style={landingPageButton}>
+          <Button href="/register" style={landingPageButton}>
             Join Now
           </Button>
         </Col>

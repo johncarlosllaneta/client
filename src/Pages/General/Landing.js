@@ -11,6 +11,7 @@ function Landing() {
     backgroundImage: `url(${background})`,
     margin: 0,
     zoom: value,
+    width: "100%",
   };
 
   var aspectratioheight = window.screen.height;

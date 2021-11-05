@@ -1,0 +1,30 @@
+/* subnavbar */
+@media (max-width: 900px) {
+  #navbar {
+    display: none;
+  }
+}
+
+/* mainnavbar */
+@media (max-width: 400px) {
+  #mainNavBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: fit-content;
+  }
+}
+
+/* Landing */
+
+/* join */
+@media (max-width: 700px) {
+  #labelH1 {
+    font-size: 30;
+  }
+
+  #labelP {
+    font-size: 15;
+  }
+}

@@ -2,6 +2,7 @@ import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { HashLink as Link } from "react-router-hash-link";
+import "../css/Screen.css";
 
 const SubNavBar = () => {
   var tabs = {
@@ -19,7 +20,7 @@ const SubNavBar = () => {
         fontSize: 20,
         fontWeight: "bold",
       }}
-      // className="navbar fixed-top"
+      id="navbar"
     >
       <Nav style={{ justifyContent: "center" }}>
         {/* <Nav.Link>Join</Nav.Link>
@@ -36,7 +37,12 @@ const SubNavBar = () => {
 
         <Nav.Link>About Us</Nav.Link> */}
 
-        <ul style={{ listStyle: "none", marginBottom: -2 }}>
+        <ul
+          style={{
+            listStyle: "none",
+            margin: 0,
+          }}
+        >
           <Link smooth to="#join">
             <li style={tabs}>Join</li>
           </Link>
