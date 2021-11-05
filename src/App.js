@@ -92,7 +92,7 @@ function App() {
           component={AppointmentHistoryMain}
         />
 
-        <Route path="/pet owner/Show Now" exact component={ShopNow} />
+        <Route path="/pet owner/Show Now" exact component={FindVetMain} />
         <Route
           path="/petOwner/Appointment/vetdetails/:vetid"
           exact

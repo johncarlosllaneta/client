@@ -53,7 +53,7 @@ const TabHome = (props) => {
     <div
       style={{
         width: "77vw",
-        marginLeft: 40,
+
 
       }}
     >
@@ -65,30 +65,37 @@ const TabHome = (props) => {
             <Container
               style={{
                 borderRadius: 30,
+                minWidth: 300,
                 width: '50vw',
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 padding: 20,
                 marginBottom: 20,
+
               }}
             >
               <h4 style={{ color: "#19B9CC", textAlign: "left" }}>Pets</h4>
-
-              <Carousel responsive={responsive}>
-                {pet.length != 0 ? (
-                  pet.map((val) => {
-                    return <PetCarouselHome data={val} />;
-                  })
-                ) : (
-                  <Spinner
-                    animation="border"
-                    role="status"
-                    style={{ marginLeft: 450, marginTop: 100 }}
-                  >
-                    <span className="visually-hidden"></span>
-                  </Spinner>
-                )}
-              </Carousel>
+              <div
+                style={{
+                  padding: 20
+                }}
+              >
+                <Carousel responsive={responsive}>
+                  {pet.length != 0 ? (
+                    pet.map((val) => {
+                      return <PetCarouselHome data={val} />;
+                    })
+                  ) : (
+                    <Spinner
+                      animation="border"
+                      role="status"
+                      style={{ marginLeft: 450, marginTop: 100 }}
+                    >
+                      <span className="visually-hidden"></span>
+                    </Spinner>
+                  )}
+                </Carousel>
+              </div>
             </Container>
 
             <Container

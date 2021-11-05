@@ -44,10 +44,19 @@ function HomePage(props) {
                             window.location.href = '/appointment';
                         }}
                     />
-                    <BottomNavigationAction label="Reservation" icon={<HiShoppingCart style={{ fontSize: 30 }} />} />
+                    <BottomNavigationAction label="Reservation" icon={<HiShoppingCart style={{ fontSize: 30 }} />}
+                        onClick={() => {
+                            window.location.href = '/my&cart';
+                        }}
+                    />
                     <BottomNavigationAction label="Pets" icon={<MdPets style={{ fontSize: 30 }} />}
                         onClick={() => {
                             window.location.href = '/pets';
+                        }}
+                    />
+                    <BottomNavigationAction label="Contact Tracing" icon={<AiFillSchedule style={{ fontSize: 30 }} />}
+                        onClick={() => {
+                            window.location.href = '/contact&tracing';
                         }}
                     />
                 </BottomNavigation>

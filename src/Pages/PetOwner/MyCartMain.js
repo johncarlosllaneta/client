@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import NavBarHome from "../../Components/navBarHome/NavBarHome";
 import SideNavBar from "./SideNavBar";
 import Axios from "axios";
 import { hostUrl } from "../../Components/Host";
 import PetMyCart from "./PetMyCart";
+import HomePage from "./HomePage";
 
 function MyCartMain() {
   const [counter, setcounter] = useState(0);
@@ -32,9 +33,6 @@ function MyCartMain() {
   }
   return (
     <div style={{ zoom: value }}>
-      <div>
-        <SideNavBar active={"mycart"} />
-      </div>
 
       <div
         style={{
@@ -42,16 +40,24 @@ function MyCartMain() {
           height: "100vh",
         }}
       >
-        <Container
-          style={{
-            padding: 0,
-          }}
-        >
-          <NavBarHome />
-        </Container>
-        <Container>
-          <PetMyCart data={user} />
-        </Container>
+
+
+        <NavBarHome />
+
+        <Row>
+          <Container
+            style={{
+              display: 'flex',
+              justifyContent: 'center'
+            }}
+          >
+            <PetMyCart data={user} />
+          </Container>
+        </Row>
+
+        <HomePage page={2} />
+
+
       </div>
     </div>
   );

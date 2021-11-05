@@ -7,8 +7,7 @@ const PetTracing = (props) => {
     <div
       style={{
         width: "77vw",
-        marginLeft: 40,
-        marginTop: 70,
+        marginTop: 20,
       }}
     >
       <Container

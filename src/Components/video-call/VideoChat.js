@@ -1,5 +1,7 @@
+import axios from "axios";
 import React, { useState, useCallback, useEffect } from "react";
 import Video from "twilio-video";
+import { hostUrl } from "../Host";
 import Lobby from "./Lobby";
 import Room from "./Room";
 
@@ -28,7 +30,7 @@ const VideoChat = () => {
     async (event) => {
       event.preventDefault();
       setConnecting(true);
-      const data = await fetch("/video/token", {
+      const data = await fetch("https://terravet-server.herokuapp.com/video/token", {
         method: "POST",
         body: JSON.stringify({
           identity: username,

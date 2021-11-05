@@ -263,8 +263,6 @@ const PetMyCart = (props) => {
     <div
       style={{
         width: "77vw",
-        marginLeft: 40,
-        marginTop: 70,
       }}
     >
       <Modal show={show} onHide={handleClose} animation={true}>

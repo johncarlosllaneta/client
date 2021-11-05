@@ -16,7 +16,8 @@ function PetCarouselHome(props) {
 
           borderTopLeftRadius: 15,
           borderTopRightRadius: 15,
-          width: 200,
+          width: '10vw',
+          minWidth: 200,
           marginRight: 15,
           marginLeft: 15,
           marginBottom: 10,

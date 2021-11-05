@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import NavBarHome from "../../Components/navBarHome/NavBarHome";
 import SideNavBar from "./SideNavBar";
 import Axios from "axios";
 import { hostUrl } from "../../Components/Host";
 import PetTracing from "./PetTracing";
+import HomePage from "./HomePage";
 
 function ContactTracingMain() {
   const [counter, setcounter] = useState(0);
@@ -32,9 +33,7 @@ function ContactTracingMain() {
   }
   return (
     <div style={{ zoom: value }}>
-      <div>
-        <SideNavBar active={"visitormonitoring"} />
-      </div>
+
 
       <div
         style={{
@@ -42,16 +41,22 @@ function ContactTracingMain() {
           height: "100vh",
         }}
       >
-        <Container
-          style={{
-            padding: 0,
-          }}
-        >
-          <NavBarHome />
-        </Container>
-        <Container>
-          <PetTracing data={user} />
-        </Container>
+
+        <NavBarHome />
+
+        <Row>
+          <Container
+            style={{
+              display: 'flex',
+              justifyContent: 'center'
+            }}
+          >
+            <PetTracing data={user} />
+          </Container>
+        </Row>
+
+        <HomePage page={4} />
+
       </div>
     </div>
   );

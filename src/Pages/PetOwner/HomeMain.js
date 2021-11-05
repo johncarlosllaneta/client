@@ -32,9 +32,6 @@ function HomeMain() {
   }
   return (
     <div style={{ zoom: value }}>
-      {/* <div>
-        <SideNavBar active={"dashboard"} />
-      </div> */}
 
       <div
         style={{
