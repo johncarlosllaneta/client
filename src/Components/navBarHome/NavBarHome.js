@@ -221,7 +221,7 @@ function NavBarHome() {
 
   return (
     <Navbar
-      expand="lg"
+      collapseOnSelect expand="lg"
       style={{
         backgroundColor: "white",
         padding: 0,
@@ -233,19 +233,32 @@ function NavBarHome() {
       </Navbar.Brand>
 
       <Navbar.Collapse className="justify-content-end">
-        <a
-          href="/petOwner/talkVet"
-          className="mb-2"
-          id="talkToVet"
-          style={{ color: "grey", fontSize: 30 }}
-        >
-          <BsChatDotsFill />
-        </a>
 
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'start',
+            alignSelf: 'center'
+          }}
+        >
+          <a
+            href="/petOwner/talkVet"
+
+            id="talkToVet"
+            style={{
+              color: "grey",
+              fontSize: 30,
+              padding: 0
+            }}
+          >
+            <BsChatDotsFill />
+          </a>
+        </div>
         <NavDropdown style={{ fontSize: 20, marginRight: 50 }} title={name}>
           <NavDropdown.Item onClick={setting}>Settings</NavDropdown.Item>
           <NavDropdown.Item onClick={logoutUser}>Logout</NavDropdown.Item>
         </NavDropdown>
+
       </Navbar.Collapse>
     </Navbar>
   );

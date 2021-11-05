@@ -28,33 +28,43 @@ function HomePage(props) {
 
             <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
                 <BottomNavigation
-                    showLabels
+                    // showLabels
                     value={props.page}
                     onChange={(event, newValue) => {
                         setValue(newValue);
                     }}
                 >
-                    <BottomNavigationAction label="Home" icon={< HiHome style={{ fontSize: 30 }} />}
+                    <BottomNavigationAction
+                        // label="Home" 
+                        icon={< HiHome style={{ fontSize: 30 }} />}
                         onClick={() => {
                             window.location.href = '/';
                         }}
                     />
-                    <BottomNavigationAction label="Appointments" icon={<AiFillSchedule style={{ fontSize: 30 }} />}
+                    <BottomNavigationAction
+                        // label="Appointments" 
+                        icon={<AiFillSchedule style={{ fontSize: 30 }} />}
                         onClick={() => {
                             window.location.href = '/appointment';
                         }}
                     />
-                    <BottomNavigationAction label="Reservation" icon={<HiShoppingCart style={{ fontSize: 30 }} />}
+                    <BottomNavigationAction
+                        // label="Reservation" 
+                        icon={<HiShoppingCart style={{ fontSize: 30 }} />}
                         onClick={() => {
                             window.location.href = '/my&cart';
                         }}
                     />
-                    <BottomNavigationAction label="Pets" icon={<MdPets style={{ fontSize: 30 }} />}
+                    <BottomNavigationAction
+                        // label="Pets" 
+                        icon={<MdPets style={{ fontSize: 30 }} />}
                         onClick={() => {
                             window.location.href = '/pets';
                         }}
                     />
-                    <BottomNavigationAction label="Contact Tracing" icon={<AiFillSchedule style={{ fontSize: 30 }} />}
+                    <BottomNavigationAction
+                        // label="Contact Tracing" 
+                        icon={<AiFillSchedule style={{ fontSize: 30 }} />}
                         onClick={() => {
                             window.location.href = '/contact&tracing';
                         }}

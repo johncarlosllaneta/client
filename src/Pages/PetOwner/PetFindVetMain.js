@@ -65,7 +65,7 @@ function PetFindVetMain() {
         style={{
           backgroundColor: "white",
           width: "100vw",
-          height: "80vh",
+          height: "auto",
           borderRadius: 30
         }}
       >
@@ -121,110 +121,125 @@ function PetFindVetMain() {
                 width: "100vw",
                 height: 300,
                 backgroundColor: "grey",
+                overflowY: 'auto',
                 marginTop: 10,
                 borderRadius: 30,
-                display: "flex",
-                overflowY: "auto",
+                display: 'grid',
+                gridTemplateColumns: 'auto auto',
+
                 maxWidth: "100%",
-                flexWrap: "wrap",
-                flexDirection: 'row',
-                justifyContent: "space-evenly",
-                padding: 5,
+
+                // flexDirection: 'row',
+                // justifyContent: "space-around",
+                padding: 20,
+                rowGap: 10,
               }}
             >
-              {search(vetclinic).map((val) => {
-                return (
-                  <div>
-                    <Container
-
-                      onClick={() => {
-                        window.location.href = `/petOwner/Appointment/vetdetails/${val.vetid}`;
-                      }}
-                      fluid="md"
+              <Row>
+                {search(vetclinic).map((val) => {
+                  return (
+                    <Col
+                      sm={6}
                       style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        padding: 15,
-                        cursor: 'pointer',
+                        marginBottom: 20,
 
                       }}
                     >
-                      <Card
-                        style={{
-                          minWidth: 150,
-                          width: '25vw',
+                      <div
 
-                          borderRadius: 20,
-                          borderWidth: 5,
-                          backgroundColor: "#FFFF",
-                          borderColor: "#19B9CC",
+                        onClick={() => {
+                          window.location.href = `/petOwner/Appointment/vetdetails/${val.vetid}`;
+                        }}
+                        // fluid="md"
+                        style={{
+                          // display: 'flex',
+                          // justifyContent: 'center',
+                          // alignItems: 'center',
+                          // padding: 15,
+                          width: '20vw',
+                          cursor: 'pointer',
 
                         }}
                       >
-                        <Row style={{ display: 'flex', justifyContent: 'center' }}>
-                          <Col
 
-                            style={{ marginTop: 6 }}
-                          >
-                            <Avatar
+                        <Card
+                          style={{
+                            minWidth: 200,
+                            width: '30vw',
+                            height: '15vh',
+                            minHeight: 160,
+                            borderRadius: 20,
+                            borderWidth: 5,
+                            backgroundColor: "#FFFF",
+                            borderColor: "#19B9CC",
 
-                              src={val.vet_picture}
-                              size={'5vh'}
-                              round
-                              name={val.vet_name}
-                            />
-                            <Container style={{}}>
-                              <Card.Title
-                                style={{
-                                  marginTop: 5,
-                                  fontSize: '2vh',
-                                  marginLeft: 1,
-                                }}
-                              >
-                                {val.vet_name}
-                              </Card.Title>
-                              <p
-                                style={{
-                                  fontSize: '1vh',
-                                  marginTop: -13,
-                                  fontWeight: "bold",
-                                  marginLeft: 3,
-                                }}
-                              >
-                                Veterinary Clinic
-                              </p>
-                              <Card.Subtitle
-                                style={{
-                                  color: "#707070",
-                                  marginTop: -17,
-                                  marginLeft: 3,
-                                  fontSize: '1.5vh'
-                                }}
-                              >
-                                {val.vet_address}
-                              </Card.Subtitle>
+                          }}
+                        >
+                          <Row style={{ display: 'flex', justifyContent: 'center' }}>
+                            <Col
 
-                              <Card.Subtitle
-                                style={{
-                                  color: "gray",
-                                  marginTop: '1vh',
-                                  fontSize: 12,
+                              style={{ marginTop: 6 }}
+                            >
+                              <Avatar
 
-                                }}
-                              >
-                                See more
-                              </Card.Subtitle>
-                            </Container>
-                          </Col>
+                                src={val.vet_picture}
+                                size={'5vh'}
+                                round
+                                name={val.vet_name}
+                              />
+                              <Container style={{}}>
+                                <Card.Title
+                                  style={{
+                                    marginTop: 5,
+                                    fontSize: '2vh',
+                                    marginLeft: 1,
+                                  }}
+                                >
+                                  {val.vet_name}
+                                </Card.Title>
+                                <p
+                                  style={{
+                                    fontSize: '1vh',
+                                    marginTop: -13,
+                                    fontWeight: "bold",
+                                    marginLeft: 3,
+                                  }}
+                                >
+                                  Veterinary Clinic
+                                </p>
+                                <Card.Subtitle
+                                  style={{
+                                    color: "#707070",
+                                    marginTop: -17,
+                                    marginLeft: 3,
+                                    fontSize: '1.5vh'
+                                  }}
+                                >
+                                  {val.vet_address}
+                                </Card.Subtitle>
+
+                                <Card.Subtitle
+                                  style={{
+                                    color: "gray",
+                                    marginTop: '1vh',
+                                    fontSize: 12,
+
+                                  }}
+                                >
+                                  See more
+                                </Card.Subtitle>
+                              </Container>
+                            </Col>
 
 
-                        </Row>
-                      </Card>
-                    </Container>
-                  </div>
-                );
-              })}
+                          </Row>
+                        </Card>
+
+                      </div>
+                    </Col>
+                  );
+                })}
+              </Row>
             </div>
             <div
               style={{
@@ -260,17 +275,23 @@ function PetFindVetMain() {
                 return (
                   <div>
                     <Card
+                      onClick={() => {
+                        window.location.href = `/petOwner/Appointment/vetdetails/${val.vetid}`;
+                      }}
                       style={{
                         boxShadow:
                           "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                        width: 500,
-                        height: "100%",
+                        minWidth: 250,
+                        width: '25vw',
+                        height: "auto",
+
                         borderRadius: 20,
                         borderWidth: 5,
                         backgroundColor: "#FFFF",
                         borderColor: "#19B9CC",
                         padding: 10,
                         margin: 5,
+                        cursor: 'pointer'
                       }}
                     >
                       <Row style={{ grid: 0 }}>
@@ -328,25 +349,7 @@ function PetFindVetMain() {
                             </p>
                           </Container>
                         </Col>
-                        <Col className="col-md-8">
-                          <Link
-                            to={`/petOwner/Appointment/vetdetails/${val.vetid}`}
-                          >
-                            <Button
-                              style={{
-                                marginTop: 12,
-                                borderRadius: 30,
-                                backgroundColor: "#3BD2E3",
-                                paddingLeft: 20,
-                                paddingRight: 20,
-                                borderColor: "transparent",
-                                marginLeft: 200,
-                              }}
-                            >
-                              View Vet
-                            </Button>
-                          </Link>
-                        </Col>
+
                       </Row>
                     </Card>
                   </div>

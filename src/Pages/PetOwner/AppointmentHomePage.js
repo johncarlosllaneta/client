@@ -66,13 +66,13 @@ function AppointmentHomePage(props) {
                 width: '20vw'
               }}
             >
-              <Card id="item" style={{ margin: 10, width: '20vw', minWidth: '10vw' }}>
-                <h3 className="ml-4 mt-4">{val.service_name}</h3>
-                <p className="ml-5 ">
+              <Card id="item" style={{ margin: 10, width: '20vw', minWidth: 250 }}>
+                <h3 className="ml-4 mt-4" style={{ fontSize: '3vh', }}>{val.service_name}</h3>
+                <p className="ml-5 " style={{ fontSize: '2vh', }}>
                   <strong>Date: </strong>{" "}
                   {dateConvertion(val.date_scheduled.split("T")[0])}{" "}
                 </p>
-                <p className="ml-5 ">
+                <p className="ml-5 " style={{ fontSize: '2vh', }}>
                   <strong>Time: </strong> {val.time_scheduled}{" "}
                 </p>
               </Card>

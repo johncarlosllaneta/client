@@ -100,7 +100,7 @@ const TabHome = (props) => {
 
             <Container
               style={{
-                minWidth: '40vw',
+                minWidth: 300,
                 maxWidth: '100vw',
                 width: '50vw',
                 borderRadius: 30,
@@ -112,7 +112,9 @@ const TabHome = (props) => {
                 justifyContent: 'center'
               }}
             >
-              <div>
+              <div
+
+              >
                 <Row className="mb-2">
                   <Col>
                     <h5
@@ -146,7 +148,7 @@ const TabHome = (props) => {
 
             <Container
               style={{
-                minWidth: '40vw',
+                minWidth: 300,
                 maxWidth: '100vw',
                 width: '50vw',
                 borderRadius: 30,

@@ -394,7 +394,7 @@ const PetMyCart = (props) => {
           <Container
             style={{
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: "space-evenly",
               padding: 15,
             }}
           >
@@ -406,8 +406,9 @@ const PetMyCart = (props) => {
                 backgroundColor: "#3BD2E3",
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                paddingLeft: 50,
-                paddingRight: 50,
+                width: '5vw',
+                minWidth: 150,
+                fontSizeAdjust: 'inherit'
               }}
             >
               Shop now
@@ -421,10 +422,9 @@ const PetMyCart = (props) => {
                 backgroundColor: "#3BD2E3",
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                marginLeft: 25,
-
-                paddingLeft: 50,
-                paddingRight: 50,
+                width: '5vw',
+                minWidth: 150,
+                fontSizeAdjust: 'inherit'
               }}
             >
               History
@@ -436,7 +436,7 @@ const PetMyCart = (props) => {
       <Container
         id="itemHistory"
         style={{
-          height: 600,
+          height: '50vh',
           backgroundColor: "white",
           borderRadius: 30,
           padding: 40,

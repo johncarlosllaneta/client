@@ -109,7 +109,7 @@ function CartHistory(props) {
   function handleCancel() {
     Axios.put(`${hostUrl}/reservation/cancel`, {
       reserveId: reserveId,
-    }).then((response) => {});
+    }).then((response) => { });
     handleClose();
   }
 
@@ -117,8 +117,7 @@ function CartHistory(props) {
     <div
       style={{
         width: "77vw",
-        marginLeft: 40,
-        marginTop: 70,
+        marginTop: 20,
       }}
     >
       <Modal show={show} onHide={handleClose} animation={true}>
@@ -194,8 +193,8 @@ function CartHistory(props) {
                 backgroundColor: "#3BD2E3",
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                paddingLeft: 50,
-                paddingRight: 50,
+                width: '5vw',
+                minWidth: 150,
               }}
             >
               Back
@@ -207,13 +206,14 @@ function CartHistory(props) {
       <Container
         id="itemHistory"
         style={{
-          height: 600,
+          height: '50vh',
           backgroundColor: "white",
           borderRadius: 30,
           padding: 40,
           boxShadow:
             "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
           overflowY: "auto",
+          marginTop: 20
         }}
       >
         {products.map((val) => {
