@@ -176,17 +176,20 @@ function SideNavBar(props) {
       <Container
         id="ContainerNavItem"
         style={{
-          marginTop: 425,
-          height: "8%",
+          marginTop: 365,
+          height: "10%",
           backgroundColor: "black",
+          flexDirection: "row",
+          alignItems: "center",
         }}
       >
-        <FaUserPlus id="icons" style={{ fontSize: 30, marginTop: 10 }} />
+        <FaUserPlus id="icons" style={{ fontSize: 30 }} />
 
         <p
           id="anchorTag"
           style={{
             cursor: "pointer",
+            marginTop: 20,
           }}
           onClick={() => {
             window.open("/system admin/registration", "_blank").focus();

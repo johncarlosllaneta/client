@@ -156,9 +156,7 @@ const Reservation = () => {
   return (
     <div
       style={{
-        width: "77vw",
-        marginLeft: 40,
-        marginTop: 70,
+        padding: 30,
       }}
     >
       <Card

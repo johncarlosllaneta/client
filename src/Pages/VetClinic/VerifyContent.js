@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import SideNavBar from "./SideNavBar";
-import NavBarHome from "../../Components/navBarHome/NavBarHome";
+import NavUnverifiedVet from "../../Components/navBarHome/NavUnverifiedVet";
 import VerificationTab from "./VerificationTab";
 function VerifyContent() {
   var aspectratioheight = window.screen.height;
@@ -14,32 +14,34 @@ function VerifyContent() {
   }
 
   return (
-    <div
-      style={{
-        marginLeft: 25,
-        zoom: value,
-      }}
-    >
-      <div>
+    <div>
+      <div
+        style={{
+          width: "20%",
+          border: "1px solid transparent",
+          float: "left",
+          padding: 0,
+          margin: 0,
+        }}
+      >
         <SideNavBar active={"verify"} />
       </div>
 
       <div
         style={{
-          backgroundColor: "#F1F9FC",
-          height: "100vh",
+          width: "80%",
+          border: "1px",
+          float: "left",
+          margin: 0,
+          padding: 0,
         }}
       >
-        <Container
-          style={{
-            padding: 0,
-          }}
-        >
-          <NavBarHome />
-        </Container>
-        <Container>
+        <div style={{ height: "15%", border: "1px ", padding: 0 }}>
+          <NavUnverifiedVet />
+        </div>
+        <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <VerificationTab />
-        </Container>
+        </div>
       </div>
     </div>
   );

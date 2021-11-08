@@ -279,9 +279,7 @@ const ConsultStart = (props) => {
   return (
     <div
       style={{
-        width: "77vw",
-        marginTop: 30,
-        marginLeft: 40,
+        padding: 20,
       }}
     >
       <Modal show={showServices} onHide={handleCloseServices}>
@@ -520,22 +518,20 @@ const ConsultStart = (props) => {
         </Form>
       </Modal>
 
-      <Container
+      <div
         style={{
           display: "flex",
-          marginBottom: 5,
-          width: "90vw",
+          width: "inherit",
           justifyContent: "space-between",
+          padding: 10,
         }}
       >
         <h5
           style={{
             color: "#696969",
             fontWeight: "bold",
-            textAlign: "left",
             fontSize: 40,
-            marginLeft: -90,
-            display: "inline",
+            margin: 0,
           }}
         >
           Service Category
@@ -546,21 +542,21 @@ const ConsultStart = (props) => {
           style={{
             backgroundColor: "#19B9CC",
             borderColor: "white",
-            display: "inline",
-            marginTop: 10,
-            marginBottom: 10,
+            paddingTop: 10,
+            margin: 0,
           }}
         >
           General Services
         </Button>
-      </Container>
+      </div>
 
       <div
         style={{
           height: "20vh",
-          width: "80vw",
+          width: "75vw",
           backgroundColor: "white",
           padding: 25,
+          marginLeft: 10,
           boxShadow:
             "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
         }}
@@ -577,38 +573,40 @@ const ConsultStart = (props) => {
                 style={{
                   backgroundColor: "white",
                   height: "15vh",
-                  width: "22vh",
+                  width: "10vw",
+                  padding: 10,
                   borderColor: "#3BD2E3",
                   borderStyle: "solid",
                   borderWidth: 5,
                   borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
                   boxShadow:
                     "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
               >
-                <Row>
-                  <Col>
-                    <Image
-                      src={imageI}
-                      style={{
-                        height: 85,
-                        marginTop: 10,
-                      }}
-                    />
-                  </Col>
-
-                  <Col>
-                    <p
-                      style={{
-                        color: "#3BD2E3",
-                        fontWeight: "bolder",
-                        marginTop: 10,
-                      }}
-                    >
-                      Consultation
-                    </p>
-                  </Col>
-                </Row>
+                <div>
+                  <Image
+                    src={imageI}
+                    style={{
+                      height: 85,
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "#3BD2E3",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Consultation
+                  </p>
+                </div>
               </Container>
             </Link>
           </Col>
@@ -624,38 +622,40 @@ const ConsultStart = (props) => {
                 style={{
                   backgroundColor: "#3BD2E3",
                   height: "15vh",
-                  width: "22vh",
+                  width: "10vw",
+                  padding: 10,
                   borderColor: "white",
                   borderStyle: "solid",
                   borderWidth: 5,
                   borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
                   boxShadow:
                     "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
               >
-                <Row>
-                  <Col>
-                    <Image
-                      src={imageII}
-                      style={{
-                        height: 85,
-                        marginTop: 10,
-                      }}
-                    />
-                  </Col>
-
-                  <Col>
-                    <p
-                      style={{
-                        color: "white",
-                        fontWeight: "bolder",
-                        marginTop: 10,
-                      }}
-                    >
-                      Pet Examination
-                    </p>
-                  </Col>
-                </Row>
+                <div>
+                  <Image
+                    src={imageII}
+                    style={{
+                      height: 85,
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Pet Examination
+                  </p>
+                </div>
               </Container>
             </Link>
           </Col>
@@ -671,39 +671,40 @@ const ConsultStart = (props) => {
                 style={{
                   backgroundColor: "#3BD2E3",
                   height: "15vh",
-                  width: "22vh",
+                  width: "10vw",
+                  padding: 10,
                   borderColor: "white",
                   borderStyle: "solid",
                   borderWidth: 5,
                   borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
                   boxShadow:
                     "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
               >
-                <Row>
-                  <Col>
-                    <Image
-                      src={imageIII}
-                      style={{
-                        height: 85,
-                        marginTop: 15,
-                        marginLeft: -10,
-                      }}
-                    />
-                  </Col>
-
-                  <Col>
-                    <p
-                      style={{
-                        color: "white",
-                        fontWeight: "bolder",
-                        marginTop: 10,
-                      }}
-                    >
-                      Pet Gromming
-                    </p>
-                  </Col>
-                </Row>
+                <div>
+                  <Image
+                    src={imageIII}
+                    style={{
+                      height: 85,
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Pet Grooming
+                  </p>
+                </div>
               </Container>
             </Link>
           </Col>
@@ -719,39 +720,40 @@ const ConsultStart = (props) => {
                 style={{
                   backgroundColor: "#3BD2E3",
                   height: "15vh",
-                  width: "22vh",
+                  padding: 10,
+                  width: "10vw",
                   borderColor: "white",
                   borderStyle: "solid",
                   borderWidth: 5,
                   borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
                   boxShadow:
                     "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
               >
-                <Row>
-                  <Col>
-                    <Image
-                      src={imageIV}
-                      style={{
-                        height: 85,
-                        marginTop: 15,
-                        marginLeft: -20,
-                      }}
-                    />
-                  </Col>
-
-                  <Col>
-                    <p
-                      style={{
-                        color: "white",
-                        fontWeight: "bolder",
-                        marginTop: 10,
-                      }}
-                    >
-                      Preventive Control
-                    </p>
-                  </Col>
-                </Row>
+                <div>
+                  <Image
+                    src={imageIV}
+                    style={{
+                      height: 85,
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Preventive Control
+                  </p>
+                </div>
               </Container>
             </Link>
           </Col>
@@ -767,39 +769,40 @@ const ConsultStart = (props) => {
                 style={{
                   backgroundColor: "#3BD2E3",
                   height: "15vh",
-                  width: "22vh",
+                  width: "10vw",
+                  padding: 10,
                   borderColor: "white",
                   borderStyle: "solid",
                   borderWidth: 5,
                   borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
                   boxShadow:
                     "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
               >
-                <Row>
-                  <Col>
-                    <Image
-                      src={imageV}
-                      style={{
-                        height: 85,
-                        marginTop: 10,
-                        marginLeft: -20,
-                      }}
-                    />
-                  </Col>
-
-                  <Col>
-                    <p
-                      style={{
-                        color: "white",
-                        fontWeight: "bolder",
-                        marginTop: 10,
-                      }}
-                    >
-                      Vaccination
-                    </p>
-                  </Col>
-                </Row>
+                <div>
+                  <Image
+                    src={imageV}
+                    style={{
+                      height: 85,
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Vaccination
+                  </p>
+                </div>
               </Container>
             </Link>
           </Col>
@@ -828,9 +831,9 @@ const ConsultStart = (props) => {
           style={{
             boxShadow:
               "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+            width: "75vw",
             marginTop: 10,
-            marginLeft: 30,
-            marginBottom: 50,
+            marginLeft: 20,
           }}
           columns={columns}
           data={consultation}

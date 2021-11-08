@@ -1,6 +1,6 @@
 #sideNavBar {
   position: fixed;
-  width: 300px;
+  width: inherit;
   height: 100vh;
   background-color: #314051;
   z-index: 1;

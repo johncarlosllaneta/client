@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import HomeTab from "./HomeTab";
 import SideNavbarVerified from "./SideNavbarVerified";
 import NavBarVet from "./NavBarVet";
@@ -14,32 +14,34 @@ function HomeTabContent() {
     value = "100%";
   }
   return (
-    <div
-      style={{
-        marginLeft: 25,
-        zoom: value,
-      }}
-    >
-      <div>
-        <SideNavbarVerified active={"dashboard"} />
-      </div>
-
+    <div>
       <div
         style={{
-          backgroundColor: "#F1F9FC",
-          height: "100vh",
+          width: "20%",
+          border: "1px solid transparent",
+          float: "left",
+          padding: 0,
+          margin: 0,
         }}
       >
-        <Container
-          style={{
-            padding: 0,
-          }}
-        >
+        {/* side nav bar */}
+        <SideNavbarVerified active={"dashboard"} />
+      </div>
+      <div
+        style={{
+          width: "80%",
+          border: "1px",
+          float: "left",
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        <div style={{ height: "15%", border: "1px ", padding: 0 }}>
           <NavBarVet />
-        </Container>
-        <Container>
+        </div>
+        <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <HomeTab />
-        </Container>
+        </div>
       </div>
     </div>
   );

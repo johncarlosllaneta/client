@@ -15,7 +15,6 @@ function HomeTab(props) {
   const [counter, setcounter] = useState(0);
   useEffect(() => {
     if (counter < 10) {
-
       var token = localStorage.getItem("ajwt");
       axios
         .get(`${hostUrl}/home`, {
@@ -92,15 +91,11 @@ function HomeTab(props) {
   }
   var screenh = window.screen.height - 300;
 
-
-
   const [numberOfDog, setnumberOfDog] = useState("");
   const [numberOfCat, setnumberOfCat] = useState("");
 
-
   // alert(props.clinic.vetid);
   useEffect(() => {
-
     // setTimeout(() => {
     if (counter < 10) {
       axios
@@ -108,8 +103,6 @@ function HomeTab(props) {
         .then((response) => {
           setnumberOfDog(response.data.dog);
         });
-
-
     }
     // }, 1000);
   }, [numberOfDog]);
@@ -167,19 +160,14 @@ function HomeTab(props) {
     },
   };
   return (
-    <div
-      style={{
-        width: "80vw",
-        marginTop: 20,
-        marginLeft: 20,
-      }}
-    >
+    <div style={{ padding: 20 }}>
       <Row className=" ml-5 " style={{ paddingBottom: 30 }}>
         <Col>
           <Card
             style={{
               backgroundColor: bgColors.LBlue,
               color: "#3BD2E3",
+              height: 170,
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
@@ -203,6 +191,7 @@ function HomeTab(props) {
             style={{
               backgroundColor: bgColors.Cyan,
               color: "#3BD2E3",
+              height: 170,
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
@@ -228,6 +217,7 @@ function HomeTab(props) {
             style={{
               backgroundColor: bgColors.LTBlue,
               color: "#3BD2E3",
+              height: 170,
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
@@ -252,6 +242,7 @@ function HomeTab(props) {
             style={{
               backgroundColor: bgColors.LTBlue,
               color: "#3BD2E3",
+              height: 170,
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
@@ -280,7 +271,6 @@ function HomeTab(props) {
           <div>
             <Card
               style={{
-                marginLeft: 60,
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
               }}

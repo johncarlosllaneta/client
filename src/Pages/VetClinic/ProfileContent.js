@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import SideNavBar from "./SideNavBar";
 import VetProfileTab from "./VetProfileTab";
-import NavBarHome from "../../Components/navBarHome/NavBarHome";
+import NavUnverifiedVet from "../../Components/navBarHome/NavUnverifiedVet";
 function ProfileContent() {
   var aspectratioheight = window.screen.height;
   var aspectratiowidth = window.screen.width;
@@ -13,27 +13,34 @@ function ProfileContent() {
     value = "100%";
   }
   return (
-    <div style={{ zoom: value }}>
-      <div>
+    <div>
+      <div
+        style={{
+          width: "20%",
+          border: "1px solid transparent",
+          float: "left",
+          padding: 0,
+          margin: 0,
+        }}
+      >
         <SideNavBar active={"profile"} />
       </div>
 
       <div
         style={{
-          backgroundColor: "#F1F9FC",
-          height: "100vh",
+          width: "80%",
+          border: "1px",
+          float: "left",
+          margin: 0,
+          padding: 0,
         }}
       >
-        <Container
-          style={{
-            padding: 0,
-          }}
-        >
-          <NavBarHome />
-        </Container>
-        <Container>
+        <div style={{ height: "15%", border: "1px ", paddingLeft: 0 }}>
+          <NavUnverifiedVet />
+        </div>
+        <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <VetProfileTab />
-        </Container>
+        </div>
       </div>
     </div>
   );

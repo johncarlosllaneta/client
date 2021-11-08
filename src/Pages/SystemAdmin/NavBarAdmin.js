@@ -180,9 +180,6 @@ function NavBarHome() {
       expand="lg"
       style={{
         backgroundColor: "white",
-        padding: 0,
-        width: "85vw",
-        marginLeft: 20,
       }}
     >
       {/* <Navbar.Brand className='ml-3' href="/" style={landingPageName}>
@@ -209,7 +206,11 @@ function NavBarHome() {
             </div>
           </NavDropdown.Item> */}
 
-        <NavDropdown style={{ fontSize: 20, marginRight: 50 }} title={name}>
+        <NavDropdown
+          style={{ fontSize: 20, marginRight: 50 }}
+          title={name}
+          drop="down"
+        >
           <NavDropdown.Item onClick={setting}>Settings</NavDropdown.Item>
           <NavDropdown.Item onClick={logoutUser}>Logout</NavDropdown.Item>
         </NavDropdown>

@@ -117,9 +117,7 @@ function PetsTable(props) {
   return (
     <div
       style={{
-        width: "80vw",
-        marginTop: 20,
-        marginLeft: 20,
+        padding: 20,
       }}
     >
       {/* Data Table */}

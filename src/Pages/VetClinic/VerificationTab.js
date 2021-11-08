@@ -208,9 +208,7 @@ const VerificationTab = () => {
   return (
     <div
       style={{
-        width: "77vw",
-        marginLeft: 40,
-        marginTop: 70,
+        padding: 20,
       }}
     >
       <Modal show={showUpload} onHide={handleCloseUpload}>

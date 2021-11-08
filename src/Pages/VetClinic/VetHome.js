@@ -59,6 +59,7 @@ const VetHome = () => {
               <Route path="/dashboard" exact component={Dashboard} />
               <Route path="/profile" exact component={ProfileContent} />
               <Route path="/verification" exact component={VerifyContent} />
+              <Route path="/vet/settings" exact component={VetSettings} />
             </Switch>
           </div>
         </Router>

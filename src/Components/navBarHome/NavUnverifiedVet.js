@@ -244,12 +244,10 @@ function NavUnverifiedVet() {
   }
   return (
     <Navbar
-      expand="lg"
       style={{
         backgroundColor: "white",
         padding: 0,
-        width: "85vw",
-        marginLeft: 20,
+        width: "inherit",
       }}
     >
       {/* <Navbar.Brand className='ml-3' href="/" style={landingPageName}>
@@ -257,8 +255,14 @@ function NavUnverifiedVet() {
         <Image src={logo} style={logocss} /> TERRAVET
       </Navbar.Brand> */}
 
-      <Navbar.Collapse className="justify-content-end">
-        <NavDropdown style={{ fontSize: 20, marginRight: 50 }} title={name}>
+      <Navbar.Collapse
+        style={{
+          flexDirection: "row",
+          display: "flex",
+          justifyContent: "right",
+        }}
+      >
+        <NavDropdown style={{ fontSize: 20, margin: 0 }} title={name}>
           <NavDropdown.Item onClick={setting}>Settings</NavDropdown.Item>
           <NavDropdown.Item onClick={logoutUser}>Logout</NavDropdown.Item>
         </NavDropdown>

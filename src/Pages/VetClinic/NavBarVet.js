@@ -205,8 +205,7 @@ function NavBarVet() {
       style={{
         backgroundColor: "white",
         padding: 0,
-        width: "85vw",
-        marginLeft: 20,
+        width: "inherit",
       }}
     >
       {/* <Navbar.Brand className='ml-3' href="/" style={landingPageName}>
@@ -214,7 +213,15 @@ function NavBarVet() {
         <Image src={logo} style={logocss} /> TERRAVET
       </Navbar.Brand> */}
 
-      <Navbar.Collapse className="justify-content-end">
+      <Navbar.Collapse
+        style={{
+          flexDirection: "row",
+          display: "flex",
+          justifyContent: "end",
+          margin: 0,
+          padding: 0,
+        }}
+      >
         <a
           href="/talk to vet"
           className="mb-2"
@@ -224,7 +231,10 @@ function NavBarVet() {
           <BsChatDotsFill />
         </a>
 
-        <NavDropdown style={{ fontSize: 20, marginRight: 50 }} title={name}>
+        <NavDropdown
+          style={{ fontSize: 20, marginRight: 50, margin: 0 }}
+          title={name}
+        >
           <NavDropdown.Item onClick={vetSettings}>Settings</NavDropdown.Item>
           <NavDropdown.Item onClick={logoutUser}>Logout</NavDropdown.Item>
         </NavDropdown>

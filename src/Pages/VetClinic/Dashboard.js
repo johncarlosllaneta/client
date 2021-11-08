@@ -14,66 +14,77 @@ function Dashboard() {
     value = "100%";
   }
   return (
-    <div style={{ zoom: value }}>
-      <div>
+    <div>
+      <div
+        style={{
+          width: "20%",
+          border: "1px solid transparent",
+          float: "left",
+          padding: 0,
+          margin: 0,
+        }}
+      >
         <SideNavBar active={"dashboard"} />
       </div>
 
       <div
         style={{
-          backgroundColor: "#F1F9FC",
-          height: "100vh",
+          width: "80%",
+          border: "1px",
+          float: "left",
+          margin: 0,
+          padding: 0,
         }}
       >
-        <Container
-          style={{
-            padding: 0,
-          }}
-        >
+        <div style={{ height: "15%", border: "1px ", padding: 0 }}>
           <NavUnverifiedVet />
-        </Container>
-        <Container>
+        </div>
+        <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <div
             style={{
-              backgroundColor: "white",
-              padding: 50,
-              marginTop: 50,
-              marginLeft: 30,
-              width: "80vw",
+              padding: 30,
             }}
           >
-            <Row>
-              <Col>
-                <h1
-                  style={{
-                    color: "#0A94A4",
-                    textAlign: "left",
-                    marginTop: 190,
-                    fontSize: 50,
-                  }}
-                >
-                  Welcome to TerraVet
-                </h1>
-                <p style={{ textAlign: "left", fontSize: 20 }}>
-                  This account belongs to the veterinary clinic.
-                  <br />
-                  Your account is currently unverified. Verify your account and
-                  you will have access to more features and services.
-                </p>
-              </Col>
+            <div
+              style={{
+                backgroundColor: "white",
+                width: "75vw",
+                height: "80vh",
+              }}
+            >
+              <Row>
+                <Col>
+                  <h1
+                    style={{
+                      color: "#0A94A4",
+                      textAlign: "left",
+                      marginTop: 250,
+                      fontSize: 50,
+                    }}
+                  >
+                    Welcome to TerraVet
+                  </h1>
+                  <p style={{ textAlign: "left", fontSize: 20 }}>
+                    This account belongs to the veterinary clinic.
+                    <br />
+                    Your account is currently unverified. Verify your account
+                    and you will have access to more features and services.
+                  </p>
+                </Col>
 
-              <Col>
-                <Image
-                  src={dashboardImage}
-                  style={{
-                    height: 505,
-                    marginTop: 30,
-                  }}
-                />
-              </Col>
-            </Row>
+                <Col>
+                  <Image
+                    src={dashboardImage}
+                    style={{
+                      height: 505,
+                      marginTop: 100,
+                    }}
+                  />
+                </Col>
+              </Row>
+            </div>
           </div>
-        </Container>
+        </div>
       </div>
     </div>
   );

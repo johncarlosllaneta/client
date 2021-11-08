@@ -223,6 +223,10 @@ function VetProfileTab() {
   const handleShow = () => setShow(true);
 
   function timeConvertion(time) {
+    // alert(time);
+    if (time == "" || time == undefined) {
+      return "Closed";
+    }
     const timeString12hr = new Date(
       "2021-01-01T" + time + "Z"
     ).toLocaleTimeString(
@@ -235,9 +239,7 @@ function VetProfileTab() {
   return (
     <div
       style={{
-        width: "77vw",
-        marginLeft: 40,
-        marginTop: 30,
+        padding: 30,
       }}
     >
       <Modal size="xl" show={show} onHide={handleClose}>
@@ -412,7 +414,7 @@ function VetProfileTab() {
 
             <Col
               style={{ backgroundColor: "#FFFFFF", borderRadius: 30 }}
-              sm="4"
+              sm="8"
             >
               <Row style={{ flexGrow: 1, height: "100%" }}>
                 <Col
@@ -501,33 +503,6 @@ function VetProfileTab() {
                   </Row>
                 </Col>
               </Row>
-            </Col>
-
-            <Col
-              style={{
-                display: "inline-block",
-                backgroundColor: "#FFFFFF",
-                borderRadius: 30,
-                marginLeft: 50,
-              }}
-              sm="4"
-            >
-              <Card style={cardCssOperation}>
-                {isLoaded ? (
-                  <GoogleMap
-                    mapContainerStyle={containerStyle}
-                    center={center}
-                    zoom={10}
-                    onLoad={onLoad}
-                    onUnmount={onUnmount}
-                  >
-                    {/* Child components, such as markers, info windows, etc. */}
-                    <></>
-                  </GoogleMap>
-                ) : (
-                  <></>
-                )}
-              </Card>
             </Col>
           </Row>
         </Container>

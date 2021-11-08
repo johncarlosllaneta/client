@@ -6,39 +6,46 @@ import SideNavbarVerified from "./../SideNavbarVerified";
 import VaccineStart from "./VaccineStart";
 
 function VaccineStartHolder() {
-    var aspectratioheight = window.screen.height;
-    var aspectratiowidth = window.screen.width;
-    var value;
-    if (aspectratioheight > 1920 && aspectratiowidth > 1080) {
-        value = "80%";
-    } else {
-        value = "100%";
-    }
-    return (
-        <div style={{ zoom: value, height: '100vh' }}>
-            <div>
-                <SideNavbarVerified active={"services"} />
-            </div>
+  var aspectratioheight = window.screen.height;
+  var aspectratiowidth = window.screen.width;
+  var value;
+  if (aspectratioheight > 1920 && aspectratiowidth > 1080) {
+    value = "80%";
+  } else {
+    value = "100%";
+  }
+  return (
+    <div>
+      <div
+        style={{
+          width: "20%",
+          border: "1px solid transparent",
+          float: "left",
+          padding: 0,
+          margin: 0,
+        }}
+      >
+        <SideNavbarVerified active={"services"} />
+      </div>
 
-            <div
-                style={{
-                    backgroundColor: "#F1F9FC",
-                    height: 'auto'
-                }}
-            >
-                <Container
-                    style={{
-                        padding: 0,
-                    }}
-                >
-                    <NavBarVet />
-                </Container>
-                <Container>
-                    <VaccineStart />
-                </Container>
-            </div>
+      <div
+        style={{
+          width: "80%",
+          border: "1px",
+          float: "left",
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        <div style={{ height: "15%", border: "1px ", padding: 0 }}>
+          <NavBarVet />
         </div>
-    )
+        <div style={{ height: "85%", border: "1px", padding: 5 }}>
+          <VaccineStart />
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default VaccineStartHolder
+export default VaccineStartHolder;

@@ -96,12 +96,7 @@ const HistoryTab = (props) => {
     },
   ];
   return (
-    <div
-      style={{
-        width: "46vw",
-        marginTop: 20,
-      }}
-    >
+    <div>
       {/* Data Table */}
       <MaterialTable
         style={{ color: "#3BD2E3" }}

@@ -16,28 +16,34 @@ function ConsultStartHolder() {
   }
 
   return (
-    <div style={{ zoom: value, height: '100vh' }}>
-      <div>
+    <div>
+      <div
+        style={{
+          width: "20%",
+          border: "1px solid transparent",
+          float: "left",
+          padding: 0,
+          margin: 0,
+        }}
+      >
         <SideNavbarVerified active={"services"} />
       </div>
 
       <div
         style={{
-          backgroundColor: "#F1F9FC",
-          height: 'auto'
+          width: "80%",
+          border: "1px",
+          float: "left",
+          margin: 0,
+          padding: 0,
         }}
       >
-        <Container
-          style={{
-            padding: 0,
-
-          }}
-        >
+        <div style={{ height: "15%", border: "1px ", padding: 0 }}>
           <NavBarVet />
-        </Container>
-        <Container>
+        </div>
+        <div style={{ height: "85%", border: "1px", padding: 10 }}>
           <ConsultStart />
-        </Container>
+        </div>
       </div>
     </div>
   );
