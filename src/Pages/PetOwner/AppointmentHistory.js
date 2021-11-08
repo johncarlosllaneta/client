@@ -20,8 +20,8 @@ import "../../css/AppointmentHistory.css";
 
 function AppointmentHistory(props) {
   const [appointment, setAppointment] = useState([]);
-  const [rateExist, setrateExist] = useState();
   const [counter, setcounter] = useState(0);
+  const [existRate, setexistRate] = useState(false);
   useEffect(() => {
     if (counter < 6) {
       Axios.get(
@@ -29,17 +29,10 @@ function AppointmentHistory(props) {
       ).then((response) => {
         setAppointment(response.data);
       });
-
-      Axios.post(`${hostUrl}/ratings&feedback/exist/rate`, {
-        appointment_id: appointment_id,
-      }).then((response) => {
-        setrateExist(response.data.message);
-      });
-
       setcounter(counter + 1);
     }
     // console.log(appointment);
-  }, [appointment, rateExist]);
+  }, [appointment]);
 
   function dateConvertion(date) {
     var str = date.split("-");
@@ -138,6 +131,19 @@ function AppointmentHistory(props) {
     setValidated(true);
   }
 
+  function rateChecker(appointmentId) {
+    Axios.post(`${hostUrl}/ratings&feedback/exist/rate`, {
+      appointment_id: appointmentId,
+    }).then((response) => {
+      // alert(response.data.message);
+      if (response.data.message == true) {
+        setexistRate(true);
+      } else {
+        setexistRate(false);
+      }
+    });
+  }
+
   return (
     <div
       style={{
@@ -173,26 +179,19 @@ function AppointmentHistory(props) {
           </p>
         </Modal.Body>
         <Modal.Footer>
-          {rateExist == true ? (
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-          ) : (
-            <div>
-              <Button
-                variant="primary"
-                onClick={() => {
-                  handleClose();
-                  handleShowRateAndFeedback();
-                }}
-              >
-                Rate and Feedback
-              </Button>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-            </div>
-          )}
+          <Button
+            variant="primary"
+            onClick={() => {
+              handleClose();
+              handleShowRateAndFeedback();
+            }}
+            hidden={existRate}
+          >
+            Rate and Feedback
+          </Button>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
         </Modal.Footer>
       </Modal>
 
@@ -336,6 +335,7 @@ function AppointmentHistory(props) {
                   getPetName(val.pet_id);
                   setstatus(val.appointment_status);
                   handleShow();
+                  rateChecker(val.appointment_id);
                 }}
                 id="itemHistory"
                 style={{
