@@ -20,6 +20,7 @@ import "../../css/AppointmentHistory.css";
 
 function AppointmentHistory(props) {
   const [appointment, setAppointment] = useState([]);
+  const [rateExist, setrateExist] = useState();
   const [counter, setcounter] = useState(0);
   useEffect(() => {
     if (counter < 6) {
@@ -28,10 +29,17 @@ function AppointmentHistory(props) {
       ).then((response) => {
         setAppointment(response.data);
       });
+
+      Axios.post(`${hostUrl}/ratings&feedback/exist/rate`, {
+        appointment_id: appointment_id,
+      }).then((response) => {
+        setrateExist(response.data.message);
+      });
+
       setcounter(counter + 1);
     }
     // console.log(appointment);
-  }, [appointment]);
+  }, [appointment, rateExist]);
 
   function dateConvertion(date) {
     var str = date.split("-");
@@ -134,7 +142,6 @@ function AppointmentHistory(props) {
     <div
       style={{
         width: "77vw",
-
       }}
     >
       <Modal show={show} onHide={handleClose}>
@@ -166,18 +173,26 @@ function AppointmentHistory(props) {
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            variant="primary"
-            onClick={() => {
-              handleClose();
-              handleShowRateAndFeedback();
-            }}
-          >
-            Rate and Feedback
-          </Button>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
+          {rateExist == true ? (
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+          ) : (
+            <div>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  handleClose();
+                  handleShowRateAndFeedback();
+                }}
+              >
+                Rate and Feedback
+              </Button>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+            </div>
+          )}
         </Modal.Footer>
       </Modal>
 
@@ -282,7 +297,7 @@ function AppointmentHistory(props) {
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 display: "inline",
                 minWidth: 150,
-                width: '10vw',
+                width: "10vw",
               }}
             >
               Back
@@ -294,7 +309,7 @@ function AppointmentHistory(props) {
       <div
         id="wrapper"
         style={{
-          height: '50vh',
+          height: "50vh",
           minHeight: 300,
           display: "inline-list-item",
           overflowY: "auto",
@@ -303,23 +318,20 @@ function AppointmentHistory(props) {
           padding: 40,
           boxShadow:
             "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-          marginTop: 20
+          marginTop: 20,
         }}
       >
         {appointment.map((val) => {
           return (
             <div>
               <Card
-
                 onClick={() => {
                   setappointment_id(val.appointment_id);
                   setserviceName(val.service_name);
                   setserviceDescription(val.service_description);
                   getVetName(val.vetid);
                   settimeSet(val.time_scheduled);
-                  setdateSet(
-                    dateConvertion(val.date_scheduled.split("T")[0])
-                  );
+                  setdateSet(dateConvertion(val.date_scheduled.split("T")[0]));
                   setfee(val.service_fee);
                   getPetName(val.pet_id);
                   setstatus(val.appointment_status);
@@ -329,26 +341,24 @@ function AppointmentHistory(props) {
                 style={{
                   padding: 20,
                   margin: 10,
-                  cursor: 'pointer',
+                  cursor: "pointer",
                   boxShadow:
                     "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
               >
                 <Row>
-
                   <Col sm={4}>
                     {/* service name */}
 
                     <div
-                      id='pendingAppointmentServiceNameDiv'
+                      id="pendingAppointmentServiceNameDiv"
                       style={{
                         marginTop: 20,
-
                       }}
                     >
-                      <h2
-                        id='pendingAppointmentServiceNameH2'
-                      >{val.service_name}</h2>
+                      <h2 id="pendingAppointmentServiceNameH2">
+                        {val.service_name}
+                      </h2>
 
                       <h6
                         style={{
@@ -363,7 +373,7 @@ function AppointmentHistory(props) {
                   <Col>
                     {/* date and time */}
                     <div
-                      id='pendingAppointmentDateTimeDiv'
+                      id="pendingAppointmentDateTimeDiv"
                       style={{
                         marginTop: 20,
                         // borderRight: "2px solid grey",
@@ -379,7 +389,7 @@ function AppointmentHistory(props) {
                   <Col>
                     {/* vet clinic */}
                     <div
-                      id='pendingAppointmentVetclinicDiv'
+                      id="pendingAppointmentVetclinicDiv"
                       style={{
                         marginTop: 20,
                       }}

@@ -8,7 +8,7 @@ import {
   Popover,
   Overlay,
   FloatingLabel,
-  Row
+  Row,
 } from "react-bootstrap";
 import { AiOutlineSearch, AiOutlineFileDone } from "react-icons/ai";
 
@@ -34,7 +34,7 @@ const GenReservation = (props) => {
   const [notifService_id, setnotifService_id] = useState();
   const [appointment, setappointment] = useState([]);
   useEffect(() => {
-    if (counter < 2) {
+    if (counter < 5) {
       Axios.get(`${hostUrl}/general/appointment/${id}`).then((response) => {
         setappointment(response.data);
       });
@@ -347,7 +347,9 @@ const GenReservation = (props) => {
                 <Form.Control.Feedback type="invalid">
                   Please provide a valid vaccine name.
                 </Form.Control.Feedback>
-                <Form.Control.Feedback>Valid vaccine name</Form.Control.Feedback>
+                <Form.Control.Feedback>
+                  Valid vaccine name
+                </Form.Control.Feedback>
               </FloatingLabel>
 
               <FloatingLabel
