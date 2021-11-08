@@ -57,7 +57,7 @@ function LoginUpdated() {
                 name: response.data.user.vet_name,
                 vet_status: response.data.vetStatus,
               });
-              window.location.href = `${hostUrlWeb}/dashboard`;
+              window.location.href = `/dashboard`;
             }
           } else if (response.data.message === "Wrong password!") {
             setAlertLogin(

@@ -209,7 +209,7 @@ function RegistrationPetOwner() {
                 Axios.post(`${hostUrl}/pet_owner/register/system/logs`, {
                   name: name,
                 });
-                window.location.href = `${hostUrlWeb}/`;
+                window.location.href = `/`;
               }
             });
           }

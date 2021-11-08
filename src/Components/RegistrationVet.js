@@ -278,7 +278,7 @@ function RegistrationVet() {
                     name: name,
                   });
                 }
-                window.location.href = `${hostUrlWeb}/`;
+                window.location.href = `/`;
               }
             });
           }
