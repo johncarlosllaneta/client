@@ -140,19 +140,14 @@ function Home() {
   var containerText = {};
 
   return (
-    <div
-      style={{
-        width: "77vw",
-        marginLeft: 40,
-        marginTop: 50,
-      }}
-    >
+    <div style={{ padding: 20 }}>
       <Row className=" ml-5 " style={{ paddingBottom: 30 }}>
         <Col>
           <Card
             style={{
               backgroundColor: "white",
               color: "#3BD2E3",
+              height: 170,
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
@@ -175,6 +170,7 @@ function Home() {
             style={{
               backgroundColor: "white",
               color: "#3BD2E3",
+              height: 170,
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
@@ -197,6 +193,7 @@ function Home() {
             style={{
               backgroundColor: "white",
               color: "#3BD2E3",
+              height: 170,
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
@@ -219,6 +216,7 @@ function Home() {
             style={{
               backgroundColor: "white",
               color: "#3BD2E3",
+              height: 170,
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
@@ -242,7 +240,6 @@ function Home() {
         <Col md={8}>
           <Card
             style={{
-              marginLeft: 70,
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
@@ -261,7 +258,7 @@ function Home() {
           >
             <Card.Body>
               <MaterialTable
-                style={{ textAlign: "left", width: 400 }}
+                style={{ textAlign: "left", width: 400, height: "100%" }}
                 title="Top Vet in Ratings"
                 pagination={true}
                 columns={columns}

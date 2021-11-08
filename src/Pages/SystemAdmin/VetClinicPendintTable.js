@@ -131,9 +131,7 @@ function VetClinicPendintTable() {
   return (
     <div
       style={{
-        width: "77vw",
-        marginLeft: 40,
-        marginTop: 50,
+        padding: 20,
       }}
     >
       <ToastContainer />

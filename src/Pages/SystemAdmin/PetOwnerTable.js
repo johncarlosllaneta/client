@@ -237,13 +237,7 @@ function PetOwnerTable() {
   };
 
   return (
-    <div
-      style={{
-        width: "77vw",
-        marginLeft: 40,
-        marginTop: 50,
-      }}
-    >
+    <div style={{ padding: 20 }}>
       <ToastContainer />
 
       <Modal show={showDelete} onHide={handleCloseDelete}>

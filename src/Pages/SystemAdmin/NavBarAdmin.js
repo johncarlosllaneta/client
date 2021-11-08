@@ -187,7 +187,15 @@ function NavBarHome() {
         <Image src={logo} style={logocss} /> TERRAVET
       </Navbar.Brand> */}
 
-      <Navbar.Collapse className="justify-content-end">
+      <Navbar.Collapse
+        style={{
+          flexDirection: "row",
+          display: "flex",
+          justifyContent: "end",
+          margin: 0,
+          padding: 0,
+        }}
+      >
         {/* <NavDropdown.Item>
             <div>
               <Row>
@@ -207,7 +215,7 @@ function NavBarHome() {
           </NavDropdown.Item> */}
 
         <NavDropdown
-          style={{ fontSize: 20, marginRight: 50 }}
+          style={{ fontSize: 20, marginRight: 50, margin: 0 }}
           title={name}
           drop="down"
         >

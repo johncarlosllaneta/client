@@ -210,13 +210,7 @@ function PetsTable() {
   }
 
   return (
-    <div
-      style={{
-        width: "77vw",
-        marginLeft: 40,
-        marginTop: 50,
-      }}
-    >
+    <div style={{ padding: 20 }}>
       <ToastContainer />
       <Modal show={showDelete} onHide={handleCloseDelete}>
         <Modal.Header closeButton>
@@ -287,6 +281,7 @@ function PetsTable() {
                     boxShadow:
                       "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                     padding: 10,
+                    height: 360,
                   }}
                 >
                   <Row>

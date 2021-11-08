@@ -176,7 +176,7 @@ function SideNavBar(props) {
       <Container
         id="ContainerNavItem"
         style={{
-          marginTop: 365,
+          marginTop: 385,
           height: "10%",
           backgroundColor: "black",
           flexDirection: "row",
