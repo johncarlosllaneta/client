@@ -35,22 +35,24 @@ function PetsMain() {
       {/* <div>
         <SideNavBar active={"pets"} />
       </div> */}
+      <NavBarHome />
 
       <div
         style={{
           backgroundColor: "#F1F9FC",
           height: "100vh",
+
         }}
       >
 
 
-        <NavBarHome />
 
         <Row>
           <Container
             style={{
               display: 'flex',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              marginTop: 100
             }}
           >
             <PetOwnerPets />

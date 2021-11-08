@@ -1,0 +1,92 @@
+ /* If the screen size is 601px wide or more, set the font-size of <div> to 80px */
+ @media screen and (min-width: 601px) {
+    #containerServices{
+        background-color: white;
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) ;
+        height: 60vh;
+        width: 100vw;
+        margin-top: 30px;
+        padding-top: 40px;
+    }
+    #imageService{
+        height: 10vh;
+    }
+    #containerServicesItems{
+        background-color: #3BD2E3;
+        height: 20vh;
+        width: 20vh;
+        border-color: white;
+        border-style: solid;
+        border-width: 5px;
+        border-radius: 30px;
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) ;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #containerInformation{
+        background-color: white;
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) ;
+        height: 15vh;
+        width: 60vw;
+        padding: 20px;
+        margin-top: 50px;
+    }
+    #h5ServiceTitle{
+        color: #3BD2E3;
+        font-weight: bold;
+        font-size: 2vw;
+        text-align: left;
+    }
+  }
+  
+  /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+  @media screen and (max-width: 600px) {
+    #containerServices{
+        background-color: white;
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) ;
+        height: auto;
+        width: 350px;
+        margin-top: 30px;
+        border-radius: 30px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+       
+    }
+    #rowServices{
+        display: grid;
+  grid-template-columns: auto auto;
+  
+    }
+    #imageService{
+        height: 10vh;
+    }#containerServicesItems{
+        background-color: #3BD2E3;
+        height: 20vh;
+        width: 18vh;
+        border-color: white;
+        border-style: solid;
+        border-width: 5px;
+        border-radius: 30px;
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) ;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #containerInformation{
+        background-color: white;
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) ;
+        height: auto;
+        width: 300px;
+        padding: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    #h5ServiceTitle{
+        color: #3BD2E3;
+        font-weight: bold;
+        font-size: 5vw;
+        text-align: left;
+    }
+  }

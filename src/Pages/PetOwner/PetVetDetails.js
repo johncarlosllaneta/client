@@ -8,6 +8,7 @@ import NavBarAppointments from "../../Components/navBarHome/NavBarAppointments";
 import Avatar from "react-avatar";
 import RatingsAndFeedback from "../VetClinic/RatingsAndFeedback";
 import VetDetailsRatings from "./VetDetailsRatings";
+import "../../css/PetVetDetails.css";
 const ratingChanged = (newRating) => {
   console.log(newRating);
 };
@@ -99,6 +100,10 @@ function PetVetDetails() {
   }, [vetclinic]);
 
   function timeConvertion(time) {
+    // alert(time);
+    if (time == '' || time == undefined) {
+      return "Closed";
+    }
     const timeString12hr = new Date(
       "2021-01-01T" + time + "Z"
     ).toLocaleTimeString(
@@ -124,7 +129,7 @@ function PetVetDetails() {
     }
   }, [counter, user]);
 
-  const talkToVet = () => {};
+  const talkToVet = () => { };
 
   var aspectratioheight = window.screen.height;
   var aspectratiowidth = window.screen.width;
@@ -134,195 +139,410 @@ function PetVetDetails() {
   } else {
     value = "100%";
   }
+
+  const [talkToVetExist, settalkToVetExist] = useState(true);
+  useEffect(() => {
+    Axios.post(`${hostUrl}/talktovet/thread/exist`, {
+      pet_owner_id: user.pet_owner_id,
+      vetid: vetid
+    }).then((response) => {
+      // alert(response.data.exist);
+      settalkToVetExist(true);
+    })
+  }, [user])
+  // alert(aspectratiowidth);
   return (
     <div
       style={{
-        backgroundImage: `url(${background})`,
-        height: window.screen.height,
-        marginTop: 110,
+
         zoom: value,
       }}
     >
       <NavBarAppointments />
-
       <div
         style={{
-          display: "flex",
-          padding: 20,
+          backgroundImage: `url(${background})`,
+          height: "auto",
+          padding: 0,
+          marginTop: 150
         }}
       >
-        <div>
-          <Button
-            href="/petOwner/Appointment"
-            style={{
-              display: "inline",
-              backgroundColor: "#3BD2E3",
-              paddingLeft: 30,
-              paddingRight: 30,
-              borderRadius: 30,
-              borderColor: "#FFFFFF",
-              marginLeft: 30,
-            }}
-          >
-            Back
-          </Button>
-        </div>
-        <Container>
-          <h5
-            style={{
-              color: "#696969",
-              fontWeight: "bold",
-              display: "inline",
-              marginLeft: -100,
-              fontSize: 40,
-            }}
-          >
-            Veterinary Clinic Details
-          </h5>
-        </Container>
-      </div>
 
-      <Container>
-        <Card
-          style={{
-            backgroundColor: "white",
-            height: "70vh",
-            width: "80vw",
-            marginLeft: -100,
-          }}
+
+        <Row
+
         >
-          <Row>
-            <Col xs={8}>
-              <Container
+          <Col>
+            <Container>
+              <h1
                 style={{
-                  backgroundColor: "white",
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                  height: 150,
-                  margin: 40,
+                  color: "grey",
+                  textAlign: "center",
+
                 }}
               >
-                <Row>
-                  <Col>
-                    {/* avatar */}
-                    <Avatar
-                      src={vetclinic.vet_picture}
-                      name={vetclinic.vet_name}
-                      size={100}
-                      round
-                      style={{
-                        marginTop: 20,
-                      }}
-                    />
-                  </Col>
+                Veterinary Clinic Details
+              </h1>
+            </Container>
+          </Col>
 
-                  <Col xs={4}>
-                    {/* vet name */}
+          <Col>
+            <Container
+              style={{
+                display: "flex",
+                height: '100%',
+                justifyContent: "flex-end",
+                alignContent: 'center'
+              }}
+            >
+              <div
+                id='divPetVetDetails'
+
+              >
+
+
+                <Button
+                  href="/petOwner/Appointment"
+                  style={{
+                    borderRadius: 20,
+                    border: "3px solid white",
+                    backgroundColor: "#3BD2E3",
+                    boxShadow:
+                      "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                    // display: "inline",
+                    minWidth: 150,
+                    width: '10vw',
+
+                  }}
+                >
+                  Back
+                </Button>
+              </div>
+            </Container>
+          </Col>
+        </Row>
+
+
+
+
+        <Row
+          style={{
+            marginTop: 15
+          }}
+        >
+          <Container
+            id='containerVetDetailsHolder'
+          // style={{
+          //   display: 'flex',
+          //   justifyContent: 'center',
+          //   height: 'auto',
+          //   marginBottom: 20
+          // }}
+          >
+            <Card
+              style={{
+                backgroundColor: "white",
+                height: "auto",
+                width: "80vw",
+                minWidth: 300
+
+              }}
+            >
+              <Row>
+                <Col xs={8}
+                // style={{
+                //   height: 'auto'
+                // }}
+                >
+                  <Container
+                    id='containerVetDetails'
+
+                  >
                     <Row>
-                      <h3
+                      <Col>
+                        {/* avatar */}
+                        <Avatar
+                          className='avatarVetDetails'
+                          src={vetclinic.vet_picture}
+                          name={vetclinic.vet_name}
+
+                          round
+                          style={{
+                            marginTop: 20,
+                          }}
+                        />
+                      </Col>
+
+                      <Col >
+                        {/* vet name */}
+                        <Row>
+                          <h3
+                            style={{
+                              textAlign: "left",
+                              marginTop: 15,
+                              fontSizeAdjust: 'inherit',
+                              fontSize: '1.5rem',
+                            }}
+                          >
+                            {vetclinic.vet_name}
+                          </h3>
+                        </Row>
+                        <Row>
+                          <h5
+                            style={{
+                              textAlign: "left",
+                              fontSizeAdjust: 'inherit',
+                              fontSize: '1.5vh',
+                            }}
+                          >
+                            Veterinary Clinic
+                          </h5>
+                        </Row>
+                        <Row>
+                          <p
+                            style={{
+                              textAlign: "left",
+                              fontSize: '2vh',
+                            }}
+                          >
+                            {vetclinic.vet_address}
+                          </p>
+                        </Row>
+                      </Col>
+
+
+                      <Col
                         style={{
-                          textAlign: "left",
-                          marginTop: 15,
+                          display: 'flex',
+                          justifyContent: 'center'
                         }}
                       >
-                        {vetclinic.vet_name}
-                      </h3>
+                        <div
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'center'
+                            }}
+                          >
+                            {/* view shop */}
+                            <Row>
+                              <Col>
+                                <Button
+                                  href={`/petOwner/Appointment/vetdetails/category/${vetclinic.vetid}`}
+                                  // href={`/petOwner/Appointment/vetdetails/service/${vetclinic.vetid}`}
+                                  style={{
+                                    borderRadius: 30,
+                                    borderWidth: 5,
+                                    borderColor: "#FFFFFF",
+                                    width: '5vw',
+                                    minWidth: 150,
+                                    fontSize: '2vh',
+                                    backgroundColor: "#3BD2E3",
+
+
+                                  }}
+                                >
+                                  Visit Vet
+                                </Button>
+                              </Col>
+                              <Col
+                                hidden={talkToVetExist}
+                              >
+                                <Button
+
+                                  onClick={() => {
+                                    Axios.post(`${hostUrl}/talktovet/thread/creating`, {
+                                      pet_owner_id: user.pet_owner_id,
+                                      vetid: vetid,
+                                    }).then((response) => {
+                                      window.location.replace("/petOwner/talkVet");
+                                    });
+                                  }}
+                                  style={{
+                                    borderRadius: 30,
+                                    borderWidth: 5,
+                                    borderColor: "#FFFFFF",
+                                    width: '5vw',
+                                    minWidth: 150,
+                                    fontSize: '2vh',
+                                    backgroundColor: "#3BD2E3",
+
+                                  }}
+                                >
+                                  Talk to Vet
+                                </Button>
+                              </Col>
+                            </Row>
+
+                          </div>
+                        </div>
+                      </Col>
                     </Row>
-                    <Row>
+                  </Container>
+
+
+                  {/* vet information */}
+                  <Row
+                    id='rowVetInformation'
+                  >
+                    <Col
+
+                    >
+                      <Row>
+                        <h3
+                          id='h3VetDetailsEmail'
+                        // style={{
+                        //   fontSize: 25,
+                        //   fontWeight: "bold",
+                        // }}
+                        >
+                          {vetclinic.email}
+                        </h3>
+
+                        <h6
+                          style={{
+                            color: "#19B9CC",
+                          }}
+                        >
+                          Email
+                        </h6>
+                      </Row>
+                      <Row>
+                        <h3
+                          style={{
+                            fontSize: 25,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {vetclinic.vet_contact_number}
+                        </h3>
+
+                        <h6
+                          style={{
+                            color: "#19B9CC",
+                          }}
+                        >
+                          Contact Number
+                        </h6>
+                      </Row>
+                    </Col>
+
+                    <Col>
+                      {/* Schedule */}
                       <h5
                         style={{
-                          textAlign: "left",
+                          color: "#19B9CC",
                         }}
                       >
-                        Veterinary Clinic
+                        Operating Schedule
                       </h5>
-                    </Row>
-                    <Row>
-                      <p
+
+                      <Row
                         style={{
-                          textAlign: "left",
-                          fontSize: 13,
+                          marginLeft: 50,
                         }}
                       >
-                        {vetclinic.vet_address}
-                      </p>
-                    </Row>
-                  </Col>
+                        <Col>
+                          {/* days */}
+                          <Row>Monday</Row>
+                          <Row>Tuesday</Row>
+                          <Row>Wednesday</Row>
+                          <Row>Thursday</Row>
+                          <Row>Friday</Row>
+                          <Row>Saturday</Row>
+                          <Row>Sunday</Row>
+                        </Col>
 
-                  {/* get direction */}
-                  {/* <Col>
-                 
+                        <Col>
+                          {/* Opening */}
+                          <Row>{OpeningMonday}</Row>
+                          <Row>{OpeningTuesday}</Row>
+                          <Row>{OpeningWednesday}</Row>
+                          <Row>{OpeningThursday}</Row>
+                          <Row>{OpeningFriday}</Row>
+                          <Row>{OpeningSaturday}</Row>
+                          <Row>{OpeningSunday}</Row>
+                        </Col>
 
-                    <Button
+                        <Col>
+                          {/* Closing */}
+                          <Row>{ClosingMonday}</Row>
+                          <Row>{ClosingTuesday}</Row>
+                          <Row>{ClosingWednesday}</Row>
+                          <Row>{ClosingThursday}</Row>
+                          <Row>{ClosingFriday}</Row>
+                          <Row>{ClosingSaturday}</Row>
+                          <Row>{ClosingSunday}</Row>
+                        </Col>
+                      </Row>
+                    </Col>
+                  </Row>
+                </Col>
+
+                <Col
+                  id='colRateAndFeedback'
+                  style={{
+                    height: 'auto',
+                    width: '10vw',
+                  }}>
+                  {/* review and feedback */}
+                  <Container>
+                    <Card
                       style={{
-                        borderRadius: 30,
-                        borderWidth: 5,
-                        borderColor: "#FFFFFF",
-                        paddingRight: 20,
-                        paddingLeft: 20,
-                        backgroundColor: "#3BD2E3",
-
-                        marginTop: 45,
+                        height: "auto",
+                        width: "20vw",
+                        backgroundColor: "white",
+                        boxShadow:
+                          "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                        marginLeft: 40,
+                        marginTop: 40,
                       }}
                     >
-                      Direction
-                    </Button>
-                  </Col> */}
+                      <Container>
+                        {/* title header */}
+                        <h5
+                          style={{
+                            color: "#19B9CC",
+                            marginTop: 10,
+                          }}
+                        >
+                          Ratings and Feedback
+                        </h5>
+                        <hr />
+                      </Container>
 
-                  <Col>
-                    {/* view shop */}
+                      <div>
+                        {/* Card Mapping */}
 
-                    <Button
-                      href={`/petOwner/Appointment/vetdetails/category/${vetclinic.vetid}`}
-                      // href={`/petOwner/Appointment/vetdetails/service/${vetclinic.vetid}`}
-                      style={{
-                        borderRadius: 30,
-                        borderWidth: 5,
-                        borderColor: "#FFFFFF",
-                        paddingRight: 20,
-                        paddingLeft: 20,
-                        backgroundColor: "#3BD2E3",
+                        <Card>
+                          <VetDetailsRatings />
+                        </Card>
+                      </div>
+                    </Card>
+                  </Container>
 
-                        marginTop: 45,
-                      }}
-                    >
-                      Visit Vet
-                    </Button>
-
-                    <Button
-                      onClick={() => {
-                        Axios.post(`${hostUrl}/talktovet/thread/creating`, {
-                          pet_owner_id: user.pet_owner_id,
-                          vetid: vetid,
-                        }).then((response) => {
-                          window.location.replace("/petOwner/talkVet");
-                        });
-                      }}
-                      style={{
-                        borderRadius: 30,
-                        borderWidth: 5,
-                        borderColor: "#FFFFFF",
-                        paddingRight: 20,
-                        paddingLeft: 20,
-                        backgroundColor: "#3BD2E3",
-                        marginTop: 45,
-                      }}
-                    >
-                      Talk to Vet
-                    </Button>
-                  </Col>
-                </Row>
-              </Container>
-
+                </Col>
+              </Row>
               {/* vet information */}
-              <Row>
-                <Col>
+              <Row
+                id='rowVetInformationMobile'
+              >
+                <Col
+
+                >
                   <Row>
                     <h3
-                      style={{
-                        fontSize: 25,
-                        fontWeight: "bold",
-                      }}
+
+                    // style={{
+                    //   fontSize: 25,
+                    //   fontWeight: "bold",
+                    // }}
                     >
                       {vetclinic.email}
                     </h3>
@@ -367,10 +587,14 @@ function PetVetDetails() {
 
                   <Row
                     style={{
-                      marginLeft: 50,
+                      marginBottom: 20
                     }}
                   >
-                    <Col>
+                    <Col
+                      style={{
+                        marginLeft: 30
+                      }}
+                    >
                       {/* days */}
                       <Row>Monday</Row>
                       <Row>Tuesday</Row>
@@ -405,48 +629,10 @@ function PetVetDetails() {
                   </Row>
                 </Col>
               </Row>
-            </Col>
-
-            <Col xl={4}>
-              {/* review and feedback */}
-              <Container>
-                <Card
-                  style={{
-                    height: "60vh",
-                    width: "20vw",
-                    backgroundColor: "white",
-                    boxShadow:
-                      "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                    marginLeft: 40,
-                    marginTop: 40,
-                  }}
-                >
-                  <Container>
-                    {/* title header */}
-                    <h5
-                      style={{
-                        color: "#19B9CC",
-                        marginTop: 10,
-                      }}
-                    >
-                      Ratings and Feedback
-                    </h5>
-                    <hr />
-                  </Container>
-
-                  <div>
-                    {/* Card Mapping */}
-
-                    <Card>
-                      <VetDetailsRatings />
-                    </Card>
-                  </div>
-                </Card>
-              </Container>
-            </Col>
-          </Row>
-        </Card>
-      </Container>
+            </Card>
+          </Container>
+        </Row>
+      </div>
     </div>
   );
 }

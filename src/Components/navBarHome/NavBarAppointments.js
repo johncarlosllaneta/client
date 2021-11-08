@@ -166,7 +166,7 @@ function NavBarAppointments() {
 
   return (
     <Navbar
-      expand="lg"
+      collapseOnSelect expand="sm"
       style={{
         backgroundColor: "white",
         padding: 0,

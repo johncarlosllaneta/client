@@ -436,7 +436,7 @@ const PetMyCart = (props) => {
       <Container
         id="itemHistory"
         style={{
-          height: '50vh',
+          height: '55vh',
           backgroundColor: "white",
           borderRadius: 30,
           padding: 40,
@@ -449,17 +449,29 @@ const PetMyCart = (props) => {
           return (
             <div>
               <Card
+                onClick={() => {
+                  setproductName(val.product_name);
+                  setproductDescription(val.product_desc);
+                  setquantity(val.reserve_quantity);
+                  settotalPrice(val.price * val.reserve_quantity);
+                  setexpire(convertTimeExpired(val.date_reserve));
+                  setproductPic(val.product_image);
+                  setreserveId(val.reserve_id);
+                  setproductId(val.product_id);
+                  // alert(val.product_id);
+                  handleShow();
+                }}
                 style={{
                   padding: 20,
                   margin: 10,
+                  cursor: 'pointer'
                 }}
               >
                 <Row>
                   <Col
+                    id="itemProduct"
                     sm={2}
-                    style={{
-                      borderRight: "2px solid grey",
-                    }}
+
                   >
                     {/* date and time */}
                     <div style={{}}>
@@ -580,37 +592,7 @@ const PetMyCart = (props) => {
                       </Col>
                     </Row>
                   </Col>
-                  <Col>
-                    {/* button */}
-                    <Container
-                      style={{
-                        paddingTop: 30,
-                      }}
-                    >
-                      <Button
-                        style={{
-                          borderRadius: 30,
-                          width: 125,
-                          backgroundColor: "#3BD2E3",
-                          borderColor: "transparent",
-                        }}
-                        onClick={() => {
-                          setproductName(val.product_name);
-                          setproductDescription(val.product_desc);
-                          setquantity(val.reserve_quantity);
-                          settotalPrice(val.price * val.reserve_quantity);
-                          setexpire(convertTimeExpired(val.date_reserve));
-                          setproductPic(val.product_image);
-                          setreserveId(val.reserve_id);
-                          setproductId(val.product_id);
-                          // alert(val.product_id);
-                          handleShow();
-                        }}
-                      >
-                        View Details
-                      </Button>
-                    </Container>
-                  </Col>
+
                 </Row>
               </Card>
             </div>

@@ -34,7 +34,7 @@ function CartHistoryMain() {
     }
     return (
         <div style={{ zoom: value }}>
-
+            <NavBarHome />
 
             <div
                 style={{
@@ -45,13 +45,14 @@ function CartHistoryMain() {
 
 
 
-                <NavBarHome />
+
 
                 <Row>
                     <Container
                         style={{
                             display: 'flex',
-                            justifyContent: 'center'
+                            justifyContent: 'center',
+                            marginTop: 150
                         }}
                     >
                         <CartHistory data={user} />

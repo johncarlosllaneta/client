@@ -1,0 +1,77 @@
+ /* If the screen size is 601px wide or more, set the font-size of <div> to 80px */
+  @media screen and (min-width: 601px) {
+   #divPetVetDetails{
+       display: flex;
+       align-items: center;
+       margin-right: 10vw;
+    }
+    #colRateAndFeedback{
+        display: block;
+    }
+    #containerVetDetails{
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        height: 20vh;
+        margin: 40px ;
+    }
+    #avatarVetDetails{
+        margin-top: 40px;
+    }
+    #containerVetDetailsHolder{
+        display: flex;
+        justify-content: center;
+        height:60vh;
+        margin-bottom: 20px;
+    }
+    #h3VetDetailsEmail{
+        font-size: 1.5vw;
+        font-weight: bold;
+    }
+    #rowVetInformation{
+        
+     }
+     #rowVetInformationMobile{
+         display: none;
+      }
+ }
+ 
+ /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+ @media screen and (max-width: 600px) {
+ #divPetVetDetails{
+     display: flex;
+     align-items: center;
+    }
+    #colRateAndFeedback{
+        display: none;
+    }
+    #containerVetDetails{
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        height: 50vh;
+       
+        margin: 40px;
+        width:60vw;
+        min-width: 220px;
+        
+    }
+    #avatarVetDetails{
+        margin-top: 20px;
+        
+    }
+    #containerVetDetailsHolder{
+        display: flex;
+        justify-content: center;
+        height: auto;
+        margin-bottom: 20px;
+    }
+    #h3VetDetailsEmail{
+        font-size: 5vw;
+        font-weight: bold;
+    }
+    #rowVetInformation{
+       display: none;
+    }
+    #rowVetInformationMobile{
+        display: block;
+     }
+ }

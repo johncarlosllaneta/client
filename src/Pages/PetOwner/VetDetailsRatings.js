@@ -79,7 +79,7 @@ function VetDetailsRatings() {
   // }
 
   return (
-    <div style={{ overflowY: "auto", height: 500, padding: 10 }}>
+    <div style={{ overflowY: "auto", height: '40vh', padding: 10 }}>
       <Modal centered show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Ratings and Feedback</Modal.Title>

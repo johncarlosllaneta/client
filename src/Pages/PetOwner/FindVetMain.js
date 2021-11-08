@@ -19,7 +19,7 @@ function FindVetMain() {
       {/* <div>
         <SideNavBar active={"appointment"} />
       </div> */}
-
+      <NavBarHome />
       <div
         style={{
           backgroundColor: "#F1F9FC",
@@ -27,13 +27,14 @@ function FindVetMain() {
         }}
       >
 
-        <NavBarHome />
+
 
         <Row>
           <Container
             style={{
               display: 'flex',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              marginTop: 150
             }}
           >
             <PetFindVetMain />

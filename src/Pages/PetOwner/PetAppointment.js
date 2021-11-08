@@ -44,7 +44,7 @@ const PetAppointment = () => {
 
   const [appointment, setAppointment] = useState([]);
   useEffect(() => {
-    if (counter < 2) {
+    if (counter < 10) {
       Axios.get(`${hostUrl}/appointments/:${user.pet_owner_id}`).then(
         (response) => {
           setAppointment(response.data);
@@ -234,7 +234,6 @@ const PetAppointment = () => {
     <div
       style={{
         width: "77vw",
-        marginLeft: 40,
         marginTop: 30,
       }}
     >
@@ -410,6 +409,7 @@ const PetAppointment = () => {
           >
             <Button
               href={"/petOwner/Appointment"}
+              id='buttonSelectorAppointment'
               style={{
                 borderRadius: 20,
                 border: "3px solid white",
@@ -418,8 +418,8 @@ const PetAppointment = () => {
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 display: "inline",
                 width: '10vw',
-                minWidth: 200,
-                fontSize: '1em'
+                minWidth: 150,
+
               }}
             >
               Add appointment
@@ -427,6 +427,7 @@ const PetAppointment = () => {
 
             <Button
               href={"/petOwner/Appointment/History"}
+              id='buttonSelectorAppointment'
               style={{
                 borderRadius: 20,
                 border: "3px solid white",
@@ -436,8 +437,8 @@ const PetAppointment = () => {
                 display: "inline",
 
                 width: '10vw',
-                minWidth: 200,
-                fontSize: '1em'
+                minWidth: 150,
+
               }}
             >
               History
@@ -528,13 +529,15 @@ const PetAppointment = () => {
       <Container
         style={{
           marginTop: 20,
+          display: "flex",
+          flexDirection: "row"
         }}
       >
         <h1
           style={{
             color: "#3BD2E3",
             textAlign: "left",
-            marginLeft: -70,
+
           }}
         >
           Pending Appointments
@@ -558,38 +561,46 @@ const PetAppointment = () => {
           return (
             <div>
               <Card
+
+                onClick={() => {
+                  setserviceName(val.service_name);
+                  setserviceDescription(val.service_description);
+                  getVetName(val.vetid);
+                  settimeSet(val.time_scheduled);
+                  setdateSet(
+                    dateConvertion(val.date_scheduled.split("T")[0])
+                  );
+                  setfee(val.service_fee);
+                  getPetName(val.pet_id);
+                  setstatus(val.appointment_status);
+                  setappointmentId(val.appointment_id);
+                  setserviceId(val.service_id);
+                  handleShow1();
+                }}
                 id="itemHistory"
                 style={{
                   padding: 20,
                   margin: 10,
+                  cursor: 'pointer',
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
               >
                 <Row>
-                  <Col>
-                    {/* date and time */}
-                    <div
-                      style={{
-                        marginTop: 20,
-                        borderRight: "2px solid grey",
-                      }}
-                    >
-                      <h2>
-                        {dateConvertion(val.date_scheduled.split("T")[0])}{" "}
-                      </h2>
 
-                      <h6>{val.time_scheduled} </h6>
-                    </div>
-                  </Col>
                   <Col sm={4}>
                     {/* service name */}
 
                     <div
+                      id='pendingAppointmentServiceNameDiv'
                       style={{
                         marginTop: 20,
-                        borderRight: "2px solid grey",
+
                       }}
                     >
-                      <h2>{val.service_name}</h2>
+                      <h2
+                        id='pendingAppointmentServiceNameH2'
+                      >{val.service_name}</h2>
 
                       <h6
                         style={{
@@ -602,11 +613,27 @@ const PetAppointment = () => {
                     </div>
                   </Col>
                   <Col>
-                    {/* vet clinic */}
+                    {/* date and time */}
                     <div
+                      id='pendingAppointmentDateTimeDiv'
                       style={{
                         marginTop: 20,
-                        borderRight: "2px solid grey",
+                        // borderRight: "2px solid grey",
+                      }}
+                    >
+                      <h2>
+                        {dateConvertion(val.date_scheduled.split("T")[0])}{" "}
+                      </h2>
+
+                      <h6>{val.time_scheduled} </h6>
+                    </div>
+                  </Col>
+                  <Col>
+                    {/* vet clinic */}
+                    <div
+                      id='pendingAppointmentVetclinicDiv'
+                      style={{
+                        marginTop: 20,
                       }}
                     >
                       <h4>{val.vet_name}</h4>
@@ -621,47 +648,13 @@ const PetAppointment = () => {
                       </h6>
                     </div>
                   </Col>
-                  <Col>
-                    {/* button */}
-                    <Container
-                      style={{
-                        paddingTop: 25,
-                      }}
-                    >
-                      <Button
-                        style={{
-                          borderRadius: 30,
-                          width: 200,
-                          backgroundColor: "#3BD2E3",
-                          borderColor: "transparent",
-                        }}
-                        onClick={() => {
-                          setserviceName(val.service_name);
-                          setserviceDescription(val.service_description);
-                          getVetName(val.vetid);
-                          settimeSet(val.time_scheduled);
-                          setdateSet(
-                            dateConvertion(val.date_scheduled.split("T")[0])
-                          );
-                          setfee(val.service_fee);
-                          getPetName(val.pet_id);
-                          setstatus(val.appointment_status);
-                          setappointmentId(val.appointment_id);
-                          setserviceId(val.service_id);
-                          handleShow1();
-                        }}
-                      >
-                        View Details
-                      </Button>
-                    </Container>
-                  </Col>
                 </Row>
               </Card>
             </div>
           );
         })}
       </div>
-    </div>
+    </div >
   );
 };
 

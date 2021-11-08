@@ -220,17 +220,31 @@ function CartHistory(props) {
           return (
             <div>
               <Card
+                onClick={() => {
+                  setproductName(val.product_name);
+                  setproductDescription(val.product_desc);
+                  setquantity(val.reserve_quantity);
+                  settotalPrice(val.price * val.reserve_quantity);
+                  setexpire(convertTimeExpired(val.date_reserve));
+                  setproductPic(val.product_image);
+                  setreserveId(val.reserve_id);
+                  handleShow();
+                }}
                 style={{
                   padding: 20,
                   margin: 10,
+                  cursor: 'pointer',
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
               >
                 <Row>
                   <Col
+                    id='itemProduct'
                     sm={2}
-                    style={{
-                      borderRight: "2px solid grey",
-                    }}
+                  // style={{
+                  //   borderRight: "2px solid grey",
+                  // }}
                   >
                     {/* date and time */}
                     <div style={{}}>
@@ -351,35 +365,7 @@ function CartHistory(props) {
                       </Col>
                     </Row>
                   </Col>
-                  <Col>
-                    {/* button */}
-                    <Container
-                      style={{
-                        paddingTop: 30,
-                      }}
-                    >
-                      <Button
-                        style={{
-                          borderRadius: 30,
-                          width: 125,
-                          backgroundColor: "#3BD2E3",
-                          borderColor: "transparent",
-                        }}
-                        onClick={() => {
-                          setproductName(val.product_name);
-                          setproductDescription(val.product_desc);
-                          setquantity(val.reserve_quantity);
-                          settotalPrice(val.price * val.reserve_quantity);
-                          setexpire(convertTimeExpired(val.date_reserve));
-                          setproductPic(val.product_image);
-                          setreserveId(val.reserve_id);
-                          handleShow();
-                        }}
-                      >
-                        View Details
-                      </Button>
-                    </Container>
-                  </Col>
+
                 </Row>
               </Card>
             </div>

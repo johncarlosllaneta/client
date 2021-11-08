@@ -117,7 +117,7 @@ function PetFindVetMain() {
             <hr />
             <div
               style={{
-                minWidth: 200,
+                minWidth: 240,
                 width: "100vw",
                 height: 300,
                 backgroundColor: "grey",

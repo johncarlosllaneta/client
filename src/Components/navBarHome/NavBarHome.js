@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Badge, Col, Nav, Navbar, NavDropdown, Row, Image } from "react-bootstrap";
+import { Badge, Col, Nav, Navbar, NavDropdown, Row, Image, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { BsChatDotsFill } from "react-icons/bs";
@@ -155,7 +155,7 @@ function NavBarHome() {
   var landingPageName = {
     fontWeight: "bold",
     color: colors.Blue,
-    marginLeft: 50
+
   };
 
   const logoutUser = () => {
@@ -220,46 +220,84 @@ function NavBarHome() {
   }
 
   return (
+
     <Navbar
       collapseOnSelect expand="lg"
       style={{
         backgroundColor: "white",
-        padding: 0,
+        display: 'flex',
+        justifyContent: 'space-around'
       }}
+      fixed="top"
     >
+
       <Navbar.Brand href="/" style={landingPageName}>
         {" "}
         <Image src={logo} style={logocss} /> TERRAVET
       </Navbar.Brand>
 
-      <Navbar.Collapse className="justify-content-end">
 
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'start',
-            alignSelf: 'center'
-          }}
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" style={{
+        margin: 10
+      }} />
+      <Navbar.Collapse id="responsive-navbar-nav" className='responsiveNavBar'
+
+      >
+        <Nav id='navBarHome'
+        // style={{
+        //   display: "flex",
+        //   justifyContent: 'flex-end',
+        //   // alignSelf: 'end'
+        // }}
         >
-          <a
-            href="/petOwner/talkVet"
+          <div
+          // style={{
+          //   display: "flex",
+          //   justifyContent: 'space-evenly',
+          //   alignSelf: 'center',
 
-            id="talkToVet"
-            style={{
-              color: "grey",
-              fontSize: 30,
-              padding: 0
-            }}
+          // }}
           >
-            <BsChatDotsFill />
-          </a>
-        </div>
-        <NavDropdown style={{ fontSize: 20, marginRight: 50 }} title={name}>
-          <NavDropdown.Item onClick={setting}>Settings</NavDropdown.Item>
-          <NavDropdown.Item onClick={logoutUser}>Logout</NavDropdown.Item>
-        </NavDropdown>
+            <a
+              href="/petOwner/talkVet"
 
+              id="talkToVet"
+              style={{
+                color: "grey",
+                fontWeight: 'bolder',
+                padding: 0,
+                textDecoration: 'none',
+                marginRight: 50,
+
+                alignItems: 'center'
+              }}
+            >
+              <div
+                id='talkToVetIcon'
+              >
+                <BsChatDotsFill />
+              </div>
+
+              <div
+                id='talkToVetWord'
+                style={{
+                  textAlign: 'center'
+                }}
+              >
+                <p
+
+                >TALK TO VET</p>
+              </div>
+
+            </a>
+          </div>
+          <NavDropdown style={{ fontSize: 20, marginRight: 50 }} title={name}>
+            <NavDropdown.Item onClick={setting}>Settings</NavDropdown.Item>
+            <NavDropdown.Item onClick={logoutUser}>Logout</NavDropdown.Item>
+          </NavDropdown>
+        </Nav>
       </Navbar.Collapse>
+
     </Navbar>
   );
 }

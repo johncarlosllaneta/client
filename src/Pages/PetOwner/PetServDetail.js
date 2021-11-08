@@ -18,6 +18,7 @@ import Axios from "axios";
 import background from "../../Images/bg.png";
 import { hostUrl } from "../../Components/Host";
 import NavBarAppointments from "../../Components/navBarHome/NavBarAppointments";
+import "../../css/PetServDetails.css";
 
 const PetServDetail = () => {
   let { serviceid } = useParams();
@@ -95,8 +96,7 @@ const PetServDetail = () => {
     // alert(serviceid.split('&')[1] + "&" + serviceid.split('&')[0]);
     if (counter < 10) {
       Axios.get(
-        `${hostUrl}/services/details/info/:${
-          serviceid.split("&")[1] + "&" + serviceid.split("&")[0]
+        `${hostUrl}/services/details/info/:${serviceid.split("&")[1] + "&" + serviceid.split("&")[0]
         }`
       ).then((response) => {
         setservices(response.data);
@@ -153,8 +153,7 @@ const PetServDetail = () => {
     }).then((response) => {
       if (response.data.message === "Success") {
         Axios.get(
-          `${hostUrl}/get/latest/entry/appointment/${user.pet_owner_id}/${
-            serviceid.split("&")[1]
+          `${hostUrl}/get/latest/entry/appointment/${user.pet_owner_id}/${serviceid.split("&")[1]
           }`
         ).then((response) => {
           setappointId(response.data[0].latestId);
@@ -549,7 +548,9 @@ const PetServDetail = () => {
       </Modal>
 
       {/* Container */}
-      <Container style={{ marginTop: 110 }}>
+      <Container
+        id='containerWeb'
+      >
         <Row>
           <Container
             style={{
@@ -575,9 +576,8 @@ const PetServDetail = () => {
                 }}
               >
                 <Button
-                  href={`/petOwner/Appointment/vetdetails/service/${
-                    serviceid.split("&")[1]
-                  }`}
+                  href={`/petOwner/Appointment/vetdetails/service/${serviceid.split("&")[1]
+                    }`}
                   style={{
                     backgroundColor: "#3BD2E3",
                     paddingLeft: 30,
@@ -648,7 +648,7 @@ const PetServDetail = () => {
                 <Container
                   style={{
                     backgroundColor: "#EFF1F7",
-                    height: 580,
+                    height: 500,
                     width: 500,
                     borderRadius: 30,
                     margin: 10,
@@ -677,40 +677,40 @@ const PetServDetail = () => {
                     >
                       {services.length !== 0
                         ? services.map((e) => {
-                            return (
-                              <Card
+                          return (
+                            <Card
+                              style={{
+                                height: 90,
+                                width: "60vw",
+                                justifyContent: "center",
+                                borderRadius: 30,
+                                boxShadow:
+                                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                              }}
+                            >
+                              <Card.Title
+                                className="mt-1"
+                                onClick={() => {
+                                  setserviceId(e.service_id);
+                                  setserviceName(e.service_name);
+                                  setserviceDescription(
+                                    e.service_description
+                                  );
+                                  setserviceFee(e.service_fee);
+                                }}
                                 style={{
-                                  height: 90,
-                                  width: "60vw",
-                                  justifyContent: "center",
-                                  borderRadius: 30,
-                                  boxShadow:
-                                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                                  cursor: "pointer",
+                                  fontSize: 25,
+                                  marginLeft: 10,
+                                  color: "black",
+                                  fontWeight: "bold",
                                 }}
                               >
-                                <Card.Title
-                                  className="mt-1"
-                                  onClick={() => {
-                                    setserviceId(e.service_id);
-                                    setserviceName(e.service_name);
-                                    setserviceDescription(
-                                      e.service_description
-                                    );
-                                    setserviceFee(e.service_fee);
-                                  }}
-                                  style={{
-                                    cursor: "pointer",
-                                    fontSize: 25,
-                                    marginLeft: 10,
-                                    color: "black",
-                                    fontWeight: "bold",
-                                  }}
-                                >
-                                  {e.service_name}
-                                </Card.Title>
-                              </Card>
-                            );
-                          })
+                                {e.service_name}
+                              </Card.Title>
+                            </Card>
+                          );
+                        })
                         : "Empty Service"}
                     </div>
                   </Container>
@@ -722,7 +722,7 @@ const PetServDetail = () => {
 
                 <Container
                   style={{
-                    height: "55vh",
+                    height: "50vh",
                     width: "35vw",
                     marginTop: 10,
                     borderRadius: 30,
@@ -792,6 +792,245 @@ const PetServDetail = () => {
                   )}
                 </Container>
               </Col>
+            </Row>
+          </Container>
+        </Row>
+      </Container>
+
+
+      {/* Mobile */}
+      <Container
+        id='containerMobile'
+      >
+        <Row>
+          <Container
+            style={{
+              backgroundColor: "white",
+              boxShadow:
+                "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+              height: "auto",
+              width: 350,
+              minWidth: 350,
+              marginTop: 30,
+              paddingTop: 20,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+              }}
+            >
+              <Container
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  marginLeft: -15,
+                }}
+              >
+                <Button
+                  href={`/petOwner/Appointment/vetdetails/service/${serviceid.split("&")[1]
+                    }`}
+                  style={{
+                    backgroundColor: "#3BD2E3",
+                    paddingLeft: 30,
+                    paddingRight: 30,
+                    borderRadius: 30,
+                    borderWidth: 2,
+                    borderColor: "#FFFFFF",
+                    boxShadow:
+                      "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                    marginBottom: 30,
+                  }}
+                >
+                  Back
+                </Button>
+              </Container>
+
+              <Container
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <BsFillInfoCircleFill
+                  onClick={handleClick}
+                  style={{
+                    color: "#0A94A4",
+                    fontSize: 30,
+                    cursor: "pointer",
+                  }}
+                />
+
+                <Overlay
+                  show={showToolTip}
+                  target={target}
+                  placement="bottom"
+                  container={ref.current}
+                  containerPadding={20}
+                >
+                  <Popover id="popover-contained">
+                    <Popover.Header as="h3">
+                      <strong>Helper</strong>
+                    </Popover.Header>
+                    <Popover.Body>
+                      This page allows you to see the list of services of your
+                      chosen category. Upon Clicking the service you want to
+                      schedule, the details of that service will be shown on the
+                      right portion of the screen.
+                      <br />
+                      Your appointment will be complete once you fill up the
+                      form below details section.
+                    </Popover.Body>
+                  </Popover>
+                </Overlay>
+              </Container>
+            </div>
+            <h1
+              style={{
+                textAlign: "left",
+                color: "#3BD2E3",
+              }}
+            >
+              {serviceid.split("&")[0]}
+            </h1>
+
+            <Row>
+              <Col>
+                {/* services display */}
+                <Container
+                  style={{
+                    // backgroundColor: "#EFF1F7",
+                    height: 400,
+                    width: 300,
+                    borderRadius: 30,
+                    margin: 10,
+                    textAlign: "left",
+                    padding: 10,
+                    // boxShadow: "1px 3px 1px 1px  grey inset"
+                  }}
+                >
+                  <Container
+                    style={{
+                      padding: 10,
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        overflowX: "scroll",
+                        // justifyContent: "center",
+                        // alignItems: "center",
+                        // display: "flex",
+                        // padding: 10,
+                        height: 350
+                        // backgroundColor: 'red'
+                      }}
+                    >
+                      {services.length !== 0
+                        ? services.map((e) => {
+                          return (
+                            <div>
+                              <Card
+                                onClick={() => {
+                                  setserviceId(e.service_id);
+                                  handleShowForm();
+                                  setserviceName(e.service_name);
+                                  setserviceDescription(
+                                    e.service_description
+                                  );
+                                  setserviceFee(e.service_fee);
+                                }}
+                                style={{
+                                  height: 300,
+                                  width: 250,
+
+                                  margin: 10,
+                                  boxShadow:
+                                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                                  cursor: "pointer",
+                                }}
+                              >
+
+                                <div
+                                  style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: 100,
+                                    backgroundColor: '#3BD2E3'
+                                  }}
+                                >
+                                  <Card.Title
+                                    style={{
+
+                                      fontSize: '5vw',
+
+                                      color: "white",
+                                      fontWeight: "bold",
+                                    }}
+                                  >{e.service_name}</Card.Title>
+                                </div>
+
+                                <div
+                                  style={{
+                                    paddingLeft: 20,
+                                    paddingRight: 20,
+                                    paddingTop: 20
+                                  }}
+                                >
+
+                                  <h6
+                                    style={{
+                                      fontWeight: 'bold'
+                                    }}
+                                  >Description</h6>
+                                  <p
+                                    id='pDescription'
+                                  >{e.service_description}</p>
+                                </div>
+
+                                <div
+                                  style={{
+                                    paddingLeft: 20,
+                                    paddingRight: 20,
+                                  }}
+                                >
+
+                                  <h6
+                                    style={{
+                                      fontWeight: 'bold'
+                                    }}
+                                  >Service Fee</h6>
+                                  <p
+
+                                  >{`₱  ${e.service_fee}.00`}</p>
+                                </div>
+                                <div
+                                  style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'end'
+                                  }}
+                                >
+
+                                  <h6
+                                    style={{
+                                      fontSize: 10
+                                    }}
+                                  >Click to set appointment</h6>
+
+                                </div>
+                              </Card>
+                            </div>
+                          );
+                        })
+                        : "Empty Service"}
+                    </div>
+                  </Container>
+                </Container>
+              </Col>
+
+
             </Row>
           </Container>
         </Row>

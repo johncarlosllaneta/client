@@ -2,7 +2,14 @@ import React from "react";
 import { Card } from "react-bootstrap";
 function PetCarouselHome(props) {
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center'
+      }}
+    >
+
+
       <Card
         onClick={() => {
           window.location.href = `/pets/${props.data.pet_id}`

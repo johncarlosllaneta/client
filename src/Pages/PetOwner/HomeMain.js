@@ -32,7 +32,7 @@ function HomeMain() {
   }
   return (
     <div style={{ zoom: value }}>
-
+      <NavBarHome />
       <div
         style={{
           backgroundColor: "#F1F9FC",
@@ -40,13 +40,14 @@ function HomeMain() {
         }}
       >
 
-        <NavBarHome />
+
 
         <Row>
           <Container
             style={{
               display: 'flex',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              marginTop: 150
             }}
           >
             <TabHome data={user} />

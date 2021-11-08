@@ -16,6 +16,7 @@ import { hostUrl } from "../../Components/Host";
 import ReactStars from "react-rating-stars-component";
 import reactStars from "react-rating-stars-component";
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
+import "../../css/AppointmentHistory.css";
 
 function AppointmentHistory(props) {
   const [appointment, setAppointment] = useState([]);
@@ -133,8 +134,7 @@ function AppointmentHistory(props) {
     <div
       style={{
         width: "77vw",
-        marginLeft: 40,
-        marginTop: 30,
+
       }}
     >
       <Modal show={show} onHide={handleClose}>
@@ -281,8 +281,8 @@ function AppointmentHistory(props) {
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 display: "inline",
-                paddingLeft: 50,
-                paddingRight: 50,
+                minWidth: 150,
+                width: '10vw',
               }}
             >
               Back
@@ -294,7 +294,8 @@ function AppointmentHistory(props) {
       <div
         id="wrapper"
         style={{
-          height: 700,
+          height: '50vh',
+          minHeight: 300,
           display: "inline-list-item",
           overflowY: "auto",
           backgroundColor: "white",
@@ -302,44 +303,52 @@ function AppointmentHistory(props) {
           padding: 40,
           boxShadow:
             "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+          marginTop: 20
         }}
       >
         {appointment.map((val) => {
           return (
             <div>
               <Card
+
+                onClick={() => {
+                  setappointment_id(val.appointment_id);
+                  setserviceName(val.service_name);
+                  setserviceDescription(val.service_description);
+                  getVetName(val.vetid);
+                  settimeSet(val.time_scheduled);
+                  setdateSet(
+                    dateConvertion(val.date_scheduled.split("T")[0])
+                  );
+                  setfee(val.service_fee);
+                  getPetName(val.pet_id);
+                  setstatus(val.appointment_status);
+                  handleShow();
+                }}
                 id="itemHistory"
                 style={{
                   padding: 20,
                   margin: 10,
+                  cursor: 'pointer',
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
               >
                 <Row>
-                  <Col>
-                    {/* date and time */}
-                    <div
-                      style={{
-                        marginTop: 20,
-                        borderRight: "2px solid grey",
-                      }}
-                    >
-                      <h2>
-                        {dateConvertion(val.date_scheduled.split("T")[0])}{" "}
-                      </h2>
 
-                      <h6>{val.time_scheduled} </h6>
-                    </div>
-                  </Col>
                   <Col sm={4}>
                     {/* service name */}
 
                     <div
+                      id='pendingAppointmentServiceNameDiv'
                       style={{
                         marginTop: 20,
-                        borderRight: "2px solid grey",
+
                       }}
                     >
-                      <h2>{val.service_name}</h2>
+                      <h2
+                        id='pendingAppointmentServiceNameH2'
+                      >{val.service_name}</h2>
 
                       <h6
                         style={{
@@ -352,11 +361,27 @@ function AppointmentHistory(props) {
                     </div>
                   </Col>
                   <Col>
-                    {/* vet clinic */}
+                    {/* date and time */}
                     <div
+                      id='pendingAppointmentDateTimeDiv'
                       style={{
                         marginTop: 20,
-                        borderRight: "2px solid grey",
+                        // borderRight: "2px solid grey",
+                      }}
+                    >
+                      <h2>
+                        {dateConvertion(val.date_scheduled.split("T")[0])}{" "}
+                      </h2>
+
+                      <h6>{val.time_scheduled} </h6>
+                    </div>
+                  </Col>
+                  <Col>
+                    {/* vet clinic */}
+                    <div
+                      id='pendingAppointmentVetclinicDiv'
+                      style={{
+                        marginTop: 20,
                       }}
                     >
                       <h4>{val.vet_name}</h4>
@@ -370,39 +395,6 @@ function AppointmentHistory(props) {
                         Veterinary Clinic
                       </h6>
                     </div>
-                  </Col>
-                  <Col>
-                    {/* button */}
-                    <Container
-                      style={{
-                        paddingTop: 25,
-                      }}
-                    >
-                      <Button
-                        style={{
-                          borderRadius: 30,
-                          width: 200,
-                          backgroundColor: "#3BD2E3",
-                          borderColor: "transparent",
-                        }}
-                        onClick={() => {
-                          setappointment_id(val.appointment_id);
-                          setserviceName(val.service_name);
-                          setserviceDescription(val.service_description);
-                          getVetName(val.vetid);
-                          settimeSet(val.time_scheduled);
-                          setdateSet(
-                            dateConvertion(val.date_scheduled.split("T")[0])
-                          );
-                          setfee(val.service_fee);
-                          getPetName(val.pet_id);
-                          setstatus(val.appointment_status);
-                          handleShow();
-                        }}
-                      >
-                        View Details
-                      </Button>
-                    </Container>
                   </Col>
                 </Row>
               </Card>

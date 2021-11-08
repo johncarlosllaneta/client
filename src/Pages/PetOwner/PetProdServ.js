@@ -11,6 +11,8 @@ import imageIII from "../../Images/baths.png";
 import imageIV from "../../Images/preventive.png";
 import imageV from "../../Images/scopy.png";
 import imageVI from "../../Images/INHOUSEW.png";
+import "../../css/PetProdServ.css";
+
 const PetProdServ = () => {
   let { vetid } = useParams();
   // alert(vetid);
@@ -120,15 +122,7 @@ const PetProdServ = () => {
       </div>
 
       <Container
-        style={{
-          backgroundColor: "white",
-          boxShadow:
-            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-          height: "70vh",
-          width: "100vw",
-          marginTop: 30,
-          paddingTop: 40,
-        }}
+        id='containerServices'
       >
         <Container>
           <h5
@@ -146,7 +140,7 @@ const PetProdServ = () => {
 
         {/* services */}
 
-        <Row>
+        <Row id='rowServices'>
           <Col hidden={consulation}>
             <Link
               to={`/petOwner/Appointment/vetdetails/service/servicedetail/${`Consultation&${vetid}`}`}
@@ -155,25 +149,13 @@ const PetProdServ = () => {
               }}
             >
               <Container
-                style={{
-                  backgroundColor: "#3BD2E3",
-                  height: "20vh",
-                  width: "20vh",
-                  borderColor: "white",
-                  borderStyle: "solid",
-                  borderWidth: 5,
-                  borderRadius: 30,
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                  marginTop: 40,
-                }}
+                id='containerServicesItems'
+
               >
                 <Image
+                  id='imageService'
                   src={imageI}
-                  style={{
-                    height: 150,
-                    marginTop: 15,
-                  }}
+
                 />
               </Container>
             </Link>
@@ -196,25 +178,13 @@ const PetProdServ = () => {
               }}
             >
               <Container
-                style={{
-                  backgroundColor: "#3BD2E3",
-                  height: "20vh",
-                  width: "20vh",
-                  borderColor: "white",
-                  borderStyle: "solid",
-                  borderWidth: 5,
-                  borderRadius: 30,
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                  marginTop: 40,
-                }}
+                id='containerServicesItems'
+
               >
                 <Image
+                  id='imageService'
                   src={imageII}
-                  style={{
-                    height: 150,
-                    marginTop: 15,
-                  }}
+
                 />
               </Container>
             </Link>
@@ -237,26 +207,13 @@ const PetProdServ = () => {
               }}
             >
               <Container
-                style={{
-                  backgroundColor: "#3BD2E3",
-                  height: "20vh",
-                  width: "20vh",
-                  borderColor: "white",
-                  borderStyle: "solid",
-                  borderWidth: 5,
-                  borderRadius: 30,
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                  marginTop: 40,
-                }}
+                id='containerServicesItems'
+
               >
                 <Image
+                  id='imageService'
                   src={imageIII}
-                  style={{
-                    height: 150,
-                    marginTop: 20,
-                    marginLeft: -10,
-                  }}
+
                 />
               </Container>
             </Link>
@@ -280,26 +237,13 @@ const PetProdServ = () => {
               }}
             >
               <Container
-                style={{
-                  backgroundColor: "#3BD2E3",
-                  height: "20vh",
-                  width: "20vh",
-                  borderColor: "white",
-                  borderStyle: "solid",
-                  borderWidth: 5,
-                  borderRadius: 30,
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                  marginTop: 40,
-                }}
+                id='containerServicesItems'
+
               >
                 <Image
+                  id='imageService'
                   src={imageIV}
-                  style={{
-                    height: 125,
-                    marginTop: 20,
-                    marginLeft: -20,
-                  }}
+
                 />
               </Container>
             </Link>
@@ -323,26 +267,12 @@ const PetProdServ = () => {
               }}
             >
               <Container
-                style={{
-                  backgroundColor: "#3BD2E3",
-                  height: "20vh",
-                  width: "20vh",
-                  borderColor: "white",
-                  borderStyle: "solid",
-                  borderWidth: 5,
-                  borderRadius: 30,
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                  marginTop: 40,
-                }}
+                id='containerServicesItems'
+
               >
                 <Image
+                  id='imageService'
                   src={imageV}
-                  style={{
-                    height: 125,
-                    marginTop: 15,
-                    marginLeft: -20,
-                  }}
                 />
               </Container>
             </Link>
@@ -357,68 +287,15 @@ const PetProdServ = () => {
             </h5>
           </Col>
 
-          <Col hidden={inHouseLab}>
-            <Link
-              to={`/petOwner/Appointment/vetdetails/service/servicedetail/${`In-House-Laboratory&${vetid}`}`}
-              style={{
-                textDecoration: "none",
-              }}
-            >
-              <Container
-                style={{
-                  backgroundColor: "#3BD2E3",
-                  height: "20vh",
-                  width: "20vh",
-                  borderColor: "white",
-                  borderStyle: "solid",
-                  borderWidth: 5,
-                  borderRadius: 30,
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                  marginTop: 40,
-                }}
-              >
-                <Image
-                  src={imageVI}
-                  style={{
-                    height: 150,
-                    marginTop: 15,
-                    marginLeft: -5,
-                  }}
-                />
-              </Container>
-            </Link>
-            <h5
-              style={{
-                color: "#3BD2E3",
-                fontWeight: "bolder",
-                marginTop: 10,
-              }}
-            >
-              In-House Laboratory
-            </h5>
-          </Col>
+
         </Row>
 
         <Container
-          style={{
-            backgroundColor: "white",
-            boxShadow:
-              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-            height: "15vh",
-            width: "60vw",
-            marginTop: 60,
-            padding: 20,
-          }}
+          id='containerInformation'
+
         >
           <h5
-            style={{
-              color: "#3BD2E3",
-              fontWeight: "bold",
-
-              fontSize: 35,
-              textAlign: "left",
-            }}
+            id='h5ServiceTitle'
           >
             Pet Examination
           </h5>

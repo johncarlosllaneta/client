@@ -34,6 +34,8 @@ function MyCartMain() {
   return (
     <div style={{ zoom: value }}>
 
+
+      <NavBarHome />
       <div
         style={{
           backgroundColor: "#F1F9FC",
@@ -42,13 +44,14 @@ function MyCartMain() {
       >
 
 
-        <NavBarHome />
+
 
         <Row>
           <Container
             style={{
               display: 'flex',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              marginTop: 150
             }}
           >
             <PetMyCart data={user} />

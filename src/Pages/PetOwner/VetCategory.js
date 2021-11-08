@@ -9,6 +9,7 @@ import Avatar from "react-avatar";
 import imageI from "../../Images/dog-food.png";
 import imageII from "../../Images/drugs .png";
 import imageIII from "../../Images/pngwing .png";
+import "../../css/VetCategory.css";
 
 function VetCategory() {
   let { vetid } = useParams();
@@ -54,99 +55,113 @@ function VetCategory() {
     <div
       style={{
         backgroundImage: `url(${background})`,
-        height: window.screen.height,
+
         marginTop: 110,
         zoom: value,
       }}
     >
       <NavBarAppointments />
 
-      <div
-        style={{
-          display: "flex",
-          padding: 20,
-        }}
-      >
-        <div>
-          <Button
-            href="/petOwner/Appointment"
+      <Row>
+        <Col>
+          <Container>
+            <h1
+              style={{
+                color: "grey",
+                textAlign: "center",
+
+              }}
+            >
+              Vet Offers
+            </h1>
+          </Container>
+        </Col>
+
+        <Col>
+          <Container
             style={{
-              display: "inline",
-              backgroundColor: "#3BD2E3",
-              paddingLeft: 30,
-              paddingRight: 30,
-              borderRadius: 30,
-              borderColor: "#FFFFFF",
-              marginLeft: 30,
+              display: "flex",
+              height: '100%',
+              justifyContent: "flex-end",
+              alignContent: 'center'
             }}
           >
-            Back
-          </Button>
-        </div>
-        <Container>
-          <h5
-            style={{
-              color: "#696969",
-              fontWeight: "bold",
-              display: "inline",
-              marginLeft: -100,
-              fontSize: 40,
-            }}
-          >
-            Vet Offers
-          </h5>
-        </Container>
-      </div>
+            <div
+              id='divPetVetDetails'
+
+            >
+
+
+              <Button
+                href={`/petOwner/Appointment/vetdetails/${vetid}`}
+                style={{
+                  borderRadius: 20,
+                  border: "3px solid white",
+                  backgroundColor: "#3BD2E3",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                  // display: "inline",
+                  minWidth: 150,
+                  width: '10vw',
+
+                }}
+              >
+                Back
+              </Button>
+            </div>
+          </Container>
+        </Col>
+      </Row>
+
+
+
+
 
       <Container
-        style={{
-          backgroundColor: "white",
-          boxShadow:
-            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-          height: "70vh",
-          marginTop: 10,
-          paddingTop: 50,
-        }}
+        id='containerVetCategory'
       >
         <Container
-          style={{
-            backgroundColor: "white",
-            boxShadow:
-              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-            height: "15vh",
-            width: "50vw",
-          }}
+
+          id='containerVetInformation'
+
         >
           {/* Vet information */}
 
-          <Row>
-            <Col>
+          <Row
+            style={{
+              padding: 5
+            }}
+          >
+            <Col
+
+              id='avatarVetImage'
+            >
               {/* avatar */}
               <Avatar
                 src={vetclinic.vet_picture}
                 name={vetclinic.vet_name}
-                size={100}
                 round
-                style={{
-                  marginTop: 20,
-                }}
               />
             </Col>
 
-            <Col xs={4}>
+            <Col >
               {/* vet name */}
               <Row>
                 <h3
-                  style={{
-                    textAlign: "left",
-                    marginTop: 10,
-                  }}
+                  id='h3VetName'
+                // style={{
+                //   textAlign: "left",
+                //   marginTop: 10,
+                //   fontSizeAdjust: 'inherit',
+                //   fontSize: '1.5rem',
+                // }}
                 >
                   {vetclinic.vet_name}
                 </h3>
               </Row>
               <Row>
                 <h5
+                  id='h5VetClinic'
                   style={{
                     textAlign: "left",
                   }}
@@ -156,9 +171,10 @@ function VetCategory() {
               </Row>
               <Row>
                 <p
+                  id='pVetClinicAddress'
                   style={{
                     textAlign: "left",
-                    fontSize: 13,
+
                   }}
                 >
                   {vetclinic.vet_address}

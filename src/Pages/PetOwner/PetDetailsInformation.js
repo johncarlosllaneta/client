@@ -27,6 +27,7 @@ import { hostUrl } from "../../Components/Host";
 import { FormatDate } from "../../Components/FormatDateTime";
 import { apps } from "../../Components/base";
 import { BiWindows } from "react-icons/bi";
+import "../../css/PetDetailsInformation.css";
 
 import DogVaccineChart from "../../Images/DogVaccineChart.png";
 import CatVaccineChart from "../../Images/CatVaccineChart.png";
@@ -200,7 +201,7 @@ function PetDetailsInformation(props) {
   return (
     <div
       style={{
-        width: "100vw",
+
         height: 'auto',
         marginTop: 70,
         backgroundColor: "#F1F9FC",
@@ -427,42 +428,40 @@ function PetDetailsInformation(props) {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          marginLeft: 50,
-          marginBottom: 20,
+
+
+          padding: 20
         }}
       >
-        <Button
-          href="/pets"
-          style={{
-            backgroundColor: "#3BD2E3",
-            width: "5vw",
-            borderRadius: 50,
-            borderStyle: "none",
-            marginLeft: 30,
-            marginTop: 30,
-            borderColor: "#FFFFFF",
-          }}
-        >
-          Back
-        </Button>
+        <div>
+          <Button
+            id='buttonBack'
+            onClick={() => {
+              window.location.href = '/pets'
+            }}
 
-        <Button
-          style={{
-            backgroundColor: "#3BD2E3",
-            width: "10vw",
-            borderRadius: 50,
-            borderStyle: "none",
-            marginRight: 80,
-            marginTop: 30,
-          }}
-          onClick={() => {
-            handleShow();
-          }}
-        >
-          Vaccination Guide
-        </Button>
+
+          >
+            Back
+          </Button>
+        </div>
+        <div>
+          <Button
+            id='buttonGuide'
+
+            onClick={() => {
+              handleShow();
+            }}
+          >
+            Vaccination Guide
+          </Button>
+        </div>
       </div>
+
+      {/* Web */}
       <Container
+
+        id='containerWeb'
         style={{
           backgroundColor: "white",
           width: "100vw",
@@ -644,6 +643,213 @@ function PetDetailsInformation(props) {
                   borderStyle: "none",
                   marginLeft: 30,
                   marginTop: 30,
+                }}
+                onClick={() => {
+                  handleShow2();
+                }}
+              >
+                Edit Profile
+              </Button>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+
+
+
+      <Container
+
+        id='containerMobile'
+        style={{
+          backgroundColor: "white",
+          width: 300,
+
+          boxShadow:
+            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+          justifyContent: 'start'
+        }}
+      >
+        <Row>
+          <Col>
+            <Row>
+              <BsFillInfoCircleFill
+                onClick={handleClick}
+                style={{
+                  color: "#0A94A4",
+                  fontSize: 30,
+                  cursor: "pointer",
+                  marginLeft: 100,
+                  marginTop: 20,
+                }}
+              />
+              <Overlay
+                show={showToolTip}
+                target={target}
+                placement="bottom-start"
+                container={ref.current}
+                containerPadding={20}
+              >
+                <Popover id="popover-contained">
+                  <Popover.Header as="h3">
+                    <strong>Helper</strong>
+                  </Popover.Header>
+                  <Popover.Body>
+                    <h5
+                      style={{
+                        color: "#3BD2E3",
+                      }}
+                    >
+                      Pet Details
+                    </h5>
+                    <p> This page is for viewing your pet's details.</p>
+                    <h5
+                      style={{
+                        color: "#3BD2E3",
+                      }}
+                    >
+                      Health Card
+                    </h5>
+                    <p>
+                      Health Card contains information about the past
+                      appointments of the pet.
+                    </p>
+                    <h5
+                      style={{
+                        color: "#3BD2E3",
+                      }}
+                    >
+                      Vaccine Card
+                    </h5>
+                    <p>
+                      Vaccine Card contains information about the vaccine
+                      history of the pet.
+                    </p>
+                  </Popover.Body>
+                </Popover>
+              </Overlay>
+            </Row>
+          </Col>
+          <Col>
+            {/* Pet Picture */}
+            <Avatar
+              src={updatePetPicture}
+              name={updatePetName}
+              size={150}
+              round
+              style={{
+
+              }}
+            />
+          </Col>
+
+          <Col
+            md={6}>
+            {/* name and breed */}
+            <h3
+
+            >
+              <p
+                style={{
+                  fontSize: 50,
+
+                  color: "black",
+                }}
+              >
+                {" "}
+                {updatePetName}
+              </p>
+
+              <br />
+              <p
+                style={{
+                  marginTop: -50,
+                  color: "#19B9CC",
+                }}
+              >
+                {updateBreed}
+              </p>
+            </h3>
+          </Col>
+
+          <Col
+            xs={12}
+          >
+            {/* type of pet */}
+            <h3
+              style={{
+                textAlign: "left",
+                marginLeft: 30,
+              }}
+            >
+              <p
+                style={{
+                  fontSize: 20,
+
+                  color: "black",
+                }}
+              >
+                {" "}
+                Type of Pet:
+              </p>
+
+              <br />
+              <p
+                style={{
+                  fontSize: 15,
+                  marginTop: -50,
+                  color: "#19B9CC",
+                }}
+              >
+                {updateTypeOfPet}
+              </p>
+            </h3>
+          </Col>
+
+          <Col
+            xs={12}
+          >
+            {/* birthday */}
+            <h3
+              style={{
+                textAlign: "left",
+                marginLeft: 30,
+              }}
+            >
+              <p
+                style={{
+                  fontSize: 20,
+                  marginTop: 20,
+                  color: "black",
+                }}
+              >
+                {" "}
+                Birth Date:
+              </p>
+
+              <br />
+              <p
+                style={{
+                  fontSize: 15,
+                  marginTop: -50,
+                  color: "#19B9CC",
+                }}
+              >{`${birthday}`}</p>
+            </h3>
+          </Col>
+
+          <Col>
+            {/* action button */}
+
+            <Row>
+              <Button
+                style={{
+                  backgroundColor: "#19B9CC",
+                  width: 150,
+                  borderRadius: 50,
+                  borderStyle: "none",
+                  marginLeft: 30,
+                  marginBottom: 20
+
                 }}
                 onClick={() => {
                   handleShow2();

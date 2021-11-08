@@ -149,7 +149,7 @@ function App() {
     <div className="App"
       style={{
         backgroundColor: "#F1F9FC",
-        height: "100vh",
+
       }}
     >
       <Router>

@@ -30,7 +30,7 @@ function PetDetailsInformationMain() {
       {/* <div>
         <SideNavBar active={"pets"} />
       </div> */}
-
+      <NavBarHome />
       <div
         style={{
           backgroundColor: "#F1F9FC",
@@ -40,7 +40,7 @@ function PetDetailsInformationMain() {
 
 
 
-        <NavBarHome />
+
 
         <Row
 
@@ -51,6 +51,7 @@ function PetDetailsInformationMain() {
               justifyContent: 'center',
               backgroundColor: "#F1F9FC",
               height: "auto",
+              marginTop: 100
             }}
           >
             <PetDetailsInformation data={pet_id} />

@@ -4,6 +4,7 @@ import { Card } from "react-bootstrap";
 import Axios from "axios";
 
 import { hostUrl } from "../../Components/Host";
+import "../../css/AppointmentHomePage.css";
 
 function AppointmentHomePage(props) {
   const [counter, setcounter] = useState(0);
@@ -57,26 +58,35 @@ function AppointmentHomePage(props) {
     <div>
       <Card
         id="divContainer"
-        style={{ overflowX: "auto", height: 'auto', width: "100%" }}
+        style={{
+          display: "flex",
+          overflowX: "auto",
+          height: '20vh',
+          width: "100%",
+
+
+        }}
       >
         {appointment.map((val) => {
           return (
-            <div
-              style={{
-                width: '20vw'
-              }}
-            >
-              <Card id="item" style={{ margin: 10, width: '20vw', minWidth: 250 }}>
-                <h3 className="ml-4 mt-4" style={{ fontSize: '3vh', }}>{val.service_name}</h3>
-                <p className="ml-5 " style={{ fontSize: '2vh', }}>
-                  <strong>Date: </strong>{" "}
-                  {dateConvertion(val.date_scheduled.split("T")[0])}{" "}
-                </p>
-                <p className="ml-5 " style={{ fontSize: '2vh', }}>
-                  <strong>Time: </strong> {val.time_scheduled}{" "}
-                </p>
-              </Card>
-            </div>
+
+            <Card id="item" style={{
+              // margin: 10,
+              // width: '20vw',
+              // minWidth: 200,
+              // boxShadow:
+              //   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+            }}>
+              <h3 className="ml-4 mt-4" style={{ fontSize: '3vh', }}>{val.service_name}</h3>
+              <p className="ml-5 " style={{ fontSize: '2vh', }}>
+                <strong>Date: </strong>{" "}
+                {dateConvertion(val.date_scheduled.split("T")[0])}{" "}
+              </p>
+              <p className="ml-5 " style={{ fontSize: '2vh', }}>
+                <strong>Time: </strong> {val.time_scheduled}{" "}
+              </p>
+            </Card>
+
           );
         })}
       </Card>
