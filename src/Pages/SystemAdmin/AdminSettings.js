@@ -441,7 +441,7 @@ function AdminSettings(props) {
                       <Row>
                         <Form
                           noValidate
-                          validated={validated}
+                          validated={true}
                           onSubmit={changePassword}
                           style={{
                             width: 1800,
@@ -592,11 +592,7 @@ function AdminSettings(props) {
                       }}
                     >
                       <Row>
-                        <Form
-                          noValidate
-                          validated={validated}
-                          onSubmit={changeInfo}
-                        >
+                        <Form noValidate validated={true} onSubmit={changeInfo}>
                           <Form.Group as={Row} style={{ rowGap: 10 }}>
                             <Form.Label column sm="4">
                               Name
