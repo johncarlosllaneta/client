@@ -280,6 +280,10 @@ function ProductTable(props) {
     Axios.post(`${hostUrl}/product/delete/${product_id}`, {
       vetid: vet,
     });
+
+    Axios.get(`${hostUrl}/products/${vet}`).then((response) => {
+      setProduct(response.data);
+    });
   };
 
   const updateProductConfirmation = (e) => {
@@ -698,7 +702,7 @@ function ProductTable(props) {
           <Modal.Title>{viewTitle}</Modal.Title>
         </Modal.Header>
         <Row>
-          <Form noValidate validated={validated} onSubmit={updateProductConfirmation}>
+          <Form noValidate validated={true} onSubmit={updateProductConfirmation}>
             <Modal.Body>
               <Row>
                 <Col>
@@ -930,7 +934,7 @@ function ProductTable(props) {
         <Row>
           <Form
             noValidate
-            validated={validated}
+            validated={true}
             onSubmit={insertProductConfirmation}
           >
             <Modal.Body>

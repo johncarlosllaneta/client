@@ -20,6 +20,7 @@ import { hostUrl } from "../../Components/Host";
 import { IoMdAdd } from "react-icons/io";
 import { BiMinus } from "react-icons/bi";
 
+
 function Pharmacy() {
   let { vetid } = useParams();
 
@@ -102,6 +103,12 @@ function Pharmacy() {
   const handleCloseProductDetails = () => setShowProductDetails(false);
   const handleShowProductDetails = () => setShowProductDetails(true);
 
+
+  // Modal Controller Mobile
+  const [showProductDetailsMobile, setShowProductDetailsMobile] = useState(false);
+  const handleCloseProductDetailsMobile = () => setShowProductDetailsMobile(false);
+  const handleShowProductDetailsMobile = () => setShowProductDetailsMobile(true);
+
   // Modal Spinner Controller
   const [showSpinner, setShowSpinner] = useState(false);
   const handleCloseSpinner = () => setShowSpinner(false);
@@ -150,7 +157,9 @@ function Pharmacy() {
           <Row>
             <Col>
               {/* Image */}
-              <Image src={productImage} sizes={800} />
+              <Image src={productImage} style={{
+                width: 500
+              }} />
             </Col>
             <Col>
               {/* Content */}
@@ -260,6 +269,134 @@ function Pharmacy() {
         </Modal.Body>
       </Modal>
 
+      {/* Mobile Modal */}
+      <Modal
+        show={showProductDetailsMobile}
+        onHide={handleCloseProductDetailsMobile}
+        centered
+
+      >
+        <Modal.Body>
+          <Row>
+            <Col
+              style={{
+                display: 'flex',
+                justifyContent: 'center'
+              }}
+            >
+              {/* Image */}
+              <Image src={productImage} style={{
+                width: 300
+              }} />
+            </Col>
+            <Col>
+              {/* Content */}
+              <h1>{productName}</h1>
+              <div
+                style={{
+                  height: 100,
+                }}
+              >
+                <p>{productDescription}</p>
+              </div>
+
+              <div>
+                <strong>
+                  {" "}
+                  <p
+                    style={{
+                      color: "#3BD2E3",
+                      display: "inline",
+                    }}
+                  >
+                    {" "}
+                    Price:{" "}
+                  </p>
+                  <p
+                    style={{
+                      display: "inline",
+                    }}
+                  >
+                    {" "}
+                    ₱ {productPrice}.00
+                  </p>
+                </strong>
+              </div>
+
+              <div>
+                <strong>
+                  {" "}
+                  <p
+                    style={{
+                      color: "#3BD2E3",
+                      display: "inline",
+                    }}
+                  >
+                    {" "}
+                    Status:{" "}
+                  </p>
+                  <p
+                    style={{
+                      display: "inline",
+                    }}
+                  >
+                    {" "}
+                    {productQuantity !== 0 ? "Available" : "Not Available"} pcs.
+                    left
+                  </p>
+                </strong>
+              </div>
+
+              <Container
+                hidden={notToCart}
+                // hidden={false}
+                style={{}}
+              >
+                <Row>
+                  <Col>
+                    <Button
+                      variant="secondary"
+                      style={{
+                        width: "100%",
+                      }}
+                      onClick={(e) => {
+                        setaddToCart(false);
+                        setnotToCart(true);
+
+                        e.preventDefault();
+                      }}
+                    >
+                      Back
+                    </Button>
+                  </Col>
+                </Row>
+              </Container>
+
+              <Container
+                hidden={addToCart}
+                style={{
+                  marginTop: 30,
+                }}
+              >
+                <Row>
+                  <Col>
+                    <Button
+                      variant="secondary"
+                      onClick={handleCloseProductDetailsMobile}
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      Close
+                    </Button>
+                  </Col>
+                </Row>
+              </Container>
+            </Col>
+          </Row>
+        </Modal.Body>
+      </Modal>
+
       <NavBarAppointments />
 
       <div
@@ -288,7 +425,13 @@ function Pharmacy() {
         </div>
       </div>
 
-      <Row>
+
+
+
+
+      <Row
+        id='rowWeb'
+      >
         <Col>
           <Container
             style={{
@@ -491,6 +634,208 @@ function Pharmacy() {
                           setproductPrice(val.price);
                           setproductQuantity(val.status);
                           handleShowProductDetails();
+                        }}
+                        style={{
+                          backgroundColor: "#3BD2E3",
+                          borderColor: "white",
+                          marginTop: 5,
+                          marginRight: -15,
+                        }}
+                      >
+                        View Product
+                      </Button>
+                    </Container>
+                  </div>
+                );
+              })}
+            </div>
+          </Container>
+        </Col>
+      </Row>
+
+
+
+      <Row
+        id='rowMobile'
+      >
+        <Col>
+          <Container
+            style={{
+              backgroundColor: "white",
+              boxShadow:
+                "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+              height: 500,
+              marginTop: 10,
+              paddingTop: 50,
+              width: 350
+            }}
+          >
+            <Container>
+              <h5
+                style={{
+                  color: "#696969",
+                  fontWeight: "bold",
+                  display: "inline",
+
+                  fontSize: 40,
+                }}
+              >
+                Pharmacy
+              </h5>
+            </Container>
+            {/*Menus */}
+            <div
+              style={{
+                height: "5vh",
+              }}
+            >
+              <Row>
+                <Col>
+                  <div
+                    style={{
+                      width: 250,
+                    }}
+                  >
+                    <Form.Group
+                      as={Row}
+                      controlId="formHorizontalEmail"
+                      style={{
+                        marginTop: 0,
+                        marginLeft: 30,
+                      }}
+                    >
+                      <Form.Control
+                        type="text"
+                        placeholder="Search"
+                        onChange={(e) => setq(e.target.value)}
+                      />
+                    </Form.Group>
+                  </div>
+                </Col>
+
+
+              </Row>
+            </div>
+
+            {/* Content */}
+
+            <div
+              style={{
+                width: "100%",
+                height: "70%",
+                backgroundColor: "grey",
+                marginTop: 10,
+                borderRadius: 30,
+                display: "flex",
+                justifyContent: 'center',
+                overflowY: "auto",
+                maxWidth: "100%",
+                flexWrap: "wrap",
+                rowGap: 40,
+                columnGap: 5,
+              }}
+            >
+              {search(pharmacy).map((val) => {
+                return (
+                  <div
+                    style={{
+                      backgroundColor: "white",
+                      boxShadow:
+                        "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                      height: 275,
+                      width: 200,
+                      margin: 25,
+                    }}
+                  >
+                    <Container>
+                      <Image
+                        src={val.medicine_image}
+                        height={100}
+                        style={{
+                          marginTop: 20,
+                        }}
+                      />
+                    </Container>
+
+                    <div
+                      style={{
+                        height: 60,
+                        padding: 5,
+                      }}
+                    >
+                      <p
+                        style={{
+                          maxWidth: "100%",
+                          display: "-webkit-box",
+                          WebkitBoxOrient: "vertical",
+                          WebkitLineClamp: 2,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {val.medicine_name}
+                      </p>
+                    </div>
+
+                    <div
+                      style={{
+                        textAlign: "left",
+                      }}
+                    >
+                      <p
+                        style={{
+                          color: "#3BD2E3",
+                          display: "inline",
+                          marginLeft: 10,
+                        }}
+                      >
+                        {" "}
+                        Price:{" "}
+                      </p>
+                      <p
+                        style={{
+                          display: "inline",
+                        }}
+                      >
+                        {" "}
+                        ₱ {val.price}.00
+                      </p>
+                    </div>
+
+                    <div
+                      style={{
+                        textAlign: "right",
+                        marginRight: 10,
+                        marginBottom: -5,
+                      }}
+                    >
+                      <p
+                        style={{
+                          display: "inline",
+                          fontSize: 12,
+                        }}
+                      >
+                        {" "}
+                        {val.status !== 0 ? "Available" : "Not Available"}{" "}
+                      </p>
+                    </div>
+
+                    <Container
+                      style={{
+                        textAlign: "left",
+                        display: "flex",
+                        justifyContent: "flex-end",
+                      }}
+                    >
+                      <Button
+                        onClick={() => {
+                          setproductID(val.medicine_id);
+                          setproductImage(val.medicine_image);
+                          setproductName(val.medicine_name);
+                          setproductDescription(val.medicine_description);
+                          setproductPrice(val.price);
+                          setproductQuantity(val.status);
+                          handleShowProductDetailsMobile();
                         }}
                         style={{
                           backgroundColor: "#3BD2E3",

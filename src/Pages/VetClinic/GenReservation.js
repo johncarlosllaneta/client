@@ -270,7 +270,20 @@ const GenReservation = (props) => {
         manufacturer: manufacturer,
         vaccineNumber: vaccineNumber,
       });
-      finishAppointment();
+      Axios.put(`${hostUrl}/vetclinic/appointment/done/${appointmentID}`).then(
+        (response) => {
+
+        }
+      );
+      Axios.post(`${hostUrl}/notification/appointment`, {
+        appointment_id: appointmentID,
+        service_id: notifService_id,
+        status: "Done",
+      });
+      Axios.get(`${hostUrl}/general/appointment/${id}`).then((response) => {
+        setappointment(response.data);
+      });
+
       handleCloseVaccinationModal();
     }
 

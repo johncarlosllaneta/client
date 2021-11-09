@@ -424,7 +424,7 @@ const PharmacyTab = (props) => {
         <Row>
           <Form
             noValidate
-            validated={validated}
+            validated={true}
             onSubmit={insertMedicineConfirmation}
           >
             <Modal.Body>
@@ -629,7 +629,7 @@ const PharmacyTab = (props) => {
         </Modal.Header>
         <Row>
 
-          <Form noValidate validated={validated} onSubmit={updateMedicineConfirmation} >
+          <Form noValidate validated={true} onSubmit={updateMedicineConfirmation} >
             <Modal.Body>
 
 
