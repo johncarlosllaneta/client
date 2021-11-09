@@ -29,14 +29,16 @@ const Lobby = ({
       }}
     >
       <div
-        style={{
-          backgroundColor: "white",
-          boxShadow:
-            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-          width: "30vw",
-          height: "50vh",
-          padding: 20,
-        }}
+        style={
+          {
+            backgroundColor: "white",
+            boxShadow:
+              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+            width: '30vw',
+            height: 'auto',
+            paddingBottom: 50
+          }
+        }
       >
         <form onSubmit={handleSubmit}>
           <Image
