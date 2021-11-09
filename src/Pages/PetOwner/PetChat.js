@@ -17,8 +17,7 @@ import { IoIosSend } from "react-icons/io";
 
 import Axios from "axios";
 import ScrollableFeed from "react-scrollable-feed";
-import "../../css/PetChat.css"
-
+import "../../css/PetChat.css";
 
 function PetChat() {
   const [vetId, setvetId] = useState();
@@ -136,7 +135,7 @@ function PetChat() {
       vetid: vetId,
       user: 1,
       message: messageSent,
-    }).then((response) => { });
+    }).then((response) => {});
     setValidated(true);
     setmessageSent("");
     refreshMessage();
@@ -154,20 +153,14 @@ function PetChat() {
       style={{
         backgroundColor: "#ECEFF2",
         height: "100vh",
-        paddingTop: 110
+        paddingTop: 110,
       }}
     >
       <NavBarAppointments />
 
       {/* Web */}
-      <div id='rowWeb'
-
-      >
-        <div
-          style={{
-
-          }}
-        >
+      <div id="rowWeb">
+        <div style={{}}>
           <div
             style={{
               width: "20%",
@@ -176,7 +169,6 @@ function PetChat() {
               margin: 0,
               padding: 0,
               height: "auto",
-
             }}
           >
             {/* Vet Clinic   */}
@@ -186,13 +178,12 @@ function PetChat() {
                 backgroundColor: "white",
                 // marginTop: 10,
                 // paddingTop: 10,
-                height: "85vh",
+                height: "87.5vh",
                 // paddingLeft: 10,
                 // paddingRight: 10,
-
               }}
             >
-              <Row style={{}}>
+              <Row>
                 <Container
                   style={{
                     display: "flex",
@@ -304,20 +295,20 @@ function PetChat() {
                                 />
                               </Col>
 
-                              <Col md={9}
+                              <Col
+                                md={9}
                                 style={{
-                                  alignItems: 'center',
-                                  paddingTop: 10
+                                  alignItems: "center",
+                                  paddingTop: 10,
                                 }}
                               >
                                 {/*Description */}
 
                                 <div
                                   style={{
-
                                     width: "auto",
-                                    display: 'flex',
-                                    alignItems: 'center',
+                                    display: "flex",
+                                    alignItems: "center",
                                     cursor: "pointer",
                                   }}
                                 >
@@ -329,7 +320,6 @@ function PetChat() {
                                   >
                                     {val.vet_name}
                                   </h4>
-
                                 </div>
                                 <h6>Vet Clinic</h6>
                               </Col>
@@ -344,17 +334,15 @@ function PetChat() {
           </div>
 
           <div
-
             style={{
               width: "80%",
               border: "1px",
               float: "left",
               margin: 0,
               padding: 0,
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'stretch'
-
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "stretch",
             }}
           >
             {/* Chat treads */}
@@ -366,11 +354,9 @@ function PetChat() {
                 // paddingTop: 10,
                 // width: '120vw',
                 width: "100%",
-                height: '85vh',
+                height: "87.5vh",
                 padding: 20,
                 borderLeft: "2px solid black",
-
-
               }}
             >
               <Row>
@@ -459,7 +445,6 @@ function PetChat() {
                     <div></div>
                   )}
                 </Container>
-
               </Row>
 
               <Row>
@@ -471,7 +456,6 @@ function PetChat() {
                     padding: 20,
                   }}
                 >
-
                   <ScrollableFeed>
                     {messageCounter !== 0 ? (
                       messages.map((val) => {
@@ -676,9 +660,7 @@ function PetChat() {
       </div>
 
       {/* Mobile */}
-      <div
-        id='rowMobile'
-      >
+      <div id="rowMobile">
         <Container
           style={{
             textAlign: "left",
@@ -736,7 +718,7 @@ function PetChat() {
             ></hr>
             <div
               style={{
-                overflowY: 'auto'
+                overflowY: "auto",
               }}
             >
               {/* List of Vet clinic */}
@@ -750,7 +732,7 @@ function PetChat() {
                           height: 100,
                           backgroundColor: "white",
                           cursor: "pointer",
-                          padding: 10
+                          padding: 10,
                         }}
                         onClick={(event) => {
                           // event.preventDefault();
@@ -795,16 +777,13 @@ function PetChat() {
                         //     display: 'flex'
                         // }}
                         >
-
-                          <Col xs={3}
-
-                          >
+                          <Col xs={3}>
                             {/* Avatar */}
                             <div
                               style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center '
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center ",
                               }}
                             >
                               <Avatar
@@ -813,24 +792,20 @@ function PetChat() {
                                 round={true}
                                 size={80}
                                 style={{
-
                                   cursor: "pointer",
                                 }}
                               />
                             </div>
                           </Col>
                           {/*Description */}
-                          <Col xs={9}
+                          <Col
+                            xs={9}
                             style={{
-                              padding: 0
+                              padding: 0,
                             }}
                           >
-
-
                             <Container
                               style={{
-
-
                                 padding: 0,
                                 cursor: "pointer",
                               }}
@@ -839,7 +814,7 @@ function PetChat() {
                                 style={{
                                   color: "grey",
                                   cursor: "pointer",
-                                  marginTop: 10
+                                  marginTop: 10,
                                 }}
                               >
                                 {val.vet_name}
@@ -855,11 +830,7 @@ function PetChat() {
             </div>
           </Row>
         </Container>
-
       </div>
-
-
-
     </div>
   );
 }

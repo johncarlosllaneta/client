@@ -10,7 +10,7 @@ const Lobby = ({
   handleRoomNameChange,
   handleSubmit,
   connecting,
-  handleUsername
+  handleUsername,
 }) => {
   let { name } = useParams();
   // alert(name);
@@ -22,22 +22,21 @@ const Lobby = ({
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh'
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
       }}
     >
       <div
-        style={
-          {
-            backgroundColor: "white",
-            boxShadow:
-              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-            width: '30vw',
-            height: '40vh'
-          }
-        }
+        style={{
+          backgroundColor: "white",
+          boxShadow:
+            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+          width: "30vw",
+          height: "50vh",
+          padding: 20,
+        }}
       >
         <form onSubmit={handleSubmit}>
           <Image
@@ -52,7 +51,6 @@ const Lobby = ({
             style={{
               display: "flex",
               justifyContent: "center",
-
             }}
           >
             <h6
@@ -67,14 +65,8 @@ const Lobby = ({
             </h6>
           </Container>
           <div>
-            <Form.Text className="text-muted">
-              Video conference
-            </Form.Text>
-            <FloatingLabel
-
-              label="Participant Name"
-              className="mb-3"
-            >
+            <Form.Text className="text-muted">Video conference</Form.Text>
+            <FloatingLabel label="Participant Name" className="mb-3">
               <Form.Control
                 type="text"
                 id="field"
@@ -92,11 +84,7 @@ const Lobby = ({
           </div>
 
           <div>
-            <FloatingLabel
-
-              label="Room Name"
-              className="mb-3"
-            >
+            <FloatingLabel label="Room Name" className="mb-3">
               <Form.Control
                 type="text"
                 id="room"
@@ -106,7 +94,6 @@ const Lobby = ({
                 required
               />
             </FloatingLabel>
-
           </div>
 
           <Button
@@ -120,13 +107,14 @@ const Lobby = ({
               fontSize: 15,
               textAlign: "center",
             }}
-            type="submit" disabled={connecting}>
+            type="submit"
+            disabled={connecting}
+          >
             {connecting ? "Connecting" : "Join"}
           </Button>
         </form>
       </div>
-
-    </div >
+    </div>
   );
 };
 
