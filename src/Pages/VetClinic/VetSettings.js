@@ -150,7 +150,7 @@ const VetSettings = (props) => {
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
   useEffect(() => {
-    if (counter < 2) {
+    if (counter < 6) {
       var token = localStorage.getItem("ajwt");
       Axios.get(`${hostUrl}/home`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -178,13 +178,14 @@ const VetSettings = (props) => {
       }).then((response) => {
         // alert(response.data.message);
         if (response.data.message === "Update Successfully") {
-          // alert('logging in')
+          // alert("logging in");
           Axios.get(`${hostUrl}/vet/uploads`, {
             params: {
               email: user.email,
             },
           }).then((response) => {
             if (response.data.message === "Correct") {
+              // alert("logging in");
               localStorage.setItem("ajwt", response.data.accessToken);
               localStorage.setItem("rjwt", response.data.refreshToken);
               localStorage.setItem("isLogin", true);
@@ -1296,7 +1297,7 @@ const VetSettings = (props) => {
                                 type="text"
                                 value={vetName}
                                 placeholder="Vet Name"
-                                pattern="[a-zA-Z ]*$"
+                                pattern="^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _\\-]*$"
                                 minLength={5}
                                 required
                                 onChange={(e) => {

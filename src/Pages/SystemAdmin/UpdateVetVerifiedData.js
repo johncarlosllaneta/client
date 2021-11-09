@@ -131,7 +131,7 @@ function UpdateVetVerifiedData(props) {
                                 required
                                 maxLength={50}
                                 minLength={5}
-                                pattern="^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$"
+                                pattern="^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _\\-]*$"
                                 onChange={(e) => {
                                   setVet_Name(e.target.value);
                                 }}
