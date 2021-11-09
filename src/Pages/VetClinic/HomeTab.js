@@ -97,15 +97,17 @@ function HomeTab(props) {
   // alert(props.clinic.vetid);
   useEffect(() => {
     // setTimeout(() => {
+
     if (counter < 10) {
       axios
         .get(`${hostUrl}/vetclinic/dog/length/${user.vetid}`)
         .then((response) => {
+          // alert(response.data.dog);
           setnumberOfDog(response.data.dog);
         });
     }
     // }, 1000);
-  }, [numberOfDog]);
+  }, [user]);
 
   useEffect(() => {
     // setTimeout(() => {
@@ -113,11 +115,12 @@ function HomeTab(props) {
       axios
         .get(`${hostUrl}/vetclinic/cat/length/${user.vetid}`)
         .then((response) => {
+          // alert(response.data.cat)
           setnumberOfCat(response.data.cat);
         });
     }
     // }, 1000);
-  }, [numberOfCat]);
+  }, [user]);
 
   const series = [
     {

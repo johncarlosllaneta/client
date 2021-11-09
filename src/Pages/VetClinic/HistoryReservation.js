@@ -29,13 +29,13 @@ function HistoryReservation() {
 
   const [appointment, setappointment] = useState([]);
   useEffect(() => {
-    if (counter < 5) {
+    if (counter < 10) {
       Axios.get(`${hostUrl}/history/appointment/${id}`).then((response) => {
         setappointment(response.data);
       });
       setcounter(counter + 1);
     }
-  }, []);
+  }, [appointment]);
 
   function formatDate(dateString) {
     const options = { year: "numeric", month: "long", day: "numeric" };

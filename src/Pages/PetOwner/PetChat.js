@@ -17,6 +17,8 @@ import { IoIosSend } from "react-icons/io";
 
 import Axios from "axios";
 import ScrollableFeed from "react-scrollable-feed";
+import "../../css/PetChat.css"
+
 
 function PetChat() {
   const [vetId, setvetId] = useState();
@@ -134,7 +136,7 @@ function PetChat() {
       vetid: vetId,
       user: 1,
       message: messageSent,
-    }).then((response) => {});
+    }).then((response) => { });
     setValidated(true);
     setmessageSent("");
     refreshMessage();
@@ -151,29 +153,43 @@ function PetChat() {
     <div
       style={{
         backgroundColor: "#ECEFF2",
-        height: "90vh",
-        marginTop: 110,
+        height: "100vh",
+        paddingTop: 110
       }}
     >
       <NavBarAppointments />
 
-      <Row style={{}}>
-        <Row
+      {/* Web */}
+      <div id='rowWeb'
+
+      >
+        <div
           style={{
-            margin: 0,
+
           }}
         >
-          <Col sm={3}>
+          <div
+            style={{
+              width: "20%",
+              border: "1px",
+              float: "left",
+              margin: 0,
+              padding: 0,
+              height: "auto",
+
+            }}
+          >
             {/* Vet Clinic   */}
             <Container
               style={{
                 textAlign: "left",
                 backgroundColor: "white",
-                marginTop: 10,
-                paddingTop: 10,
-                height: "80vh",
-                paddingLeft: 10,
-                paddingRight: 10,
+                // marginTop: 10,
+                // paddingTop: 10,
+                height: "85vh",
+                // paddingLeft: 10,
+                // paddingRight: 10,
+
               }}
             >
               <Row style={{}}>
@@ -181,6 +197,7 @@ function PetChat() {
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
+
                     padding: 0,
                   }}
                 >
@@ -189,7 +206,7 @@ function PetChat() {
                       style={{
                         fontSize: 30,
                         color: "#19B9CC",
-                        marginTop: 30,
+                        marginTop: 70,
                       }}
                     >
                       Chats
@@ -206,7 +223,7 @@ function PetChat() {
                       href={"/"}
                       style={{
                         height: 40,
-                        marginTop: 15,
+                        marginTop: 50,
                         backgroundColor: "#19B9CC",
                         borderColor: "#19B9CC",
                       }}
@@ -215,128 +232,145 @@ function PetChat() {
                     </Button>
                   </Container>
                 </Container>
-                <hr
+                {/* <hr
                   style={{
-                    marginBottom: 0,
+                    marginTop: 40,
                   }}
-                ></hr>
+                ></hr> */}
 
                 {/* List of Vet clinic */}
+                <div style={{ padding: 0 }}>
+                  {thread.length !== 0 &&
+                    thread.map((val) => {
+                      return (
+                        <div style={{ padding: 0 }}>
+                          <Card
+                            style={{
+                              height: 100,
+                              backgroundColor: "white",
+                              cursor: "pointer",
+                            }}
+                            onClick={(event) => {
+                              // event.preventDefault();
+                              // setthreadId(val.thread_id);
 
-                {thread.length !== 0 &&
-                  thread.map((val) => {
-                    return (
-                      <div>
-                        <Card
-                          style={{
-                            height: 100,
-                            backgroundColor: "white",
-                            cursor: "pointer",
-                          }}
-                          onClick={(event) => {
-                            // event.preventDefault();
-                            // setthreadId(val.thread_id);
+                              // alert(threadId)
 
-                            // alert(threadId)
+                              setactiveThread(val.thread_id);
+                              console.log(activeThread);
+                              // activeThread = val;
+                              // console.log(activeThread);
+                              setconvoImg(val.vet_picture);
+                              setconvoName(val.vet_name);
+                              setconvoCallerId(val.callerId);
+                              // alert(convoCallerId);
 
-                            setactiveThread(val.thread_id);
-                            console.log(activeThread);
-                            // activeThread = val;
-                            // console.log(activeThread);
-                            setconvoImg(val.vet_picture);
-                            setconvoName(val.vet_name);
-                            setconvoCallerId(val.callerId);
-                            // alert(convoCallerId);
+                              setmessageActiveChecker(false);
 
-                            setmessageActiveChecker(false);
+                              temp = val.thread_id;
+                              setactiveChat(true);
+                              setthreadId(val.thread_id);
 
-                            temp = val.thread_id;
-                            setactiveChat(true);
-                            setthreadId(val.thread_id);
+                              setvetId(val.vetid);
+                              // alert(temp);
 
-                            setvetId(val.vetid);
-                            // alert(temp);
+                              Axios.post(
+                                `${hostUrl}/talktovet/vetclinic/messages`,
+                                {
+                                  thread_id: temp,
+                                }
+                              ).then((response) => {
+                                setmessages(response.data);
+                                messageConvo = response.data;
+                                setmessageCounter(response.data.length);
+                              });
+                              // alert(messageCounter);
+                              console.log(messages);
+                            }}
+                          >
+                            <Row>
+                              <Col md={3}>
+                                {/* Avatar */}
 
-                            Axios.post(
-                              `${hostUrl}/talktovet/vetclinic/messages`,
-                              {
-                                thread_id: temp,
-                              }
-                            ).then((response) => {
-                              setmessages(response.data);
-                              messageConvo = response.data;
-                              setmessageCounter(response.data.length);
-                            });
-                            // alert(messageCounter);
-                            console.log(messages);
-                          }}
-                        >
-                          <Row>
-                            <Col md={3}>
-                              {/* Avatar */}
+                                <Avatar
+                                  name={val.vet_name}
+                                  src={val.vet_picture}
+                                  round={true}
+                                  size={80}
+                                  style={{
+                                    marginTop: 10,
+                                    cursor: "pointer",
+                                  }}
+                                />
+                              </Col>
 
-                              <Avatar
-                                name={val.vet_name}
-                                src={val.vet_picture}
-                                round={true}
-                                size={80}
+                              <Col md={9}
                                 style={{
-                                  marginTop: 10,
-                                  cursor: "pointer",
-                                }}
-                              />
-                            </Col>
-
-                            <Col md={9}>
-                              {/*Description */}
-
-                              <Container
-                                style={{
-                                  marginLeft: -50,
-                                  width: "20vw",
-                                  paddingTop: 20,
-                                  cursor: "pointer",
+                                  alignItems: 'center',
+                                  paddingTop: 10
                                 }}
                               >
-                                <h4
+                                {/*Description */}
+
+                                <div
                                   style={{
-                                    color: "grey",
+
+                                    width: "auto",
+                                    display: 'flex',
+                                    alignItems: 'center',
                                     cursor: "pointer",
                                   }}
                                 >
-                                  {val.vet_name}
-                                </h4>
+                                  <h4
+                                    style={{
+                                      color: "grey",
+                                      cursor: "pointer",
+                                    }}
+                                  >
+                                    {val.vet_name}
+                                  </h4>
+
+                                </div>
                                 <h6>Vet Clinic</h6>
-                              </Container>
-                            </Col>
-                          </Row>
-                        </Card>
-                      </div>
-                    );
-                  })}
+                              </Col>
+                            </Row>
+                          </Card>
+                        </div>
+                      );
+                    })}
+                </div>
               </Row>
             </Container>
-          </Col>
+          </div>
 
-          <Col
-            sm={9}
+          <div
+
             style={{
-              width: "70vw",
+              width: "80%",
+              border: "1px",
+              float: "left",
+              margin: 0,
               padding: 0,
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'stretch'
+
             }}
           >
             {/* Chat treads */}
-            <Container
+            <div
               style={{
                 textAlign: "left",
                 backgroundColor: "white",
-                marginTop: 10,
-                paddingTop: 10,
-                paddingLeft: -5,
-                paddingRight: -5,
+                // marginTop: 10,
+                // paddingTop: 10,
+                // width: '120vw',
+                width: "100%",
+                height: '85vh',
+                padding: 20,
+                borderLeft: "2px solid black",
 
-                height: "80vh",
-                width: "140vw",
+
               }}
             >
               <Row>
@@ -425,18 +459,19 @@ function PetChat() {
                     <div></div>
                   )}
                 </Container>
-                <hr></hr>
+
               </Row>
 
               <Row>
                 <Container
                   style={{
                     backgroundColor: "whitesmoke",
-                    height: "60vh",
+                    height: "65vh",
                     overflow: "hidden",
                     padding: 20,
                   }}
                 >
+
                   <ScrollableFeed>
                     {messageCounter !== 0 ? (
                       messages.map((val) => {
@@ -635,10 +670,196 @@ function PetChat() {
                   </Row>
                 </Form>
               </Row>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile */}
+      <div
+        id='rowMobile'
+      >
+        <Container
+          style={{
+            textAlign: "left",
+            backgroundColor: "white",
+            marginTop: 10,
+            paddingTop: 10,
+            height: "100vh",
+            paddingLeft: 10,
+            paddingRight: 10,
+          }}
+        >
+          <Row style={{}}>
+            <Container
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                padding: 0,
+              }}
+            >
+              <Container>
+                <h4
+                  style={{
+                    fontSize: 30,
+                    color: "#19B9CC",
+                    marginTop: 30,
+                  }}
+                >
+                  Chats
+                </h4>
+              </Container>
+              <Container
+                style={{
+                  display: "flex",
+                  justifyContent: "end",
+                  alignItems: "center",
+                }}
+              >
+                <Button
+                  href={"/"}
+                  style={{
+                    height: 40,
+                    marginTop: 15,
+                    backgroundColor: "#19B9CC",
+                    borderColor: "#19B9CC",
+                  }}
+                >
+                  Home
+                </Button>
+              </Container>
             </Container>
-          </Col>
-        </Row>
-      </Row>
+            <hr
+              style={{
+                marginBottom: 0,
+              }}
+            ></hr>
+            <div
+              style={{
+                overflowY: 'auto'
+              }}
+            >
+              {/* List of Vet clinic */}
+
+              {thread.length !== 0 &&
+                thread.map((val) => {
+                  return (
+                    <div>
+                      <Card
+                        style={{
+                          height: 100,
+                          backgroundColor: "white",
+                          cursor: "pointer",
+                          padding: 10
+                        }}
+                        onClick={(event) => {
+                          // event.preventDefault();
+                          // setthreadId(val.thread_id);
+
+                          // alert(threadId)
+
+                          setactiveThread(val.thread_id);
+                          console.log(activeThread);
+                          // activeThread = val;
+                          // console.log(activeThread);
+                          setconvoImg(val.vet_picture);
+                          setconvoName(val.vet_name);
+                          setconvoCallerId(val.callerId);
+                          // alert(convoCallerId);
+
+                          setmessageActiveChecker(false);
+
+                          temp = val.thread_id;
+                          setactiveChat(true);
+                          setthreadId(val.thread_id);
+
+                          setvetId(val.vetid);
+                          // alert(temp);
+
+                          Axios.post(
+                            `${hostUrl}/talktovet/vetclinic/messages`,
+                            {
+                              thread_id: temp,
+                            }
+                          ).then((response) => {
+                            setmessages(response.data);
+                            messageConvo = response.data;
+                            setmessageCounter(response.data.length);
+                          });
+                          // alert(messageCounter);
+                          console.log(messages);
+                        }}
+                      >
+                        <Row
+                        // style={{
+                        //     display: 'flex'
+                        // }}
+                        >
+
+                          <Col xs={3}
+
+                          >
+                            {/* Avatar */}
+                            <div
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center '
+                              }}
+                            >
+                              <Avatar
+                                name={val.vet_name}
+                                src={val.vet_picture}
+                                round={true}
+                                size={80}
+                                style={{
+
+                                  cursor: "pointer",
+                                }}
+                              />
+                            </div>
+                          </Col>
+                          {/*Description */}
+                          <Col xs={9}
+                            style={{
+                              padding: 0
+                            }}
+                          >
+
+
+                            <Container
+                              style={{
+
+
+                                padding: 0,
+                                cursor: "pointer",
+                              }}
+                            >
+                              <h4
+                                style={{
+                                  color: "grey",
+                                  cursor: "pointer",
+                                  marginTop: 10
+                                }}
+                              >
+                                {val.vet_name}
+                              </h4>
+                              <h6>Vet Clinic</h6>
+                            </Container>
+                          </Col>
+                        </Row>
+                      </Card>
+                    </div>
+                  );
+                })}
+            </div>
+          </Row>
+        </Container>
+
+      </div>
+
+
+
     </div>
   );
 }

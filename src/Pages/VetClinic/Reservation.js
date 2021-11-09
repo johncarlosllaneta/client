@@ -28,7 +28,7 @@ const Reservation = () => {
   const [counter, setcounter] = useState(0);
   const [notif, setnotif] = useState([]);
   useEffect(() => {
-    if (counter < 6) {
+    if (counter < 10) {
       Axios.get(`${hostUrl}/vetclinic/notification/${vetid}`).then(
         (response) => {
           setnotif(response.data);

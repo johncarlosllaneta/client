@@ -277,7 +277,22 @@ function NavBarHome() {
               >
                 <BsChatDotsFill />
               </div>
+            </a>
 
+            <a
+              href="/petOwner/talkVet/threads"
+
+              id="talkToVet"
+              style={{
+                color: "grey",
+                fontWeight: 'bolder',
+                padding: 0,
+                textDecoration: 'none',
+                marginRight: 50,
+
+                alignItems: 'center'
+              }}
+            >
               <div
                 id='talkToVetWord'
                 style={{

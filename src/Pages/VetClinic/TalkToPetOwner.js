@@ -69,7 +69,7 @@ const TalkToPetOwner = () => {
         }
       }
     }
-  }, [threadList]);
+  }, [user]);
 
   const [thread, setthread] = useState([]);
   useEffect(() => {
@@ -84,7 +84,7 @@ const TalkToPetOwner = () => {
     refreshMessage();
 
     // console.log(thread);
-  }, [thread, counter]);
+  }, [user]);
 
   function refreshMessage() {
     Axios.post(`${hostUrl}/talktovet/vetclinic/messages`, {
@@ -122,7 +122,7 @@ const TalkToPetOwner = () => {
   const [messageSent, setmessageSent] = useState();
 
   const sendMessage = (e) => {
-    e.preventDefault();
+
 
     Axios.post(`${hostUrl}/talktovet/vetclinic/messages/sent`, {
       thread_id: threadId,
@@ -130,10 +130,15 @@ const TalkToPetOwner = () => {
       vetid: user.vetid,
       user: 2,
       message: messageSent,
-    }).then((response) => {});
+    }).then((response) => { });
     setValidated(true);
     setmessageSent("");
-    refreshMessage();
+    Axios.post(`${hostUrl}/talktovet/vetclinic/messages`, {
+      thread_id: threadId,
+    }).then((response) => {
+      setmessages(response.data);
+    });
+    e.preventDefault();
   };
 
   var aspectratioheight = window.screen.height;

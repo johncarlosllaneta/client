@@ -35,6 +35,8 @@ import AppointmentHistoryMain from "./Pages/PetOwner/AppointmentHistoryMain";
 import CartHistoryMain from "./Pages/PetOwner/CartHistoryMain";
 import Calling from "./Components/video-call/Calling";
 import HomePage from "./Pages/PetOwner/HomePage";
+import PetChatMobile from "./Pages/PetOwner/PetChatMobile";
+import PetChatMessagesMobile from "./Pages/PetOwner/PetChatMessagesMobile";
 
 function App() {
   const [isLogin, setisLogin] = useState("");
@@ -128,6 +130,8 @@ function App() {
           children={<PetServDetail />}
         />
         <Route path="/petOwner/talkVet" exact children={<PetChat />} />
+        <Route path="/petOwner/talkVet/threads" exact children={<PetChatMobile />} />
+        <Route path="/petOwner/talkVet/threads/messages" exact children={<PetChatMessagesMobile />} />
 
         <Route path="/video conference/:name" exact children={<Calling />} />
         <Route path="/petOwner/talkVet" exact children={<PetChat />} />
@@ -148,8 +152,10 @@ function App() {
   return (
     <div className="App"
       style={{
-        backgroundColor: "#F1F9FC",
-
+        height: '100%',
+        width: '100%',
+        padding: 0,
+        overflow: 'hidden'
       }}
     >
       <Router>
