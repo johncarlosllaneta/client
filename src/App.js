@@ -38,6 +38,10 @@ import HomePage from "./Pages/PetOwner/HomePage";
 import PetChatMobile from "./Pages/PetOwner/PetChatMobile";
 import PetChatMessagesMobile from "./Pages/PetOwner/PetChatMessagesMobile";
 
+import PrivacyPolicy from "./Pages/General/PrivacyPolicy";
+import ContactUs from "./Pages/General/ContactUs";
+import AboutUsPage from "./Pages/General/AboutUsPage";
+
 function App() {
   const [isLogin, setisLogin] = useState("");
   const [role, setRole] = useState([]);
@@ -171,9 +175,20 @@ function App() {
               <Route path="/vetReg" component={RegistrationVet} />
               <Route path="/terms&condition" component={TermsAndCondition} />
               <Route
-                path="/video conference/:name"
+                path="/privacy policy"
                 exact
-                children={<Calling />}
+                children={<PrivacyPolicy />}
+              />
+
+              <Route
+                path="/about us"
+                exact
+                children={<AboutUsPage />}
+              />
+              <Route
+                path="/contact us"
+                exact
+                children={<ContactUs />}
               />
             </Switch>
           </div>

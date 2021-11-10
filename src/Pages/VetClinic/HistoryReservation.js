@@ -30,7 +30,7 @@ function HistoryReservation() {
   const [appointment, setappointment] = useState([]);
   useEffect(() => {
     if (counter < 10) {
-      Axios.get(`${hostUrl}/history/appointment/${id}`).then((response) => {
+      Axios.get(`${hostUrl}/history/appointment/${vetid}`).then((response) => {
         setappointment(response.data);
       });
       setcounter(counter + 1);

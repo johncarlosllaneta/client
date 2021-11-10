@@ -28,7 +28,7 @@ const ReqReservation = (props) => {
   const [notifService_id, setnotifService_id] = useState();
   const [appointment, setappointment] = useState([]);
   useEffect(() => {
-    if (counter < 10) {
+    if (counter < 6) {
       Axios.get(`${hostUrl}/pending/appointment/${id}`).then((response) => {
         setappointment(response.data);
       });
@@ -36,11 +36,11 @@ const ReqReservation = (props) => {
     }
   }, [appointment]);
 
-  useEffect(() => {
-    if (counter < 10) {
-      Axios.put(`${hostUrl}/expiration/pending/appointment/${id}`);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (counter < 6) {
+  //     Axios.put(`${hostUrl}/expiration/pending/appointment/${id}`);
+  //   }
+  // }, []);
 
   const [appointmentDetails, setappointmentDetails] = useState([]);
   function viewDetails(appointment_id) {
