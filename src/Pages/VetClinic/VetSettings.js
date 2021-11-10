@@ -74,6 +74,18 @@ const VetSettings = (props) => {
   const [vetAddress, setvetAddress] = useState();
   const [vetContactNumber, setvetContactNumber] = useState();
 
+  const [showInfo, setShowInfo] = useState(false);
+  const handleCloseInfo = () => setShowInfo(false);
+  const handleShowInfo = () => setShowInfo(true);
+
+  const [showOffers, setshowOffers] = useState(false);
+  const handleCloseOffers = () => setshowOffers(false);
+  const handleShowOffer = () => setshowOffers(true);
+
+  const [showHours, setshowHours] = useState(false);
+  const handleCloseHours = () => setshowHours(false);
+  const handleShowHours = () => setshowHours(true);
+
   const enableServiceChecker = (status) => {
     setservicesEnable(status);
   };
@@ -165,42 +177,52 @@ const VetSettings = (props) => {
 
   function UpdateVetClinic(e) {
     const form = e.currentTarget;
-    if (form.checkValidity() === false) {
+    if (form.checkValidity() == false) {
       e.preventDefault();
       e.stopPropagation();
     } else {
-      Axios.put(`${hostUrl}/vetclinic/update/${vetId}`, {
-        vet_name: vetName,
-        email: vetEmail,
-        vet_address: vetAddress,
-        vet_contact_number: vetContactNumber,
-        oldnumber: user.vet_contact_number,
-      }).then((response) => {
-        // alert(response.data.message);
-        if (response.data.message === "Update Successfully") {
-          // alert("logging in");
-          Axios.get(`${hostUrl}/vet/uploads`, {
-            params: {
-              email: user.email,
-            },
-          }).then((response) => {
-            if (response.data.message === "Correct") {
-              // alert("logging in");
-              localStorage.setItem("ajwt", response.data.accessToken);
-              localStorage.setItem("rjwt", response.data.refreshToken);
-              localStorage.setItem("isLogin", true);
-              localStorage.setItem("role", response.data.role);
-              if (response.data.role === 2) {
-                localStorage.setItem("vetStatus", response.data.vetStatus);
-                localStorage.setItem("id", response.data.id);
-              }
-              window.location.href = `/vet/settings`;
-            }
-          });
-        }
-      });
+      e.preventDefault();
+      handleShowInfo();
     }
     setValidated(true);
+  }
+
+  function SaveVetInfo() {
+    Axios.put(`${hostUrl}/vetclinic/update/${vetId}`, {
+      vet_name: vetName,
+      email: vetEmail,
+      vet_address: vetAddress,
+      vet_contact_number: vetContactNumber,
+      oldnumber: user.vet_contact_number,
+    }).then((response) => {
+      // alert(response.data.message);
+      if (response.data.message === "Update Successfully") {
+        // alert("logging in");
+        Axios.get(`${hostUrl}/vet/uploads`, {
+          params: {
+            email: user.email,
+          },
+        }).then((response) => {
+          if (response.data.message === "Correct") {
+            // alert("logging in");
+            localStorage.setItem("ajwt", response.data.accessToken);
+            localStorage.setItem("rjwt", response.data.refreshToken);
+            localStorage.setItem("isLogin", true);
+            localStorage.setItem("role", response.data.role);
+            if (response.data.role === 2) {
+              localStorage.setItem("vetStatus", response.data.vetStatus);
+              localStorage.setItem("id", response.data.id);
+            }
+
+            handleCloseOffers();
+            ToastUpdate();
+            setTimeout(() => {
+              window.location.href = `/vet/settings`;
+            }, 3000);
+          }
+        });
+      }
+    });
   }
 
   function editVetHours() {
@@ -297,6 +319,9 @@ const VetSettings = (props) => {
   }
 
   function UpdateVetHours() {
+    handleShowHours();
+  }
+  function SaveVetHours() {
     var monday;
     var tuesday;
     var wednesday;
@@ -371,7 +396,11 @@ const VetSettings = (props) => {
               localStorage.setItem("vetStatus", response.data.vetStatus);
               localStorage.setItem("id", response.data.id);
             }
-            window.location.href = `/vet/settings`;
+            handleCloseOffers();
+            ToastUpdate();
+            setTimeout(() => {
+              window.location.href = `/vet/settings`;
+            }, 3000);
           }
         });
       }
@@ -434,6 +463,9 @@ const VetSettings = (props) => {
   }
 
   function UpdateVetOffers() {
+    handleShowOffer();
+  }
+  function SaveVetOffers() {
     Axios.put(`${hostUrl}/vetclinic/offers/update/${vetId}`, {
       enableProduct: enableProduct,
       enablePharmacy: enablePharmacy,
@@ -459,7 +491,11 @@ const VetSettings = (props) => {
               localStorage.setItem("vetStatus", response.data.vetStatus);
               localStorage.setItem("id", response.data.id);
             }
-            window.location.href = `/vet/settings`;
+            handleClose();
+            ToastUpdate();
+            setTimeout(() => {
+              window.location.href = `/vet/settings`;
+            }, 3000);
           }
         });
       }
@@ -525,10 +561,10 @@ const VetSettings = (props) => {
               localStorage.setItem("id", response.data.id);
             }
           }
-          handleClose();
+          handleCloseHours();
           ToastUpdate();
           setTimeout(() => {
-            window.location.href = `${hostUrlWeb}/vet/settings`;
+            window.location.href = `/vet/settings`;
           }, 3000);
         });
       }
@@ -575,6 +611,94 @@ const VetSettings = (props) => {
               setvetId(user.vetid);
               setvetEmail(user.email);
               savePassword();
+            }}
+          >
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal
+        show={showInfo}
+        onHide={handleCloseInfo}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Edit information</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure, you want to change your information?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseInfo}>
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              setvetName(user.vet_name);
+              setvetEmail(user.email);
+              setvetAddress(user.vet_address);
+              setvetContactNumber(user.vet_contact_number);
+              setvetId(user.vet_admin_id);
+              SaveVetInfo();
+            }}
+          >
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal
+        show={showOffers}
+        onHide={handleCloseOffers}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Vet Offers</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure, you want to change your veterinary clinic offers?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseOffers}>
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              editVetOffers();
+              SaveVetOffers();
+            }}
+          >
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal
+        show={showHours}
+        onHide={handleCloseHours}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Vet Hours</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure, you want to change your veterinary clinic working hours?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseHours}>
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              editVetHours();
+              SaveVetHours();
             }}
           >
             Save Changes
@@ -1264,7 +1388,7 @@ const VetSettings = (props) => {
                           setvetId(user.vet_admin_id);
                         }}
                       >
-                        Edit Credentials
+                        Edit Information
                       </h5>
                       <IoChevronForward
                         style={{ fontSize: 30, cursor: "pointer" }}

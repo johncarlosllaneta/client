@@ -107,7 +107,7 @@ function AdminSettings(props) {
           handleCloseInfo();
           ToastUpdate();
           setTimeout(() => {
-            window.location.href = `${hostUrlWeb}/admin/settings`;
+            window.location.href = `/admin/settings`;
           }, 3000);
         });
       }

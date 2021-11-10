@@ -42,8 +42,8 @@ function Home() {
   }, [vetRatings]);
 
   // categories: ["Dogs", "Cats", "Fish", "Birds", "Turle", "Hamster"],
-  const [numberOfDog, setnumberOfDog] = useState();
-  const [numberOfCat, setnumberOfCat] = useState();
+  const [numberOfDog, setnumberOfDog] = useState(0);
+  const [numberOfCat, setnumberOfCat] = useState(0);
 
   useEffect(() => {
     if (counter < 6) {

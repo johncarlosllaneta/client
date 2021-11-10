@@ -24,11 +24,11 @@ function PetOwnerSettings() {
   const [editCred, setEditCred] = useState("none");
   const [vetOffers, setVetOffers] = useState("none");
   const [handleChecker, sethandleChecker] = useState(true);
+  const [validated, setValidated] = useState(false);
 
   const [password, setpassword] = useState();
   const [newPass, setnewPass] = useState();
   const [confirmPass, setconfirmPass] = useState();
-  const [validated, setValidated] = useState(false);
 
   const [petOwnerId, setpetOwnerId] = useState("");
   const [name, setname] = useState();
@@ -39,6 +39,10 @@ function PetOwnerSettings() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [showInfo, setShowInfo] = useState(false);
+  const handleCloseInfo = () => setShowInfo(false);
+  const handleShowInfo = () => setShowInfo(true);
 
   const [currentPasswordChecker, setcurrentPasswordChecker] = useState(false);
 
@@ -89,7 +93,7 @@ function PetOwnerSettings() {
     }
   }, [counter, user]);
 
-  function UpdatePetOwner() {
+  function SavePetOwnerInfo() {
     Axios.put(`${hostUrl}/petowner/update/${petOwnerId}`, {
       updatePetOwnerName: name,
       updatePetOwnerContactNumber: contactNumber,
@@ -109,10 +113,27 @@ function PetOwnerSettings() {
             localStorage.setItem("isLogin", true);
             localStorage.setItem("role", response.data.role);
           }
-          window.location.href = `${hostUrlWeb}/petOwner/settings`;
+
+          handleCloseInfo();
+          ToastUpdate();
+          setTimeout(() => {
+            window.location.href = `/petOwner/settings`;
+          }, 3000);
         });
       }
     });
+  }
+
+  function UpdatePetOwner(e) {
+    const form = e.currentTarget;
+    if (form.checkValidity() == false) {
+      e.preventDefault();
+      e.stopPropagation();
+    } else {
+      e.preventDefault();
+      handleShowInfo();
+    }
+    setValidated(true);
   }
 
   const [passwordVerify, setpasswordVerify] = useState("none");
@@ -184,7 +205,7 @@ function PetOwnerSettings() {
           handleClose();
           ToastUpdate();
           setTimeout(() => {
-            window.location.href = `${hostUrlWeb}/petOwner/settings`;
+            window.location.href = `/petOwner/settings`;
           }, 3000);
         });
       }
@@ -197,7 +218,6 @@ function PetOwnerSettings() {
         backgroundRepeat: "repeat",
         padding: 20,
         height: "100vh",
-
       }}
     >
       <ToastContainer />
@@ -228,20 +248,51 @@ function PetOwnerSettings() {
         </Modal.Footer>
       </Modal>
 
+      <Modal
+        show={showInfo}
+        onHide={handleCloseInfo}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Edit information</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure, you want to change your information?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseInfo}>
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              setname(user.name);
+              setaddress(user.address);
+              setcontactNumber(user.contact_number);
+              setemail(user.email);
+              setpetOwnerId(user.pet_owner_id);
+              SavePetOwnerInfo();
+            }}
+          >
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <div
         style={{
-          marginBottom: 50
+          marginBottom: 50,
         }}
       >
         <Container
           style={{
-            height: 'auto',
-            maxHeight: 'auto',
+            height: "auto",
+            maxHeight: "auto",
             maxWidth: "100%",
             borderRadius: 30,
             backgroundColor: "#FFFFFF",
             padding: 20,
-
           }}
         >
           <Row>
@@ -366,7 +417,6 @@ function PetOwnerSettings() {
                               id="textMobile"
                               controlId="floatingInputPassword"
                               label="Current Password"
-
                               className="mb-3"
                             >
                               <Form.Control
@@ -436,9 +486,9 @@ function PetOwnerSettings() {
                                     }}
                                   />
                                   <Form.Text id="passwordHelpBlock" muted>
-                                    Your password must contain at least one number
-                                    and one uppercase and lowercase letter, and at
-                                    least 8 or more characters
+                                    Your password must contain at least one
+                                    number and one uppercase and lowercase
+                                    letter, and at least 8 or more characters
                                   </Form.Text>
                                   <Form.Control.Feedback type="invalid">
                                     Please provide a valid password.
@@ -477,8 +527,8 @@ function PetOwnerSettings() {
                                     }}
                                   />
                                   <Form.Control.Feedback type="invalid">
-                                    Your confirm password must be the same as new
-                                    password.
+                                    Your confirm password must be the same as
+                                    new password.
                                   </Form.Control.Feedback>
                                 </FloatingLabel>
                               </Form.Group>
@@ -493,8 +543,7 @@ function PetOwnerSettings() {
                               <Button
                                 type="submit"
                                 style={{
-
-                                  width: '100%',
+                                  width: "100%",
                                   backgroundColor: "#19B9CC",
                                 }}
                               >
@@ -552,7 +601,7 @@ function PetOwnerSettings() {
                       }}
                     >
                       <Row>
-                        <Form>
+                        <Form validated={true} onSubmit={UpdatePetOwner}>
                           <Form.Group as={Row} style={{ rowGap: 10 }}>
                             <Form.Label column sm="4">
                               Name
@@ -561,6 +610,8 @@ function PetOwnerSettings() {
                               <Form.Control
                                 type="text"
                                 value={name}
+                                pattern="[a-zA-Z][a-zA-Z ]+[a-zA-Z]$"
+                                required
                                 placeholder="Name"
                                 onChange={(e) => {
                                   setname(e.target.value);
@@ -575,6 +626,7 @@ function PetOwnerSettings() {
                               <Form.Control
                                 type="email"
                                 value={email}
+                                required
                                 placeholder="Email Address"
                                 onChange={(e) => {
                                   setemail(e.target.value);
@@ -589,6 +641,7 @@ function PetOwnerSettings() {
                               <Form.Control
                                 type="text"
                                 value={address}
+                                required
                                 placeholder="Address"
                                 onChange={(e) => {
                                   setaddress(e.target.value);
@@ -602,6 +655,7 @@ function PetOwnerSettings() {
                             <Col sm="7">
                               <Form.Control
                                 type="text"
+                                required
                                 value={contactNumber}
                                 placeholder="Contact Number"
                                 onChange={(e) => {
@@ -617,14 +671,14 @@ function PetOwnerSettings() {
                               }}
                             >
                               <Button
+                                type="submit"
                                 style={{
-
-                                  width: '100%',
+                                  width: "100%",
                                   backgroundColor: "#19B9CC",
                                 }}
-                                onClick={() => {
-                                  UpdatePetOwner();
-                                }}
+                                // onClick={() => {
+                                // UpdatePetOwner();
+                                // }}
                               >
                                 SAVE
                               </Button>
