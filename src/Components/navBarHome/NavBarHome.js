@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Badge, Col, Nav, Navbar, NavDropdown, Row, Image, Container } from "react-bootstrap";
+import {
+  Badge,
+  Col,
+  Nav,
+  Navbar,
+  NavDropdown,
+  Row,
+  Image,
+  Container,
+} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { BsChatDotsFill } from "react-icons/bs";
@@ -16,6 +25,7 @@ function NavBarHome() {
   var name;
   var toast;
   var accountImg;
+  const [numberNewThread, setnumberNewThread] = useState(0);
 
   const [counter, setcounter] = useState(0);
   useEffect(() => {
@@ -30,6 +40,13 @@ function NavBarHome() {
       }).then((response) => {
         setuser(response.data.result[0]);
         // console.log(user);
+      });
+
+      Axios.get(
+        `${hostUrl}/petOwner/messages/notification/length/${user.pet_owner_id}`
+      ).then((response) => {
+        setnumberNewThread(response.data.view);
+        // alert(response.data.view);
       });
       setcounter(counter + 1);
     }
@@ -155,7 +172,6 @@ function NavBarHome() {
   var landingPageName = {
     fontWeight: "bold",
     color: colors.Blue,
-
   };
 
   const logoutUser = () => {
@@ -219,36 +235,39 @@ function NavBarHome() {
     return month + " " + day + ", " + year;
   }
 
+  function viewing() {
+    Axios.put(`${hostUrl}/petOwner/messages/notification/${user.pet_owner_id}`);
+  }
   return (
-
     <Navbar
-      collapseOnSelect expand="lg"
+      collapseOnSelect
+      expand="lg"
       style={{
         backgroundColor: "white",
-        display: 'flex',
-        justifyContent: 'space-around'
+        display: "flex",
+        justifyContent: "space-around",
       }}
       fixed="top"
     >
-
       <Navbar.Brand href="/" style={landingPageName}>
         {" "}
         <Image src={logo} style={logocss} /> TERRAVET
       </Navbar.Brand>
 
-
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" style={{
-        margin: 10
-      }} />
-      <Navbar.Collapse id="responsive-navbar-nav" className='responsiveNavBar'
-
-      >
-        <Nav id='navBarHome'
-        // style={{
-        //   display: "flex",
-        //   justifyContent: 'flex-end',
-        //   // alignSelf: 'end'
-        // }}
+      <Navbar.Toggle
+        aria-controls="responsive-navbar-nav"
+        style={{
+          margin: 10,
+        }}
+      />
+      <Navbar.Collapse id="responsive-navbar-nav" className="responsiveNavBar">
+        <Nav
+          id="navBarHome"
+          // style={{
+          //   display: "flex",
+          //   justifyContent: 'flex-end',
+          //   // alignSelf: 'end'
+          // }}
         >
           <div
           // style={{
@@ -260,50 +279,102 @@ function NavBarHome() {
           >
             <a
               href="/petOwner/talkVet"
-
               id="talkToVet"
               style={{
                 color: "grey",
-                fontWeight: 'bolder',
+                fontWeight: "bolder",
                 padding: 0,
-                textDecoration: 'none',
+                textDecoration: "none",
                 marginRight: 50,
 
-                alignItems: 'center'
+                alignItems: "center",
               }}
+              onClick={viewing}
             >
-              <div
-                id='talkToVetIcon'
-              >
-                <BsChatDotsFill />
+              <div id="talkToVetIcon">
+                <div>
+                  {String(numberNewThread) === "0" ? (
+                    <Badge bg="primary" pill style={{ fontSize: 25 }}>
+                      <BsChatDotsFill
+                        style={{ fontSize: 30, color: "whitesmoke" }}
+                      />
+                    </Badge>
+                  ) : (
+                    <Badge
+                      bg="primary"
+                      pill
+                      style={{ fontSize: 30, color: "whitesmoke" }}
+                    >
+                      <BsChatDotsFill
+                        style={{
+                          fontSize: 30,
+                          color: "whitesmoke",
+                          marginTop: 10,
+                        }}
+                      />
+                      {String(numberNewThread)}
+                    </Badge>
+                  )}
+                </div>
               </div>
             </a>
 
             <a
               href="/petOwner/talkVet/threads"
-
               id="talkToVet"
               style={{
                 color: "grey",
-                fontWeight: 'bolder',
+                fontWeight: "bolder",
                 padding: 0,
-                textDecoration: 'none',
-                marginRight: 50,
+                textDecoration: "none",
+                // marginRight: 50,
 
-                alignItems: 'center'
+                alignItems: "center",
               }}
+              onClick={viewing}
             >
               <div
-                id='talkToVetWord'
+                id="talkToVetWord"
                 style={{
-                  textAlign: 'center'
+                  textAlign: "center",
                 }}
               >
-                <p
-
-                >TALK TO VET</p>
+                {String(numberNewThread) === "0" ? (
+                  <Badge
+                    bg="primary"
+                    pill
+                    style={{ fontSize: 20, paddingBottom: 0 }}
+                  >
+                    <p style={{ fontSize: 15, color: "whitesmoke" }}>
+                      TALK TO VET
+                    </p>
+                  </Badge>
+                ) : (
+                  <Badge
+                    bg="primary"
+                    pill
+                    style={{
+                      fontSize: 20,
+                      color: "whitesmoke",
+                      paddingBottom: 0,
+                    }}
+                  >
+                    <div style={{ flexDirection: "row", display: "flex" }}>
+                      <p
+                        style={{
+                          fontSize: 15,
+                          color: "whitesmoke",
+                          marginTop: 10,
+                          padding: 5,
+                        }}
+                      >
+                        TALK TO VET
+                      </p>
+                      {String(numberNewThread)}
+                    </div>
+                  </Badge>
+                )}
               </div>
-
             </a>
           </div>
           <NavDropdown style={{ fontSize: 20, marginRight: 50 }} title={name}>
@@ -312,7 +383,6 @@ function NavBarHome() {
           </NavDropdown>
         </Nav>
       </Navbar.Collapse>
-
     </Navbar>
   );
 }

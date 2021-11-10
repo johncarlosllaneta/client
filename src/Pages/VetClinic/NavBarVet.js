@@ -12,6 +12,7 @@ function NavBarVet() {
   const [user, setuser] = useState([]);
   const [userole, setuserole] = useState("");
   const [counter, setcounter] = useState(0);
+  const [numberNewThread, setnumberNewThread] = useState(0);
   var name;
   // var toast;
   var accountImg;
@@ -28,6 +29,13 @@ function NavBarVet() {
       }).then((response) => {
         setuser(response.data.result[0]);
         // console.log(user);
+      });
+
+      Axios.get(
+        `${hostUrl}/vetclinic/messages/notification/length/${user.vetid}`
+      ).then((response) => {
+        setnumberNewThread(response.data.view);
+        // alert(response.data.view);
       });
       setcounter(counter + 1);
     }
@@ -184,21 +192,9 @@ function NavBarVet() {
 
   var circleAvatar = accountImg;
 
-  // function tConvert(time) {
-  //   // Check correct time format and split into components
-  //   time = time
-  //     .toString()
-  //     .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
-  //   if (time.length > 1) {
-  //     // If time format correct
-  //     time = time.slice(1); // Remove full string match value
-  //     time[5] = +time[0] < 12 ? "AM" : "PM"; // Set AM/PM
-  //     time[0] = +time[0] % 12 || 12; // Adjust hours
-  //   }
-  //   return time.join(""); // return adjusted time or original string
-  // }
-
+  function viewing() {
+    Axios.put(`${hostUrl}/vetclinic/messages/notification/${user.vetid}`);
+  }
   return (
     <Navbar
       expand="lg"
@@ -227,8 +223,26 @@ function NavBarVet() {
           className="mb-2"
           id="talkToVet"
           style={{ color: "grey", fontSize: 30 }}
+          onClick={viewing}
         >
-          <BsChatDotsFill />
+          <div>
+            {String(numberNewThread) === "0" ? (
+              <Badge bg="primary" pill style={{ fontSize: 25 }}>
+                <BsChatDotsFill style={{ fontSize: 30, color: "whitesmoke" }} />
+              </Badge>
+            ) : (
+              <Badge
+                bg="primary"
+                pill
+                style={{ fontSize: 30, color: "whitesmoke" }}
+              >
+                <BsChatDotsFill
+                  style={{ fontSize: 30, color: "whitesmoke", marginTop: 10 }}
+                />
+                {String(numberNewThread)}
+              </Badge>
+            )}
+          </div>
         </a>
 
         <NavDropdown

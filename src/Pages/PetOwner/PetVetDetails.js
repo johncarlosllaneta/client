@@ -101,7 +101,7 @@ function PetVetDetails() {
 
   function timeConvertion(time) {
     // alert(time);
-    if (time == '' || time == undefined) {
+    if (time == "" || time == undefined) {
       return "Closed";
     }
     const timeString12hr = new Date(
@@ -129,7 +129,7 @@ function PetVetDetails() {
     }
   }, [counter, user]);
 
-  const talkToVet = () => { };
+  const talkToVet = () => {};
 
   var aspectratioheight = window.screen.height;
   var aspectratiowidth = window.screen.width;
@@ -140,21 +140,25 @@ function PetVetDetails() {
     value = "100%";
   }
 
-  const [talkToVetExist, settalkToVetExist] = useState(true);
+  const [talkToVetExist, settalkToVetExist] = useState(false);
   useEffect(() => {
+    // alert(user.pet_owner_id + " " + vetid);
     Axios.post(`${hostUrl}/talktovet/thread/exist`, {
       pet_owner_id: user.pet_owner_id,
-      vetid: vetid
+      vetid: vetid,
     }).then((response) => {
       // alert(response.data.exist);
-      settalkToVetExist(true);
-    })
-  }, [user])
+      if (response.data.exist == true) {
+        settalkToVetExist(true);
+      } else {
+        settalkToVetExist(false);
+      }
+    });
+  }, [user]);
   // alert(aspectratiowidth);
   return (
     <div
       style={{
-
         zoom: value,
       }}
     >
@@ -164,21 +168,16 @@ function PetVetDetails() {
           backgroundImage: `url(${background})`,
           height: "auto",
           padding: 0,
-          marginTop: 150
+          marginTop: 150,
         }}
       >
-
-
-        <Row
-
-        >
+        <Row>
           <Col>
             <Container>
               <h1
                 style={{
                   color: "grey",
                   textAlign: "center",
-
                 }}
               >
                 Veterinary Clinic Details
@@ -190,17 +189,12 @@ function PetVetDetails() {
             <Container
               style={{
                 display: "flex",
-                height: '100%',
+                height: "100%",
                 justifyContent: "flex-end",
-                alignContent: 'center'
+                alignContent: "center",
               }}
             >
-              <div
-                id='divPetVetDetails'
-
-              >
-
-
+              <div id="divPetVetDetails">
                 <Button
                   href="/petOwner/Appointment"
                   style={{
@@ -211,8 +205,7 @@ function PetVetDetails() {
                       "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                     // display: "inline",
                     minWidth: 150,
-                    width: '10vw',
-
+                    width: "10vw",
                   }}
                 >
                   Back
@@ -222,50 +215,43 @@ function PetVetDetails() {
           </Col>
         </Row>
 
-
-
-
         <Row
           style={{
-            marginTop: 15
+            marginTop: 15,
           }}
         >
           <Container
-            id='containerVetDetailsHolder'
-          // style={{
-          //   display: 'flex',
-          //   justifyContent: 'center',
-          //   height: 'auto',
-          //   marginBottom: 20
-          // }}
+            id="containerVetDetailsHolder"
+            // style={{
+            //   display: 'flex',
+            //   justifyContent: 'center',
+            //   height: 'auto',
+            //   marginBottom: 20
+            // }}
           >
             <Card
               style={{
                 backgroundColor: "white",
                 height: "auto",
                 width: "80vw",
-                minWidth: 300
-
+                minWidth: 300,
               }}
             >
               <Row>
-                <Col xs={8}
-                // style={{
-                //   height: 'auto'
-                // }}
+                <Col
+                  xs={8}
+                  // style={{
+                  //   height: 'auto'
+                  // }}
                 >
-                  <Container
-                    id='containerVetDetails'
-
-                  >
+                  <Container id="containerVetDetails">
                     <Row>
                       <Col>
                         {/* avatar */}
                         <Avatar
-                          className='avatarVetDetails'
+                          className="avatarVetDetails"
                           src={vetclinic.vet_picture}
                           name={vetclinic.vet_name}
-
                           round
                           style={{
                             marginTop: 20,
@@ -273,15 +259,15 @@ function PetVetDetails() {
                         />
                       </Col>
 
-                      <Col >
+                      <Col>
                         {/* vet name */}
                         <Row>
                           <h3
                             style={{
                               textAlign: "left",
                               marginTop: 15,
-                              fontSizeAdjust: 'inherit',
-                              fontSize: '1.5rem',
+                              fontSizeAdjust: "inherit",
+                              fontSize: "1.5rem",
                             }}
                           >
                             {vetclinic.vet_name}
@@ -291,8 +277,8 @@ function PetVetDetails() {
                           <h5
                             style={{
                               textAlign: "left",
-                              fontSizeAdjust: 'inherit',
-                              fontSize: '1.5vh',
+                              fontSizeAdjust: "inherit",
+                              fontSize: "1.5vh",
                             }}
                           >
                             Veterinary Clinic
@@ -302,7 +288,7 @@ function PetVetDetails() {
                           <p
                             style={{
                               textAlign: "left",
-                              fontSize: '2vh',
+                              fontSize: "2vh",
                             }}
                           >
                             {vetclinic.vet_address}
@@ -310,24 +296,23 @@ function PetVetDetails() {
                         </Row>
                       </Col>
 
-
                       <Col
                         style={{
-                          display: 'flex',
-                          justifyContent: 'center'
+                          display: "flex",
+                          justifyContent: "center",
                         }}
                       >
                         <div
                           style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
                           }}
                         >
                           <div
                             style={{
-                              display: 'flex',
-                              justifyContent: 'center'
+                              display: "flex",
+                              justifyContent: "center",
                             }}
                           >
                             {/* view shop */}
@@ -340,67 +325,60 @@ function PetVetDetails() {
                                     borderRadius: 30,
                                     borderWidth: 5,
                                     borderColor: "#FFFFFF",
-                                    width: '5vw',
+                                    width: "5vw",
                                     minWidth: 150,
-                                    fontSize: '2vh',
+                                    fontSize: "2vh",
                                     backgroundColor: "#3BD2E3",
-
-
                                   }}
                                 >
                                   Visit Vet
                                 </Button>
                               </Col>
-                              <Col
-                                hidden={talkToVetExist}
-                              >
+                              <Col hidden={talkToVetExist}>
                                 <Button
-
                                   onClick={() => {
-                                    Axios.post(`${hostUrl}/talktovet/thread/creating`, {
-                                      pet_owner_id: user.pet_owner_id,
-                                      vetid: vetid,
-                                    }).then((response) => {
-                                      window.location.replace("/petOwner/talkVet");
+                                    Axios.post(
+                                      `${hostUrl}/talktovet/thread/creating`,
+                                      {
+                                        pet_owner_id: user.pet_owner_id,
+                                        vetid: vetid,
+                                      }
+                                    ).then((response) => {
+                                      window.location.replace(
+                                        "/petOwner/talkVet"
+                                      );
                                     });
                                   }}
                                   style={{
                                     borderRadius: 30,
                                     borderWidth: 5,
                                     borderColor: "#FFFFFF",
-                                    width: '5vw',
+                                    width: "5vw",
                                     minWidth: 150,
-                                    fontSize: '2vh',
+                                    fontSize: "2vh",
                                     backgroundColor: "#3BD2E3",
-
                                   }}
                                 >
                                   Talk to Vet
                                 </Button>
                               </Col>
                             </Row>
-
                           </div>
                         </div>
                       </Col>
                     </Row>
                   </Container>
 
-
                   {/* vet information */}
-                  <Row
-                    id='rowVetInformation'
-                  >
-                    <Col
-
-                    >
+                  <Row id="rowVetInformation">
+                    <Col>
                       <Row>
                         <h3
-                          id='h3VetDetailsEmail'
-                        // style={{
-                        //   fontSize: 25,
-                        //   fontWeight: "bold",
-                        // }}
+                          id="h3VetDetailsEmail"
+                          // style={{
+                          //   fontSize: 25,
+                          //   fontWeight: "bold",
+                          // }}
                         >
                           {vetclinic.email}
                         </h3>
@@ -486,11 +464,12 @@ function PetVetDetails() {
                 </Col>
 
                 <Col
-                  id='colRateAndFeedback'
+                  id="colRateAndFeedback"
                   style={{
-                    height: 'auto',
-                    width: '10vw',
-                  }}>
+                    height: "auto",
+                    width: "10vw",
+                  }}
+                >
                   {/* review and feedback */}
                   <Container>
                     <Card
@@ -526,16 +505,11 @@ function PetVetDetails() {
                       </div>
                     </Card>
                   </Container>
-
                 </Col>
               </Row>
               {/* vet information */}
-              <Row
-                id='rowVetInformationMobile'
-              >
-                <Col
-
-                >
+              <Row id="rowVetInformationMobile">
+                <Col>
                   <Row>
                     <h3
 
@@ -587,12 +561,12 @@ function PetVetDetails() {
 
                   <Row
                     style={{
-                      marginBottom: 20
+                      marginBottom: 20,
                     }}
                   >
                     <Col
                       style={{
-                        marginLeft: 30
+                        marginLeft: 30,
                       }}
                     >
                       {/* days */}
