@@ -109,8 +109,10 @@ const Room = ({ roomName, room, handleLogout }) => {
               <div
                 style={{
                   width: '50vw',
+                  minWidth: '30vw',
                   maxWidth: '90vh',
                   height: '68vh',
+                  minHeight: '30vh',
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',

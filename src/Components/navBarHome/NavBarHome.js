@@ -320,7 +320,7 @@ function NavBarHome() {
             </a>
 
             <a
-              href="/petOwner/talkVet/threads"
+              href="/petOwner/talkVet"
               id="talkToVet"
               style={{
                 color: "grey",

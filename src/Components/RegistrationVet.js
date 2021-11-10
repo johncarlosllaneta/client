@@ -244,44 +244,48 @@ function RegistrationVet() {
         setphoneNumberControllerNessage(false);
       } else {
         e.preventDefault();
-        Axios.post(`${hostUrl}/vetclinic/insert`, {
-          email: email,
-          password: password,
-          name: name,
-          address: houseNumber + " " + street + "," + city,
-          contactNumber: contactNumber,
-          vetPicture: imageUploadedUrl,
-          enableProduct: enableProduct,
-          enablePharmacy: enablePharmacy,
-          enableService: enableService,
-          enableConsultation: enableConsultation,
-          enableExamination: enableExamination,
-          enableGrooming: enableGrooming,
-          enableVaccination: enableVaccination,
-          enablePreventiveControls: enablePreventiveControls,
-          enableInHouseLab: enableInHouseLab,
-        }).then((response) => {
-          if (response.data.message === "Registered") {
-            Axios.post(`${hostUrl}/api/login`, {
-              email: email,
-              password: password,
-            }).then((response) => {
-              if (response.data.message == "Correct") {
-                localStorage.setItem("ajwt", response.data.accessToken);
-                localStorage.setItem("rjwt", response.data.refreshToken);
-                localStorage.setItem("isLogin", true);
-                localStorage.setItem("role", response.data.role);
-                if (response.data.role == 2) {
-                  localStorage.setItem("vetStatus", response.data.vetStatus);
-                  localStorage.setItem("id", response.data.id);
-                  Axios.post(`${hostUrl}/vetclinic/register/system/logs`, {
-                    name: name,
-                  });
+        navigator.geolocation.getCurrentPosition(function (position) {
+          Axios.post(`${hostUrl}/vetclinic/insert`, {
+            email: email,
+            password: password,
+            name: name,
+            address: houseNumber + " " + street + "," + city,
+            contactNumber: contactNumber,
+            vetPicture: imageUploadedUrl,
+            enableProduct: enableProduct,
+            enablePharmacy: enablePharmacy,
+            enableService: enableService,
+            enableConsultation: enableConsultation,
+            enableExamination: enableExamination,
+            enableGrooming: enableGrooming,
+            enableVaccination: enableVaccination,
+            enablePreventiveControls: enablePreventiveControls,
+            enableInHouseLab: enableInHouseLab,
+            longitude: position.coords.longitude,
+            latitude: position.coords.latitude,
+          }).then((response) => {
+            if (response.data.message === "Registered") {
+              Axios.post(`${hostUrl}/api/login`, {
+                email: email,
+                password: password,
+              }).then((response) => {
+                if (response.data.message == "Correct") {
+                  localStorage.setItem("ajwt", response.data.accessToken);
+                  localStorage.setItem("rjwt", response.data.refreshToken);
+                  localStorage.setItem("isLogin", true);
+                  localStorage.setItem("role", response.data.role);
+                  if (response.data.role == 2) {
+                    localStorage.setItem("vetStatus", response.data.vetStatus);
+                    localStorage.setItem("id", response.data.id);
+                    Axios.post(`${hostUrl}/vetclinic/register/system/logs`, {
+                      name: name,
+                    });
+                  }
+                  window.location.href = `/`;
                 }
-                window.location.href = `/`;
-              }
-            });
-          }
+              });
+            }
+          });
         });
       }
     }

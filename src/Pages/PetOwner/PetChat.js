@@ -17,7 +17,10 @@ import { IoIosSend } from "react-icons/io";
 
 import Axios from "axios";
 import ScrollableFeed from "react-scrollable-feed";
-import "../../css/PetChat.css";
+import "../../css/PetChat.css"
+import { IconButton } from "@mui/material";
+import { ArrowBack, ArrowBackIos, Send } from "@material-ui/icons";
+
 
 function PetChat() {
   const [vetId, setvetId] = useState();
@@ -120,7 +123,7 @@ function PetChat() {
 
   function timeConvertion(time) {
     var date = new Date(time);
-    return date.toLocaleTimeString();
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
 
   const [validated, setValidated] = useState(false);
@@ -135,7 +138,7 @@ function PetChat() {
       vetid: vetId,
       user: 1,
       message: messageSent,
-    }).then((response) => {});
+    }).then((response) => { });
     setValidated(true);
     setmessageSent("");
     refreshMessage();
@@ -147,6 +150,10 @@ function PetChat() {
   const callChecker = () => {
     setisBusy(true);
   };
+
+
+  const [mobileMessageController, setmobileMessageController] = useState(true);
+
 
   return (
     <div
@@ -660,12 +667,17 @@ function PetChat() {
       </div>
 
       {/* Mobile */}
-      <div id="rowMobile">
+      <div
+        id='rowMobile'
+
+      >
         <Container
+          hidden={!mobileMessageController}
+          // hidden={true}
           style={{
             textAlign: "left",
             backgroundColor: "white",
-            marginTop: 10,
+            marginTop: -40,
             paddingTop: 10,
             height: "100vh",
             paddingLeft: 10,
@@ -770,6 +782,7 @@ function PetChat() {
                           });
                           // alert(messageCounter);
                           console.log(messages);
+                          setmobileMessageController(!mobileMessageController);
                         }}
                       >
                         <Row
@@ -830,6 +843,361 @@ function PetChat() {
             </div>
           </Row>
         </Container>
+
+
+        {/* ------------- Messages --------------- */}
+
+        <div
+          hidden={mobileMessageController}
+          // hidden={false}
+          style={{
+            marginTop: -50
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'start'
+            }}
+          >
+            <IconButton color="primary" aria-label="return to thread"
+              onClick={() => {
+                setmobileMessageController(!mobileMessageController);
+              }}
+            >
+              <ArrowBackIos /> Return to thread
+            </IconButton>
+          </div>
+          <div
+
+            style={{
+              width: "100%",
+              margin: 0,
+              padding: 0,
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'stretch'
+
+            }}
+          >
+            {/* Chat treads */}
+            <div
+              style={{
+                textAlign: "left",
+                backgroundColor: "white",
+                // marginTop: 10,
+                // paddingTop: 10,
+                // width: '120vw',
+                width: "100%",
+                height: '85vh',
+                padding: 20,
+
+
+
+              }}
+            >
+              <Row>
+                <Container
+                  style={{
+                    backgroundColor: "white",
+                    height: 100,
+                  }}
+                >
+                  {activeThread !== undefined ? (
+                    <div>
+                      {/* vet details */}
+                      <Row>
+                        <Col
+                          xs={2}
+                          style={{
+
+                          }}
+                        >
+                          {/* Avatar */}
+
+                          <Avatar
+                            name={convoName}
+                            src={convoImg}
+                            round={true}
+                            size={50}
+                            style={{
+                              marginTop: 10,
+                            }}
+                          />
+                        </Col>
+
+                        <Col xs={10}>
+                          {/*Description */}
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <Container
+                              style={{
+
+
+                              }}
+                            >
+                              <h4
+                                style={{
+                                  color: "grey",
+                                  fontSize: 20
+                                }}
+                              >
+                                {convoName}
+                              </h4>
+                              <h6>Vet Clinic</h6>
+                            </Container>
+                          </div>
+                        </Col>
+                      </Row>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+                </Container>
+
+              </Row>
+
+              <Row>
+                <Container
+                  style={{
+                    backgroundColor: "whitesmoke",
+                    height: "65vh",
+                    overflow: "hidden",
+                  }}
+                >
+
+                  <ScrollableFeed>
+                    {messageCounter !== 0 ? (
+                      messages.map((val) => {
+                        let messagefloat = "";
+                        let messageImgs = "";
+
+                        if (val.user_message === 2) {
+                          messagefloat = "left";
+                          messageImgs = val.vet_picture;
+
+                          layoutMessage = (
+                            <div
+                              style={{
+                                marginBottom: 10,
+                              }}
+                            >
+                              <Row>
+                                <Container
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <p>{dateConvertion(val.created_time_date)}</p>
+                                </Container>
+                                <Row
+                                  style={{
+                                    float: messagefloat,
+                                    marginBottom: 10
+                                  }}
+                                >
+                                  <Col xs={3}>
+                                    <div
+                                      style={{
+                                        paddingLeft: 30,
+                                      }}
+                                    >
+                                      <Avatar
+                                        src={messageImgs}
+                                        name={val.vet_name}
+                                        size={30}
+                                        round
+                                      />
+                                    </div>
+                                  </Col>
+
+                                  <Col>
+                                    <Row>
+                                      <Card
+                                        style={{
+                                          backgroundColor: "white",
+                                          textAlign: "left",
+                                          maxWidth: 500,
+                                          float: "left",
+                                          padding: 15,
+                                          borderTopRightRadius: 30,
+                                          borderBottomLeftRadius: 30,
+                                          borderBottomRightRadius: 30,
+                                          marginBottom: 10
+                                        }}
+                                      >
+                                        <h4>{val.vet_name}</h4>
+                                        <p>{val.message_content}</p>
+                                        <p
+                                          style={{
+                                            fontSize: 12,
+
+                                          }}
+                                        >
+                                          {timeConvertion(val.created_time_date)}
+                                        </p>
+                                      </Card>
+                                    </Row>
+
+                                  </Col>
+                                </Row>
+                              </Row>
+                            </div>
+                          );
+                        } else {
+                          messagefloat = "right";
+                          messageImgs = val.profilePicture;
+                          layoutMessage = (
+                            <div
+                              style={{
+                                marginBottom: 10
+                              }}
+                            >
+                              <Row>
+                                <Container
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <p>{dateConvertion(val.created_time_date)}</p>
+                                </Container>
+
+                                <Row
+                                  style={{
+                                    float: messagefloat,
+                                  }}
+                                >
+                                  <Col>
+                                    <Row
+                                      style={{
+                                        float: "right",
+                                        marginBottom: 10
+                                      }}
+                                    >
+                                      <Card
+                                        style={{
+                                          backgroundColor: "white",
+                                          textAlign: "right",
+                                          maxWidth: 500,
+                                          float: "right",
+                                          padding: 15,
+                                          borderTopLeftRadius: 30,
+                                          borderBottomLeftRadius: 30,
+                                          borderBottomRightRadius: 30,
+                                          marginBottom: 10
+                                        }}
+                                      >
+                                        <h4>{val.name}</h4>
+                                        <p>{val.message_content}</p>
+                                        <p
+                                          style={{
+                                            fontSize: 12
+                                          }}
+                                        >
+                                          {timeConvertion(
+                                            val.created_time_date
+                                          )}
+                                        </p>
+                                      </Card>
+
+                                    </Row>
+                                  </Col>
+
+                                  <Col xs={3}>
+                                    <div
+                                      style={{
+                                        paddingRight: 30,
+                                      }}
+                                    >
+                                      <Avatar
+                                        src={messageImgs}
+                                        name={val.name}
+                                        size={30}
+                                        round
+                                      />
+                                    </div>
+                                  </Col>
+                                </Row>
+                              </Row>
+                            </div>
+                          );
+                        }
+
+                        return <div>{layoutMessage}</div>;
+                      })
+                    ) : (
+                      <div></div>
+                    )}
+                  </ScrollableFeed>
+                </Container>
+              </Row>
+
+              <div
+                style={{
+                  position: 'fixed',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  width: '100%',
+                  backgroundColor: 'white',
+
+                }}
+              >
+                <Form onSubmit={sendMessage}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+
+                    padding: 0,
+                    width: '100%',
+                  }}
+                >
+
+
+                  <Form.Control
+                    type="text"
+                    placeholder="Type a message here..."
+                    onChange={(e) => {
+                      setmessageSent(e.target.value);
+                    }}
+                    value={messageSent}
+                    required
+                    style={{
+                      borderRadius: 20,
+                      display: 'inline'
+                    }}
+                  />
+
+                  <IconButton color="primary" type="submit" aria-label="send"
+                    style={{
+                      display: 'inline'
+                    }}
+                    disabled={messageActiveChecker}
+                  >
+                    <Send style={{
+                      fontSize: 30,
+                      color: "#19B9CC",
+                      cursor: "pointer",
+                    }} />
+                  </IconButton>
+
+
+
+
+                </Form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
   );

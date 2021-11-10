@@ -16,6 +16,7 @@ import Axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { ToastDelete, ToastUpdate } from "../../Components/Toast";
 import { hostUrl, hostUrlWeb } from "../../Components/Host";
+import "../../css/PetOwnerSettings.css";
 
 function PetOwnerSettings() {
   const [changePass, setChangePass] = useState("none");
@@ -196,7 +197,7 @@ function PetOwnerSettings() {
         backgroundRepeat: "repeat",
         padding: 20,
         height: "100vh",
-        zoom: value,
+
       }}
     >
       <ToastContainer />
@@ -227,14 +228,20 @@ function PetOwnerSettings() {
         </Modal.Footer>
       </Modal>
 
-      <div>
+      <div
+        style={{
+          marginBottom: 50
+        }}
+      >
         <Container
           style={{
-            height: 850,
+            height: 'auto',
+            maxHeight: 'auto',
             maxWidth: "100%",
             borderRadius: 30,
             backgroundColor: "#FFFFFF",
             padding: 20,
+
           }}
         >
           <Row>
@@ -356,8 +363,10 @@ function PetOwnerSettings() {
                             }}
                           >
                             <FloatingLabel
+                              id="textMobile"
                               controlId="floatingInputPassword"
                               label="Current Password"
+
                               className="mb-3"
                             >
                               <Form.Control
@@ -390,108 +399,111 @@ function PetOwnerSettings() {
                           </div>
                         </Col>
                       </Form.Group>
-                      <Form
-                        noValidate
-                        validated={validated}
-                        onSubmit={changePassword}
-                      >
-                        <Form.Group as={Row} style={{ rowGap: 10 }}>
-                          <Form.Label column sm="4">
-                            New Password
-                          </Form.Label>
-                          <Col sm="7">
-                            <Form.Group
-                              style={{
-                                textAlign: "left",
-                              }}
-                            >
-                              <FloatingLabel
-                                controlId="floatingInputPassword"
-                                label="New Password"
-                                className="mb-3"
+                      <Row>
+                        <Form
+                          noValidate
+                          validated={validated}
+                          onSubmit={changePassword}
+                        >
+                          <Form.Group as={Row} style={{ rowGap: 10 }}>
+                            <Form.Label column sm="4">
+                              New Password
+                            </Form.Label>
+                            <Col sm="7">
+                              <Form.Group
+                                style={{
+                                  textAlign: "left",
+                                }}
                               >
-                                <Form.Control
-                                  style={{
-                                    height: 50,
-                                    backgroundColor: "white",
-                                  }}
-                                  type="password"
-                                  placeholder="Password"
-                                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                  title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-                                  required
-                                  onChange={(e) => {
-                                    setnewPass(e.target.value);
-                                  }}
-                                />
-                                <Form.Text id="passwordHelpBlock" muted>
-                                  Your password must contain at least one number
-                                  and one uppercase and lowercase letter, and at
-                                  least 8 or more characters
-                                </Form.Text>
-                                <Form.Control.Feedback type="invalid">
-                                  Please provide a valid password.
-                                </Form.Control.Feedback>
-                              </FloatingLabel>
-                            </Form.Group>
-                          </Col>
+                                <FloatingLabel
+                                  id="textMobile"
+                                  controlId="floatingInputPassword"
+                                  label="New Password"
+                                  className="mb-3"
+                                >
+                                  <Form.Control
+                                    style={{
+                                      height: 50,
+                                      backgroundColor: "white",
+                                    }}
+                                    type="password"
+                                    placeholder="Password"
+                                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                    title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                                    required
+                                    onChange={(e) => {
+                                      setnewPass(e.target.value);
+                                    }}
+                                  />
+                                  <Form.Text id="passwordHelpBlock" muted>
+                                    Your password must contain at least one number
+                                    and one uppercase and lowercase letter, and at
+                                    least 8 or more characters
+                                  </Form.Text>
+                                  <Form.Control.Feedback type="invalid">
+                                    Please provide a valid password.
+                                  </Form.Control.Feedback>
+                                </FloatingLabel>
+                              </Form.Group>
+                            </Col>
 
-                          <Form.Label column sm="4">
-                            Confirm New Password
-                          </Form.Label>
-                          <Col sm="7">
-                            <Form.Group
-                              style={{
-                                textAlign: "left",
-                              }}
-                            >
-                              <FloatingLabel
-                                controlId="floatingInputPassword"
-                                label="Confirm Password"
-                                className="mb-3"
+                            <Form.Label column sm="4">
+                              Confirm New Password
+                            </Form.Label>
+                            <Col sm="7">
+                              <Form.Group
+                                style={{
+                                  textAlign: "left",
+                                }}
                               >
-                                <Form.Control
-                                  style={{
-                                    height: 50,
-                                    backgroundColor: "white",
-                                  }}
-                                  type="password"
-                                  placeholder="Password"
-                                  pattern={newPass}
-                                  title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-                                  required
-                                  onChange={(e) => {
-                                    setconfirmPass(e.target.value);
-                                  }}
-                                />
-                                <Form.Control.Feedback type="invalid">
-                                  Your confirm password must be the same as new
-                                  password.
-                                </Form.Control.Feedback>
-                              </FloatingLabel>
-                            </Form.Group>
-                          </Col>
+                                <FloatingLabel
+                                  id="textMobile"
+                                  controlId="floatingInputPassword"
+                                  label="Confirm Password"
+                                  className="mb-3"
+                                >
+                                  <Form.Control
+                                    style={{
+                                      height: 50,
+                                      backgroundColor: "white",
+                                    }}
+                                    type="password"
+                                    placeholder="Password"
+                                    pattern={newPass}
+                                    title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                                    required
+                                    onChange={(e) => {
+                                      setconfirmPass(e.target.value);
+                                    }}
+                                  />
+                                  <Form.Control.Feedback type="invalid">
+                                    Your confirm password must be the same as new
+                                    password.
+                                  </Form.Control.Feedback>
+                                </FloatingLabel>
+                              </Form.Group>
+                            </Col>
 
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <Button
-                              type="submit"
+                            <div
                               style={{
-                                borderRadius: 30,
-                                paddingLeft: 120,
-                                paddingRight: 120,
-                                backgroundColor: "#19B9CC",
+                                display: "flex",
+                                justifyContent: "center",
                               }}
                             >
-                              SAVE
-                            </Button>
-                          </div>
-                        </Form.Group>
-                      </Form>
+                              <Button
+                                type="submit"
+                                style={{
+
+                                  width: '100%',
+                                  backgroundColor: "#19B9CC",
+                                }}
+                              >
+                                SAVE
+                              </Button>
+                            </div>
+                          </Form.Group>
+                        </Form>
+                      </Row>
                     </div>
                   </div>
 
@@ -539,86 +551,87 @@ function PetOwnerSettings() {
                         display: editCred,
                       }}
                     >
-                      <Form>
-                        <Form.Group as={Row} style={{ rowGap: 10 }}>
-                          <Form.Label column sm="4">
-                            Name
-                          </Form.Label>
-                          <Col sm="7">
-                            <Form.Control
-                              type="text"
-                              value={name}
-                              placeholder="Name"
-                              onChange={(e) => {
-                                setname(e.target.value);
-                              }}
-                            />
-                          </Col>
+                      <Row>
+                        <Form>
+                          <Form.Group as={Row} style={{ rowGap: 10 }}>
+                            <Form.Label column sm="4">
+                              Name
+                            </Form.Label>
+                            <Col sm="7">
+                              <Form.Control
+                                type="text"
+                                value={name}
+                                placeholder="Name"
+                                onChange={(e) => {
+                                  setname(e.target.value);
+                                }}
+                              />
+                            </Col>
 
-                          <Form.Label column sm="4">
-                            Email Address
-                          </Form.Label>
-                          <Col sm="7">
-                            <Form.Control
-                              type="email"
-                              value={email}
-                              placeholder="Email Address"
-                              onChange={(e) => {
-                                setemail(e.target.value);
-                              }}
-                            />
-                          </Col>
+                            <Form.Label column sm="4">
+                              Email Address
+                            </Form.Label>
+                            <Col sm="7">
+                              <Form.Control
+                                type="email"
+                                value={email}
+                                placeholder="Email Address"
+                                onChange={(e) => {
+                                  setemail(e.target.value);
+                                }}
+                              />
+                            </Col>
 
-                          <Form.Label column sm="4">
-                            Address
-                          </Form.Label>
-                          <Col sm="7">
-                            <Form.Control
-                              type="text"
-                              value={address}
-                              placeholder="Address"
-                              onChange={(e) => {
-                                setaddress(e.target.value);
-                              }}
-                            />
-                          </Col>
+                            <Form.Label column sm="4">
+                              Address
+                            </Form.Label>
+                            <Col sm="7">
+                              <Form.Control
+                                type="text"
+                                value={address}
+                                placeholder="Address"
+                                onChange={(e) => {
+                                  setaddress(e.target.value);
+                                }}
+                              />
+                            </Col>
 
-                          <Form.Label column sm="4">
-                            Contact Number
-                          </Form.Label>
-                          <Col sm="7">
-                            <Form.Control
-                              type="text"
-                              value={contactNumber}
-                              placeholder="Contact Number"
-                              onChange={(e) => {
-                                setcontactNumber(e.target.value);
-                              }}
-                            />
-                          </Col>
+                            <Form.Label column sm="4">
+                              Contact Number
+                            </Form.Label>
+                            <Col sm="7">
+                              <Form.Control
+                                type="text"
+                                value={contactNumber}
+                                placeholder="Contact Number"
+                                onChange={(e) => {
+                                  setcontactNumber(e.target.value);
+                                }}
+                              />
+                            </Col>
 
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <Button
+                            <div
                               style={{
-                                borderRadius: 30,
-                                paddingLeft: 120,
-                                paddingRight: 120,
-                                backgroundColor: "#19B9CC",
-                              }}
-                              onClick={() => {
-                                UpdatePetOwner();
+                                display: "flex",
+                                justifyContent: "center",
                               }}
                             >
-                              SAVE
-                            </Button>
-                          </div>
-                        </Form.Group>
-                      </Form>
+                              <Button
+                                style={{
+
+                                  width: '100%',
+                                  backgroundColor: "#19B9CC",
+                                }}
+                                onClick={() => {
+                                  UpdatePetOwner();
+                                }}
+                              >
+                                SAVE
+                              </Button>
+                            </div>
+                          </Form.Group>
+                        </Form>
+                      </Row>
                     </div>
                   </div>
                 </div>

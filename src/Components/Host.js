@@ -1,5 +1,5 @@
-// const hostUrl = "https://terravet-server.herokuapp.com";
-const hostUrl = "http://localhost:3001";
+const hostUrl = "https://terravet-server.herokuapp.com";
+// const hostUrl = "http://localhost:3001";
 // const hostUrlWeb = "http://localhost:3000";
 const hostUrlWeb = "https://terravet-website.web.app";
 

@@ -35,7 +35,7 @@ const GenReservation = (props) => {
   const [appointment, setappointment] = useState([]);
   useEffect(() => {
     if (counter < 10) {
-      Axios.get(`${hostUrl}/general/appointment/${id}`).then((response) => {
+      Axios.get(`${hostUrl}/general/appointment/${vetid}`).then((response) => {
         setappointment(response.data);
       });
       setcounter(counter + 1);

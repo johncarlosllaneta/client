@@ -68,9 +68,9 @@ const AboutUs = () => {
               >
                 Quick Links
               </li>
-              <li>About Us</li>
-              <li>Contact Us</li>
-              <li>Privacy Policy</li>
+              <li ><a href='/about us'>About Us</a></li>
+              <li><a href='/contact us'>Contact Us</a> </li>
+              <li><a href='/privacy policy'>Privacy Policy</a> </li>
             </ul>
           </Col>
         </Row>
