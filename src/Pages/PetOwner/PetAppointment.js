@@ -316,11 +316,9 @@ const PetAppointment = () => {
         </Modal.Footer>
       </Modal>
 
-      <Row
-        style={{ marginBottom: 10 }}
-      >
+      <Row style={{ marginBottom: 10 }}>
         <Col>
-          <Container style={{ display: "flex", flexDirection: "row" }}>
+          <div style={{ display: "flex", flexDirection: "row" }}>
             <h1
               style={{
                 color: "#3BD2E3",
@@ -397,19 +395,20 @@ const PetAppointment = () => {
                 </div>
               </NavDropdown>
             </Navbar>
-          </Container>
+          </div>
         </Col>
 
         <Col>
-          <Container
+          <div
             style={{
               display: "flex",
               justifyContent: "space-evenly",
+              paddingTop: 20,
             }}
           >
             <Button
               href={"/petOwner/Appointment"}
-              id='buttonSelectorAppointment'
+              id="buttonSelectorAppointment"
               style={{
                 borderRadius: 20,
                 border: "3px solid white",
@@ -417,9 +416,8 @@ const PetAppointment = () => {
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 display: "inline",
-                width: '10vw',
+                width: "10vw",
                 minWidth: 150,
-
               }}
             >
               Add appointment
@@ -427,7 +425,7 @@ const PetAppointment = () => {
 
             <Button
               href={"/petOwner/Appointment/History"}
-              id='buttonSelectorAppointment'
+              id="buttonSelectorAppointment"
               style={{
                 borderRadius: 20,
                 border: "3px solid white",
@@ -436,14 +434,13 @@ const PetAppointment = () => {
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 display: "inline",
 
-                width: '10vw',
+                width: "10vw",
                 minWidth: 150,
-
               }}
             >
               History
             </Button>
-          </Container>
+          </div>
         </Col>
       </Row>
       <div
@@ -530,14 +527,13 @@ const PetAppointment = () => {
         style={{
           marginTop: 20,
           display: "flex",
-          flexDirection: "row"
+          flexDirection: "row",
         }}
       >
         <h1
           style={{
             color: "#3BD2E3",
             textAlign: "left",
-
           }}
         >
           Pending Appointments
@@ -555,22 +551,19 @@ const PetAppointment = () => {
           padding: 40,
           boxShadow:
             "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-          marginBottom: 20
+          marginBottom: 20,
         }}
       >
         {appointmentPending.map((val) => {
           return (
             <div>
               <Card
-
                 onClick={() => {
                   setserviceName(val.service_name);
                   setserviceDescription(val.service_description);
                   getVetName(val.vetid);
                   settimeSet(val.time_scheduled);
-                  setdateSet(
-                    dateConvertion(val.date_scheduled.split("T")[0])
-                  );
+                  setdateSet(dateConvertion(val.date_scheduled.split("T")[0]));
                   setfee(val.service_fee);
                   getPetName(val.pet_id);
                   setstatus(val.appointment_status);
@@ -582,26 +575,24 @@ const PetAppointment = () => {
                 style={{
                   padding: 20,
                   margin: 10,
-                  cursor: 'pointer',
+                  cursor: "pointer",
                   boxShadow:
                     "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
               >
                 <Row>
-
                   <Col sm={4}>
                     {/* service name */}
 
                     <div
-                      id='pendingAppointmentServiceNameDiv'
+                      id="pendingAppointmentServiceNameDiv"
                       style={{
                         marginTop: 20,
-
                       }}
                     >
-                      <h2
-                        id='pendingAppointmentServiceNameH2'
-                      >{val.service_name}</h2>
+                      <h2 id="pendingAppointmentServiceNameH2">
+                        {val.service_name}
+                      </h2>
 
                       <h6
                         style={{
@@ -616,7 +607,7 @@ const PetAppointment = () => {
                   <Col>
                     {/* date and time */}
                     <div
-                      id='pendingAppointmentDateTimeDiv'
+                      id="pendingAppointmentDateTimeDiv"
                       style={{
                         marginTop: 20,
                         // borderRight: "2px solid grey",
@@ -632,7 +623,7 @@ const PetAppointment = () => {
                   <Col>
                     {/* vet clinic */}
                     <div
-                      id='pendingAppointmentVetclinicDiv'
+                      id="pendingAppointmentVetclinicDiv"
                       style={{
                         marginTop: 20,
                       }}
@@ -655,7 +646,7 @@ const PetAppointment = () => {
           );
         })}
       </div>
-    </div >
+    </div>
   );
 };
 

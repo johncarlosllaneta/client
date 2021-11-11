@@ -259,7 +259,6 @@ const Reservation = () => {
         </Row>
 
         <Tabs
-          style={{ paddingBottom: 20 }}
           id="controlled-tab-example"
           activeKey={key}
           onSelect={(k) => setKey(k)}

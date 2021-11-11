@@ -138,7 +138,7 @@ const PharmacyTab = (props) => {
     {
       title: "Action",
       render: (row) => (
-        <div>
+        <div style={{ flexDirection: "row", display: "flex" }}>
           <OverlayTrigger
             placement="top-start"
             delay={{ show: 250 }}
@@ -234,7 +234,6 @@ const PharmacyTab = (props) => {
     setValidated(true);
   };
 
-
   const updateMedicineConfirmation = (e) => {
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
@@ -257,11 +256,11 @@ const PharmacyTab = (props) => {
       insertMedicinePrice: updateMedicinePrice,
     });
 
-    setimageUploadedUrl('');
+    setimageUploadedUrl("");
     setPreview(null);
-    setUpdateMedicineName('');
-    setUpdateMedicineDescription('');
-    setUpdateMedicinePrice('');
+    setUpdateMedicineName("");
+    setUpdateMedicineDescription("");
+    setUpdateMedicinePrice("");
     handleClose2();
     Axios.get(`${hostUrl}/pharmacy/${id}`).then((response) => {
       setpharmacy(response.data);
@@ -277,7 +276,6 @@ const PharmacyTab = (props) => {
   };
 
   const updateMedicine = () => {
-
     Axios.put(`${hostUrl}/pharmacy/update/${pharmacyUpdateId}`, {
       vetid: vetid,
       medicine_image: pharmacyUpdateImage,
@@ -287,14 +285,10 @@ const PharmacyTab = (props) => {
       status: pharmacyUpdateStatus,
     });
 
-
     Axios.get(`${hostUrl}/pharmacy/${vetid}`).then((response) => {
       setpharmacy(response.data);
     });
     handleCloseUpdate();
-
-
-
   };
 
   // Modal Delete
@@ -609,7 +603,7 @@ const PharmacyTab = (props) => {
               <Button variant="secondary" onClick={handleClose2}>
                 Close
               </Button>
-              <Button variant="primary" type='submit'>
+              <Button variant="primary" type="submit">
                 Save Changes
               </Button>
             </Modal.Footer>
@@ -617,27 +611,21 @@ const PharmacyTab = (props) => {
         </Row>
       </Modal>
 
-
-
-
-
-
       {/* //Edit Medicine Details*/}
       <Modal show={showUpdate} onHide={handleCloseUpdate} size="xl" centered>
         <Modal.Header closeButton>
           <Modal.Title>{viewTitle}</Modal.Title>
         </Modal.Header>
         <Row>
-
-          <Form noValidate validated={true} onSubmit={updateMedicineConfirmation} >
+          <Form
+            noValidate
+            validated={true}
+            onSubmit={updateMedicineConfirmation}
+          >
             <Modal.Body>
-
-
-              <Row
-
-              >
+              <Row>
                 <Col sm={6}>
-                  <Form.Group >
+                  <Form.Group>
                     <Image
                       style={{
                         border: "1px solid grey",
@@ -785,7 +773,6 @@ const PharmacyTab = (props) => {
                   </Form.Group>
                 </Col>
               </Row>
-
             </Modal.Body>
 
             <div
@@ -797,7 +784,7 @@ const PharmacyTab = (props) => {
                 <Button variant="secondary" onClick={handleCloseUpdate}>
                   Close
                 </Button>
-                <Button variant="primary" type='submit'>
+                <Button variant="primary" type="submit">
                   Save Changes
                 </Button>
               </Modal.Footer>

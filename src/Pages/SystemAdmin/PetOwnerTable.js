@@ -104,7 +104,7 @@ function PetOwnerTable() {
     {
       name: "Action",
       cell: (row) => (
-        <div>
+        <div style={{ flexDirection: "row", display: "flex" }}>
           <OverlayTrigger
             placement="top-start"
             delay={{ show: 250 }}

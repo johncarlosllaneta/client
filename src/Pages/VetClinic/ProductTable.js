@@ -156,7 +156,7 @@ function ProductTable(props) {
     {
       title: "Action",
       render: (row) => (
-        <div>
+        <div style={{ flexDirection: "row", display: "flex" }}>
           <OverlayTrigger
             placement="top-start"
             delay={{ show: 250 }}
@@ -262,17 +262,15 @@ function ProductTable(props) {
       insertProductPetType: updateProductPetType,
     });
 
-    setimageUploadedUrl('');
-    setUpdateProductName('');
-    setUpdateProductDescription('');
-    setUpdateProductQuantity('');
-    setUpdateProductPrice('');
-    setupdateProductCategory('');
-    setupdateProductPetType('');
+    setimageUploadedUrl("");
+    setUpdateProductName("");
+    setUpdateProductDescription("");
+    setUpdateProductQuantity("");
+    setUpdateProductPrice("");
+    setupdateProductCategory("");
+    setupdateProductPetType("");
     handleClose2();
     refreshTable();
-
-
   };
 
   const deleteProduct = () => {
@@ -287,7 +285,6 @@ function ProductTable(props) {
   };
 
   const updateProductConfirmation = (e) => {
-
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.preventDefault();
@@ -300,9 +297,7 @@ function ProductTable(props) {
     setValidated(true);
   };
 
-
   const increaseProductConfirmation = (e) => {
-
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.preventDefault();
@@ -316,7 +311,6 @@ function ProductTable(props) {
   };
 
   const decreaseProductConfirmation = (e) => {
-
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.preventDefault();
@@ -328,7 +322,6 @@ function ProductTable(props) {
 
     setValidated(true);
   };
-
 
   const updateProduct = () => {
     Axios.put(`${hostUrl}/product/update/${productUpdateId}`, {
@@ -346,7 +339,7 @@ function ProductTable(props) {
     });
     handleCloseUpdate();
     // window.location.reload();
-  }
+  };
 
   const [stockIn, setstockIn] = useState(0);
   const addStockProduct = () => {
@@ -375,7 +368,6 @@ function ProductTable(props) {
     });
 
     handleCloseAddStock();
-
   };
 
   const [stockUsed, setstockUsed] = useState(0);
@@ -424,16 +416,20 @@ function ProductTable(props) {
   const handleShowConfirmationUpdate = () => setshowConfirmationUpdate(true);
 
   // Modal Confirmation Increase
-  const [showConfirmationIncrease, setshowConfirmationIncrease] = useState(false);
-  const handleCloseConfirmationIncrease = () => setshowConfirmationIncrease(false);
-  const handleShowConfirmationIncrease = () => setshowConfirmationIncrease(true);
+  const [showConfirmationIncrease, setshowConfirmationIncrease] =
+    useState(false);
+  const handleCloseConfirmationIncrease = () =>
+    setshowConfirmationIncrease(false);
+  const handleShowConfirmationIncrease = () =>
+    setshowConfirmationIncrease(true);
 
   // Modal Confirmation Decrease
-  const [showConfirmationDecrease, setshowConfirmationDecrease] = useState(false);
-  const handleCloseConfirmationDecrease = () => setshowConfirmationDecrease(false);
-  const handleShowConfirmationDecrease = () => setshowConfirmationDecrease(true);
-
-
+  const [showConfirmationDecrease, setshowConfirmationDecrease] =
+    useState(false);
+  const handleCloseConfirmationDecrease = () =>
+    setshowConfirmationDecrease(false);
+  const handleShowConfirmationDecrease = () =>
+    setshowConfirmationDecrease(true);
 
   // Modal Add stock
   const [showAddStock, setshowAddStock] = useState(false);
@@ -473,7 +469,6 @@ function ProductTable(props) {
         marginTop: 20,
       }}
     >
-
       {/* Confirmation Increase */}
       <Modal
         show={showConfirmationIncrease}
@@ -482,7 +477,9 @@ function ProductTable(props) {
         <Modal.Header closeButton>
           <Modal.Title>Warning</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to add stock in this product? </Modal.Body>
+        <Modal.Body>
+          Are you sure you want to add stock in this product?{" "}
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseConfirmationIncrease}>
             No
@@ -505,7 +502,11 @@ function ProductTable(props) {
         <Modal.Header closeButton>
           <Modal.Title>Add Stock</Modal.Title>
         </Modal.Header>
-        <Form noValidate validated={true} onSubmit={increaseProductConfirmation}>
+        <Form
+          noValidate
+          validated={true}
+          onSubmit={increaseProductConfirmation}
+        >
           <Modal.Body>
             <FloatingLabel
               controlId="floatingTextarea"
@@ -552,7 +553,6 @@ function ProductTable(props) {
         </Form>
       </Modal>
 
-
       {/* Confirmation Decrease */}
       <Modal
         show={showConfirmationDecrease}
@@ -561,7 +561,9 @@ function ProductTable(props) {
         <Modal.Header closeButton>
           <Modal.Title>Warning</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to decrease stock in this product? </Modal.Body>
+        <Modal.Body>
+          Are you sure you want to decrease stock in this product?{" "}
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseConfirmationDecrease}>
             No
@@ -579,8 +581,6 @@ function ProductTable(props) {
         </Modal.Footer>
       </Modal>
 
-
-
       {/* Decrease Stock */}
       <Modal
         show={showDecreaseStock}
@@ -590,7 +590,11 @@ function ProductTable(props) {
         <Modal.Header closeButton>
           <Modal.Title>Decrease Stock</Modal.Title>
         </Modal.Header>
-        <Form noValidate validated={true} onSubmit={decreaseProductConfirmation}>
+        <Form
+          noValidate
+          validated={true}
+          onSubmit={decreaseProductConfirmation}
+        >
           <Modal.Body>
             <FloatingLabel
               controlId="floatingTextarea"
@@ -661,15 +665,6 @@ function ProductTable(props) {
         </Modal.Footer>
       </Modal>
 
-
-
-
-
-
-
-
-
-
       {/* Confirmation Updating */}
       <Modal
         show={showConfirmationUpdate}
@@ -702,11 +697,15 @@ function ProductTable(props) {
           <Modal.Title>{viewTitle}</Modal.Title>
         </Modal.Header>
         <Row>
-          <Form noValidate validated={true} onSubmit={updateProductConfirmation}>
+          <Form
+            noValidate
+            validated={true}
+            onSubmit={updateProductConfirmation}
+          >
             <Modal.Body>
               <Row>
                 <Col>
-                  <Form.Group >
+                  <Form.Group>
                     <Image
                       style={{
                         border: "1px solid grey",
@@ -898,8 +897,6 @@ function ProductTable(props) {
           </Form>
         </Row>
       </Modal>
-
-
 
       {/* Confirmation Inserting */}
       <Modal

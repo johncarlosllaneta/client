@@ -204,7 +204,7 @@ const ServiceTab = (props) => {
     {
       title: "Action",
       render: (row) => (
-        <div>
+        <div style={{ flexDirection: "row", display: "flex" }}>
           <OverlayTrigger
             placement="top-start"
             delay={{ show: 250 }}
@@ -592,7 +592,7 @@ const ServiceTab = (props) => {
                   <Image
                     src={imageI}
                     style={{
-                      height: 85,
+                      height: "8vh",
                       width: "5vw",
                     }}
                   />
@@ -641,7 +641,7 @@ const ServiceTab = (props) => {
                   <Image
                     src={imageII}
                     style={{
-                      height: 85,
+                      height: "8vh",
                       width: "5vw",
                     }}
                   />
@@ -690,7 +690,7 @@ const ServiceTab = (props) => {
                   <Image
                     src={imageIII}
                     style={{
-                      height: 85,
+                      height: "8vh",
                       width: "5vw",
                     }}
                   />
@@ -739,7 +739,7 @@ const ServiceTab = (props) => {
                   <Image
                     src={imageIV}
                     style={{
-                      height: 85,
+                      height: "7vh",
                       width: "5vw",
                     }}
                   />
@@ -788,7 +788,7 @@ const ServiceTab = (props) => {
                   <Image
                     src={imageV}
                     style={{
-                      height: 85,
+                      height: "8vh",
                       width: "5vw",
                     }}
                   />

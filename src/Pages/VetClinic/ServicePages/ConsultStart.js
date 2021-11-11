@@ -591,7 +591,7 @@ const ConsultStart = (props) => {
                   <Image
                     src={imageI}
                     style={{
-                      height: 85,
+                      height: "8vh",
                       width: "5vw",
                     }}
                   />
@@ -640,7 +640,7 @@ const ConsultStart = (props) => {
                   <Image
                     src={imageII}
                     style={{
-                      height: 85,
+                      height: "8vh",
                       width: "5vw",
                     }}
                   />
@@ -689,7 +689,7 @@ const ConsultStart = (props) => {
                   <Image
                     src={imageIII}
                     style={{
-                      height: 85,
+                      height: "8vh",
                       width: "5vw",
                     }}
                   />
@@ -738,7 +738,7 @@ const ConsultStart = (props) => {
                   <Image
                     src={imageIV}
                     style={{
-                      height: 85,
+                      height: "7vh",
                       width: "5vw",
                     }}
                   />
@@ -787,7 +787,7 @@ const ConsultStart = (props) => {
                   <Image
                     src={imageV}
                     style={{
-                      height: 85,
+                      height: "8vh",
                       width: "5vw",
                     }}
                   />

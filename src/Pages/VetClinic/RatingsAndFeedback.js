@@ -79,7 +79,7 @@ function RatingsAndFeedback(props) {
   // }
 
   return (
-    <div style={{ overflowY: "auto", height: 500, padding: 10 }}>
+    <div style={{ overflowY: "auto", padding: 10 }}>
       <Modal centered show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Ratings and Feedback</Modal.Title>

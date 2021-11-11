@@ -170,12 +170,18 @@ function HomeTab(props) {
             style={{
               backgroundColor: bgColors.LBlue,
               color: "#3BD2E3",
-              height: 170,
+              height: "25vh",
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
-            <Card.Body>
+            <Card.Body
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Row>
                 <Col>
                   <FaPaw style={{ fontSize: 100 }} />
@@ -194,12 +200,18 @@ function HomeTab(props) {
             style={{
               backgroundColor: bgColors.Cyan,
               color: "#3BD2E3",
-              height: 170,
+              height: "25vh",
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
-            <Card.Body>
+            <Card.Body
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Row>
                 <Col>
                   <FaUserAlt style={{ fontSize: 100 }} />
@@ -220,12 +232,18 @@ function HomeTab(props) {
             style={{
               backgroundColor: bgColors.LTBlue,
               color: "#3BD2E3",
-              height: 170,
+              height: "25vh",
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
-            <Card.Body>
+            <Card.Body
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Row>
                 <Col>
                   <FaClinicMedical style={{ fontSize: 100 }} />
@@ -245,12 +263,18 @@ function HomeTab(props) {
             style={{
               backgroundColor: bgColors.LTBlue,
               color: "#3BD2E3",
-              height: 170,
+              height: "25vh",
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
-            <Card.Body>
+            <Card.Body
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Row>
                 <Col>
                   <BsFillStarFill style={{ fontSize: 100 }} />
@@ -298,7 +322,7 @@ function HomeTab(props) {
               >
                 Ratings and Feedback
               </h5>
-              <Card style={{ height: "90%", padding: 10 }}>
+              <Card style={{ height: "55vh", padding: 10 }}>
                 <RatingsAndFeedback data={user} />
                 {/* <h5>Hello</h5> */}
               </Card>

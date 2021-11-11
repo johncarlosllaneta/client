@@ -147,12 +147,18 @@ function Home() {
             style={{
               backgroundColor: "white",
               color: "#3BD2E3",
-              height: 170,
+              height: "25vh",
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
-            <Card.Body>
+            <Card.Body
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Row>
                 <Col>
                   <RiStethoscopeFill style={{ fontSize: 100 }} />
@@ -170,12 +176,18 @@ function Home() {
             style={{
               backgroundColor: "white",
               color: "#3BD2E3",
-              height: 170,
+              height: "25vh",
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
-            <Card.Body>
+            <Card.Body
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Row>
                 <Col>
                   <FaUserAlt style={{ fontSize: 100 }} />
@@ -193,12 +205,18 @@ function Home() {
             style={{
               backgroundColor: "white",
               color: "#3BD2E3",
-              height: 170,
+              height: "25vh",
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
-            <Card.Body>
+            <Card.Body
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Row>
                 <Col>
                   <FaPaw style={{ fontSize: 100 }} />
@@ -216,12 +234,18 @@ function Home() {
             style={{
               backgroundColor: "white",
               color: "#3BD2E3",
-              height: 170,
+              height: "25vh",
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
-            <Card.Body>
+            <Card.Body
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Row>
                 <Col>
                   <FaClinicMedical style={{ fontSize: 100 }} />
@@ -249,29 +273,36 @@ function Home() {
         </Col>
 
         <Col md={4} style={{ display: "flex" }}>
-          <Card
+          {/* <Card
             style={{
-              maxHeight: "100%",
+             
+          > */}
+          {/* <Card.Body > */}
+          <div
+            style={{
+              height: "40vh",
+              width: "100%",
+              height: "68vh",
+              // justifyContent: "center",
+              padding: 20,
               boxShadow:
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
           >
-            <Card.Body>
-              <MaterialTable
-                style={{ textAlign: "left", width: 400, height: "100%" }}
-                title="Top Vet in Ratings"
-                pagination={true}
-                columns={columns}
-                data={vetRatings}
-                responsive={true}
-                options={{
-                  search: false,
-                  paging: true,
-                  pageSizeOptions: [],
-                }}
-              />
-            </Card.Body>
-          </Card>
+            <MaterialTable
+              pagination={true}
+              title={"Ratings & Feedback"}
+              columns={columns}
+              data={vetRatings}
+              responsive={true}
+              options={{
+                search: false,
+                paging: true,
+                pageSizeOptions: [],
+              }}
+            />
+          </div>
+          {/* </Card> */}
         </Col>
       </Row>
     </div>

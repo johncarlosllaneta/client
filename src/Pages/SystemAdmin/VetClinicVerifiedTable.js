@@ -111,7 +111,7 @@ function VetClinicVerifiedTable() {
     {
       name: "Action",
       cell: (row) => (
-        <div>
+        <div style={{ flexDirection: "row", display: "flex" }}>
           <OverlayTrigger
             placement="top-start"
             delay={{ show: 250 }}
@@ -120,6 +120,9 @@ function VetClinicVerifiedTable() {
             <Button
               variant="info"
               className="mr-3"
+              style={{
+                marginRight: 10,
+              }}
               onClick={() => {
                 cancelChanges();
                 setprofileAndGraphChecker(true);
@@ -138,6 +141,9 @@ function VetClinicVerifiedTable() {
             <Button
               variant="primary"
               className="mr-3"
+              style={{
+                marginRight: 10,
+              }}
               onClick={() => {
                 setupdateAndTablesChecker(true);
                 setviewProfileVetData(row);
@@ -154,6 +160,9 @@ function VetClinicVerifiedTable() {
           >
             <Button
               variant="danger"
+              style={{
+                marginRight: 10,
+              }}
               onClick={() => {
                 setdeleteId(row.email);
                 handleShowDelete();

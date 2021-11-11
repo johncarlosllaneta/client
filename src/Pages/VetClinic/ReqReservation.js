@@ -125,7 +125,7 @@ const ReqReservation = (props) => {
     {
       title: "Action",
       render: (row) => (
-        <div>
+        <div style={{ flexDirection: "row", display: "flex" }}>
           <OverlayTrigger
             placement="top-start"
             delay={{ show: 250 }}

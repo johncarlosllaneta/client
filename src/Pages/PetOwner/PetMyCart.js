@@ -256,7 +256,6 @@ const PetMyCart = (props) => {
       }
     });
 
-
     handleClose();
   }
 
@@ -398,11 +397,11 @@ const PetMyCart = (props) => {
         </Col>
 
         <Col>
-          <Container
+          <div
             style={{
               display: "flex",
               justifyContent: "space-evenly",
-              padding: 15,
+              paddingTop: 20,
             }}
           >
             <Button
@@ -413,9 +412,9 @@ const PetMyCart = (props) => {
                 backgroundColor: "#3BD2E3",
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                width: '5vw',
+                width: "5vw",
                 minWidth: 150,
-                fontSizeAdjust: 'inherit'
+                fontSizeAdjust: "inherit",
               }}
             >
               Shop now
@@ -429,28 +428,28 @@ const PetMyCart = (props) => {
                 backgroundColor: "#3BD2E3",
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                width: '5vw',
+                width: "5vw",
                 minWidth: 150,
-                fontSizeAdjust: 'inherit'
+                fontSizeAdjust: "inherit",
               }}
             >
               History
             </Button>
-          </Container>
+          </div>
         </Col>
       </Row>
 
       <Container
         id="itemHistory"
         style={{
-          height: '55vh',
+          height: "55vh",
           backgroundColor: "white",
           borderRadius: 30,
           padding: 40,
           boxShadow:
             "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
           overflowY: "auto",
-          marginBottom: 20
+          marginBottom: 20,
         }}
       >
         {products.map((val) => {
@@ -472,15 +471,11 @@ const PetMyCart = (props) => {
                 style={{
                   padding: 20,
                   margin: 10,
-                  cursor: 'pointer'
+                  cursor: "pointer",
                 }}
               >
                 <Row>
-                  <Col
-                    id="itemProduct"
-                    sm={2}
-
-                  >
+                  <Col id="itemProduct" sm={2}>
                     {/* date and time */}
                     <div style={{}}>
                       <Image src={val.product_image} height={100} />
@@ -600,7 +595,6 @@ const PetMyCart = (props) => {
                       </Col>
                     </Row>
                   </Col>
-
                 </Row>
               </Card>
             </div>
