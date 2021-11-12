@@ -18,7 +18,7 @@ const ForgetNew = () => {
   const [validated, setValidated] = useState(false);
   const handleEmailPassword = (e) => {
     userrole = phoneNumber.toString().substr(phoneNumber.toString().length - 1);
-    alert(userrole);
+    // alert(userrole);
     phone_number = phoneNumber
       .toString()
       .substring(0, phoneNumber.toString().length - 1);

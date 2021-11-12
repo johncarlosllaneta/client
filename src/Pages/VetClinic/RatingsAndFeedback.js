@@ -9,7 +9,7 @@ import { useParams } from "react-router";
 
 function RatingsAndFeedback(props) {
   // let { vetid } = useParams();
-  // alert(vetid);
+  // alert(props.data.vetid);
   const [counter, setcounter] = useState(0);
   const [rateList, setrateList] = useState([]);
   useEffect(() => {
