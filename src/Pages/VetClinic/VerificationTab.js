@@ -151,7 +151,7 @@ const VerificationTab = () => {
               localStorage.setItem("vetStatus", response.data.vetStatus);
               localStorage.setItem("id", response.data.id);
             }
-            window.location.href = `${hostUrlWeb}/verification`;
+            window.location.href = `/verification`;
           }
         });
       }
