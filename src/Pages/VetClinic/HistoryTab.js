@@ -92,7 +92,13 @@ const HistoryTab = (props) => {
     {
       title: "Time",
       sorting: true,
-      render: (row) => tConvert(row.time_visited),
+      render: (row) =>
+        tConvert(
+          row.time_visited
+            .toString()
+            .split("T")[1]
+            .substring(0, row.time_visited.toString().split("T")[1].length - 5)
+        ),
     },
   ];
   return (

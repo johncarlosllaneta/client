@@ -212,7 +212,7 @@ function RatingsAndFeedback(props) {
 
                   <Row>
                     <p style={{ fontWeight: "bold", fontSize: 12 }}>
-                      Time:{val.time_scheduled}{" "}
+                      Time:{val.time_scheduled}
                     </p>
                   </Row>
                 </Col>

@@ -423,6 +423,7 @@ function PetOwnerSettings() {
                                 style={{
                                   height: 50,
                                   backgroundColor: "white",
+                                  width: "50vw",
                                 }}
                                 type="password"
                                 placeholder="Password"
@@ -454,12 +455,15 @@ function PetOwnerSettings() {
                           noValidate
                           validated={validated}
                           onSubmit={changePassword}
+                          style={{
+                            width: 1800,
+                          }}
                         >
                           <Form.Group as={Row} style={{ rowGap: 10 }}>
                             <Form.Label column sm="4">
                               New Password
                             </Form.Label>
-                            <Col sm="7">
+                            <Col sm="8" style={{ paddingLeft: 20 }}>
                               <Form.Group
                                 style={{
                                   textAlign: "left",
@@ -475,6 +479,7 @@ function PetOwnerSettings() {
                                     style={{
                                       height: 50,
                                       backgroundColor: "white",
+                                      width: "50vw",
                                     }}
                                     type="password"
                                     placeholder="Password"
@@ -500,7 +505,7 @@ function PetOwnerSettings() {
                             <Form.Label column sm="4">
                               Confirm New Password
                             </Form.Label>
-                            <Col sm="7">
+                            <Col sm="8" style={{ paddingLeft: 20 }}>
                               <Form.Group
                                 style={{
                                   textAlign: "left",
@@ -516,6 +521,7 @@ function PetOwnerSettings() {
                                     style={{
                                       height: 50,
                                       backgroundColor: "white",
+                                      width: "50vw",
                                     }}
                                     type="password"
                                     placeholder="Password"

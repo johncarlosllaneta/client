@@ -126,7 +126,16 @@ const TracingCard = (props) => {
                           val.date_visited.toString().split("T")[0]
                         ) +
                           " " +
-                          tConvert(val.time_visited)}
+                          tConvert(
+                            val.date_visited
+                              .toString()
+                              .split("T")[1]
+                              .substring(
+                                0,
+                                val.date_visited.toString().split("T")[1]
+                                  .length - 5
+                              )
+                          )}
                       </p>
                     </Col>
                     <Col

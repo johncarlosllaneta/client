@@ -162,6 +162,7 @@ function VaccineCard() {
       <MaterialTable
         columns={columns}
         data={vaccine}
+        title={" "}
         cellEditable={false}
         options={{
           sorting: true,

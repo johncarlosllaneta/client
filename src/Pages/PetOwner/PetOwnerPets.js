@@ -107,6 +107,7 @@ const PetOwnerPets = () => {
       e.preventDefault();
       e.stopPropagation();
     } else {
+      e.preventDefault();
       Axios.post(`${hostUrl}/pets/insert`, {
         petOwnerId: user.pet_owner_id,
         petOwnerName: user.name,
@@ -340,12 +341,11 @@ const PetOwnerPets = () => {
         </Form>
       </Modal>
 
-      <Container >
+      <Container>
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
-
           }}
         >
           <div>
@@ -358,11 +358,11 @@ const PetOwnerPets = () => {
                 borderColor: "white",
                 borderWidth: 5,
                 backgroundColor: "#3BD2E3",
-                width: '10vw',
+                width: "10vw",
                 minWidth: 100,
-                height: 'auto',
+                height: "auto",
 
-                fontSize: '2vh'
+                fontSize: "2vh",
               }}
               onClick={() => {
                 handleShow2();
