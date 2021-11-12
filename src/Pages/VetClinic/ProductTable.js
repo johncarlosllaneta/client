@@ -906,7 +906,7 @@ function ProductTable(props) {
         <Modal.Header closeButton>
           <Modal.Title>Warning</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this product? </Modal.Body>
+        <Modal.Body>Are you sure you want to add this product? </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseConfirmationInsert}>
             No

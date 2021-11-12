@@ -113,6 +113,7 @@ const Room = ({ roomName, room, handleLogout }) => {
                   maxWidth: '90vh',
                   height: '68vh',
                   minHeight: '30vh',
+                  maxHeight: '68vh',
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',

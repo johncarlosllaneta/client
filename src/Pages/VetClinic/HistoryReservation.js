@@ -161,6 +161,7 @@ function HistoryReservation() {
     );
     // console.log(appointmentDetails);
     // handleShowView();
+    alert(appointmentDetails.pet_name)
   }
 
   return (

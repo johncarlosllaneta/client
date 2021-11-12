@@ -4,6 +4,8 @@ import AboutUs from './AboutUs'
 import { Card, Container, Row, Col } from 'react-bootstrap'
 import Avatar from 'react-avatar'
 import JCEL from '../../Images/JCEL.jpg'
+import RLS from '../../Images/RLS.png'
+import JSM from '../../Images/JSM.png'
 function AboutUsPage() {
     return (
         <div>
@@ -346,7 +348,7 @@ function AboutUsPage() {
                                 <Container>
                                     <Avatar name='Carmella Joy D. Guelas' round={true} size={200} style={{ boder: '10px solid white', marginTop: -100, marginBottom: 25, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', }} />
                                 </Container>
-                                <h3>Carmella Joy Guelas</h3>
+                                <h3>Carmella Joy D. Guelas</h3>
                                 <p>Researcher</p>
 
                             </Card>
@@ -378,7 +380,7 @@ function AboutUsPage() {
                                 }}
                             >
                                 <Container>
-                                    <Avatar name='Jimuel S. Mercado' round={true} size={200} style={{ boder: '10px solid white', marginTop: -100, marginBottom: 25, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', }} />
+                                    <Avatar name='Jimuel S. Mercado' src={JSM} round={true} size={200} style={{ boder: '10px solid white', marginTop: -100, marginBottom: 25, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', }} />
                                 </Container>
                                 <h3>Jimuel S. Mercado</h3>
                                 <p>Mobile Developer</p>
@@ -395,7 +397,7 @@ function AboutUsPage() {
                                 }}
                             >
                                 <Container>
-                                    <Avatar name='Richard L. Sasis' round={true} size={200} style={{ boder: '10px solid white', marginTop: -100, marginBottom: 25, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', }} />
+                                    <Avatar name='Richard L. Sasis' src={RLS} round={true} size={200} style={{ boder: '10px solid white', marginTop: -100, marginBottom: 25, boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)', }} />
                                 </Container>
                                 <h3>Richard L. Sasis</h3>
                                 <p>Web Developer</p>

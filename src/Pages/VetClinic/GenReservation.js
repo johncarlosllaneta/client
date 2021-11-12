@@ -262,6 +262,7 @@ const GenReservation = (props) => {
       event.preventDefault();
       event.stopPropagation();
     } else {
+      event.preventDefault();
       Axios.post(`${hostUrl}/pets/vaccination/record/${pet_id}`, {
         weight: weight,
         appointment_id: appointmentID,
@@ -270,11 +271,7 @@ const GenReservation = (props) => {
         manufacturer: manufacturer,
         vaccineNumber: vaccineNumber,
       });
-      Axios.put(`${hostUrl}/vetclinic/appointment/done/${appointmentID}`).then(
-        (response) => {
-
-        }
-      );
+      Axios.put(`${hostUrl}/vetclinic/appointment/done/${appointmentID}`)
       Axios.post(`${hostUrl}/notification/appointment`, {
         appointment_id: appointmentID,
         service_id: notifService_id,
@@ -284,6 +281,7 @@ const GenReservation = (props) => {
         setappointment(response.data);
       });
 
+      setValidated(false);
       handleCloseVaccinationModal();
     }
 
