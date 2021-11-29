@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { BsChatDotsFill } from "react-icons/bs";
 import Axios from "axios";
-import "../../navBarHome.css";
+import "../.././css/navBarHome.css";
 import { hostUrl } from "../../Components/Host";
 import Avatar from "react-avatar";
 

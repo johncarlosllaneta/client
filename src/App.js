@@ -27,7 +27,7 @@ import FindVetMain from "./Pages/PetOwner/FindVetMain";
 import PetDetailsInformationMain from "./Pages/PetOwner/PetDetailsInformationMain";
 import VetCategory from "./Pages/PetOwner/VetCategory";
 import ShopNow from "./Pages/PetOwner/ShopNow";
-import ProductShop from "./Pages/VetClinic/ProductShop";
+import ProductShop from "./Pages/VetClinic/Verified Vet/Vet Offers/Products/ProductShop";
 import Pharmacy from "./Pages/PetOwner/Pharmacy";
 import PetOwnerSettings from "./Pages/PetOwner/PetOwnerSettings";
 import VideoChat from "./Pages/PetOwner/VideoChat";

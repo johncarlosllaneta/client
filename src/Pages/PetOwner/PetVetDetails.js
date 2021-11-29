@@ -6,7 +6,7 @@ import Axios from "axios";
 import { hostUrl } from "../../Components/Host";
 import NavBarAppointments from "../../Components/navBarHome/NavBarAppointments";
 import Avatar from "react-avatar";
-import RatingsAndFeedback from "../VetClinic/RatingsAndFeedback";
+import RatingsAndFeedback from "../VetClinic/Verified Vet/Dashboard/RatingsAndFeedback";
 import VetDetailsRatings from "./VetDetailsRatings";
 import "../../css/PetVetDetails.css";
 const ratingChanged = (newRating) => {
@@ -129,7 +129,7 @@ function PetVetDetails() {
     }
   }, [counter, user]);
 
-  const talkToVet = () => {};
+  const talkToVet = () => { };
 
   var aspectratioheight = window.screen.height;
   var aspectratiowidth = window.screen.width;
@@ -222,12 +222,12 @@ function PetVetDetails() {
         >
           <Container
             id="containerVetDetailsHolder"
-            // style={{
-            //   display: 'flex',
-            //   justifyContent: 'center',
-            //   height: 'auto',
-            //   marginBottom: 20
-            // }}
+          // style={{
+          //   display: 'flex',
+          //   justifyContent: 'center',
+          //   height: 'auto',
+          //   marginBottom: 20
+          // }}
           >
             <Card
               style={{
@@ -240,9 +240,9 @@ function PetVetDetails() {
               <Row>
                 <Col
                   xs={8}
-                  // style={{
-                  //   height: 'auto'
-                  // }}
+                // style={{
+                //   height: 'auto'
+                // }}
                 >
                   <Container id="containerVetDetails">
                     <Row>
@@ -375,10 +375,10 @@ function PetVetDetails() {
                       <Row>
                         <h3
                           id="h3VetDetailsEmail"
-                          // style={{
-                          //   fontSize: 25,
-                          //   fontWeight: "bold",
-                          // }}
+                        // style={{
+                        //   fontSize: 25,
+                        //   fontWeight: "bold",
+                        // }}
                         >
                           {vetclinic.email}
                         </h3>

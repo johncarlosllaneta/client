@@ -13,7 +13,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { BsChatDotsFill } from "react-icons/bs";
 import Axios from "axios";
-import "../../navBarHome.css";
+import "../.././css/navBarHome.css";
 import Notification from "../Notification";
 import { hostUrl } from "../Host";
 import Avatar from "react-avatar";
@@ -263,11 +263,11 @@ function NavBarHome() {
       <Navbar.Collapse id="responsive-navbar-nav" className="responsiveNavBar">
         <Nav
           id="navBarHome"
-          // style={{
-          //   display: "flex",
-          //   justifyContent: 'flex-end',
-          //   // alignSelf: 'end'
-          // }}
+        // style={{
+        //   display: "flex",
+        //   justifyContent: 'flex-end',
+        //   // alignSelf: 'end'
+        // }}
         >
           <div
           // style={{

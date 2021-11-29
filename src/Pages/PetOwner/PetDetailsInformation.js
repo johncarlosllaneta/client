@@ -17,9 +17,9 @@ import {
   Tab,
   Tabs,
 } from "react-bootstrap";
-import "../VetClinic/vetClinic.css";
+import "../../css/vetClinic.css";
 import { BsFillInfoCircleFill } from "react-icons/bs";
-import ReqReservation from "../VetClinic/ReqReservation";
+import ReqReservation from "../VetClinic/Verified Vet/Appointment/ReqReservation";
 import HealthCard from "./HealthCard";
 import VaccineCard from "./VaccineCard";
 import Axios from "axios";

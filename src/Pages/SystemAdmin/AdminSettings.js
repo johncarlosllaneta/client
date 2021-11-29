@@ -13,7 +13,7 @@ import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import Avatar from "react-avatar";
 import Axios from "axios";
-import { hostUrl, hostUrlWeb } from "../../Components/Host";
+import { hostUrl } from "../../Components/Host";
 import { ToastContainer } from "react-toastify";
 import { ToastDelete, ToastUpdate } from "../../Components/Toast";
 function AdminSettings(props) {
@@ -197,7 +197,7 @@ function AdminSettings(props) {
           handleClose();
           ToastUpdate();
           setTimeout(() => {
-            window.location.href = `${hostUrlWeb}/admin/settings`;
+            window.location.href = `/admin/settings`;
           }, 3000);
         });
       }

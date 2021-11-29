@@ -1,29 +1,41 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Image, NavDropdown } from "react-bootstrap";
+import { Navbar, NavDropdown, Row, Col, Badge } from "react-bootstrap";
+
 import "bootstrap/dist/css/bootstrap.min.css";
-import logo from "../../Images/logo.png";
+import { BsChatDotsFill } from "react-icons/bs";
 import Axios from "axios";
-import "../.././css/navBarHome.css";
-import { hostUrl } from "../Host";
+import "../../../css/navBarHome.css";
+import { hostUrl } from "../../../Components/Host";
 import Avatar from "react-avatar";
-function NavBarAppointments() {
+
+function NavBarVet() {
   const [user, setuser] = useState([]);
   const [userole, setuserole] = useState("");
-  var name;
-  var accountImg;
   const [counter, setcounter] = useState(0);
+  const [numberNewThread, setnumberNewThread] = useState(0);
+  var name;
+  // var toast;
+  var accountImg;
   useEffect(() => {
     var token = localStorage.getItem("ajwt");
     var roles = localStorage.getItem("role");
 
     setuserole(roles);
     // alert(userole);
+
     if (counter < 6) {
       Axios.get(`${hostUrl}/home`, {
         headers: { Authorization: `Bearer ${token}` },
       }).then((response) => {
         setuser(response.data.result[0]);
         // console.log(user);
+      });
+
+      Axios.get(
+        `${hostUrl}/vetclinic/messages/notification/length/${user.vetid}`
+      ).then((response) => {
+        setnumberNewThread(response.data.view);
+        // alert(response.data.view);
       });
       setcounter(counter + 1);
     }
@@ -156,43 +168,88 @@ function NavBarAppointments() {
     //   token: localStorage.getItem("rjwt"),
     // });
 
+    Axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
+      name: user.vet_name,
+    });
     localStorage.clear();
     window.location.replace("/");
   };
 
-  const setting = () => {
-    window.location.replace("/settings");
+  const vetSettings = () => {
+    // axios.delete("http://localhost:3001/logout", {
+    //   token: localStorage.getItem("rjwt"),
+    // });
+    if (parseInt(userole) === 1) {
+      window.location.replace("/petOwner/settings");
+    } else if (parseInt(userole) === 2) {
+      window.location.replace("/vet/settings");
+    } else if (parseInt(userole) === 3) {
+      window.location.replace("/admin/settings");
+    }
   };
 
+  const [show, setShow] = useState(true);
+
+  var circleAvatar = accountImg;
+
+  function viewing() {
+    Axios.put(`${hostUrl}/vetclinic/messages/notification/${user.vetid}`);
+  }
   return (
     <Navbar
-      collapseOnSelect expand="sm"
+      expand="lg"
       style={{
         backgroundColor: "white",
         padding: 0,
+        width: "inherit",
       }}
-      fixed="top"
     >
-      <Navbar.Brand className="ml-3" href="/" style={landingPageName}>
+      {/* <Navbar.Brand className='ml-3' href="/" style={landingPageName}>
         {" "}
         <Image src={logo} style={logocss} /> TERRAVET
-      </Navbar.Brand>
+      </Navbar.Brand> */}
 
-      <Navbar.Collapse className="justify-content-end">
-        {/* <a href="/petOwner/talkVet" className='mb-2' id='talkToVet' style={{ color: 'grey', fontSize: 30 }}><BsChatDotsFill /></a> */}
+      <Navbar.Collapse
+        style={{
+          flexDirection: "row",
+          display: "flex",
+          justifyContent: "end",
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        <a
+          href="/talk to vet"
+          className="mb-2"
+          id="talkToVet"
+          style={{ color: "grey", fontSize: 30 }}
+          onClick={viewing}
+        >
+          <div>
+            {String(numberNewThread) === "0" ? (
+              <Badge bg="primary" pill style={{ fontSize: 25 }}>
+                <BsChatDotsFill style={{ fontSize: 30, color: "whitesmoke" }} />
+              </Badge>
+            ) : (
+              <Badge
+                bg="primary"
+                pill
+                style={{ fontSize: 30, color: "whitesmoke" }}
+              >
+                <BsChatDotsFill
+                  style={{ fontSize: 30, color: "whitesmoke", marginTop: 10 }}
+                />
+                {String(numberNewThread)}
+              </Badge>
+            )}
+          </div>
+        </a>
 
-        {/* <NavDropdown title={<IoNotificationsSharp style={{ fontSize: 30, color: 'grey' }} />} id="navbarScrollingDropdown" alignRight={true}>
-                    <NavDropdown.Header>Notification</NavDropdown.Header>
-                    {data.map((val) => {
-                        return (
-                            <Notification img={val.img} name={val.name} description={val.description} />
-                        )
-                    })}
-                    <NavDropdown.Header style={{ textAlign: 'center' }}><a href="#" >See More</a></NavDropdown.Header>
-                </NavDropdown> */}
-
-        <NavDropdown style={{ fontSize: 20, marginRight: 50 }} title={name}>
-          <NavDropdown.Item onClick={setting}>Settings</NavDropdown.Item>
+        <NavDropdown
+          style={{ fontSize: 20, marginRight: 50, margin: 0 }}
+          title={name}
+        >
+          <NavDropdown.Item onClick={vetSettings}>Settings</NavDropdown.Item>
           <NavDropdown.Item onClick={logoutUser}>Logout</NavDropdown.Item>
         </NavDropdown>
       </Navbar.Collapse>
@@ -200,4 +257,4 @@ function NavBarAppointments() {
   );
 }
 
-export default NavBarAppointments;
+export default NavBarVet;
