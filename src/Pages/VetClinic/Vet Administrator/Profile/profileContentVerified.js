@@ -1,8 +1,8 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 
-import SideNavbarVerified from "../SideNavbarVerified";
-import NavBarVet from "../NavBarVet";
+import SideNavBarVetAdmin from '../SideNavBarVetAdmin';
+import NavBarVet from '../../Verified Vet/NavBarVet';
 import VetProfileTab from "./VetProfileTab";
 
 function profileContentVerified() {
@@ -26,7 +26,7 @@ function profileContentVerified() {
           margin: 0,
         }}
       >
-        <SideNavbarVerified active={"profile"} />
+        <SideNavBarVetAdmin active={"profile"} />
       </div>
 
       <div

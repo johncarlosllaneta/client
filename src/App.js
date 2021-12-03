@@ -41,6 +41,7 @@ import PetChatMessagesMobile from "./Pages/PetOwner/PetChatMessagesMobile";
 import PrivacyPolicy from "./Pages/General/PrivacyPolicy";
 import ContactUs from "./Pages/General/ContactUs";
 import AboutUsPage from "./Pages/General/AboutUsPage";
+import VetAdminHome from "./Pages/VetClinic/Vet Administrator/VetAdminHome";
 
 function App() {
   const [isLogin, setisLogin] = useState("");
@@ -148,7 +149,9 @@ function App() {
       </Switch>
     );
   } else if (role === 2) {
-    loginContent = <VetHome />;
+    // loginContent = <VetHome />;
+    loginContent = <VetAdminHome />;
+
   } else if (role === 3) {
     loginContent = <SystemAdminHome />;
   }
