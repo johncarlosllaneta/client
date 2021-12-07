@@ -18,6 +18,8 @@ import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { hostUrl } from "../../../../Components/Host";
 import Avatar from "react-avatar";
 import { BsClock } from "react-icons/bs";
+import ScheduleVet from "./ScheduleVet";
+import VetInformation from "./VetInformation";
 
 function VetProfileTab() {
   const [user, setuser] = useState([]);
@@ -239,274 +241,109 @@ function VetProfileTab() {
   return (
     <div
       style={{
-        padding: 30,
+        paddingRight: '5vw',
+        paddingLeft: '5vw'
       }}
     >
-      <Modal size="xl" show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Update Profile</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Alert variant="info">
-              <Alert.Heading>Vet Information</Alert.Heading>
-              <Row>
-                <Col>
-                  <div style={{ alignContent: "center" }}>
-                    <img
-                      src={user.vet_picture}
-                      style={{
-                        height: 100,
-                        width: 100,
-                        borderRadius: 50,
-                        border: "7px",
-                        borderStyle: "solid",
-                        borderColor: "transparent",
-                        marginTop: "2vh",
-                      }}
-                    ></img>
 
-                    <Form.Group controlId="formBasicEmail">
-                      <Form.Label>
-                        <strong>Name:</strong>
-                      </Form.Label>
-                      <Form.Control type="text" value={user.vet_name} />
-                    </Form.Group>
-                  </div>
+      <div
+        style={{
 
-                  <Form.Group controlId="formBasicEmail">
-                    <Form.Label>
-                      <strong>Email:</strong>
-                    </Form.Label>
-                    <Form.Control type="email" value={user.email} />
-                  </Form.Group>
+          boxShadow:
+            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+        }}
+      >
+        <Card >
+          <div
+            style={{
+              padding: 30,
+              borderRadius: 30,
+              backgroundColor: 'white',
 
-                  <Form.Group controlId="formBasicEmail">
-                    <Form.Label>
-                      <strong>Address:</strong>
-                    </Form.Label>
-                    <Form.Control type="text" value={user.vet_address} />
-                  </Form.Group>
-
-                  <Form.Group controlId="formBasicEmail">
-                    <Form.Label>
-                      <strong>Contact Number:</strong>
-                    </Form.Label>
-                    <Form.Control type="text" value={user.vet_contact_number} />
-                  </Form.Group>
-                </Col>
-                <Col>
-                  <p>
-                    <strong>Time Schedule:</strong>
-                  </p>
-                </Col>
-              </Row>
-            </Alert>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      <Card style={{ borderRadius: 30 }}>
-        <Container style={{ maxWidth: "100%", padding: 20 }}>
-          <Row>
-            <Col>
-              <Container style={{ alignItems: "center" }}>
-                {user.vet_picture !== undefined ? (
-                  <Avatar
-                    src={user.vet_picture}
-                    name={user.vet_name}
-                    round={true}
-                  />
-                ) : (
+            }}
+          >
+            <Row>
+              <Col xs={3}>
+                <Row>
                   <div
-                    data-initials="GC"
                     style={{
-                      backgroundColor: "#099bdd",
-                      color: "white",
-                      opacity: 1,
-                      content: "Data Initials",
-                      display: "inline-block",
-                      borderRadius: "50%",
-                      verticalAlign: "middle",
-                      width: 50,
-                      height: 50,
-                      lineHeight: 50,
-                      textAlign: "center",
-                    }}
-                  ></div>
-                )}
-
-                <h4>{user.vet_name}</h4>
-                <h5>{user.vet_status}</h5>
-              </Container>
-              <Button
-                variant="outline-info"
-                className="float-right"
-                // onClick={handleShow}
-                href={"/vet/settings"}
-              >
-                Edit profile
-              </Button>
-            </Col>
-          </Row>
-          <Row style={{ padding: 10 }}>
-            <Col sm="3">
-              <Row>
-                <Card style={cardCssBio}>
-                  <Row>
-                    <Col sm="3">
-                      <HiOutlineMail style={iconsCss} />
-                    </Col>
-                    <Col sm="7">
-                      <Row>
-                        <h5 style={descCssTitle}>Email Address</h5>
-                      </Row>
-                      <Row>
-                        <p style={descCssLabel}> {user.email}</p>
-                      </Row>
-                    </Col>
-                  </Row>
-                </Card>
-              </Row>
-              <Row>
-                <Card style={cardCssBio}>
-                  <Row>
-                    <Col sm="3">
-                      <BiPhone style={iconsCss} />
-                    </Col>
-                    <Col sm="7">
-                      <Row>
-                        <h5 style={descCssTitle}>Contact Number</h5>
-                      </Row>
-                      <Row>
-                        <p style={descCssLabel}>{user.vet_contact_number}</p>
-                      </Row>
-                    </Col>
-                  </Row>
-                </Card>
-              </Row>
-              <Row>
-                <Card style={cardCssBio}>
-                  <Row>
-                    <Col sm="3">
-                      <HiOutlineLocationMarker style={iconsCss} />
-                    </Col>
-                    <Col sm="7">
-                      <Row>
-                        <h5 style={descCssTitle}>Location</h5>
-                      </Row>
-                      <Row>
-                        <p style={descCssLabel}>{user.vet_address}</p>
-                      </Row>
-                    </Col>
-                  </Row>
-                </Card>
-              </Row>
-            </Col>
-
-            <Col
-              style={{ backgroundColor: "#FFFFFF", borderRadius: 30 }}
-              sm="8"
-            >
-              <Row style={{ flexGrow: 1, height: "100%" }}>
-                <Col
-                  sm="3"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <div>
-                    <BsClock style={{ fontSize: 60, color: "#19B9CC" }} />
-                    <div style={{ marginTop: 20 }}>
-                      <h5>
-                        Opening <br /> Hours
-                      </h5>
-                    </div>
-                  </div>
-                </Col>
-                <Col
-                  sm="4"
-                  style={{
-                    color: "#19B9CC",
-                  }}
-                >
-                  <Row
-                    style={{
-                      flexGrow: 1,
-                      height: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      display: 'block',
+                      justifyContent: 'center',
+                      alignContent: 'center',
+                      height: 'auto'
                     }}
                   >
-                    <Row>Sunday</Row>
-                    <Row>Monday</Row>
-                    <Row>Tuesday</Row>
-                    <Row>Wednesday</Row>
-                    <Row>Thursday</Row>
-                    <Row>Friday</Row>
-                    <Row>Saturday</Row>
-                  </Row>
-                </Col>
-                <Col sm="5">
-                  <Row>
-                    <Col>
-                      {/* Opening */}
-                      <Row
-                        style={{
-                          flexGrow: 1,
-                          height: "100%",
-                          rowGap: 40,
-                          paddingTop: 15,
-                          paddingBottom: 15,
-                        }}
-                      >
-                        <Row>{OpeningSunday}</Row>
-                        <Row>{OpeningMonday}</Row>
-                        <Row>{OpeningTuesday}</Row>
-                        <Row>{OpeningWednesday}</Row>
-                        <Row>{OpeningThursday}</Row>
-                        <Row>{OpeningFriday}</Row>
-                        <Row>{OpeningSaturday}</Row>
-                      </Row>
-                    </Col>
 
-                    <Col>
-                      {/* Closing */}
-                      <Row
-                        style={{
-                          flexGrow: 1,
-                          height: "100%",
-                          rowGap: 40,
-                          paddingTop: 15,
-                          paddingBottom: 15,
-                        }}
-                      >
-                        <Row>{ClosingSunday}</Row>
-                        <Row>{ClosingMonday}</Row>
-                        <Row>{ClosingTuesday}</Row>
-                        <Row>{ClosingWednesday}</Row>
-                        <Row>{ClosingThursday}</Row>
-                        <Row>{ClosingFriday}</Row>
-                        <Row>{ClosingSaturday}</Row>
-                      </Row>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Container>
-      </Card>
+                    <Avatar
+                      round={true}
+                      name={user.vet_name}
+                      src={user.vet_picture}
+                      size={'10vh'}
+                      style={{ marginBottom: 15 }}
+                    />
+
+
+                    <p
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: '1.25rem',
+                        marginBottom: 0
+                      }}
+                    >
+                      {user.vet_name}
+                    </p>
+                    <h6
+                      style={{
+                        color: '#3BD2E3'
+                      }}
+                    >
+                      Veterinary Clinic
+                    </h6>
+
+                    <Button>
+                      Edit Profile
+                    </Button>
+                  </div>
+                </Row>
+              </Col>
+
+              <Col xs={9}>
+                <Row>
+                  <div
+                    style={{
+                      display: 'block'
+
+                    }}
+                  >
+                    <h4>Schedule</h4>
+                    <ScheduleVet
+                      OpeningMonday={OpeningMonday}
+                      OpeningTuesday={OpeningTuesday}
+                      OpeningWednesday={OpeningWednesday}
+                      OpeningThursday={OpeningThursday}
+                      OpeningFriday={OpeningFriday}
+                      OpeningSaturday={OpeningSaturday}
+                      OpeningSunday={OpeningSunday}
+                      ClosingMonday={ClosingMonday}
+                      ClosingTuesday={ClosingTuesday}
+                      ClosingWednesday={ClosingWednesday}
+                      ClosingThursday={ClosingThursday}
+                      ClosingFriday={ClosingFriday}
+                      ClosingSaturday={ClosingSaturday}
+                      ClosingSunday={ClosingSunday}
+                    />
+
+                    <VetInformation
+                      user={user}
+                    />
+                  </div>
+                </Row>
+              </Col>
+
+            </Row>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 }
