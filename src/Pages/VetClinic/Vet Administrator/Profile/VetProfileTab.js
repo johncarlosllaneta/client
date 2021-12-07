@@ -20,6 +20,7 @@ import Avatar from "react-avatar";
 import { BsClock } from "react-icons/bs";
 import ScheduleVet from "./ScheduleVet";
 import VetInformation from "./VetInformation";
+import TabPanelController from "./TabPanelController";
 
 function VetProfileTab() {
   const [user, setuser] = useState([]);
@@ -343,6 +344,10 @@ function VetProfileTab() {
             </Row>
           </div>
         </Card>
+      </div>
+
+      <div>
+        <TabPanelController user={user} />
       </div>
     </div>
   );

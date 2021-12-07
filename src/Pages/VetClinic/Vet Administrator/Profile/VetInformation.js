@@ -12,29 +12,31 @@ function VetInformation(props) {
                         <Col
                             style={{
                                 padding: 0,
+                                display: 'inline-flex'
                             }}
                         >
                             <div
                                 style={{
-                                    display: 'inline'
+                                    display: 'flex'
                                 }}
                             >
                                 <IoMailSharp
                                     style={{
                                         color: '#57D4FF',
                                         fontSize: '3vw',
-                                        display: 'inline'
+                                        // display: 'inline'
                                     }}
                                 />
                             </div>
                             <div
                                 style={{
-                                    display: 'inline'
+                                    display: 'flex'
                                 }}
                             >
                                 <div
                                     style={{
-                                        display: 'block'
+                                        display: 'block',
+                                        padding: 10
                                     }}
                                 >
                                     <h5
@@ -59,42 +61,55 @@ function VetInformation(props) {
                 </Col>
 
 
+
                 <Col>
                     <Row>
-                        <Col xs={3}>
-                            <IoLocationSharp
-                                style={{
-                                    color: '#57D4FF',
-                                    fontSize: '3vw'
-                                }}
-                            />
-                        </Col>
-
-                        <Col xs={9}
+                        <Col
                             style={{
-                                padding: 0
+                                padding: 0,
+                                display: 'inline-flex'
                             }}
                         >
                             <div
                                 style={{
-                                    display: 'block'
+                                    display: 'flex'
                                 }}
                             >
-                                <h5
-                                    style={{
-                                        marginBottom: 0
-                                    }}
-                                >
-                                    {props.user.vet_address}
-                                </h5>
-                                <p
+                                <IoLocationSharp
                                     style={{
                                         color: '#57D4FF',
-                                        fontSize: 'inherit'
+                                        fontSize: '3vw',
+                                        // display: 'inline'
+                                    }}
+                                />
+                            </div>
+                            <div
+                                style={{
+                                    display: 'flex'
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        display: 'block',
+                                        padding: 10
                                     }}
                                 >
-                                    Address
-                                </p>
+                                    <h5
+                                        style={{
+                                            marginBottom: 0
+                                        }}
+                                    >
+                                        {props.user.vet_address}
+                                    </h5>
+                                    <p
+                                        style={{
+                                            color: '#57D4FF',
+                                            fontSize: 'inherit'
+                                        }}
+                                    >
+                                        Address
+                                    </p>
+                                </div>
                             </div>
                         </Col>
                     </Row>
@@ -104,44 +119,59 @@ function VetInformation(props) {
 
                 <Col>
                     <Row>
-                        <Col xs={3}>
-                            <AiFillPhone
-                                style={{
-                                    color: '#57D4FF',
-                                    fontSize: '3vw'
-                                }}
-                            />
-                        </Col>
-
-                        <Col xs={9}
+                        <Col
                             style={{
-                                padding: 0
+                                padding: 0,
+                                display: 'inline-flex'
                             }}
                         >
                             <div
                                 style={{
-                                    display: 'block'
+                                    display: 'flex'
                                 }}
                             >
-                                <h5
-                                    style={{
-                                        marginBottom: 0
-                                    }}
-                                >
-                                    {props.user.vet_contact_number}
-                                </h5>
-                                <p
+                                <AiFillPhone
                                     style={{
                                         color: '#57D4FF',
-                                        fontSize: 'inherit'
+                                        fontSize: '3vw',
+                                        // display: 'inline'
+                                    }}
+                                />
+                            </div>
+                            <div
+                                style={{
+                                    display: 'flex'
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        display: 'block',
+                                        padding: 10
                                     }}
                                 >
-                                    Contact Number
-                                </p>
+                                    <h5
+                                        style={{
+                                            marginBottom: 0
+                                        }}
+                                    >
+                                        {props.user.vet_contact_number}
+                                    </h5>
+                                    <p
+                                        style={{
+                                            color: '#57D4FF',
+                                            fontSize: 'inherit'
+                                        }}
+                                    >
+                                        Contact Number
+                                    </p>
+                                </div>
                             </div>
                         </Col>
                     </Row>
                 </Col>
+
+
+
 
 
 
