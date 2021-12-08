@@ -1,7 +1,10 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 import DashboardVetAdmin from './Dashboard/DashboardVetAdmin';
+import PetsVerified from './Pets/PetsVerified';
 import profileContentVerified from './Profile/profileContentVerified';
+import PetPanelTableController from './Pets/PetPanelTableController';
 
 function VetAdminHome() {
     return (
@@ -12,6 +15,8 @@ function VetAdminHome() {
                         <Route path="/" exact component={DashboardVetAdmin} />
                         <Route path="/dashboard" exact component={DashboardVetAdmin} />
                         <Route path="/profile" exact component={profileContentVerified} />
+                        <Route path="/pets/:vetid" exact component={PetsVerified} />
+                        <Route path="/pets/:vetid/:petid" exact component={PetPanelTableController} />
                         {/* <Route path="/dashboard" exact component={Dashboard} />
                         <Route path="/profile" exact component={ProfileContent} />
                         <Route path="/verification" exact component={VerifyContent} />
