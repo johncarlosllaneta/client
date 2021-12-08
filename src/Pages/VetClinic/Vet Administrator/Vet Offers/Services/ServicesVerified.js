@@ -1,12 +1,10 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import SideNavBarVetAdmin from "../../../../Vet Administrator/SideNavBarVetAdmin";
+import SideNavBarVetAdmin from "../../SideNavBarVetAdmin";
+import ServiceTab from "./ServiceTab";
+import NavBarVet from '../../../Verified Vet/NavBarVet';
 
-import NavBarVet from "../../../NavBarVet";
-
-
-import ConsultStart from "./ConsultStart";
-function ConsultStartHolder() {
+function ServicesVerified() {
   var aspectratioheight = window.screen.height;
   var aspectratiowidth = window.screen.width;
   var value;
@@ -27,7 +25,7 @@ function ConsultStartHolder() {
           margin: 0,
         }}
       >
-        <SideNavBarVetAdmin active={"consultation"} />
+        <SideNavBarVetAdmin active={"services"} />
       </div>
 
       <div
@@ -42,12 +40,12 @@ function ConsultStartHolder() {
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
           <NavBarVet />
         </div>
-        <div style={{ height: "85%", border: "1px", padding: 10 }}>
-          <ConsultStart />
+        <div style={{ height: "85%", border: "1px", padding: 5 }}>
+          <ServiceTab />
         </div>
       </div>
     </div>
   );
 }
 
-export default ConsultStartHolder;
+export default ServicesVerified;

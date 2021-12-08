@@ -199,6 +199,7 @@ function HealthPetCard(props) {
   return (
     <div>
       <MaterialTable
+        title={'Health Record'}
         columns={columns}
         data={healthCard}
         cellEditable={false}

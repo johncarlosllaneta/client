@@ -1,9 +1,8 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import SideNavBarVetAdmin from "../../../../Vet Administrator/SideNavBarVetAdmin";
 
 import NavBarVet from "../../../NavBarVet";
-
+import SideNavbarVerified from "../../../SideNavbarVerified";
 
 import ConsultStart from "./ConsultStart";
 function ConsultStartHolder() {
@@ -27,7 +26,7 @@ function ConsultStartHolder() {
           margin: 0,
         }}
       >
-        <SideNavBarVetAdmin active={"consultation"} />
+        <SideNavbarVerified active={"services"} />
       </div>
 
       <div

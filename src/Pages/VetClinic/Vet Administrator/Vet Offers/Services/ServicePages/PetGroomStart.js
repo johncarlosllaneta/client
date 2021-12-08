@@ -18,39 +18,26 @@ import { useParams, BrowserRouter, Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import MaterialTable from "material-table";
 import { hostUrl } from "../../../../../../Components/Host";
-import imageI from "../../../../../../Images/PetOwner/Consultation.png";
+import imageI from "../../../../../../Images/CHECKUP.png";
 import imageII from "../../../../../../Images/examination copy.png";
-import imageIII from "../../../../../../Images/baths.png";
+import imageIII from "../../../../../../Images/PetOwner/Grooming.png";
 import imageIV from "../../../../../../Images/preventive.png";
 import imageV from "../../../../../../Images/scopy.png";
 import imageVI from "../../../../../../Images/INHOUSEW.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 
-const ConsultStart = (props) => {
+const PetGroomStart = (props) => {
   let { vetid } = useParams();
   var id = vetid.toString().replace("10##01", "/");
-  const [counter, setcounter] = useState(0);
-
-  const [consultation, setconsultation] = useState([]);
-  useEffect(() => {
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/consultation/${id}`).then((response) => {
-        setconsultation(response.data);
-        // console.log(response.data)
-      });
-      // alert(props.data.vet_admin_id);
-      setcounter(counter + 1);
-    }
-  }, [consultation]);
-
-  const [consulations, setconsulations] = useState(true);
+  //category
+  const [consulation, setconsulation] = useState(true);
   const [petExamination, setpetExamination] = useState(true);
   const [petGrooming, setpetGrooming] = useState(true);
   const [preventiveControls, setpreventiveControls] = useState(true);
   const [vaccination, setvaccination] = useState(true);
   const [inHouseLab, setinHouseLab] = useState(true);
-
+  const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
   useEffect(() => {
     if (counter < 1) {
@@ -61,7 +48,7 @@ const ConsultStart = (props) => {
         setuser(response.data.result[0]);
 
         if (response.data.result[0].enableConsultation == 1) {
-          setconsulations(false);
+          setconsulation(false);
         }
         if (response.data.result[0].enableExamination == 1) {
           setpetExamination(false);
@@ -93,6 +80,7 @@ const ConsultStart = (props) => {
   const handleCloseInsert = () => setShowInsert(false);
   const handleShowInsert = () => setShowInsert(true);
 
+  const [services, setservices] = useState([]);
   const [updateService, setupdateService] = useState([]);
 
   const [updateServiceId, setupdateServiceId] = useState();
@@ -104,22 +92,26 @@ const ConsultStart = (props) => {
   const [showServices, setShowServices] = useState(false);
   const handleCloseServices = () => setShowServices(false);
   const handleShowServices = (val) => {
+    // setupdateService(val);
     setupdateServiceId(val.service_id);
     setupdateServiceName(val.service_name);
     setupdateServiceDescription(val.service_description);
     setupdateServiceFee(val.service_fee);
     setupdateServiceCategory(val.category);
+    console.log(updateService);
     setShowServices(true);
   };
 
   const [showUpdate, setShowUpdate] = useState(false);
   const handleCloseUpdate = () => setShowUpdate(false);
   const handleShowUpdate = (val) => {
+    // setupdateService(val);
     setupdateServiceId(val.service_id);
     setupdateServiceName(val.service_name);
     setupdateServiceDescription(val.service_description);
     setupdateServiceFee(val.service_fee);
     setupdateServiceCategory(val.category);
+    console.log(updateService);
     setShowUpdate(true);
   };
 
@@ -130,8 +122,17 @@ const ConsultStart = (props) => {
     setShowDelete(true);
   };
 
-  const [validated, setValidated] = useState(false);
-  const [validatedInsert, setValidatedInsert] = useState(false);
+  const [petGroomings, setpetGroomings] = useState([]);
+  useEffect(() => {
+    if (counter < 2) {
+      Axios.get(`${hostUrl}/petGrooming/${id}`).then((response) => {
+        setpetGroomings(response.data);
+        // console.log(response.data)
+      });
+      setcounter(counter + 1);
+    }
+    // alert(props.data.vet_admin_id);
+  }, [petGroomings]);
 
   const submitService = (e) => {
     const form = e.currentTarget;
@@ -142,16 +143,15 @@ const ConsultStart = (props) => {
       e.preventDefault();
       var id = vetid.toString().replace("10##01", "/");
       Axios.post(`${hostUrl}/services/insert/:${id}`, {
-        serviceName: "Consultation",
+        serviceName: serviceName,
         serviceDescription: serviceDescription,
         service_fee: serviceFee,
-        category: "Consultation",
+        category: "Pet Grooming",
       }).then((response) => {
         setValidatedInsert(false);
         handleCloseInsert();
       });
     }
-
     setValidatedInsert(true);
   };
 
@@ -166,7 +166,7 @@ const ConsultStart = (props) => {
         updateServiceName: updateServiceName,
         updateServiceDescription: updateServiceDescription,
         updateServiceFee: updateServiceFee,
-        updateServiceCategory: updateServiceCategory,
+        updateServiceCategory: "Pet Grooming",
       }).then((response) => {
         handleCloseUpdate();
       });
@@ -183,6 +183,9 @@ const ConsultStart = (props) => {
     );
   };
 
+  const [validated, setValidated] = useState(false);
+  const [validatedInsert, setValidatedInsert] = useState(false);
+
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
 
   const columns = [
@@ -194,16 +197,21 @@ const ConsultStart = (props) => {
     },
     {
       title: "Description",
-      // field: "category",
+      field: "service_description",
+      sorting: true,
       sorting: true,
       render: (row) => <p>{row.service_description}</p>,
     },
     {
-      title: "Fee",
-      field: "service_fee",
-      render: (rowData) =>
-        rowData.price !== "" && "₱" + rowData.service_fee + ".00",
+      title: "Service Fee",
+      render: (row) => (
+        <div>
+          <p>{"₱ " + row.service_fee + ".00"}</p>
+          {/* {row.service_fee} */}
+        </div>
+      ),
     },
+
     {
       title: "Action",
       render: (row) => (
@@ -276,6 +284,7 @@ const ConsultStart = (props) => {
     setShowPopover(!showPopover);
     setTarget(event.target);
   };
+
   return (
     <div
       style={{
@@ -331,13 +340,7 @@ const ConsultStart = (props) => {
                 controlId="floatingInputPrice"
                 label="Service Category"
               >
-                <Form.Select
-                  custom
-                  defaultValue={updateServiceCategory}
-                  onChange={(e) => {
-                    setupdateServiceCategory(e.target.value);
-                  }}
-                >
+                <Form.Select custom defaultValue={updateServiceCategory}>
                   <option value="Consultation">Consultation</option>
                   <option value="Pet Examination">Pet Examination</option>
                   <option value="Pet Grooming">Pet Grooming </option>
@@ -447,14 +450,38 @@ const ConsultStart = (props) => {
                 <Form.Select
                   custom
                   required
-                  defaultValue={"Consultation"}
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setCategory("Consultation");
-                  }}
+                  defaultValue={"Pet Grooming"}
+                // onSubmit={(e) => {
+                //   e.preventDefault();
+                //   setCategory('Consultation');
+                // }}
                 >
-                  <option value="Consultation">Consultation</option>
+                  <option value="Pet Grooming">Pet Grooming</option>
                 </Form.Select>
+              </FloatingLabel>
+            </Form.Group>
+
+            <Form.Group controlId="formBasicProduct">
+              <FloatingLabel
+                controlId="floatingInputPrice"
+                label="Service Name"
+              >
+                <Form.Control
+                  type="text"
+                  // value={updateProductName}
+                  placeholder="Sample Service"
+                  minLength={5}
+                  required
+                  onChange={(e) => {
+                    setServiceName(e.target.value);
+                  }}
+                />
+                <Form.Control.Feedback type="valid">
+                  You've input a valid service name.
+                </Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">
+                  Service name is required in this form.
+                </Form.Control.Feedback>
               </FloatingLabel>
             </Form.Group>
 
@@ -518,12 +545,11 @@ const ConsultStart = (props) => {
         </Form>
       </Modal>
 
-      {/* Main Panel */}
       <div
         style={{
           display: "flex",
           width: "inherit",
-          justifyContent: "start",
+          justifyContent: "space-between",
           padding: 10,
         }}
       >
@@ -535,46 +561,278 @@ const ConsultStart = (props) => {
             margin: 0,
           }}
         >
-          Consultation
+          Service Category
         </h5>
 
-
+        <Button
+          href={`/services/${vetid}`}
+          style={{
+            backgroundColor: "#19B9CC",
+            borderColor: "white",
+            paddingTop: 10,
+            margin: 0,
+          }}
+        >
+          General Services
+        </Button>
       </div>
 
-      {/* Consultation Options */}
       <div
         style={{
-          height: "auto",
+          height: "20vh",
           width: "75vw",
-          backgroundColor: "transparent",
+          backgroundColor: "white",
           padding: 25,
           marginLeft: 10,
-
+          boxShadow:
+            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
         }}
       >
         <Row>
-          <Col>
-            <div
+          <Col hidden={consulation}>
+            <Link
+              to={`/services/consultation/${vetid}`}
               style={{
-                boxShadow:
-                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                height: '20vh'
+                textDecoration: "none",
               }}
             >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  width: "10vw",
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageI}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
 
-            </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Consultation
+                  </p>
+                </div>
+              </Container>
+            </Link>
           </Col>
 
-          <Col>
-            <div
+          <Col hidden={petExamination}>
+            <Link
+              to={`/services/pet&examination/${vetid}`}
               style={{
-                boxShadow:
-                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                height: '20vh'
+                textDecoration: "none",
               }}
             >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  width: "10vw",
+                  padding: 10,
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageII}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Pet Examination
+                  </p>
+                </div>
+              </Container>
+            </Link>
+          </Col>
 
-            </div>
+          <Col hidden={petGrooming}>
+            <Link
+              to={`/services/pet&grooming/${vetid}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Container
+                style={{
+                  backgroundColor: "white",
+                  height: "15vh",
+                  width: "10vw",
+                  padding: 10,
+                  borderColor: "#3BD2E3",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageIII}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <p
+                    style={{
+                      color: "#3BD2E3",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Pet Grooming
+                  </p>
+                </div>
+              </Container>
+            </Link>
+          </Col>
+
+          <Col hidden={preventiveControls}>
+            <Link
+              to={`/services/preventive&control/${vetid}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  padding: 10,
+                  width: "10vw",
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageIV}
+                    style={{
+                      height: "7vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Preventive Control
+                  </p>
+                </div>
+              </Container>
+            </Link>
+          </Col>
+
+          <Col hidden={vaccination}>
+            <Link
+              to={`/services/vaccination/${vetid}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  width: "10vw",
+                  padding: 10,
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageV}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Vaccination
+                  </p>
+                </div>
+              </Container>
+            </Link>
           </Col>
         </Row>
       </div>
@@ -582,54 +840,53 @@ const ConsultStart = (props) => {
       {/* Data Table */}
 
       {/* tables */}
-      <Row>
-        <Overlay
-          show={showPopover}
-          target={target}
-          placement="bottom"
-          container={ref.current}
-          containerPadding={20}
-        >
-          <Popover id="popover-contained">
-            <Popover.Header as="h3">Helper</Popover.Header>
-            <Popover.Body>
-              <p>This table shows the consultation services. </p>
-            </Popover.Body>
-          </Popover>
-        </Overlay>
-        <MaterialTable
-          style={{
-            boxShadow:
-              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-            width: "75vw",
-            marginTop: 10,
-            marginLeft: 20,
-          }}
-          columns={columns}
-          data={consultation}
-          title={"Consultation Services"}
-          cellEditable={false}
-          options={{
-            sorting: true,
-          }}
-          actions={[
-            {
-              icon: "add",
-              tooltip: "Add Services",
-              isFreeAction: true,
-              onClick: (event) => handleShowInsert(),
-            },
-            {
-              icon: "information",
-              tooltip: "Helper",
-              isFreeAction: true,
-              onClick: handleClick,
-            },
-          ]}
-        />
-      </Row>
+
+      <Overlay
+        show={showPopover}
+        target={target}
+        placement="bottom"
+        container={ref.current}
+        containerPadding={20}
+      >
+        <Popover id="popover-contained">
+          <Popover.Header as="h3">Helper</Popover.Header>
+          <Popover.Body>
+            <p>This table shows the pet grooming services. </p>
+          </Popover.Body>
+        </Popover>
+      </Overlay>
+      <MaterialTable
+        style={{
+          boxShadow:
+            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+          width: "75vw",
+          marginTop: 10,
+          marginLeft: 10,
+        }}
+        columns={columns}
+        data={petGroomings}
+        title={"Pet Grooming Services"}
+        cellEditable={false}
+        options={{
+          sorting: true,
+        }}
+        actions={[
+          {
+            icon: "add",
+            tooltip: "Add Services",
+            isFreeAction: true,
+            onClick: (event) => handleShowInsert(),
+          },
+          {
+            icon: "information",
+            tooltip: "Helper",
+            isFreeAction: true,
+            onClick: handleClick,
+          },
+        ]}
+      />
     </div>
   );
 };
 
-export default ConsultStart;
+export default PetGroomStart;

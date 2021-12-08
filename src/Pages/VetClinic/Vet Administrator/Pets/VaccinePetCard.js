@@ -163,7 +163,7 @@ function VaccinePetCard(props) {
       <MaterialTable
         columns={columns}
         data={vaccine}
-        title={"Vaccine Table"}
+        title={"Vaccine Record"}
         cellEditable={false}
         options={{
           sorting: true,

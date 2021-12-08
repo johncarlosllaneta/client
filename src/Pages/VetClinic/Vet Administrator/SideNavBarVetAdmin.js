@@ -267,7 +267,7 @@ function SideNavBarVetAdmin(props) {
                         }}
                     >
                         <FaStethoscope id="icons" />
-                        <a id="anchorTag" href={`/consultation/${vetID}`}>
+                        <a id="anchorTag" href={`/services/consultation/${vetID}`}>
                             Consultation
                         </a>
                     </Container>

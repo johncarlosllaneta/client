@@ -518,12 +518,11 @@ const ConsultStart = (props) => {
         </Form>
       </Modal>
 
-      {/* Main Panel */}
       <div
         style={{
           display: "flex",
           width: "inherit",
-          justifyContent: "start",
+          justifyContent: "space-between",
           padding: 10,
         }}
       >
@@ -535,46 +534,277 @@ const ConsultStart = (props) => {
             margin: 0,
           }}
         >
-          Consultation
+          Service Category
         </h5>
 
-
+        <Button
+          href={`/services/${vetid}`}
+          style={{
+            backgroundColor: "#19B9CC",
+            borderColor: "white",
+            paddingTop: 10,
+            margin: 0,
+          }}
+        >
+          General Services
+        </Button>
       </div>
 
-      {/* Consultation Options */}
       <div
         style={{
-          height: "auto",
+          height: "20vh",
           width: "75vw",
-          backgroundColor: "transparent",
+          backgroundColor: "white",
           padding: 25,
           marginLeft: 10,
-
+          boxShadow:
+            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
         }}
       >
         <Row>
-          <Col>
-            <div
+          <Col hidden={consulations}>
+            <Link
+              to={`/services/consultation/${vetid}`}
               style={{
-                boxShadow:
-                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                height: '20vh'
+                textDecoration: "none",
               }}
             >
-
-            </div>
+              <Container
+                style={{
+                  backgroundColor: "white",
+                  height: "15vh",
+                  width: "10vw",
+                  padding: 10,
+                  borderColor: "#3BD2E3",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageI}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "#3BD2E3",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Consultation
+                  </p>
+                </div>
+              </Container>
+            </Link>
           </Col>
 
-          <Col>
-            <div
+          <Col hidden={petExamination}>
+            <Link
+              to={`/services/pet&examination/${vetid}`}
               style={{
-                boxShadow:
-                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                height: '20vh'
+                textDecoration: "none",
               }}
             >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  width: "10vw",
+                  padding: 10,
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageII}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Pet Examination
+                  </p>
+                </div>
+              </Container>
+            </Link>
+          </Col>
 
-            </div>
+          <Col hidden={petGrooming}>
+            <Link
+              to={`/services/pet&grooming/${vetid}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  width: "10vw",
+                  padding: 10,
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageIII}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Pet Grooming
+                  </p>
+                </div>
+              </Container>
+            </Link>
+          </Col>
+
+          <Col hidden={preventiveControls}>
+            <Link
+              to={`/services/preventive&control/${vetid}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  padding: 10,
+                  width: "10vw",
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageIV}
+                    style={{
+                      height: "7vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Preventive Control
+                  </p>
+                </div>
+              </Container>
+            </Link>
+          </Col>
+
+          <Col hidden={vaccination}>
+            <Link
+              to={`/services/vaccination/${vetid}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  width: "10vw",
+                  padding: 10,
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageV}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Vaccination
+                  </p>
+                </div>
+              </Container>
+            </Link>
           </Col>
         </Row>
       </div>
