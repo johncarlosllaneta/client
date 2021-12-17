@@ -27,6 +27,10 @@ function VeterinarianTable(props) {
                         </FloatingLabel>
                     </div>
                     <Button
+                        onClick={() => {
+                            window.open("/registration/veterinarian", "_blank").focus();
+
+                        }}
                         style={{
                             marginLeft: 10
                         }}

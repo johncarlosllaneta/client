@@ -7,6 +7,7 @@ import profileContentVerified from './Profile/profileContentVerified';
 import PetPanelTableController from './Pets/PetPanelTableController';
 import ServicesVerified from './Vet Offers/Services/ServicesVerified';
 import ConsultStartHolder from '../Verified Vet/Vet Offers/Services/ServicePages/ConsultStartHolder';
+import RegistrationVeterinarian from './Profile/Registration/Veterinarian/RegistrationVeterinarian';
 
 function VetAdminHome() {
     return (
@@ -17,6 +18,7 @@ function VetAdminHome() {
                         <Route path="/" exact component={DashboardVetAdmin} />
                         <Route path="/dashboard" exact component={DashboardVetAdmin} />
                         <Route path="/profile" exact component={profileContentVerified} />
+                        <Route path="/registration/veterinarian" exact component={RegistrationVeterinarian} />
                         <Route path="/pets/:vetid" exact component={PetsVerified} />
                         <Route path="/pets/:vetid/:petid" exact component={PetPanelTableController} />
                         <Route
