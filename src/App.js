@@ -42,6 +42,9 @@ import PrivacyPolicy from "./Pages/General/PrivacyPolicy";
 import ContactUs from "./Pages/General/ContactUs";
 import AboutUsPage from "./Pages/General/AboutUsPage";
 import VetAdminHome from "./Pages/VetClinic/Vet Administrator/VetAdminHome";
+import DashboardMain from "./Pages/VetClinic/Veterinarian/Dashboard/DashboardMain";
+import VetDoctorHome from "./Pages/VetClinic/Veterinarian/VetDoctorHome";
+import VetStaffHome from "./Pages/VetClinic/Vet Staff/VetStaffHome";
 
 function App() {
   const [isLogin, setisLogin] = useState("");
@@ -67,7 +70,7 @@ function App() {
           console.log(res.data);
           setRole(res.data.result[0].password);
         })
-        .catch((error) => { });
+        .catch((error) => {});
       setcounter(counter + 1);
     }
   }, []);
@@ -135,8 +138,16 @@ function App() {
           children={<PetServDetail />}
         />
         <Route path="/petOwner/talkVet" exact children={<PetChat />} />
-        <Route path="/petOwner/talkVet/threads" exact children={<PetChatMobile />} />
-        <Route path="/petOwner/talkVet/threads/messages" exact children={<PetChatMessagesMobile />} />
+        <Route
+          path="/petOwner/talkVet/threads"
+          exact
+          children={<PetChatMobile />}
+        />
+        <Route
+          path="/petOwner/talkVet/threads/messages"
+          exact
+          children={<PetChatMessagesMobile />}
+        />
 
         <Route path="/video conference/:name" exact children={<Calling />} />
         <Route path="/petOwner/talkVet" exact children={<PetChat />} />
@@ -150,19 +161,22 @@ function App() {
     );
   } else if (role === 2) {
     // loginContent = <VetHome />;
-    loginContent = <VetAdminHome />;
-
+    // loginContent = <VetAdminHome />;
+    // loginContent = <VetDoctorHome />;
+    loginContent = <VetStaffHome />;
   } else if (role === 3) {
     loginContent = <SystemAdminHome />;
+    // loginContent = <VetAdminHome />;
   }
 
   return (
-    <div className="App"
+    <div
+      className="App"
       style={{
-        height: '100%',
-        width: '100%',
+        height: "100%",
+        width: "100%",
         padding: 0,
-        overflow: 'hidden'
+        overflow: "hidden",
       }}
     >
       <Router>
@@ -183,22 +197,15 @@ function App() {
                 children={<PrivacyPolicy />}
               />
 
-              <Route
-                path="/about us"
-                exact
-                children={<AboutUsPage />}
-              />
-              <Route
-                path="/contact us"
-                exact
-                children={<ContactUs />}
-              />
+              <Route path="/about us" exact children={<AboutUsPage />} />
+              <Route path="/contact us" exact children={<ContactUs />} />
             </Switch>
           </div>
         ) : (
           <div>{loginContent}</div>
         )}
       </Router>
+      {/* <DashboardMain /> */}
     </div>
   );
 }
