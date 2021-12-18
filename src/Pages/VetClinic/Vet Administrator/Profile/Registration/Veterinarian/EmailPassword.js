@@ -12,7 +12,7 @@ function EmailPassword(props) {
     const [validEmails, setvalidEmails] = useState([]);
     const [counterEmails, setcounterEmails] = useState(0);
     const [emailControllerNessage, setemailControllerNessage] = useState(true);
-
+    let emailVerification = '';
     useEffect(() => {
         if (counterEmails < 5) {
             Axios.get(`${hostUrl}/users`).then((response) => {
@@ -26,7 +26,7 @@ function EmailPassword(props) {
 
     function userExists() {
         return validEmails.some(function (el) {
-            return el.email === email;
+            return el.email === emailVerification;
         });
     }
 
@@ -51,9 +51,17 @@ function EmailPassword(props) {
                 console.log(userExists(email));
             } else {
                 e.preventDefault();
+
                 Axios.post(`${hostUrl}/verifyEmail`, {
                     email: email
                 })
+
+                props.setPassword(password);
+                props.setEmail(email);
+
+                props.submitRegistration(e);
+
+
             }
         }
 
@@ -149,21 +157,21 @@ function EmailPassword(props) {
                                                 required
                                                 minLength={8}
                                                 onChange={(e) => {
-
+                                                    setValidated(true);
 
 
 
                                                     e.preventDefault();
                                                     setEmail(e.target.value);
+                                                    emailVerification = e.target.value;
 
 
-                                                    if (email != null) {
-                                                        if (userExists(email)) {
-                                                            setemailControllerNessage(false);
-                                                        } else {
-                                                            setemailControllerNessage(true);
-                                                        }
+                                                    if (userExists()) {
+                                                        setemailControllerNessage(false);
+                                                    } else {
+                                                        setemailControllerNessage(true);
                                                     }
+
                                                 }}
 
 
@@ -199,7 +207,9 @@ function EmailPassword(props) {
                                                 type="password"
                                                 placeholder="Password"
                                                 pattern="^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+*!=]).*$"
-                                                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                                                title="Must contain at least one number, special
+                                                character, uppercase and lowercase letter, and at least 8 or
+                                                more characters."
                                                 required
                                                 onChange={(e) => {
 
@@ -209,7 +219,7 @@ function EmailPassword(props) {
                                             <Form.Text id="passwordHelpBlock" muted>
                                                 Your password must contain at least one number, special
                                                 character, uppercase and lowercase letter, and at least 8 or
-                                                more characters
+                                                more characters.
                                             </Form.Text>
                                             <Form.Control.Feedback type="invalid">
                                                 Please provide a valid password.
