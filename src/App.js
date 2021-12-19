@@ -54,25 +54,50 @@ function App() {
 
   const [counter, setcounter] = useState(0);
   useEffect(() => {
+    let tokens = localStorage.getItem("ajwt");
     const loginState = localStorage.getItem("isLogin");
     setisLogin(loginState);
     const roleuser = parseInt(localStorage.getItem("role"));
     setRole(roleuser);
-    settoken(sessionStorage.getItem("ajwt"));
-    if (counter < 5) {
-      axios
-        .get(`${hostUrl}/home`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
-          setRole(res.data.result[0].password);
-        })
-        .catch((error) => {});
-      setcounter(counter + 1);
+    settoken(localStorage.getItem("ajwt"));
+    // alert(tokens)
+
+    let roles = parseInt(localStorage.getItem("role"));
+    // alert(roles);
+
+    if (roles == NaN) {
+      window.location.replace("/");
     }
+    else if (roles == 1 || roles == 2 || roles == 3 || roles == 4 || roles == 5) {
+      axios.get(`${hostUrl}/home`, {
+        headers: {
+          'Authorization': `Bearer ${tokens}`,
+        },
+      }
+      )
+        .then((res) => {
+
+          // alert(res.status);
+          if (res.status == 200) {
+            setRole(roles);
+          } else {
+            setRole();
+            localStorage.clear();
+            window.location.href = '/login';
+          }
+
+          // setRole(res.data.result[0].password);
+        })
+        .catch((error) => {
+          console.log(error);
+          if (roles == 1 || roles == 2 || roles == 3 || roles == 4 || roles == 5) {
+            localStorage.clear();
+            window.location.replace("/login");
+          }
+        });
+    }
+
+
   }, []);
 
   //islogin
@@ -161,12 +186,17 @@ function App() {
     );
   } else if (role === 2) {
     // loginContent = <VetHome />;
-    // loginContent = <VetAdminHome />;
-    // loginContent = <VetDoctorHome />;
-    loginContent = <VetStaffHome />;
+    loginContent = <VetAdminHome />;
+
   } else if (role === 3) {
     loginContent = <SystemAdminHome />;
-    // loginContent = <VetAdminHome />;
+
+  } else if (role === 4) {
+    loginContent = <VetDoctorHome />;
+  }
+
+  else if (role === 5) {
+    loginContent = <VetStaffHome />;
   }
 
   return (

@@ -10,6 +10,7 @@ import ConsultStartHolder from '../Verified Vet/Vet Offers/Services/ServicePages
 import RegistrationVeterinarian from './Profile/Registration/Veterinarian/RegistrationVeterinarian';
 import axios from 'axios';
 import { hostUrl } from '../../../Components/Host';
+import RegistrationVetStaff from './Profile/Registration/VetStaff/RegistrationVetStaff';
 
 function VetAdminHome() {
 
@@ -23,6 +24,7 @@ function VetAdminHome() {
                         <Route path="/dashboard" exact component={DashboardVetAdmin} />
                         <Route path="/profile" exact component={profileContentVerified} />
                         <Route path="/registration/veterinarian" exact component={RegistrationVeterinarian} />
+                        <Route path="/registration/vet staff" exact component={RegistrationVetStaff} />
                         <Route path="/pets/:vetid" exact component={PetsVerified} />
                         <Route path="/pets/:vetid/:petid" exact component={PetPanelTableController} />
                         <Route
