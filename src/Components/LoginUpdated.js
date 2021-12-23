@@ -24,6 +24,19 @@ function LoginUpdated() {
 
   const [validated, setValidated] = useState(false);
 
+  const [invalidLogin, setinvalidLogin] = useState(1)
+  const [invalidButtonController, setinvalidButtonController] = useState(false);
+  function refreshInvalidLogin() {
+    setTimeout(() => {
+      setinvalidLogin(1);
+      setinvalidButtonController(false);
+      setAlertLogin();
+      setVariant();
+      setIdx();
+      setdisplay('none');
+    }, 180000);
+  }
+
   const submitLogin = (event) => {
     if (email !== "" && password !== "") {
       Axios.post(`${hostUrl}/api/login`, {
@@ -37,7 +50,7 @@ function LoginUpdated() {
             localStorage.setItem("isLogin", true);
             localStorage.setItem("role", response.data.role);
 
-            if (response.data.role === 1 || response.data.role === 3) {
+            if (response.data.role === 1 || response.data.role === 3 || response.data.role === 4 || response.data.role === 5) {
               if (response.data.role === 1) {
                 Axios.post(`${hostUrl}/pet_owner/system/logs`, {
                   name: response.data.user.name,
@@ -60,15 +73,55 @@ function LoginUpdated() {
               window.location.href = `/dashboard`;
             }
           } else if (response.data.message === "Wrong password!") {
-            setAlertLogin(
-              "The username and password you entered did not match our records. Please double-check and try again."
-            );
-            setVariant("danger");
-            setIdx("3");
-            setdisplay("block");
+            setinvalidLogin(invalidLogin + 1);
+            if (invalidLogin == 5) {
+              setinvalidButtonController(true);
+              setAlertLogin(
+                "You have reach the maximum login attempt, please try again after 3 mins"
+              );
+              setVariant("danger");
+              setIdx("3");
+              setdisplay("block");
+              refreshInvalidLogin();
+            }
+
+            if (invalidLogin < 5) {
+              setAlertLogin(
+                "The username and password you entered did not match our records. Please double-check and try again."
+              );
+              setVariant("danger");
+              setIdx("3");
+              setdisplay("block");
+            }
+
+
           } else if (response.data.message === "User doesn't exist...") {
+            setinvalidLogin(invalidLogin + 1);
+            if (invalidLogin == 5) {
+              setinvalidButtonController(true);
+              setAlertLogin(
+                "You have reach the maximum login attempt, please try again after 3 mins"
+              );
+              setVariant("danger");
+              setIdx("3");
+              setdisplay("block");
+              refreshInvalidLogin()
+            }
+
+            if (invalidLogin < 5) {
+              setAlertLogin(
+                "The username and password you entered did not match our records. Please double-check and try again."
+              );
+              setVariant("danger");
+              setIdx("3");
+              setdisplay("block");
+            }
+
+
+          }
+          else if (response.data.message === "Already login with other device") {
             setAlertLogin(
-              "The username and password you entered did not match our records. Please double-check and try again."
+              "Already login with other device. Please double-check and try again."
             );
             setVariant("danger");
             setIdx("3");
@@ -76,6 +129,17 @@ function LoginUpdated() {
           }
         })
         .catch((err) => alert(err));
+
+      if (invalidLogin < 5) {
+        setTimeout(() => {
+          setAlertLogin(
+
+          );
+          setVariant();
+          setIdx();
+          setdisplay('none');
+        }, 5000);
+      }
       event.preventDefault();
     }
   };
@@ -234,6 +298,7 @@ function LoginUpdated() {
               </Form.Text>
             </Container>
             <Button
+              disabled={invalidButtonController}
               type="submit"
               style={{
                 backgroundColor: "#0A94A4",
