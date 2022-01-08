@@ -12,7 +12,8 @@ import {
     Container,
 } from "react-bootstrap";
 
-function PanelTableController() {
+function PanelTableController(props) {
+    // alert(props.vetid)
     return (
         <div
             style={{
@@ -21,7 +22,7 @@ function PanelTableController() {
         >
             <Row>
                 <Container>
-                    <AppointmentTable />
+                    <AppointmentTable vetid={props.vetid} />
                 </Container>
             </Row>
 

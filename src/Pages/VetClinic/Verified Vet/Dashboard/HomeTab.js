@@ -18,6 +18,7 @@ import DashboardReservationTab from "../../Vet Staff/Dashboard/Widgets/Dashboard
 function HomeTab(props) {
   const [user, setuser] = useState([]);
   const [counter, setcounter] = useState(0);
+  let id = '';
   useEffect(() => {
     if (counter < 10) {
       var token = localStorage.getItem("ajwt");
@@ -27,57 +28,55 @@ function HomeTab(props) {
         })
         .then((response) => {
           setuser(response.data.result[0]);
+          getPet(response.data.result[0].vetid);
+          getReserveProducts(response.data.result[0].vetid);
+          getPendingAppointment(response.data.result[0].vetid);
+          getRatings(response.data.result[0].vetid);
+          id = response.data.result[0].vetid;
+          // alert(id);
           // console.log(user);
         });
 
       setcounter(counter + 1);
     }
-  }, [user]);
+  }, []);
 
   const [numberOfPets, setNumberOfPets] = useState();
   const [numberOfPendingReserved, setnumberOfPendingReserved] = useState();
   const [numberOfPendingRequest, setNumberOfPendingRequest] = useState();
   const [averageRating, setaverageRating] = useState();
 
-  useEffect(() => {
-    if (counter < 6) {
-      axios
-        .get(`${hostUrl}/pets/vetclinic/length/${user.vetid}`)
-        .then((response) => {
-          setNumberOfPets(response.data.pets);
-        });
-    }
-  }, [numberOfPets, user]);
+  function getPet(id) {
+    axios
+      .get(`${hostUrl}/pets/vetclinic/length/${id}`)
+      .then((response) => {
+        setNumberOfPets(response.data.pets);
+      });
+  }
 
-  useEffect(() => {
-    if (counter < 6) {
-      axios
-        .get(`${hostUrl}/reserved/vetclinic/length/${user.vetid}`)
-        .then((response) => {
-          setnumberOfPendingReserved(response.data.reserved);
-        });
-    }
-  }, [numberOfPendingReserved, user]);
+  function getReserveProducts(id) {
+    axios
+      .get(`${hostUrl}/reserved/vetclinic/length/${id}`)
+      .then((response) => {
+        setnumberOfPendingReserved(response.data.reserved);
+      });
+  }
 
-  useEffect(() => {
-    if (counter < 6) {
-      axios
-        .get(`${hostUrl}/pending/vetclinic/length/${user.vetid}`)
-        .then((response) => {
-          setNumberOfPendingRequest(response.data.pending);
-        });
-    }
-  }, [numberOfPendingRequest, user]);
+  function getPendingAppointment(id) {
+    axios
+      .get(`${hostUrl}/pending/vetclinic/length/${id}`)
+      .then((response) => {
+        setNumberOfPendingRequest(response.data.pending);
+      });
+  }
 
-  useEffect(() => {
-    if (counter < 6) {
-      axios
-        .get(`${hostUrl}/vetRatings/vetclinic/length/:${user.vetid}`)
-        .then((response) => {
-          setaverageRating(response.data.averageRatings);
-        });
-    }
-  }, [averageRating, user]);
+  function getRatings(id) {
+    axios
+      .get(`${hostUrl}/vetRatings/vetclinic/length/:${id}`)
+      .then((response) => {
+        setaverageRating(response.data.averageRatings);
+      });
+  }
 
   function oneDecimal(ratess) {
     return Math.round(ratess * 10) / 10;
@@ -93,7 +92,7 @@ function HomeTab(props) {
     userPanel = <DashboardReservationTab />;
     userSidePanel = <RatingsAndFeedback data={user} />;
   } else if (props.user == "Vet Admin") {
-    userPanel = <PanelTableController />;
+    userPanel = <PanelTableController vetid={user.vetid} />;
     userSidePanel = <RatingsAndFeedback data={user} />;
   }
 
@@ -131,11 +130,18 @@ function HomeTab(props) {
       </Row>
 
       <Row>
-        <Col sm={8}>
+        <div
+          // sm={8}
+          style={{
+            width: '80%'
+          }}
+        >
           <div style={{ height: "55vh" }}> {userPanel} </div>
-        </Col>
+        </div>
 
-        <Col sm={4} style={{ display: "flex" }}>
+        <div
+          // sm={4} 
+          style={{ display: "flex", width: '20%' }}>
           <Card
             style={{
               boxShadow:
@@ -154,7 +160,7 @@ function HomeTab(props) {
                 </h5>
               ) : (
                 <h5
-                  style={{ color: "#19B9CC", textAlign: "left" }}
+                  style={{ color: "#19B9CC", textAlign: "left", fontSize: '100%' }}
                   className="mt-2"
                 >
                   Ratings and Feedback
@@ -167,7 +173,7 @@ function HomeTab(props) {
               </Card>
             </Card.Body>
           </Card>
-        </Col>
+        </div>
       </Row>
     </div>
   );

@@ -16,9 +16,24 @@ import { TiCancel } from "react-icons/ti";
 import MaterialTable from "material-table";
 import Axios from "axios";
 import { hostUrl } from "../../../../Components/Host";
+import { dateConvertion } from "../../../../Components/FormatDateTime";
 
 
-function AppointmentTable() {
+
+function AppointmentTable(props) {
+
+    const [appointment, setappointment] = useState([]);
+
+    // getPendingAppointment
+
+    // alert(props.vetid);
+    useEffect(() => {
+        Axios.get(`${hostUrl}/pending/appointment/${props.vetid}`).then((response) => {
+            setappointment(response.data);
+
+        });
+
+    }, [props.vetid])
 
     // Popover Overlay
     const [showPopover, setShowPopover] = useState(false);
@@ -50,77 +65,78 @@ function AppointmentTable() {
             field: "date_scheduled",
             sorting: true,
             defaultSort: "desc",
-            // render: (row) => dateConvertion(String(row.date_scheduled).split("T")[0]),
+            render: (row) => dateConvertion(String(row.date_scheduled).split("T")[0]),
         },
         {
             title: "Time Schedule",
             field: "time_scheduled",
             sorting: true,
-        },
-        {
-            title: "Action",
-            render: (row) => (
-                <div style={{ display: "flex", flexDirection: "row " }}>
-                    <OverlayTrigger
-                        placement="top-start"
-                        delay={{ show: 250 }}
-                        overlay={renderTooltip({ msg: "View Information" })}
-                    >
-                        <Button
-                            variant="info"
-                            style={{
-                                marginRight: 5,
-                            }}
-                            onClick={() => {
-                                // viewDetails(row.appointment_id);
-                                // ModalView();
-                            }}
-                        >
-                            <AiOutlineSearch style={{ fontSize: 25, color: "white" }} />
-                        </Button>
-                    </OverlayTrigger>
+        }
+        // ,
+        // {
+        //     title: "Action",
+        //     render: (row) => (
+        //         <div style={{ display: "flex", flexDirection: "row " }}>
+        //             <OverlayTrigger
+        //                 placement="top-start"
+        //                 delay={{ show: 250 }}
+        //                 overlay={renderTooltip({ msg: "View Information" })}
+        //             >
+        //                 <Button
+        //                     variant="info"
+        //                     style={{
+        //                         marginRight: 5,
+        //                     }}
+        //                     onClick={() => {
+        //                         // viewDetails(row.appointment_id);
+        //                         // ModalView();
+        //                     }}
+        //                 >
+        //                     <AiOutlineSearch style={{ fontSize: 25, color: "white" }} />
+        //                 </Button>
+        //             </OverlayTrigger>
 
-                    <OverlayTrigger
-                        placement="top-start"
-                        delay={{ show: 250 }}
-                        overlay={renderTooltip({ msg: "Done Appointment" })}
-                    >
-                        <Button
-                            variant="primary"
-                            style={{
-                                marginRight: 5,
-                            }}
-                            onClick={() => {
-                                // setpet_id(row.pet_id);
-                                // setappointmentID(row.appointment_id);
-                                // setcategory(row.category);
-                                // setnotifService_id(row.service_id);
-                                // handleShowModalFinish();
-                            }}
-                        >
-                            <AiOutlineFileDone style={{ fontSize: 25 }} />
-                        </Button>
-                    </OverlayTrigger>
+        //             <OverlayTrigger
+        //                 placement="top-start"
+        //                 delay={{ show: 250 }}
+        //                 overlay={renderTooltip({ msg: "Done Appointment" })}
+        //             >
+        //                 <Button
+        //                     variant="primary"
+        //                     style={{
+        //                         marginRight: 5,
+        //                     }}
+        //                     onClick={() => {
+        //                         // setpet_id(row.pet_id);
+        //                         // setappointmentID(row.appointment_id);
+        //                         // setcategory(row.category);
+        //                         // setnotifService_id(row.service_id);
+        //                         // handleShowModalFinish();
+        //                     }}
+        //                 >
+        //                     <AiOutlineFileDone style={{ fontSize: 25 }} />
+        //                 </Button>
+        //             </OverlayTrigger>
 
-                    <OverlayTrigger
-                        placement="top-start"
-                        delay={{ show: 250 }}
-                        overlay={renderTooltip({ msg: "Void Appointment" })}
-                    >
-                        <Button
-                            variant="danger"
-                            onClick={() => {
-                                // setappointmentID(row.appointment_id);
-                                // setnotifService_id(row.service_id);
-                                // handleShowModalDecline();
-                            }}
-                        >
-                            <TiCancel style={{ fontSize: 25 }} />
-                        </Button>
-                    </OverlayTrigger>
-                </div>
-            ),
-        },
+        //             <OverlayTrigger
+        //                 placement="top-start"
+        //                 delay={{ show: 250 }}
+        //                 overlay={renderTooltip({ msg: "Void Appointment" })}
+        //             >
+        //                 <Button
+        //                     variant="danger"
+        //                     onClick={() => {
+        //                         // setappointmentID(row.appointment_id);
+        //                         // setnotifService_id(row.service_id);
+        //                         // handleShowModalDecline();
+        //                     }}
+        //                 >
+        //                     <TiCancel style={{ fontSize: 25 }} />
+        //                 </Button>
+        //             </OverlayTrigger>
+        //         </div>
+        //     ),
+        // },
     ];
 
 
@@ -155,7 +171,7 @@ function AppointmentTable() {
 
                 }}
                 columns={columns}
-                data={[]}
+                data={appointment}
                 title={"Pending Appointments"}
                 cellEditable={false}
                 options={{

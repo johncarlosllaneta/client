@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, NavDropdown, Row, Col, Badge } from "react-bootstrap";
+import { Navbar, NavDropdown, Row, Col } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BsChatDotsFill } from "react-icons/bs";
@@ -8,6 +8,14 @@ import "../../../css/navBarHome.css";
 import { hostUrl } from "../../../Components/Host";
 import Avatar from "react-avatar";
 
+import { Badge, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from "@material-ui/core";
+import { MailOutlined, Settings } from "@material-ui/icons";
+import { AiFillCaretDown } from "react-icons/ai";
+import { BiLogOut } from "react-icons/bi";
+import { IoLogOut } from "react-icons/io5";
+
+
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function NavBarVet() {
   const [user, setuser] = useState([]);
   const [userole, setuserole] = useState("");
@@ -163,10 +171,20 @@ function NavBarVet() {
     color: colors.Blue,
   };
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
   const logoutUser = () => {
-    // axios.delete("http://localhost:3001/logout", {
-    //   token: localStorage.getItem("rjwt"),
-    // });
+    Axios.delete("http://localhost:3001/logout", {
+      token: localStorage.getItem("rjwt"),
+    });
 
     Axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
       name: user.vet_name,
@@ -197,17 +215,14 @@ function NavBarVet() {
   }
   return (
     <Navbar
-      expand="lg"
+      expand="sm"
       style={{
-        backgroundColor: "white",
+        backgroundColor: "#354A5F",
         padding: 0,
         width: "inherit",
       }}
     >
-      {/* <Navbar.Brand className='ml-3' href="/" style={landingPageName}>
-        {" "}
-        <Image src={logo} style={logocss} /> TERRAVET
-      </Navbar.Brand> */}
+
 
       <Navbar.Collapse
         style={{
@@ -218,42 +233,133 @@ function NavBarVet() {
           padding: 0,
         }}
       >
-        <a
-          href="/talk to vet"
-          className="mb-2"
-          id="talkToVet"
-          style={{ color: "grey", fontSize: 30 }}
-          onClick={viewing}
-        >
-          <div>
-            {String(numberNewThread) === "0" ? (
-              <Badge bg="primary" pill style={{ fontSize: 25 }}>
-                <BsChatDotsFill style={{ fontSize: 30, color: "whitesmoke" }} />
-              </Badge>
-            ) : (
-              <Badge
-                bg="primary"
-                pill
-                style={{ fontSize: 30, color: "whitesmoke" }}
-              >
-                <BsChatDotsFill
-                  style={{ fontSize: 30, color: "whitesmoke", marginTop: 10 }}
-                />
-                {String(numberNewThread)}
-              </Badge>
-            )}
-          </div>
-        </a>
 
-        <NavDropdown
+
+        {/* <NavDropdown
           style={{ fontSize: 20, marginRight: 50, margin: 0 }}
           title={name}
         >
           <NavDropdown.Item onClick={vetSettings}>Settings</NavDropdown.Item>
           <NavDropdown.Item onClick={logoutUser}>Logout</NavDropdown.Item>
-        </NavDropdown>
+        </NavDropdown> */}
+
+        <Box sx={{ flexGrow: 0, paddingTop: 0 }}>
+          <IconButton size="large" aria-label="show 4 new mails" color="inherit"
+            onClick={() => {
+              window.location.href = `/talk to vet`;
+            }}
+          >
+            <Badge badgeContent={numberNewThread} color="error">
+              <MailOutlined
+
+                style={{
+                  color: 'white',
+
+                }}
+              />
+            </Badge>
+          </IconButton>
+
+
+          <Tooltip title={user.vet_name}>
+            <IconButton onClick={handleClick} >
+
+              <Avatar
+                round={true}
+                size={35}
+                style={{
+                  marginBottom: 0
+                }}
+                src={user.vet_picture}
+                name={user.vet_name}
+              />
+              <AiFillCaretDown style={{
+                color: 'white',
+
+              }} size={20} />
+            </IconButton>
+          </Tooltip>
+          <Menu
+            anchorEl={anchorEl}
+            id="account-menu"
+            open={open}
+            onClose={handleClose}
+            onClick={handleClose}
+            PaperProps={{
+              elevation: 0,
+              sx: {
+                overflow: 'visible',
+                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                mt: 1.5,
+                '& .MuiAvatar-root': {
+                  width: 50,
+                  height: 35,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                '&:before': {
+                  content: '""',
+                  display: 'block',
+                  position: 'absolute',
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: 'background.paper',
+                  transform: 'translateY(-50%) rotate(45deg)',
+                  zIndex: 0,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+
+          >
+            <div
+              style={{
+                padding: 10,
+                backgroundColor: 'whitesmoke'
+              }}
+            >
+              <p>Signed in as <br /> <strong>{user.vet_name}</strong></p>
+            </div>
+            <Divider />
+            <MenuItem
+              style={{
+                backgroundColor: 'whitesmoke'
+              }}
+            >
+              <Avatar round={true}
+                size={25}
+                style={{
+                  marginBottom: 0,
+                  marginRight: 25
+                }}
+                src={user.vet_picture}
+                name={user.vet_name} /> My profile
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={vetSettings} style={{
+              backgroundColor: 'whitesmoke'
+            }}>
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
+              Settings
+            </MenuItem>
+            <MenuItem onClick={logoutUser} style={{
+              backgroundColor: 'whitesmoke'
+            }}>
+              <ListItemIcon>
+                <IoLogOut fontSize="large" style={{ marginLeft: 5 }} />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
+
+          </Menu>
+        </Box>
       </Navbar.Collapse>
-    </Navbar>
+    </Navbar >
   );
 }
 
