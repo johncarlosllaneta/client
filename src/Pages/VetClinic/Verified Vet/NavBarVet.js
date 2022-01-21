@@ -6,17 +6,33 @@ import { BsChatDotsFill } from "react-icons/bs";
 import Axios from "axios";
 import "../../../css/navBarHome.css";
 import { hostUrl } from "../../../Components/Host";
-import Avatar from "react-avatar";
+// import Avatar from "react-avatar";
 
-import { Badge, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from "@material-ui/core";
-import { MailOutlined, Settings } from "@material-ui/icons";
+// import { Badge, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from "@material-ui/core";
+// import { MailOutlined, Settings } from "@material-ui/icons";
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
+import Badge from '@mui/material/Badge';
+import { MailOutlined } from '@material-ui/icons';
 import { AiFillCaretDown } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
 import { IoLogOut } from "react-icons/io5";
-
+import HomeIcon from '@mui/icons-material/Home';
+import MessageIcon from '@mui/icons-material/Message';
+import logo from "../../../Images/logo.png";
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-function NavBarVet() {
+function NavBarVet(props) {
   const [user, setuser] = useState([]);
   const [userole, setuserole] = useState("");
   const [counter, setcounter] = useState(0);
@@ -223,6 +239,27 @@ function NavBarVet() {
       }}
     >
 
+      <div
+        hidden={props.showLogo}
+      >
+        <Navbar.Brand
+          href="#home"
+          style={{ color: 'white' }}
+        >
+
+          <img
+            alt=""
+            src={logo}
+            width="30"
+            height="30"
+            style={{ marginLeft: 10 }}
+            className="d-inline-block align-top"
+          />{' '}
+          TERRAVET
+        </Navbar.Brand>
+
+      </div>
+
 
       <Navbar.Collapse
         style={{
@@ -235,31 +272,46 @@ function NavBarVet() {
       >
 
 
-        {/* <NavDropdown
-          style={{ fontSize: 20, marginRight: 50, margin: 0 }}
-          title={name}
-        >
-          <NavDropdown.Item onClick={vetSettings}>Settings</NavDropdown.Item>
-          <NavDropdown.Item onClick={logoutUser}>Logout</NavDropdown.Item>
-        </NavDropdown> */}
+
 
         <Box sx={{ flexGrow: 0, paddingTop: 0 }}>
-          <IconButton size="large" aria-label="show 4 new mails" color="inherit"
-            onClick={() => {
-              window.location.href = `/talk to vet`;
-            }}
-          >
-            <Badge badgeContent={numberNewThread} color="error">
-              <MailOutlined
 
-                style={{
-                  color: 'white',
+          <Tooltip title={"Home"}>
+            <IconButton size="large" aria-label="show 4 new mails" color="inherit"
+              hidden={props.showHome}
+              onClick={() => {
+                window.location.href = `/`;
+              }}
+            >
+              <Badge badgeContent={numberNewThread} color="error">
+                <HomeIcon
 
-                }}
-              />
-            </Badge>
-          </IconButton>
+                  style={{
+                    color: 'white',
 
+                  }}
+                />
+              </Badge>
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title={"Messages"}>
+            <IconButton size="large" aria-label="show 4 new mails" color="inherit"
+              onClick={() => {
+                window.location.href = `/talk to vet`;
+              }}
+            >
+              <Badge badgeContent={numberNewThread} color="error">
+                <MessageIcon
+
+                  style={{
+                    color: 'white',
+
+                  }}
+                />
+              </Badge>
+            </IconButton>
+          </Tooltip>
 
           <Tooltip title={user.vet_name}>
             <IconButton onClick={handleClick} >
@@ -280,6 +332,7 @@ function NavBarVet() {
             </IconButton>
           </Tooltip>
           <Menu
+
             anchorEl={anchorEl}
             id="account-menu"
             open={open}
@@ -292,8 +345,8 @@ function NavBarVet() {
                 filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                 mt: 1.5,
                 '& .MuiAvatar-root': {
-                  width: 50,
-                  height: 35,
+                  width: 32,
+                  height: 32,
                   ml: -0.5,
                   mr: 1,
                 },
@@ -318,43 +371,63 @@ function NavBarVet() {
             <div
               style={{
                 padding: 10,
-                backgroundColor: 'whitesmoke'
+                // backgroundColor: 'whitesmoke'
               }}
             >
               <p>Signed in as <br /> <strong>{user.vet_name}</strong></p>
-            </div>
-            <Divider />
-            <MenuItem
-              style={{
-                backgroundColor: 'whitesmoke'
-              }}
-            >
-              <Avatar round={true}
-                size={25}
-                style={{
-                  marginBottom: 0,
-                  marginRight: 25
+              <Divider />
+              <MenuItem
+                onClick={() => {
+                  window.location.href = `/profile`;
                 }}
-                src={user.vet_picture}
-                name={user.vet_name} /> My profile
-            </MenuItem>
-            <Divider />
-            <MenuItem onClick={vetSettings} style={{
-              backgroundColor: 'whitesmoke'
-            }}>
-              <ListItemIcon>
-                <Settings fontSize="small" />
-              </ListItemIcon>
-              Settings
-            </MenuItem>
-            <MenuItem onClick={logoutUser} style={{
-              backgroundColor: 'whitesmoke'
-            }}>
-              <ListItemIcon>
-                <IoLogOut fontSize="large" style={{ marginLeft: 5 }} />
-              </ListItemIcon>
-              Logout
-            </MenuItem>
+                style={{
+                  display: 'flex',
+                  justifyContent: 'start',
+                  marginTop: 10
+                }}
+              >
+                <Avatar
+                  round={true}
+                  size={15}
+                  style={{
+
+
+                  }}
+                  src={user.vet_picture}
+                  name={user.vet_name}
+                />
+                {/* <Avatar src={user.vet_picture} sizes="" /> */}
+                My profile
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={vetSettings}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'start'
+                }}
+              >
+                <ListItemIcon>
+                  <Settings fontSize="small" />
+                </ListItemIcon>
+                Settings
+              </MenuItem>
+
+              <MenuItem onClick={logoutUser}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'start'
+                }}
+              >
+                <ListItemIcon>
+                  {/* <IoLogOut fontSize="large"
+                // style={{ marginLeft: 5 }}
+                /> */}
+                  <Logout fontSize="small" />
+                </ListItemIcon>
+                Logout
+              </MenuItem>
+            </div>
+
 
           </Menu>
         </Box>
