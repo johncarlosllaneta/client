@@ -39,6 +39,8 @@ import { apps } from "../../../../Components/base";
 import { ToastContainer } from "react-toastify";
 
 
+
+
 function VetProfileTab() {
   const [user, setuser] = useState([]);
   const [imgProfile, setimgProfile] = useState("");
@@ -157,9 +159,13 @@ function VetProfileTab() {
           );
         }
       });
+
       setimgProfile(user.vet_picture);
       setcounter(counter + 1);
+
+
     }
+
   }, [user]);
 
 
@@ -317,11 +323,11 @@ function VetProfileTab() {
 
             handleCloseProfilePicture();
             ToastUpdate();
-            refreshUser();
+            // refreshUser();
 
-            // setTimeout(() => {
-            //   window.location.reload();
-            // }, 3000);
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
 
 
           }
@@ -338,7 +344,7 @@ function VetProfileTab() {
 
     canvas.toBlob(
       (blob) => {
-        var file = new File([blob], blob.name, { lastModified: new Date().getTime(), type: blob.type });
+        var file = new File([blob], Math.floor(Math.random() * 1000000000000000000), { lastModified: new Date().getTime(), type: blob.type });
 
 
         uploadImage(file);
@@ -398,8 +404,9 @@ function VetProfileTab() {
               }}
             >
               <Form.Control type="file"
-                id="imagePicker" hidden='true'
+                id="imagePicker" hidden={true}
                 ref={inputFileRef}
+                accept="image/png, image/gif, image/jpeg"
                 onChange={onFilechange}
               />
               <UploadFileIcon
@@ -518,14 +525,6 @@ function VetProfileTab() {
           </div>
 
         </Modal.Body>
-        {/* <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseProfilePicture}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleCloseProfilePicture}>
-            Save Changes
-          </Button>
-        </Modal.Footer> */}
       </Modal>
 
 

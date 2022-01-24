@@ -30,8 +30,9 @@ import { IoLogOut } from "react-icons/io5";
 import HomeIcon from '@mui/icons-material/Home';
 import MessageIcon from '@mui/icons-material/Message';
 import logo from "../../../Images/logo.png";
+import { messages, numberNewThreads, users } from "../../../Components/User";
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
 function NavBarVet(props) {
   const [user, setuser] = useState([]);
   const [userole, setuserole] = useState("");
@@ -41,28 +42,34 @@ function NavBarVet(props) {
   // var toast;
   var accountImg;
   useEffect(() => {
-    var token = localStorage.getItem("ajwt");
-    var roles = localStorage.getItem("role");
+    // var token = localStorage.getItem("ajwt");
+    // var roles = localStorage.getItem("role");
 
-    setuserole(roles);
-    // alert(userole);
+    // setuserole(roles);
+    // // alert(userole);
 
-    if (counter < 6) {
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-        // console.log(user);
-      });
+    // if (counter < 6) {
+    //   Axios.get(`${hostUrl}/home`, {
+    //     headers: { Authorization: `Bearer ${token}` },
+    //   }).then((response) => {
+    //     setuser(response.data.result[0]);
+    //     // console.log(user);
+    //   });
 
-      Axios.get(
-        `${hostUrl}/vetclinic/messages/notification/length/${user.vetid}`
-      ).then((response) => {
-        setnumberNewThread(response.data.view);
-        // alert(response.data.view);
-      });
-      setcounter(counter + 1);
-    }
+    //   Axios.get(
+    //     `${hostUrl}/vetclinic/messages/notification/length/${user.vetid}`
+    //   ).then((response) => {
+    //     setnumberNewThread(response.data.view);
+    //     // alert(response.data.view);
+    //   });
+    //   setcounter(counter + 1);
+    // }
+    setuser(users[0]);
+    messages(user);
+    // alert(numberNewThreads);
+    setTimeout(() => {
+      setnumberNewThread(numberNewThreads);
+    }, 1000);
   }, [user]);
 
   if (parseInt(userole) === 1) {
@@ -283,15 +290,15 @@ function NavBarVet(props) {
                 window.location.href = `/`;
               }}
             >
-              <Badge badgeContent={numberNewThread} color="error">
-                <HomeIcon
 
-                  style={{
-                    color: 'white',
+              <HomeIcon
 
-                  }}
-                />
-              </Badge>
+                style={{
+                  color: 'white',
+
+                }}
+              />
+
             </IconButton>
           </Tooltip>
 
