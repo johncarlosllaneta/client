@@ -1,8 +1,10 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 
-import NavBarVet from "../../../NavBarVet";
-import SideNavbarVerified from "../../../SideNavbarVerified";
+import NavBarVet from "../../../../Verified Vet/NavBarVet";
+
+
+import SideNavBarVetAdmin from "../../../../Vet Administrator/SideNavBarVetAdmin";
 import VaccineStart from "./VaccineStart";
 
 function VaccineStartHolder() {
@@ -25,7 +27,7 @@ function VaccineStartHolder() {
           margin: 0,
         }}
       >
-        <SideNavbarVerified active={"services"} />
+        <SideNavBarVetAdmin active={"services"} />
       </div>
 
       <div
@@ -38,7 +40,7 @@ function VaccineStartHolder() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavBarVet />
+          <NavBarVet showLogo={true} showHome={true} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <VaccineStart />

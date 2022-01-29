@@ -26,6 +26,7 @@ import imageV from "../../../../../../Images/PetOwner/Vaccination.png";
 import imageVI from "../../../../../../Images/INHOUSEW.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
+import { users } from "../../../../../../Components/User";
 
 const VaccineStart = (props) => {
   let { vetid } = useParams();
@@ -40,37 +41,27 @@ const VaccineStart = (props) => {
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
   useEffect(() => {
-    if (counter < 1) {
-      var token = localStorage.getItem("ajwt");
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-
-        if (response.data.result[0].enableConsultation == 1) {
-          setconsulation(false);
-        }
-        if (response.data.result[0].enableExamination == 1) {
-          setpetExamination(false);
-        }
-
-        if (response.data.result[0].enableGrooming == 1) {
-          setpetGrooming(false);
-        }
-        if (response.data.result[0].enableVaccination == 1) {
-          setvaccination(false);
-        }
-        if (response.data.result[0].enablePreventiveControls == 1) {
-          setpreventiveControls(false);
-        }
-
-        if (response.data.result[0].enableInHouseLab == 1) {
-          setinHouseLab(false);
-        }
-      });
-      setcounter(counter + 1);
+    if (users[0].enableConsultation == 1) {
+      setconsulation(false);
     }
-  }, [user]);
+    if (users[0].enableExamination == 1) {
+      setpetExamination(false);
+    }
+
+    if (users[0].enableGrooming == 1) {
+      setpetGrooming(false);
+    }
+    if (users[0].enableVaccination == 1) {
+      setvaccination(false);
+    }
+    if (users[0].enablePreventiveControls == 1) {
+      setpreventiveControls(false);
+    }
+
+    if (users[0].enableInHouseLab == 1) {
+      setinHouseLab(false);
+    }
+  }, []);
 
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();
@@ -124,13 +115,21 @@ const VaccineStart = (props) => {
   const [vaccine, setvaccine] = useState([]);
   useEffect(() => {
     if (counter < 1) {
-      Axios.get(`${hostUrl}/vaccine/${id}`).then((response) => {
+      Axios.get(`${hostUrl}/vaccine/${users[0].vetid}`).then((response) => {
         setvaccine(response.data);
         // console.log(response.data)
       });
     }
     // alert(props.data.vet_admin_id);
-  }, [vaccine]);
+  }, []);
+
+  function reloadVaccine() {
+    Axios.get(`${hostUrl}/vaccine/${users[0].vetid}`).then((response) => {
+      setvaccine(response.data);
+      // console.log(response.data)
+      setValidated(false);
+    });
+  }
 
   const submitService = (e) => {
     const form = e.currentTarget;
@@ -139,15 +138,18 @@ const VaccineStart = (props) => {
       e.stopPropagation();
     } else {
       e.preventDefault();
-      var id = vetid.toString().replace("10##01", "/");
-      Axios.post(`${hostUrl}/services/insert/:${id}`, {
+
+      Axios.post(`${hostUrl}/services/insert/:${users[0].vetid}`, {
         serviceName: serviceName,
         serviceDescription: serviceDescription,
         service_fee: serviceFee,
         category: "Vaccination",
       }).then((response) => {
-        setValidatedInsert(false);
-        handleCloseInsert();
+        if (response.data.message == 'Success') {
+          setValidatedInsert(false);
+          handleCloseInsert();
+          reloadVaccine();
+        }
       });
     }
     setValidatedInsert(true);
@@ -166,7 +168,10 @@ const VaccineStart = (props) => {
         updateServiceFee: updateServiceFee,
         updateServiceCategory: "Vaccination",
       }).then((response) => {
-        handleCloseUpdate();
+        if (response.data.message == 'Success') {
+          handleCloseUpdate();
+          reloadVaccine();
+        }
       });
     }
 
@@ -177,6 +182,10 @@ const VaccineStart = (props) => {
     Axios.delete(`${hostUrl}/service/delete/:${updateServiceId}`, {}).then(
       (response) => {
         // alert(response.data.message);
+        if (response.data.message == 'Success') {
+
+          reloadVaccine();
+        }
       }
     );
   };

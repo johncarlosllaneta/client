@@ -26,6 +26,7 @@ import imageV from "../../../../../../Images/scopy.png";
 import imageVI from "../../../../../../Images/INHOUSEW.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
+import { users } from "../../../../../../Components/User";
 
 const PetExamStart = (props) => {
   let { vetid } = useParams();
@@ -40,37 +41,27 @@ const PetExamStart = (props) => {
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
   useEffect(() => {
-    if (counter < 1) {
-      var token = localStorage.getItem("ajwt");
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-
-        if (response.data.result[0].enableConsultation == 1) {
-          setconsulation(false);
-        }
-        if (response.data.result[0].enableExamination == 1) {
-          setpetExamination(false);
-        }
-
-        if (response.data.result[0].enableGrooming == 1) {
-          setpetGrooming(false);
-        }
-        if (response.data.result[0].enableVaccination == 1) {
-          setvaccination(false);
-        }
-        if (response.data.result[0].enablePreventiveControls == 1) {
-          setpreventiveControls(false);
-        }
-
-        if (response.data.result[0].enableInHouseLab == 1) {
-          setinHouseLab(false);
-        }
-      });
-      setcounter(counter + 1);
+    if (users[0].enableConsultation == 1) {
+      setconsulation(false);
     }
-  }, [user]);
+    if (users[0].enableExamination == 1) {
+      setpetExamination(false);
+    }
+
+    if (users[0].enableGrooming == 1) {
+      setpetGrooming(false);
+    }
+    if (users[0].enableVaccination == 1) {
+      setvaccination(false);
+    }
+    if (users[0].enablePreventiveControls == 1) {
+      setpreventiveControls(false);
+    }
+
+    if (users[0].enableInHouseLab == 1) {
+      setinHouseLab(false);
+    }
+  }, []);
 
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();
@@ -134,6 +125,13 @@ const PetExamStart = (props) => {
     // alert(props.data.vet_admin_id);
   }, [petExaminations]);
 
+  function reloadPetExamination() {
+    Axios.get(`${hostUrl}/petExamination/${users[0].vetid}`).then((response) => {
+      setpetExaminations(response.data);
+      // console.log(response.data)
+    });
+  }
+
   const submitService = (e) => {
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
@@ -141,15 +139,18 @@ const PetExamStart = (props) => {
       e.stopPropagation();
     } else {
       e.preventDefault();
-      var id = vetid.toString().replace("10##01", "/");
-      Axios.post(`${hostUrl}/services/insert/:${id}`, {
+
+      Axios.post(`${hostUrl}/services/insert/:${users[0].vetid}`, {
         serviceName: serviceName,
         serviceDescription: serviceDescription,
         service_fee: serviceFee,
         category: "Pet Examination",
       }).then((response) => {
-        setValidatedInsert(false);
-        handleCloseInsert();
+        if (response.data.message == 'Success') {
+          setValidatedInsert(false);
+          handleCloseInsert();
+          reloadPetExamination();
+        }
       });
     }
   };
@@ -167,7 +168,11 @@ const PetExamStart = (props) => {
         updateServiceFee: updateServiceFee,
         updateServiceCategory: updateServiceCategory,
       }).then((response) => {
-        handleCloseUpdate();
+        if (response.data.message == 'Success') {
+          handleCloseUpdate();
+          reloadPetExamination();
+        }
+
       });
     }
 
@@ -178,6 +183,11 @@ const PetExamStart = (props) => {
     Axios.delete(`${hostUrl}/service/delete/:${updateServiceId}`, {}).then(
       (response) => {
         // alert(response.data.message);
+        if (response.data.message == 'Success') {
+
+          reloadPetExamination();
+        }
+
       }
     );
   };

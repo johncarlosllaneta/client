@@ -1,8 +1,9 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import NavBarVet from "../../../../Verified Vet/NavBarVet";
 
-import NavBarVet from "../../../NavBarVet";
-import SideNavbarVerified from "../../../SideNavbarVerified";
+
+import SideNavBarVetAdmin from "../../../../Vet Administrator/SideNavBarVetAdmin";
 
 import PreControlStart from "./PreControlStart";
 
@@ -26,7 +27,7 @@ function PreControlStartHolder() {
           margin: 0,
         }}
       >
-        <SideNavbarVerified active={"services"} />
+        <SideNavBarVetAdmin active={"services"} />
       </div>
 
       <div
@@ -39,7 +40,7 @@ function PreControlStartHolder() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavBarVet />
+          <NavBarVet showLogo={true} showHome={true} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <PreControlStart />
