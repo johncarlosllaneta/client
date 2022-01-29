@@ -84,8 +84,11 @@ function CredentialDetails(props) {
                         handleShow();
                         setTimeout(() => {
                             handleClose();
-                        }, 5000);
-                        window.close();
+                        }, 2000);
+                        setTimeout(() => {
+                            window.close();
+                        }, 4000);
+
                     } else {
 
                     }
@@ -149,6 +152,7 @@ function CredentialDetails(props) {
                             }}
                         >
                             <h6> Successfully Register !</h6>
+                            <p> This window will close automatically. Please select Leave on the alert dialog.</p>
                         </Container>
                     </Row>
                 </Modal.Body>

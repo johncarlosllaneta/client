@@ -54,12 +54,18 @@ function EmailPassword(props) {
 
                 Axios.post(`${hostUrl}/verifyEmail`, {
                     email: email
+                }).then((response) => {
+                    if (response.data == ('Invalid Email')) {
+                        alert('Invalid Email')
+                    } else {
+                        props.setPassword(password);
+                        props.setEmail(email);
+
+                        props.submitRegistration(e);
+                    }
                 })
 
-                props.setPassword(password);
-                props.setEmail(email);
 
-                props.submitRegistration(e);
 
 
             }
