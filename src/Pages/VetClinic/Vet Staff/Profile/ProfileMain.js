@@ -1,5 +1,5 @@
-import React from "react";
-import NavBarVet from "../../Verified Vet/NavBarVet";
+import React, { useState, useEffect } from "react";
+import NavBarStaff from "../NavBarStaff";
 import SideNavBarVetStaff from "../SideNavBarVetStaff";
 import ProfilePage from "./Widgets/ProfilePage";
 
@@ -29,7 +29,7 @@ function ProfileMain() {
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
           {/* navbar */}
-          <NavBarVet />
+          <NavBarStaff />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <ProfilePage />

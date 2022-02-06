@@ -41,10 +41,10 @@ function SideNavBarVetDoctor(props) {
         setuser(response.data.result[0]);
         setvetID(response.data.result[0].vetid);
       });
-      setconsultationChecker(user.enableConsultation);
+      setconsultationChecker(1);
       setpharmacyChecker(user.enablePharmacy);
       setproductChecker(user.enableProduct);
-      setservicesChecker(user.enableServices);
+      setservicesChecker(1);
       // console.log(user);
       // alert(vetID.toString().replace('/', '10##01'))
 

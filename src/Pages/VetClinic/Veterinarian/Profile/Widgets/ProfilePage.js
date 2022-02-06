@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
+import { hostUrl } from "../../../../../Components/Host";
 import Avatar from "react-avatar";
 import { Button, Col, Row } from "react-bootstrap";
 import SampleImage from "../../../../../Images/JCEL.jpg";
 import ProfileContainer from "./ProfileContainer";
 import { MdEmail, MdPlace, MdPermContactCalendar } from "react-icons/md";
 function ProfilePage() {
+  const [counter, setcounter] = useState(0);
+  const [user, setuser] = useState([]);
+  const [imgProfile, setimgProfile] = useState("");
+
+  useEffect(() => {
+    var token = localStorage.getItem("ajwt");
+    if (counter < 3) {
+      Axios.get(`${hostUrl}/home`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }).then((response) => {
+        setuser(response.data.result[0]);
+      });
+      setimgProfile(user.vet_doc_profilePic);
+      setcounter(counter + 1);
+    }
+  }, [user]);
   return (
     <div
       style={{
-        padding: 20,
+        paddingTop: 140,
+        paddingBottom: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
       }}
     >
       <Col>
@@ -29,15 +50,21 @@ function ProfilePage() {
                     style={{
                       marginTop: 10,
                     }}
-                    src={SampleImage}
-                    name={"Jhaycee Llaneta"}
+                    src={user.vet_doc_profilePic}
+                    name={user.vet_doc_fname}
                   />
                 </div>
               </Col>
               <Col>
                 <div style={{ paddingTop: 40 }}>
                   <Row style={{ fontSize: 20 }}>My name is</Row>
-                  <Row style={{ fontSize: 32 }}>Dr. Ignacio Delpilar</Row>
+                  <Row style={{ fontSize: 32 }}>
+                    {user.vet_doc_fname +
+                      " " +
+                      user.vet_doc_mname +
+                      " " +
+                      user.vet_doc_lname}
+                  </Row>
                   <Row style={{ fontSize: 10, color: "#33C1D2" }}>
                     Veterinarian
                   </Row>
@@ -64,7 +91,7 @@ function ProfilePage() {
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-evenly",
-              padding: 10,
+              padding: 30,
             }}
           >
             <div
@@ -78,7 +105,7 @@ function ProfilePage() {
             >
               <ProfileContainer
                 icon={<MdEmail style={{ color: "#62D7FF", fontSize: 90 }} />}
-                title={"IgnacioDelpilar@gmail.com"}
+                title={user.vet_doc_email}
                 subtext={"Email Address"}
               />
             </div>
@@ -112,7 +139,7 @@ function ProfilePage() {
                     style={{ color: "#62D7FF", fontSize: 90 }}
                   />
                 }
-                title={"0956781739024"}
+                title={user.vet_doc_contactNumber}
                 subtext={"Contact Number"}
               />
             </div>

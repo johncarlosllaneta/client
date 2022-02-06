@@ -25,7 +25,7 @@ import { BiLogOut } from "react-icons/bi";
 import { IoLogOut } from "react-icons/io5";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-function NavBarVet() {
+function NavBarDoc() {
   const [user, setuser] = useState([]);
   const [userole, setuserole] = useState("");
   const [counter, setcounter] = useState(0);
@@ -341,7 +341,15 @@ function NavBarVet() {
               />
             </Badge>
           </IconButton>
-          <Tooltip title={user.vet_name}>
+          <Tooltip
+            title={
+              user.vet_doc_fname +
+              " " +
+              user.vet_doc_mname +
+              " " +
+              user.vet_doc_lname
+            }
+          >
             <IconButton onClick={handleClick}>
               <Avatar
                 round={true}
@@ -349,8 +357,14 @@ function NavBarVet() {
                 style={{
                   marginBottom: 0,
                 }}
-                src={user.vet_picture}
-                name={user.vet_name}
+                src={user.vet_doc_profilePic}
+                name={
+                  user.vet_doc_fname +
+                  " " +
+                  user.vet_doc_mname +
+                  " " +
+                  user.vet_doc_lname
+                }
               />
               <AiFillCaretDown
                 style={{
@@ -402,7 +416,14 @@ function NavBarVet() {
               }}
             >
               <p>
-                Signed in as <br /> <strong>{user.vet_name}</strong>
+                Signed in as <br />{" "}
+                <strong>
+                  {user.vet_doc_fname +
+                    " " +
+                    user.vet_doc_mname +
+                    " " +
+                    user.vet_doc_lname}
+                </strong>
               </p>
             </div>
             <Divider />
@@ -418,8 +439,14 @@ function NavBarVet() {
                   marginBottom: 0,
                   marginRight: 25,
                 }}
-                src={user.vet_picture}
-                name={user.vet_name}
+                src={user.vet_doc_profilePic}
+                name={
+                  user.vet_doc_fname +
+                  " " +
+                  user.vet_doc_mname +
+                  " " +
+                  user.vet_doc_lname
+                }
               />{" "}
               My profile
             </MenuItem>
@@ -453,4 +480,4 @@ function NavBarVet() {
   );
 }
 
-export default NavBarVet;
+export default NavBarDoc;

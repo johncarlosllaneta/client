@@ -1,5 +1,5 @@
 import React from "react";
-import NavBarVet from "../../../Verified Vet/NavBarVet";
+import NavBarStaff from "../../NavBarStaff";
 import SideNavBarVetStaff from "../../SideNavBarVetStaff";
 import ProductPage from "./ProductPage";
 
@@ -29,7 +29,7 @@ function ProductMain() {
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
           {/* navbar */}
-          <NavBarVet />
+          <NavBarStaff />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <ProductPage />
