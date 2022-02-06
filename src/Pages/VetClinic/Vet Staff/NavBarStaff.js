@@ -6,33 +6,26 @@ import { BsChatDotsFill } from "react-icons/bs";
 import Axios from "axios";
 import "../../../css/navBarHome.css";
 import { hostUrl } from "../../../Components/Host";
-// import Avatar from "react-avatar";
+import Avatar from "react-avatar";
 
-// import { Badge, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from "@material-ui/core";
-// import { MailOutlined, Settings } from "@material-ui/icons";
-import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
-import Badge from "@mui/material/Badge";
-import { MailOutlined } from "@material-ui/icons";
+import {
+  Badge,
+  Box,
+  Divider,
+  IconButton,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
+import { MailOutlined, Settings } from "@material-ui/icons";
 import { AiFillCaretDown } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
 import { IoLogOut } from "react-icons/io5";
-import HomeIcon from "@mui/icons-material/Home";
-import MessageIcon from "@mui/icons-material/Message";
-import logo from "../../../Images/logo.png";
-import { messages, numberNewThreads, users } from "../../../Components/User";
 
-function NavBarVet(props) {
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
+function NavBarStaff() {
   const [user, setuser] = useState([]);
   const [userole, setuserole] = useState("");
   const [counter, setcounter] = useState(0);
@@ -41,12 +34,28 @@ function NavBarVet(props) {
   // var toast;
   var accountImg;
   useEffect(() => {
-    setuser(users[0]);
-    messages(user);
-    // alert(numberNewThreads);
-    setTimeout(() => {
-      setnumberNewThread(numberNewThreads);
-    }, 1000);
+    var token = localStorage.getItem("ajwt");
+    var roles = localStorage.getItem("role");
+
+    setuserole(roles);
+    // alert(userole);
+
+    if (counter < 6) {
+      Axios.get(`${hostUrl}/home`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }).then((response) => {
+        setuser(response.data.result[0]);
+        // console.log(user);
+      });
+
+      Axios.get(
+        `${hostUrl}/vetclinic/messages/notification/length/${user.vetid}`
+      ).then((response) => {
+        setnumberNewThread(response.data.view);
+        // alert(response.data.view);
+      });
+      setcounter(counter + 1);
+    }
   }, [user]);
 
   if (parseInt(userole) === 1) {
@@ -298,20 +307,6 @@ function NavBarVet(props) {
         width: "inherit",
       }}
     >
-      <div hidden={props.showLogo}>
-        <Navbar.Brand href="#home" style={{ color: "white" }}>
-          <img
-            alt=""
-            src={logo}
-            width="30"
-            height="30"
-            style={{ marginLeft: 10 }}
-            className="d-inline-block align-top"
-          />{" "}
-          TERRAVET
-        </Navbar.Brand>
-      </div>
-
       <Navbar.Collapse
         style={{
           flexDirection: "row",
@@ -321,45 +316,40 @@ function NavBarVet(props) {
           padding: 0,
         }}
       >
+        {/* <NavDropdown
+          style={{ fontSize: 20, marginRight: 50, margin: 0 }}
+          title={name}
+        >
+          <NavDropdown.Item onClick={vetSettings}>Settings</NavDropdown.Item>
+          <NavDropdown.Item onClick={logoutUser}>Logout</NavDropdown.Item>
+        </NavDropdown> */}
+
         <Box sx={{ flexGrow: 0, paddingTop: 0 }}>
-          <Tooltip title={"Home"}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-              hidden={props.showHome}
-              onClick={() => {
-                window.location.href = `/`;
-              }}
-            >
-              <HomeIcon
+          <IconButton
+            size="large"
+            aria-label="show 4 new mails"
+            color="inherit"
+            onClick={() => {
+              window.location.href = `/talk to vet`;
+            }}
+          >
+            <Badge badgeContent={numberNewThread} color="error">
+              <MailOutlined
                 style={{
                   color: "white",
                 }}
               />
-            </IconButton>
-          </Tooltip>
-
-          <Tooltip title={"Messages"}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-              onClick={() => {
-                window.location.href = `/talk to vet`;
-              }}
-            >
-              <Badge badgeContent={numberNewThread} color="error">
-                <MessageIcon
-                  style={{
-                    color: "white",
-                  }}
-                />
-              </Badge>
-            </IconButton>
-          </Tooltip>
-
-          <Tooltip title={user.vet_name}>
+            </Badge>
+          </IconButton>
+          <Tooltip
+            title={
+              user.vet_staff_fname +
+              " " +
+              user.vet_staff_mname +
+              " " +
+              user.vet_staff_lname
+            }
+          >
             <IconButton onClick={handleClick}>
               <Avatar
                 round={true}
@@ -367,8 +357,14 @@ function NavBarVet(props) {
                 style={{
                   marginBottom: 0,
                 }}
-                src={users[0].vet_picture}
-                name={user.vet_name}
+                src={user.vet_staff_profilePic}
+                name={
+                  user.vet_staff_fname +
+                  " " +
+                  user.vet_staff_mname +
+                  " " +
+                  user.vet_staff_lname
+                }
               />
               <AiFillCaretDown
                 style={{
@@ -391,8 +387,8 @@ function NavBarVet(props) {
                 filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                 mt: 1.5,
                 "& .MuiAvatar-root": {
-                  width: 32,
-                  height: 32,
+                  width: 50,
+                  height: 35,
                   ml: -0.5,
                   mr: 1,
                 },
@@ -416,63 +412,67 @@ function NavBarVet(props) {
             <div
               style={{
                 padding: 10,
-                // backgroundColor: 'whitesmoke'
+                backgroundColor: "whitesmoke",
               }}
             >
               <p>
-                Signed in as <br /> <strong>{user.vet_name}</strong>
+                Signed in as <br />{" "}
+                <strong>
+                  {user.vet_staff_fname +
+                    " " +
+                    user.vet_staff_mname +
+                    " " +
+                    user.vet_staff_lname}
+                </strong>
               </p>
-              <Divider />
-              <MenuItem
-                onClick={() => {
-                  window.location.href = `/profile`;
-                }}
-                style={{
-                  display: "flex",
-                  justifyContent: "start",
-                  marginTop: 10,
-                }}
-              >
-                <Avatar
-                  round={true}
-                  size={15}
-                  style={{}}
-                  src={user.vet_picture}
-                  name={user.vet_name}
-                />
-                {/* <Avatar src={user.vet_picture} sizes="" /> */}
-                My profile
-              </MenuItem>
-              <Divider />
-              <MenuItem
-                onClick={vetSettings}
-                style={{
-                  display: "flex",
-                  justifyContent: "start",
-                }}
-              >
-                <ListItemIcon>
-                  <Settings fontSize="small" />
-                </ListItemIcon>
-                Settings
-              </MenuItem>
-
-              <MenuItem
-                onClick={logoutUser}
-                style={{
-                  display: "flex",
-                  justifyContent: "start",
-                }}
-              >
-                <ListItemIcon>
-                  {/* <IoLogOut fontSize="large"
-                // style={{ marginLeft: 5 }}
-                /> */}
-                  <Logout fontSize="small" />
-                </ListItemIcon>
-                Logout
-              </MenuItem>
             </div>
+            <Divider />
+            <MenuItem
+              style={{
+                backgroundColor: "whitesmoke",
+              }}
+            >
+              <Avatar
+                round={true}
+                size={25}
+                style={{
+                  marginBottom: 0,
+                  marginRight: 25,
+                }}
+                src={user.vet_staff_profilePic}
+                name={
+                  user.vet_staff_fname +
+                  " " +
+                  user.vet_staff_mname +
+                  " " +
+                  user.vet_staff_lname
+                }
+              />{" "}
+              My profile
+            </MenuItem>
+            <Divider />
+            <MenuItem
+              onClick={vetSettings}
+              style={{
+                backgroundColor: "whitesmoke",
+              }}
+            >
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
+              Settings
+            </MenuItem>
+            <MenuItem
+              onClick={logoutUser}
+              style={{
+                backgroundColor: "whitesmoke",
+              }}
+            >
+              <ListItemIcon>
+                <IoLogOut fontSize="large" style={{ marginLeft: 5 }} />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
           </Menu>
         </Box>
       </Navbar.Collapse>
@@ -480,4 +480,4 @@ function NavBarVet(props) {
   );
 }
 
-export default NavBarVet;
+export default NavBarStaff;

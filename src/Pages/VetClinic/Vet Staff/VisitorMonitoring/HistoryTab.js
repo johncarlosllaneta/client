@@ -8,21 +8,34 @@ import { hostUrl } from "../../../../Components/Host";
 import { useParams } from "react-router-dom";
 
 const HistoryTab = (props) => {
-  let { vetid } = useParams();
-
   // useEffect(() => {
-  //   Axios.get(`${hostUrl}/history/vetclinic/${vetid}`).then((response) => {
+  //   Axios.get(`${hostUrl}/history/vetclinic/${staffId}`).then((response) => {
   //     setHistory(response.data);
   //   });
   // }, [history]);
+  const [user, setuser] = useState([]);
+  const [counter1, setcounter1] = useState(0);
+  useEffect(() => {
+    var token = localStorage.getItem("ajwt");
+    if (counter1 < 2) {
+      Axios.get(`${hostUrl}/home`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }).then((response) => {
+        setuser(response.data.result[0]);
+      });
+      setcounter1(counter + 1);
+    }
+  }, [user]);
 
   const [counter, setcounter] = useState(0);
   const [visitor, setvisitor] = useState([]);
   useEffect(() => {
     if (counter < 2) {
-      Axios.get(`${hostUrl}/vetclinic/visitor/${vetid}`).then((response) => {
-        setvisitor(response.data);
-      });
+      Axios.get(`${hostUrl}/visitor/staff/${user.vet_staff_id}`).then(
+        (response) => {
+          setvisitor(response.data);
+        }
+      );
       setcounter(counter + 1);
     }
   }, [visitor]);
@@ -76,6 +89,14 @@ const HistoryTab = (props) => {
     }
     return time.join(""); // return adjusted time or original string
   }
+
+  function tempMeter(temp) {
+    if (temp >= 38) {
+      return <h5 style={{ color: "red" }}>{temp}</h5>;
+    } else {
+      return <h5 style={{ color: "green" }}>{temp}</h5>;
+    }
+  }
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
   const columns = [
     {
@@ -84,21 +105,22 @@ const HistoryTab = (props) => {
       defaultSort: "asc",
     },
     {
+      title: "Temperature",
+      render: (row) => tempMeter(row.temperature),
+      // sorting: true,
+    },
+    {
       title: "Date",
+      // field: "date",
       sorting: true,
       render: (row) =>
         dateConvertion(row.date_visited.toString().split("T")[0]),
     },
     {
       title: "Time",
+      // field: "time",
       sorting: true,
-      render: (row) =>
-        tConvert(
-          row.time_visited
-            .toString()
-            .split("T")[1]
-            .substring(0, row.time_visited.toString().split("T")[1].length - 5)
-        ),
+      render: (row) => tConvert(row.time_visited.toString()),
     },
   ];
   return (

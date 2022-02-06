@@ -17,6 +17,54 @@ import MaterialTable from "material-table";
 import Axios from "axios";
 import { hostUrl } from "../../../../../../Components/Host";
 function ReservationTable() {
+  const [user, setuser] = useState([]);
+
+  const [counter1, setcounter1] = useState(0);
+  useEffect(() => {
+    var token = localStorage.getItem("ajwt");
+    if (counter < 6) {
+      Axios.get(`${hostUrl}/home`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }).then((response) => {
+        setuser(response.data.result[0]);
+        // console.log(user);
+      });
+      setcounter1(counter + 1);
+    }
+  }, [user]);
+
+  const [counter, setcounter] = useState(0);
+  const [reservation, setReservation] = useState([]);
+  useEffect(() => {
+    if (counter < 3) {
+      // var id = vetid.toString().replace("10##01", "/");
+      // var id = staffId;
+      Axios.get(
+        `${hostUrl}/pending/reservation/staff/${user.vet_staff_id}`
+      ).then((response) => {
+        setReservation(response.data);
+      });
+      setcounter(counter + 1);
+    }
+  }, [reservation]);
+
+  function formatDateAndTime(dateString) {
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  }
+
+  function formatDate(dateString) {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  }
+
   const [showPopover, setShowPopover] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);
@@ -25,7 +73,7 @@ function ReservationTable() {
   const columns = [
     {
       title: "Reservation ID",
-      field: "appointment_id",
+      field: "reserve_id",
     },
     {
       title: "Pet Owner Name",
@@ -33,7 +81,11 @@ function ReservationTable() {
     },
     {
       title: "Date Schedule",
-      field: "date_scheduled",
+      render: (row) => (
+        <div>
+          <p style={{ display: "inline" }}>{formatDate(row.date_reserve)}</p>
+        </div>
+      ),
       sorting: true,
       defaultSort: "desc",
       // render: (row) => dateConvertion(String(row.date_scheduled).split("T")[0]),
@@ -43,70 +95,70 @@ function ReservationTable() {
       field: "time_scheduled",
       sorting: true,
     },
-    // {
-    //   title: "Action",
-    //   render: (row) => (
-    //     <div style={{ display: "flex", flexDirection: "row " }}>
-    //       <OverlayTrigger
-    //         placement="top-start"
-    //         delay={{ show: 250 }}
-    //         overlay={renderTooltip({ msg: "View Information" })}
-    //       >
-    //         <Button
-    //           variant="info"
-    //           style={{
-    //             marginRight: 5,
-    //           }}
-    //           onClick={() => {
-    //             // viewDetails(row.appointment_id);
-    //             // ModalView();
-    //           }}
-    //         >
-    //           <AiOutlineSearch style={{ fontSize: 25, color: "white" }} />
-    //         </Button>
-    //       </OverlayTrigger>
+    {
+      title: "Action",
+      render: (row) => (
+        <div style={{ display: "flex", flexDirection: "row " }}>
+          <OverlayTrigger
+            placement="top-start"
+            delay={{ show: 250 }}
+            overlay={renderTooltip({ msg: "View Information" })}
+          >
+            <Button
+              variant="info"
+              style={{
+                marginRight: 5,
+              }}
+              onClick={() => {
+                // viewDetails(row.appointment_id);
+                // ModalView();
+              }}
+            >
+              <AiOutlineSearch style={{ fontSize: 25, color: "white" }} />
+            </Button>
+          </OverlayTrigger>
 
-    //       <OverlayTrigger
-    //         placement="top-start"
-    //         delay={{ show: 250 }}
-    //         overlay={renderTooltip({ msg: "Done Appointment" })}
-    //       >
-    //         <Button
-    //           variant="primary"
-    //           style={{
-    //             marginRight: 5,
-    //           }}
-    //           onClick={() => {
-    //             // setpet_id(row.pet_id);
-    //             // setappointmentID(row.appointment_id);
-    //             // setcategory(row.category);
-    //             // setnotifService_id(row.service_id);
-    //             // handleShowModalFinish();
-    //           }}
-    //         >
-    //           <AiOutlineFileDone style={{ fontSize: 25 }} />
-    //         </Button>
-    //       </OverlayTrigger>
+          <OverlayTrigger
+            placement="top-start"
+            delay={{ show: 250 }}
+            overlay={renderTooltip({ msg: "Done Appointment" })}
+          >
+            <Button
+              variant="primary"
+              style={{
+                marginRight: 5,
+              }}
+              onClick={() => {
+                // setpet_id(row.pet_id);
+                // setappointmentID(row.appointment_id);
+                // setcategory(row.category);
+                // setnotifService_id(row.service_id);
+                // handleShowModalFinish();
+              }}
+            >
+              <AiOutlineFileDone style={{ fontSize: 25 }} />
+            </Button>
+          </OverlayTrigger>
 
-    //       <OverlayTrigger
-    //         placement="top-start"
-    //         delay={{ show: 250 }}
-    //         overlay={renderTooltip({ msg: "Void Appointment" })}
-    //       >
-    //         <Button
-    //           variant="danger"
-    //           onClick={() => {
-    //             // setappointmentID(row.appointment_id);
-    //             // setnotifService_id(row.service_id);
-    //             // handleShowModalDecline();
-    //           }}
-    //         >
-    //           <TiCancel style={{ fontSize: 25 }} />
-    //         </Button>
-    //       </OverlayTrigger>
-    //     </div>
-    //   ),
-    // },
+          <OverlayTrigger
+            placement="top-start"
+            delay={{ show: 250 }}
+            overlay={renderTooltip({ msg: "Void Appointment" })}
+          >
+            <Button
+              variant="danger"
+              onClick={() => {
+                // setappointmentID(row.appointment_id);
+                // setnotifService_id(row.service_id);
+                // handleShowModalDecline();
+              }}
+            >
+              <TiCancel style={{ fontSize: 25 }} />
+            </Button>
+          </OverlayTrigger>
+        </div>
+      ),
+    },
   ];
   return (
     <div>
@@ -136,7 +188,7 @@ function ReservationTable() {
             "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
         }}
         columns={columns}
-        data={[]}
+        data={reservation}
         title={""}
         cellEditable={false}
         options={{

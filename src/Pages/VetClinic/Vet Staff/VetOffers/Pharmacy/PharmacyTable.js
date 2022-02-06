@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect, useRef, useParams } from "react";
+import Axios from "axios";
+import { hostUrl } from "../../../../../Components/Host";
 import {
   Row,
   Col,
@@ -8,35 +10,73 @@ import {
   Modal,
   Tabs,
   Tab,
+  Image,
 } from "react-bootstrap";
 import MaterialTable from "material-table";
 import { AiOutlineSearch } from "react-icons/ai";
 function PharmacyTable() {
+  const [user, setuser] = useState([]);
+
+  const [counter1, setcounter1] = useState(0);
+  useEffect(() => {
+    var token = localStorage.getItem("ajwt");
+    if (counter < 6) {
+      Axios.get(`${hostUrl}/home`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }).then((response) => {
+        setuser(response.data.result[0]);
+        // console.log(user);
+      });
+      setcounter1(counter + 1);
+    }
+  }, [user]);
+
+  const [counter, setcounter] = useState(0);
+  const [pharmacy, setPharmacy] = useState([]);
+  useEffect(() => {
+    if (counter < 3) {
+      // var id = vetid.toString().replace("10##01", "/");
+      // var id = staffId;
+      Axios.get(`${hostUrl}/pharmacy/staff/${user.vet_staff_id}`).then(
+        (response) => {
+          setPharmacy(response.data);
+        }
+      );
+      setcounter(counter + 1);
+    }
+  }, [pharmacy]);
+
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
   const columns = [
     {
-      title: "Item Image",
-      field: "image",
+      title: "Medicine Image",
+      render: (row) => (
+        <div>
+          <Image
+            src={row.medicine_image}
+            style={{
+              height: 50,
+              width: 50,
+            }}
+            rounded
+          />
+        </div>
+      ),
       defaultSort: "asc",
     },
     {
-      title: "Item Name",
-      field: "item_name",
+      title: "Medicine ID",
+      field: "med_id",
       defaultSort: "asc",
     },
     {
-      title: "Category",
-      field: "date",
-      sorting: true,
-    },
-    {
-      title: "Quantity",
-      field: "date",
-      sorting: true,
+      title: "Medicine Name",
+      field: "medicine_name",
+      defaultSort: "asc",
     },
     {
       title: "Price",
-      field: "date",
+      field: "price",
       sorting: true,
     },
     {
@@ -80,7 +120,7 @@ function PharmacyTable() {
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
             columns={columns}
-            // data={pet}
+            data={pharmacy}
             title={"Pharmacy Table"}
             cellEditable={false}
             options={{

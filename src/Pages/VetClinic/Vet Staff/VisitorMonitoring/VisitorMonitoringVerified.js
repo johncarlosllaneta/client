@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useParams } from "react";
 import { Col, Container, Image, Row, Button } from "react-bootstrap";
 import HistoryTab from "./HistoryTab";
 // import QrCode from "../../Images/qr-code.png";
-import NavBarVet from "../../Verified Vet/NavBarVet";
 import QRCode from "qrcode";
 import Axios from "axios";
 import { hostUrl } from "../../../../Components/Host";
 import SideNavBarVetStaff from "../SideNavBarVetStaff";
+import NavBarStaff from "../NavBarStaff";
 
 function VisitorMonitoringVerified() {
+  // let { staffId } = useParams();
   var aspectratioheight = window.screen.height;
   var aspectratiowidth = window.screen.width;
   var value;
@@ -35,7 +36,7 @@ function VisitorMonitoringVerified() {
   }, [user]);
 
   useEffect(() => {
-    QRCode.toDataURL(`${user.vetid}`).then(setqrCode);
+    QRCode.toDataURL("staffId").then(setqrCode);
   }, [user]);
 
   function formatDate(dateString) {
@@ -66,7 +67,7 @@ function VisitorMonitoringVerified() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavBarVet />
+          <NavBarStaff />
         </div>
         <div
           style={{

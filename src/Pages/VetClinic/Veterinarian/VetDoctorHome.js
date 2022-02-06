@@ -9,7 +9,6 @@ import ProfileMain from "./Profile/ProfileMain";
 import ConsultationMain from "./Vet Offers/Consultation/ConsultationMain";
 import PharmacyMain from "./Vet Offers/Pharmacy/PharmacyMain";
 import ServicesMain from "./Vet Offers/Services/ServicesMain";
-import VetOffersMain from "./Vet Offers/VetOffersMain";
 
 function VetDoctorHome() {
   return (
@@ -20,7 +19,6 @@ function VetDoctorHome() {
           <Route path="/dashboard" exact component={DashboardMain} />
           <Route path="/profile" exact component={ProfileMain} />
           <Route path="/pets" exact component={PetsMain} />
-          <Route path="/vetOffers" exact component={VetOffersMain} />
           <Route path="/consultation" exact component={ConsultationMain} />
           <Route path="/services" exact component={ServicesMain} />
           <Route path="/pharmacy" exact component={PharmacyMain} />

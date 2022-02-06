@@ -27,7 +27,6 @@ function SideNavBarVetStaff(props) {
   const [numberOfUnviewedAppointment, setnumberOfUnviewedAppointment] =
     useState(0);
 
-  const [vetID, setvetID] = useState("");
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
   useEffect(() => {
@@ -37,11 +36,9 @@ function SideNavBarVetStaff(props) {
         headers: { Authorization: `Bearer ${token}` },
       }).then((response) => {
         setuser(response.data.result[0]);
-        setvetID(response.data.result[0].vetid);
       });
-      setconsultationChecker(user.enableConsultation);
-      setpharmacyChecker(user.enablePharmacy);
-      setproductChecker(user.enableProduct);
+      setpharmacyChecker(1);
+      setproductChecker(1);
 
       // console.log(user);
       // alert(vetID.toString().replace('/', '10##01'))
@@ -238,7 +235,7 @@ function SideNavBarVetStaff(props) {
             }}
           >
             <RiServiceFill id="icons" />
-            <a id="anchorTag" href={`/product`}>
+            <a id="anchorTag" href={`/product/${user.vet_staff_id}`}>
               Product
             </a>
           </Container>
@@ -257,7 +254,7 @@ function SideNavBarVetStaff(props) {
             }}
           >
             <MdLocalPharmacy id="icons" />
-            <a id="anchorTag" href={`/pharmacy`}>
+            <a id="anchorTag" href={`/pharmacy/${user.vet_staff_id}`}>
               Pharmacy
             </a>
           </Container>
@@ -273,7 +270,7 @@ function SideNavBarVetStaff(props) {
         }}
       >
         <AiFillSecurityScan id="icons" />
-        <a id="anchorTag" href={`/visitormonitoring`}>
+        <a id="anchorTag" href={`/visitormonitoring/${user.vet_staff_id}`}>
           Visitor Monitoring
         </a>
       </Container>

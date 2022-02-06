@@ -1,6 +1,6 @@
 import React from "react";
 import HomeTab from "../../../VetClinic/Verified Vet/Dashboard/HomeTab";
-import NavBarVet from "../../../VetClinic/Verified Vet/NavBarVet";
+import NavBarStaff from "../NavBarStaff";
 import SideNavBarVetStaff from "../SideNavBarVetStaff";
 function DashboardMain() {
   return (
@@ -28,7 +28,7 @@ function DashboardMain() {
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
           {/* navbar */}
-          <NavBarVet />
+          <NavBarStaff />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <HomeTab user={"Vet Staff"} />
