@@ -1,8 +1,30 @@
-import React from 'react'
-import { FloatingLabel, Form, Row, Button } from 'react-bootstrap'
+import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import { FloatingLabel, Form, Row, Button, Col } from 'react-bootstrap'
+import { ItemAssignmentPage } from 'twilio/lib/rest/numbers/v2/regulatoryCompliance/bundle/itemAssignment';
+import { hostUrl } from '../../../../Components/Host';
+import { users } from '../../../../Components/User';
 import VetStaffProfile from './VetStaffProfile'
 
 function VetStaffTable(props) {
+
+    const [searchItem, setsearchItem] = useState('');
+    const [vetStaff, setvetStaff] = useState([]);
+    useEffect(() => {
+
+        axios.get(
+            `${hostUrl}/vetclinic/get/vetStaff/${users[0].vetid}`
+        ).then((response) => {
+            setvetStaff(response.data);
+
+        });
+        setTimeout(() => {
+            console.log(vetStaff);
+        }, 2000);
+
+    }, []);
+
+
     return (
         <div>
             <Row
@@ -22,7 +44,9 @@ function VetStaffTable(props) {
                             className="mb-3"
                         >
                             <Form.Control type="text" placeholder="search"
-
+                                onChange={(e) => {
+                                    setsearchItem(e.target.value);
+                                }}
                             />
                         </FloatingLabel>
                     </div>
@@ -46,7 +70,20 @@ function VetStaffTable(props) {
                     marginTop: 20
                 }}
             >
-                <VetStaffProfile />
+                {vetStaff.filter((val) => {
+                    if (searchItem == "") {
+                        return val;
+                    } else if (val.vet_staff_fname.toLowerCase().includes(searchItem.toLowerCase()) || val.vet_staff_lname.toLowerCase().includes(searchItem.toLowerCase())) {
+                        return val;
+                    }
+                }).map((item) => {
+                    return (
+                        <Col>
+                            <VetStaffProfile user={item} />
+                        </Col>
+                    )
+                })}
+
             </Row>
         </div>
     )

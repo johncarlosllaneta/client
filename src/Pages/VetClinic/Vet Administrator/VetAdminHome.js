@@ -11,6 +11,11 @@ import RegistrationVeterinarian from './Profile/Registration/Veterinarian/Regist
 import axios from 'axios';
 import { hostUrl } from '../../../Components/Host';
 import RegistrationVetStaff from './Profile/Registration/VetStaff/RegistrationVetStaff';
+import PreControlStartHolder from './Vet Offers/Services/ServicePages/PreControlStartHolder';
+import PetExamStartHolder from './Vet Offers/Services/ServicePages/PetExamStartHolder';
+import PetGroomStartHolder from './Vet Offers/Services/ServicePages/PetGroomStartHolder';
+import VaccineStartHolder from './Vet Offers/Services/ServicePages/VaccineStartHolder';
+
 
 function VetAdminHome() {
 
@@ -37,6 +42,28 @@ function VetAdminHome() {
                             exact
                             component={ConsultStartHolder}
                         />
+                        <Route
+                            path="/services/preventive&control/:vetid"
+                            exact
+                            component={PreControlStartHolder}
+                        />
+                        <Route
+                            path="/services/pet&examination/:vetid"
+                            exact
+                            component={PetExamStartHolder}
+                        />
+
+                        <Route
+                            path="/services/pet&grooming/:vetid"
+                            exact
+                            component={PetGroomStartHolder}
+                        />
+                        <Route
+                            path="/services/vaccination/:vetid"
+                            exact
+                            component={VaccineStartHolder}
+                        />
+
                         {/* <Route path="/dashboard" exact component={Dashboard} />
                         <Route path="/profile" exact component={ProfileContent} />
                         <Route path="/verification" exact component={VerifyContent} />

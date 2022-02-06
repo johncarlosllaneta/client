@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   Col,
   Container,
   Row,
   Tab,
   Tabs,
-  Button,
   Card,
   Modal,
   Alert,
   Form,
+  Image,
 } from "react-bootstrap";
 import Axios from "axios";
 import { HiOutlineMail, HiOutlineLocationMarker } from "react-icons/hi";
@@ -21,6 +21,25 @@ import { BsClock } from "react-icons/bs";
 import ScheduleVet from "./ScheduleVet";
 import VetInformation from "./VetInformation";
 import TabPanelController from "./TabPanelController";
+import { Badge, Tooltip, Typography } from "@mui/material";
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import { AiOutlineFileJpg } from "react-icons/ai";
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
+
+
+import LinearProgress from '@mui/material/LinearProgress';
+import Box from '@mui/material/Box';
+import { ToastUpdate } from "../../../../Components/Toast";
+import { apps } from "../../../../Components/base";
+import { ToastContainer } from "react-toastify";
+
+
+
 
 function VetProfileTab() {
   const [user, setuser] = useState([]);
@@ -140,85 +159,25 @@ function VetProfileTab() {
           );
         }
       });
+
       setimgProfile(user.vet_picture);
       setcounter(counter + 1);
+
+
     }
+
   }, [user]);
 
-  var cardCssBio = {
-    position: "relative",
-    width: "13vw",
-    height: "13vh",
-    borderRadius: 30,
-    margin: "2vh 0vh 1vh 5vh",
-    backgroundColor: "white",
-    boxShadow: "#cdc8c6 -15px 20px 15px -15px",
-    justifyContent: "center",
-  };
 
-  var cardCssOperation = {
-    position: "relative",
-    width: "100%",
-    height: "50vh",
-    borderRadius: 30,
-    margin: "2vh 0vh 1vh 0vh",
-    backgroundColor: "white",
-    boxShadow: "#cdc8c6 -15px 20px 15px -15px",
-  };
+  function refreshUser() {
+    var token = localStorage.getItem("ajwt");
+    Axios.get(`${hostUrl}/home`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((response) => {
+      setuser(response.data.result[0]);
+    })
+  }
 
-  var iconsCss = {
-    fontSize: "300%",
-    padding: 5,
-    textAlign: "center",
-    color: "#57D4FF",
-    marginTop: "35%",
-  };
-
-  var descCssTitle = {
-    fontSize: "70%",
-    marginTop: "2vh",
-  };
-
-  var descCssLabel = {
-    fontSize: "70%",
-  };
-
-  var descCssLabelDay = {
-    fontSize: "70%",
-    color: "#57D4FF",
-    fontWeight: "bold",
-    textAlign: "center",
-  };
-
-  const containerStyle = {
-    width: "100%",
-    height: "50vh",
-    borderRadius: 30,
-    display: "inline-flex",
-    // border:
-  };
-
-  const center = {
-    lat: 14.5834,
-    lng: 121.0367,
-  };
-
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: "AIzaSyB2uqvQNV8t-Zwt4mQzzX1t62I8vEbJxug",
-  });
-
-  const [map, setMap] = React.useState(null);
-
-  const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds();
-    map.fitBounds(bounds);
-    setMap(map);
-  }, []);
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null);
-  }, []);
 
   const [show, setShow] = useState(false);
 
@@ -239,13 +198,335 @@ function VetProfileTab() {
     return timeString12hr;
   }
 
+  // upload profile picture
+  const [showUploadProfilePicture, setShowUploadProfilePicture] = useState(false);
+
+  const handleCloseProfilePicture = () => {
+    setimageFile('');
+    setShowUploadProfilePicture(false);
+    setselectImage(false);
+    setdisplayImage(true);
+    setprogressCounterUploadImage(0);
+
+  };
+  const handleShowProfilePicture = () => setShowUploadProfilePicture(true);
+
+
+  const [progressCounterUploadImage, setprogressCounterUploadImage] = useState(0);
+  const [progressUploadController, setprogressUploadController] = useState(true);
+
+  function counters() {
+    setInterval(() => {
+      setprogressCounterUploadImage((progressCounterUploadImage) => (progressCounterUploadImage < 100 ? progressCounterUploadImage + 25 : 100));
+    }, 1000);
+  }
+
+
+  // Upload image controller
+  const [selectImage, setselectImage] = useState(false);
+  const [displayImage, setdisplayImage] = useState(true);
+
+  // Image Picker
+  const inputFileRef = useRef(null);
+  const [imageFile, setimageFile] = useState('');
+  const onFilechange = (e) => {
+    /*Selected files data can be collected here.*/
+    console.log(e.target.files);
+    setimageFile(URL.createObjectURL(e.target.files[0]));
+    setselectImage(true);
+    setdisplayImage(false);
+
+
+  }
+  const onBtnClick = () => {
+    /*Collecting node-element and performing click*/
+    inputFileRef.current.click();
+  }
+
+  // Crop
+  const previewCanvasRef = useRef(null);
+  const [crop, setCrop] = useState({ unit: '%', width: 30, aspect: 9 / 9 });
+  const [completedCrop, setCompletedCrop] = useState(null);
+
+  const onLoad = useCallback((img) => {
+    inputFileRef.current = img;
+  }, []);
+
+  useEffect(() => {
+    if (!completedCrop || !previewCanvasRef.current || !inputFileRef.current) {
+      return;
+    }
+
+    const image = inputFileRef.current;
+    const canvas = previewCanvasRef.current;
+    const crop = completedCrop;
+
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    const ctx = canvas.getContext('2d');
+    const pixelRatio = window.devicePixelRatio;
+
+    canvas.width = crop.width * pixelRatio * scaleX;
+    canvas.height = crop.height * pixelRatio * scaleY;
+
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.imageSmoothingQuality = 'high';
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width * scaleX,
+      crop.height * scaleY
+    );
+  }, [completedCrop]);
+
+
+
+  const uploadImage = async (e) => {
+    const storageRef = apps.storage().ref();
+    const filRef = storageRef.child(e.name);
+    await filRef.put(e);
+    // setimageUploadedUrl(await filRef.getDownloadURL());
+    console.log(await filRef.getDownloadURL());
+    updateImage(await filRef.getDownloadURL());
+  };
+
+  function updateImage(imageLink) {
+    Axios.post(`${hostUrl}/vetclinic/update/profile`, {
+      vetid: user.vetid,
+      imageUrl: imageLink
+    }).then((response) => {
+
+      if (response.data.message == 'Update Successfully') {
+
+
+        Axios.get(`${hostUrl}/vet/uploads`, {
+          params: {
+            email: user.email,
+          },
+        }).then((response) => {
+          if (response.data.message === "Correct") {
+            // alert("logging in");
+            localStorage.setItem("ajwt", response.data.accessToken);
+            localStorage.setItem("rjwt", response.data.refreshToken);
+            localStorage.setItem("isLogin", true);
+            localStorage.setItem("role", response.data.role);
+            if (response.data.role === 2) {
+              localStorage.setItem("vetStatus", response.data.vetStatus);
+              localStorage.setItem("id", response.data.id);
+            }
+
+            handleCloseProfilePicture();
+            ToastUpdate();
+            // refreshUser();
+
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+
+
+          }
+        });
+      }
+    })
+  }
+
+
+  function generateDownload(canvas, crop) {
+    if (!crop || !canvas) {
+      return;
+    }
+
+    canvas.toBlob(
+      (blob) => {
+        var file = new File([blob], Math.floor(Math.random() * 1000000000000000000), { lastModified: new Date().getTime(), type: blob.type });
+
+
+        uploadImage(file);
+      },
+      'image/png',
+      1
+    );
+
+
+  }
+  function updateProfilePicture() {
+    generateDownload(previewCanvasRef.current, completedCrop);
+  }
+
   return (
     <div
       style={{
         paddingRight: '5vw',
-        paddingLeft: '5vw'
+        paddingLeft: '5vw',
+        marginTop: 10
       }}
     >
+      <ToastContainer />
+
+      {/* Upload Picture */}
+      <Modal show={showUploadProfilePicture}
+        backdrop="static"
+        keyboard={false}
+        centered
+        onHide={handleCloseProfilePicture}>
+        <Modal.Header closeButton>
+          <Modal.Title>Upload Profile Picture</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+          <div
+
+            hidden={selectImage}
+            onClick={onBtnClick}
+            style={{
+              display: 'block',
+              // justifyContent: 'center',
+              alignItems: 'center',
+              borderStyle: 'dashed',
+              borderColor: 'grey',
+              height: 'auto',
+              width: '100%',
+              cursor: 'pointer'
+            }}
+          >
+            <Container
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: '10vh',
+              }}
+            >
+              <Form.Control type="file"
+                id="imagePicker" hidden={true}
+                ref={inputFileRef}
+                accept="image/png, image/gif, image/jpeg"
+                onChange={onFilechange}
+              />
+              <UploadFileIcon
+
+                sx={{ fontSize: 50 }}
+              />
+            </Container>
+            <Container
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: '10vh',
+              }}
+            >
+              <Typography  >
+                Upload Image File
+              </Typography>
+            </Container>
+
+
+          </div>
+
+
+
+          <div
+            hidden={displayImage}
+
+            style={{
+              display: 'block',
+              // justifyContent: 'center',
+              alignItems: 'center',
+              height: 'auto',
+              width: '100%',
+
+            }}
+          >
+            <Container
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+
+              }}
+            >
+
+              <ReactCrop
+                src={imageFile}
+                onImageLoaded={onLoad}
+                crop={crop}
+                onChange={(c) => setCrop(c)}
+                onComplete={(c) => setCompletedCrop(c)}
+              />
+              <div>
+                <canvas
+                  ref={previewCanvasRef}
+                  // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+                  style={{
+                    width: 300,
+                    height: 300
+                  }}
+                />
+              </div>
+
+            </Container>
+            <Container
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginTop: '1vh',
+              }}
+            >
+              <Row>
+                <Col sm={3}
+                  style={{
+                    display: 'flex'
+                  }}
+                >
+                  <AiOutlineFileJpg
+                    style={{ fontSize: 50 }}
+                  />
+                </Col>
+                <Col sm={9}>
+                  <Typography  >
+                    Upload Image File
+                  </Typography>
+                </Col>
+              </Row>
+
+              <Button
+                onClick={() => {
+                  setprogressUploadController(false);
+                  counters();
+                  updateProfilePicture();
+                }}
+              >
+                Upload
+              </Button>
+
+
+            </Container>
+            <Container
+              hidden={progressUploadController}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: '1vh',
+              }}
+            >
+              <Box sx={{ width: '100%' }}>
+                <LinearProgress value={progressCounterUploadImage} variant="determinate" />
+              </Box>
+            </Container>
+          </div>
+
+        </Modal.Body>
+      </Modal>
+
 
       <div
         style={{
@@ -264,48 +545,70 @@ function VetProfileTab() {
             }}
           >
             <Row>
-              <Col xs={3}>
-                <Row>
-                  <div
+              <Col xs={3}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+              >
+
+                <Container
+                  style={{
+                    display: 'block',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    // height: 'auto',
+                    // width: '100%'
+                  }}
+                >
+
+                  <Tooltip title={"Change Profile Picture"}>
+                    <Badge
+                      overlap="circular"
+
+                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                      badgeContent={
+                        <IconButton color="info" aria-label="upload picture" component="span"
+                          onClick={() => {
+                            handleShowProfilePicture();
+                          }}
+                        >
+                          <PhotoCamera color="#314051" />
+                        </IconButton>
+                      }
+                    >
+                      <Avatar
+                        round={true}
+                        name={user.vet_name}
+                        src={user.vet_picture}
+                        size={'10vh'}
+                        style={{ marginBottom: 15 }}
+                      />
+                    </Badge>
+                  </Tooltip>
+
+                  <p
                     style={{
-                      display: 'block',
-                      justifyContent: 'center',
-                      alignContent: 'center',
-                      height: 'auto'
+                      fontWeight: 'bold',
+                      fontSize: '1.25rem',
+                      marginBottom: 0
                     }}
                   >
+                    {user.vet_name}
+                  </p>
+                  <h6
+                    style={{
+                      color: '#3BD2E3'
+                    }}
+                  >
+                    Veterinary Clinic
+                  </h6>
 
-                    <Avatar
-                      round={true}
-                      name={user.vet_name}
-                      src={user.vet_picture}
-                      size={'10vh'}
-                      style={{ marginBottom: 15 }}
-                    />
-
-
-                    <p
-                      style={{
-                        fontWeight: 'bold',
-                        fontSize: '1.25rem',
-                        marginBottom: 0
-                      }}
-                    >
-                      {user.vet_name}
-                    </p>
-                    <h6
-                      style={{
-                        color: '#3BD2E3'
-                      }}
-                    >
-                      Veterinary Clinic
-                    </h6>
-
-                    <Button>
+                  {/* <Button>
                       Edit Profile
-                    </Button>
-                  </div>
-                </Row>
+                    </Button> */}
+                </Container>
+
               </Col>
 
               <Col xs={9}>

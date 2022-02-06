@@ -65,27 +65,31 @@ function CredentialDetails(props) {
         } else {
             e.preventDefault();
             handleShowOnLoading();
-            Axios.post(`${hostUrl}/register/vetStaff`, {
-                vetid: users.vetid,
-                email: props.email,
-                password: props.password,
-                fName: fname,
-                lName: lname,
-                mName: mname,
-                contactNumber: contactNumber,
-            }).then((response) => {
-                if (response.data == 'Successfully Registered') {
-                    handleCloseOnLoading();
-                    handleShow();
-                    setTimeout(() => {
-                        handleClose();
-                        window.close();
-                    }, 5000);
+            setTimeout(() => {
+                Axios.post(`${hostUrl}/register/vetStaff`, {
+                    vetid: users.vetid,
+                    email: props.email,
+                    password: props.password,
+                    fName: fname,
+                    lName: lname,
+                    mName: mname,
+                    contactNumber: contactNumber,
+                }).then((response) => {
+                    if (response.data == 'Successfully Registered') {
+                        handleCloseOnLoading();
+                        handleShow();
+                        setTimeout(() => {
+                            handleClose();
+                        }, 2000);
+                        setTimeout(() => {
+                            window.close();
+                        }, 4000);
 
-                } else {
+                    } else {
 
-                }
-            })
+                    }
+                })
+            }, 2000);
 
 
 

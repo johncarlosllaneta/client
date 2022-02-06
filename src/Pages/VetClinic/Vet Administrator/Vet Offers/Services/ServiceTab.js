@@ -96,7 +96,7 @@ const ServiceTab = (props) => {
     setupdateServiceDescription(val.service_description);
     setupdateServiceFee(val.service_fee);
     setupdateServiceCategory(val.category);
-    alert(updateServiceCategory);
+    // alert(updateServiceCategory);
     setShowServices(true);
   };
 

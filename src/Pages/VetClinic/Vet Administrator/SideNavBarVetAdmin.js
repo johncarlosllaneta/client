@@ -174,7 +174,7 @@ function SideNavBarVetAdmin(props) {
                 </a>
             </Container>
 
-            <Container
+            {/* <Container
                 id="ContainerNavItem"
                 style={{
                     backgroundColor: profile,
@@ -184,7 +184,7 @@ function SideNavBarVetAdmin(props) {
                 <a id="anchorTag" href="/profile">
                     Profile
                 </a>
-            </Container>
+            </Container> */}
 
             <Container
                 id="ContainerNavItem"

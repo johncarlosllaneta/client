@@ -17,7 +17,7 @@ function profileContentVerified() {
 
   return (
     <div>
-      <div
+      {/* <div
         style={{
           width: "20%",
           border: "1px solid transparent",
@@ -27,11 +27,11 @@ function profileContentVerified() {
         }}
       >
         <SideNavBarVetAdmin active={"profile"} />
-      </div>
+      </div> */}
 
       <div
         style={{
-          width: "80%",
+          width: "100%",
           border: "1px",
           float: "left",
           margin: 0,
@@ -39,7 +39,7 @@ function profileContentVerified() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavBarVet />
+          <NavBarVet showLogo={false} showHome={false} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <VetProfileTab />

@@ -1,8 +1,10 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 
-import NavBarVet from "../../../NavBarVet";
-import SideNavbarVerified from "../../../SideNavbarVerified";
+import NavBarVet from "../../../../Verified Vet/NavBarVet";
+
+
+import SideNavBarVetAdmin from "../../../../Vet Administrator/SideNavBarVetAdmin";
 
 import PetGroomStart from "./PetGroomStart";
 
@@ -27,7 +29,7 @@ function PetGroomStartHolder() {
           margin: 0,
         }}
       >
-        <SideNavbarVerified active={"services"} />
+        <SideNavBarVetAdmin active={"services"} />
       </div>
 
       <div
@@ -40,7 +42,7 @@ function PetGroomStartHolder() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavBarVet />
+          <NavBarVet showLogo={true} showHome={true} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <PetGroomStart />

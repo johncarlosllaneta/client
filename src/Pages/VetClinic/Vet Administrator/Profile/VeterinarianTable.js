@@ -1,8 +1,33 @@
-import React from 'react'
-import { FloatingLabel, Form, Row, Button } from 'react-bootstrap'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { FloatingLabel, Form, Row, Button, Col } from 'react-bootstrap'
+import { getVeterinarian, veterinarians } from '../../../../Components/Functions/GetVetDoctors';
+import { hostUrl } from '../../../../Components/Host';
+import { users } from '../../../../Components/User';
 import VeterinarianProfile from './VeterinarianProfile'
 
 function VeterinarianTable(props) {
+
+    const [searchItem, setsearchItem] = useState('');
+    const [veterinarian, setveterinarian] = useState([]);
+
+    useEffect(() => {
+
+        axios.get(
+            `${hostUrl}/vetclinic/get/veterinarian/${users[0].vetid}`
+        ).then((response) => {
+            setveterinarian(response.data);
+
+        });
+        setTimeout(() => {
+            console.log(veterinarian);
+        }, 2000);
+
+    }, []);
+
+
+
+
     return (
         <div>
             <Row
@@ -22,7 +47,9 @@ function VeterinarianTable(props) {
                             className="mb-3"
                         >
                             <Form.Control type="text" placeholder="search"
-
+                                onChange={(e) => {
+                                    setsearchItem(e.target.value);
+                                }}
                             />
                         </FloatingLabel>
                     </div>
@@ -43,10 +70,35 @@ function VeterinarianTable(props) {
 
             <Row
                 style={{
-                    marginTop: 20
+                    marginTop: 20,
+                    display: 'grid',
+                    gridTemplateColumns: 'auto auto auto auto',
+                    gridGap: 10,
+                    padding: 10
+
+                    // justifyContent: 'start'
+
                 }}
             >
-                <VeterinarianProfile />
+
+                {veterinarian.filter((val) => {
+                    if (searchItem == "") {
+                        return val;
+                    } else if (val.vet_doc_fname.toLowerCase().includes(searchItem.toLowerCase()) || val.vet_doc_lname.toLowerCase().includes(searchItem.toLowerCase())) {
+                        return val;
+                    }
+                }).map((item) => {
+                    return (
+                        <div
+                            style={{
+                                gridRow: '1/1'
+                            }}
+                        >
+                            <VeterinarianProfile user={item} />
+                        </div>
+                    )
+                })}
+
             </Row>
         </div>
     )
