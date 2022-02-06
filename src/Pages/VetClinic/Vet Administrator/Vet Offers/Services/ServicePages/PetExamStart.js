@@ -39,7 +39,7 @@ const PetExamStart = (props) => {
   const [vaccination, setvaccination] = useState(true);
   const [inHouseLab, setinHouseLab] = useState(true);
   const [counter, setcounter] = useState(0);
-  const [user, setuser] = useState([]);
+
   useEffect(() => {
     if (users[0].enableConsultation == 1) {
       setconsulation(false);

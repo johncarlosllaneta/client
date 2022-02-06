@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 
 import SideNavbarVerified from "../SideNavbarVerified";
-import NavBarVet from "../NavBarVet";
+// import NavBarVet from "../NavBarVet";
 import VetProfileTab from "./VetProfileTab";
 
 function profileContentVerified() {
@@ -39,7 +39,7 @@ function profileContentVerified() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavBarVet />
+          {/* <NavBarVet /> */}
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <VetProfileTab />

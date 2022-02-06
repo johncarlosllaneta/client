@@ -1,6 +1,6 @@
 import React from 'react'
 import SideNavBarVetAdmin from '../SideNavBarVetAdmin'
-import NavBarVet from '../../Verified Vet/NavBarVet';
+import NavBarVet from '../NavBarVet';
 import PetRecord from './PetRecord';
 
 function PetPanelTableController(props) {

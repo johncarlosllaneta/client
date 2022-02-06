@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import SideNavBarVetAdmin from "../../../../Vet Administrator/SideNavBarVetAdmin";
 
-import NavBarVet from "../../../NavBarVet";
+import NavBarVet from "../../../../Vet Administrator/NavBarVet";
 
 
 import ConsultStart from "./ConsultStart";

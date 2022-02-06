@@ -1,7 +1,7 @@
 import React from 'react'
 import { Col, Container, Row, Image } from "react-bootstrap";
 import HomeTab from '../../Verified Vet/Dashboard/HomeTab';
-import NavBarVet from '../../Verified Vet/NavBarVet';
+import NavBarVet from '../NavBarVet';
 import SideNavBarVetAdmin from '../SideNavBarVetAdmin';
 
 

@@ -1,13 +1,10 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import SideNavBarVetAdmin from "../../SideNavBarVetAdmin";
 
-import NavBarVet from "../../../NavBarVet";
-
-
-import SideNavBarVetAdmin from "../../../../Vet Administrator/SideNavBarVetAdmin";
-
-import PetExamStart from "./PetExamStart";
-function PetExamStartHolder() {
+import ProductTable from "./ProductTable";
+import NavBarVet from "../../NavBarVet";
+function ProductVerified() {
   var aspectratioheight = window.screen.height;
   var aspectratiowidth = window.screen.width;
   var value;
@@ -28,7 +25,8 @@ function PetExamStartHolder() {
           margin: 0,
         }}
       >
-        <SideNavBarVetAdmin active={"services"} />
+        <SideNavBarVetAdmin active={"products"} />
+
       </div>
 
       <div
@@ -44,11 +42,11 @@ function PetExamStartHolder() {
           <NavBarVet showLogo={true} showHome={true} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
-          <PetExamStart />
+          <ProductTable />
         </div>
       </div>
     </div>
   );
 }
 
-export default PetExamStartHolder;
+export default ProductVerified;

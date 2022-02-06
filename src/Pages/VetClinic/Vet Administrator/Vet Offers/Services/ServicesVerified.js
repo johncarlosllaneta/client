@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import SideNavBarVetAdmin from "../../SideNavBarVetAdmin";
 import ServiceTab from "./ServiceTab";
-import NavBarVet from '../../../Verified Vet/NavBarVet';
+import NavBarVet from '../../NavBarVet';
 
 function ServicesVerified() {
   var aspectratioheight = window.screen.height;

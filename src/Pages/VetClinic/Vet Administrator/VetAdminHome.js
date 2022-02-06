@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import DashboardVetAdmin from './Dashboard/DashboardVetAdmin';
@@ -8,13 +8,14 @@ import PetPanelTableController from './Pets/PetPanelTableController';
 import ServicesVerified from './Vet Offers/Services/ServicesVerified';
 import ConsultStartHolder from '../Verified Vet/Vet Offers/Services/ServicePages/ConsultStartHolder';
 import RegistrationVeterinarian from './Profile/Registration/Veterinarian/RegistrationVeterinarian';
-import axios from 'axios';
-import { hostUrl } from '../../../Components/Host';
 import RegistrationVetStaff from './Profile/Registration/VetStaff/RegistrationVetStaff';
 import PreControlStartHolder from './Vet Offers/Services/ServicePages/PreControlStartHolder';
 import PetExamStartHolder from './Vet Offers/Services/ServicePages/PetExamStartHolder';
 import PetGroomStartHolder from './Vet Offers/Services/ServicePages/PetGroomStartHolder';
 import VaccineStartHolder from './Vet Offers/Services/ServicePages/VaccineStartHolder';
+import PharmacyVerified from './Vet Offers/Pharmacy/PharmacyVerified';
+import Products from './Vet Offers/Products/Product';
+import ProductVerified from './Vet Offers/Products/ProductVerified';
 
 
 function VetAdminHome() {
@@ -32,6 +33,17 @@ function VetAdminHome() {
                         <Route path="/registration/vet staff" exact component={RegistrationVetStaff} />
                         <Route path="/pets/:vetid" exact component={PetsVerified} />
                         <Route path="/pets/:vetid/:petid" exact component={PetPanelTableController} />
+                        <Route
+                            path="/pharmacy/:vetid"
+                            exact
+                            component={PharmacyVerified}
+                        />
+
+                        <Route
+                            path="/products/:vetid"
+                            exact
+                            component={ProductVerified}
+                        />
                         <Route
                             path="/services/:vetid"
                             exact

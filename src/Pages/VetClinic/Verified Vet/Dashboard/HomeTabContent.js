@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import HomeTab from "./HomeTab";
 import SideNavbarVerified from "../SideNavbarVerified";
-import NavBarVet from "../NavBarVet";
+// import NavBarVet from "../NavBarVet";
 
 function HomeTabContent() {
   var aspectratioheight = window.screen.height;
@@ -37,7 +37,7 @@ function HomeTabContent() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavBarVet />
+          {/* <NavBarVet /> */}
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <HomeTab />

@@ -183,9 +183,11 @@ function NavBarVet(props) {
 
 
   const logoutUser = () => {
-    Axios.delete("http://localhost:3001/logout", {
+    Axios.delete(`${hostUrl}/logout`, {
       token: localStorage.getItem("rjwt"),
     });
+
+    Axios.put(`${hostUrl}/logout/user/vetclinic/${users[0].vetid}`);
 
     Axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
       name: user.vet_name,

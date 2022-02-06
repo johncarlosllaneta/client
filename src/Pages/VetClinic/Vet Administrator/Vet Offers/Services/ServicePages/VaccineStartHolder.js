@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 
-import NavBarVet from "../../../../Verified Vet/NavBarVet";
+import NavBarVet from "../../../NavBarVet";
 
 
 import SideNavBarVetAdmin from "../../../../Vet Administrator/SideNavBarVetAdmin";

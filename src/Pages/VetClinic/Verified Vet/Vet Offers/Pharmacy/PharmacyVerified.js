@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import SideNavbarVerified from "../../SideNavbarVerified";
 import PharmacyTab from "./PharmacyTab";
-import NavBarVet from "../../NavBarVet";
+// import NavBarVet from "../../NavBarVet";
 function PharmacyVerified() {
   var aspectratioheight = window.screen.height;
   var aspectratiowidth = window.screen.width;
@@ -37,7 +37,7 @@ function PharmacyVerified() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavBarVet />
+          {/* <NavBarVet /> */}
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <PharmacyTab />
