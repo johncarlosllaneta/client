@@ -235,7 +235,7 @@ function SideNavBarVetStaff(props) {
             }}
           >
             <RiServiceFill id="icons" />
-            <a id="anchorTag" href={`/product/${user.vet_staff_id}`}>
+            <a id="anchorTag" href={`/product/${user.vetid}`}>
               Product
             </a>
           </Container>
@@ -254,7 +254,7 @@ function SideNavBarVetStaff(props) {
             }}
           >
             <MdLocalPharmacy id="icons" />
-            <a id="anchorTag" href={`/pharmacy/${user.vet_staff_id}`}>
+            <a id="anchorTag" href={`/pharmacy/${user.vetid}`}>
               Pharmacy
             </a>
           </Container>
@@ -270,7 +270,7 @@ function SideNavBarVetStaff(props) {
         }}
       >
         <AiFillSecurityScan id="icons" />
-        <a id="anchorTag" href={`/visitormonitoring/${user.vet_staff_id}`}>
+        <a id="anchorTag" href={`/visitormonitoring/${user.vetid}`}>
           Visitor Monitoring
         </a>
       </Container>

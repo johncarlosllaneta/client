@@ -9,7 +9,7 @@ import SideNavBarVetStaff from "../SideNavBarVetStaff";
 import NavBarStaff from "../NavBarStaff";
 
 function VisitorMonitoringVerified() {
-  // let { staffId } = useParams();
+  // let { vetid } = useParams();
   var aspectratioheight = window.screen.height;
   var aspectratiowidth = window.screen.width;
   var value;
@@ -36,7 +36,7 @@ function VisitorMonitoringVerified() {
   }, [user]);
 
   useEffect(() => {
-    QRCode.toDataURL("staffId").then(setqrCode);
+    QRCode.toDataURL(`${user.vetid}`).then(setqrCode);
   }, [user]);
 
   function formatDate(dateString) {

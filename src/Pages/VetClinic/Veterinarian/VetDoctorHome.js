@@ -21,7 +21,7 @@ function VetDoctorHome() {
           <Route path="/pets" exact component={PetsMain} />
           <Route path="/consultation" exact component={ConsultationMain} />
           <Route path="/services" exact component={ServicesMain} />
-          <Route path="/pharmacy" exact component={PharmacyMain} />
+          <Route path="/pharmacy/:vetid" exact component={PharmacyMain} />
           <Route path="/appointments" exact component={AppointmentMain} />
         </Switch>
       </div>
