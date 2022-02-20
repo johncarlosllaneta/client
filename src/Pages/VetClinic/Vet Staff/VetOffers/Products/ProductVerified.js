@@ -1,9 +1,19 @@
 import React from "react";
-import NavBarStaff from "../../NavBarStaff";
+import { Container } from "react-bootstrap";
 import SideNavBarVetStaff from "../../SideNavBarVetStaff";
-import PharmacyPage from "./PharmacyPage";
-import PharmacyTable from "./PharmacyTable";
-function PharmacyMain() {
+
+import ProductTable from "./ProductTable";
+import NavBarStaff from "../../NavBarStaff";
+function ProductVerified() {
+  var aspectratioheight = window.screen.height;
+  var aspectratiowidth = window.screen.width;
+  var value;
+  if (aspectratioheight > 1920 && aspectratiowidth > 1080) {
+    value = "80%";
+  } else {
+    value = "100%";
+  }
+
   return (
     <div>
       <div
@@ -15,7 +25,7 @@ function PharmacyMain() {
           margin: 0,
         }}
       >
-        <SideNavBarVetStaff active={"pharmacy"} />
+        <SideNavBarVetStaff active={"products"} />
       </div>
 
       <div
@@ -28,15 +38,14 @@ function PharmacyMain() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          {/* navbar */}
-          <NavBarStaff />
+          <NavBarStaff showLogo={true} showHome={true} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
-          <PharmacyTable />
+          <ProductTable />
         </div>
       </div>
     </div>
   );
 }
 
-export default PharmacyMain;
+export default ProductVerified;

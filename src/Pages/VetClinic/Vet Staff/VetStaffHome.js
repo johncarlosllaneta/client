@@ -5,8 +5,10 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import DashboardMain from "./Dashboard/DashboardMain";
 import ProfileMain from "./Profile/ProfileMain";
 import PharmacyMain from "./VetOffers/Pharmacy/PharmacyMain";
-import ProductMain from "./VetOffers/Products/ProductMain";
+// import ProductMain from "./VetOffers/Products/ProductMain";
 import VisitorMonitoringVerified from "./VisitorMonitoring/VisitorMonitoringVerified";
+import ProductVerified from "./VetOffers/Products/ProductVerified";
+
 function VetStaffHome() {
   const [user, setuser] = useState([]);
 
@@ -31,10 +33,10 @@ function VetStaffHome() {
           <Route path="/" exact component={DashboardMain} />
           <Route path="/dashboard" exact component={DashboardMain} />
           <Route path="/profile" exact component={ProfileMain} />
-          <Route path="/product/:staffId" exact component={ProductMain} />
-          <Route path="/pharmacy/:staffId" exact component={PharmacyMain} />
+          <Route path="/product/:vetid" exact component={ProductVerified} />
+          <Route path="/pharmacy/:vetid" exact component={PharmacyMain} />
           <Route
-            path="/visitormonitoring/:staffId"
+            path="/visitormonitoring/:vetid"
             exact
             component={VisitorMonitoringVerified}
           />

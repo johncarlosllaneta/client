@@ -13,8 +13,9 @@ import {
 import MaterialTable from "material-table";
 import Axios from "axios";
 import { hostUrl } from "../../../../../../Components/Host";
-import { TiCancel } from "react-icons/ti";
-import { AiOutlineFileDone, AiOutlineSearch } from "react-icons/ai";
+import { BiPencil } from "react-icons/bi";
+import { IoMdTrash } from "react-icons/io";
+import { AiOutlineSearch } from "react-icons/ai";
 function ProductTable() {
   // let { staffId } = useParams();
 
@@ -125,7 +126,7 @@ function ProductTable() {
           <OverlayTrigger
             placement="top-start"
             delay={{ show: 250 }}
-            overlay={renderTooltip({ msg: "Done Appointment" })}
+            overlay={renderTooltip({ msg: "Update Product" })}
           >
             <Button
               variant="primary"
@@ -140,14 +141,14 @@ function ProductTable() {
                 // handleShowModalFinish();
               }}
             >
-              <AiOutlineFileDone style={{ fontSize: 25 }} />
+              <BiPencil style={{ fontSize: 25 }} />
             </Button>
           </OverlayTrigger>
 
           <OverlayTrigger
             placement="top-start"
             delay={{ show: 250 }}
-            overlay={renderTooltip({ msg: "Void Appointment" })}
+            overlay={renderTooltip({ msg: "Delete Product" })}
           >
             <Button
               variant="danger"
@@ -157,7 +158,7 @@ function ProductTable() {
                 // handleShowModalDecline();
               }}
             >
-              <TiCancel style={{ fontSize: 25 }} />
+              <IoMdTrash style={{ fontSize: 25 }} />
             </Button>
           </OverlayTrigger>
         </div>

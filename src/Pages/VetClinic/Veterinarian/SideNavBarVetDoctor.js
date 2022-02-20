@@ -42,7 +42,7 @@ function SideNavBarVetDoctor(props) {
         setvetID(response.data.result[0].vetid);
       });
       setconsultationChecker(1);
-      setpharmacyChecker(user.enablePharmacy);
+      setpharmacyChecker(1);
       setproductChecker(user.enableProduct);
       setservicesChecker(1);
       // console.log(user);
@@ -275,7 +275,7 @@ function SideNavBarVetDoctor(props) {
             }}
           >
             <MdLocalPharmacy id="icons" />
-            <a id="anchorTag" href={`/pharmacy`}>
+            <a id="anchorTag" href={`/pharmacy/${user.vetid}`}>
               Pharmacy
             </a>
           </Container>

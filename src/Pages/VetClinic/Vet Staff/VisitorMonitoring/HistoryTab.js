@@ -8,34 +8,14 @@ import { hostUrl } from "../../../../Components/Host";
 import { useParams } from "react-router-dom";
 
 const HistoryTab = (props) => {
-  // useEffect(() => {
-  //   Axios.get(`${hostUrl}/history/vetclinic/${staffId}`).then((response) => {
-  //     setHistory(response.data);
-  //   });
-  // }, [history]);
-  const [user, setuser] = useState([]);
-  const [counter1, setcounter1] = useState(0);
-  useEffect(() => {
-    var token = localStorage.getItem("ajwt");
-    if (counter1 < 2) {
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-      });
-      setcounter1(counter + 1);
-    }
-  }, [user]);
-
+  let { vetid } = useParams();
   const [counter, setcounter] = useState(0);
   const [visitor, setvisitor] = useState([]);
   useEffect(() => {
     if (counter < 2) {
-      Axios.get(`${hostUrl}/visitor/staff/${user.vet_staff_id}`).then(
-        (response) => {
-          setvisitor(response.data);
-        }
-      );
+      Axios.get(`${hostUrl}/vetclinic/visitor/${vetid}`).then((response) => {
+        setvisitor(response.data);
+      });
       setcounter(counter + 1);
     }
   }, [visitor]);
