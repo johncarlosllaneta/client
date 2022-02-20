@@ -34,7 +34,7 @@ function ProductItem(props) {
 
             <div
                 style={{
-                    backgroundImage: 'url("https://www.petwarehouse.ph/12474-big_default/prama-delicacy-snack-sweet-melon-70g-dog-treats.jpg")',
+                    backgroundImage: `url('${props.product.product_image}')`,
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'auto',
@@ -77,6 +77,7 @@ function ProductItem(props) {
 
                 >
                     <MenuItem
+
                         style={{
                             display: 'flex',
                             justifyContent: 'start',
@@ -92,6 +93,10 @@ function ProductItem(props) {
                     </MenuItem>
 
                     <MenuItem
+                        onClick={() => {
+                            props.handleShowUpdateProduct();
+
+                        }}
                         style={{
                             display: 'flex',
                             justifyContent: 'start',
@@ -134,9 +139,9 @@ function ProductItem(props) {
                     textAlign: 'left'
                 }}
             >
-                <h6>Prama Delicacy Snack Sweet Melon 70g Dog Treats</h6>
-                <strong>₱165.00</strong> <br />
-                <strong>Quantity: 100 pcs</strong>
+                <h6>{props.product.product_name}</h6>
+                <strong>₱{props.product.price}.00</strong> <br />
+                <strong>Quantity: {props.product.quantity} pcs</strong>
 
             </div>
         </Card>

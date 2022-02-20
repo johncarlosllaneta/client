@@ -16,6 +16,7 @@ import VaccineStartHolder from './Vet Offers/Services/ServicePages/VaccineStartH
 import PharmacyVerified from './Vet Offers/Pharmacy/PharmacyVerified';
 import Products from './Vet Offers/Products/Product';
 import ProductVerified from './Vet Offers/Products/ProductVerified';
+import VisitorMonitoringVerified from './Visitor Monitoring/VisitorMonitoringVerified';
 
 
 function VetAdminHome() {
@@ -74,6 +75,11 @@ function VetAdminHome() {
                             path="/services/vaccination/:vetid"
                             exact
                             component={VaccineStartHolder}
+                        />
+                        <Route
+                            path="/visitors"
+                            exact
+                            component={VisitorMonitoringVerified}
                         />
 
                         {/* <Route path="/dashboard" exact component={Dashboard} />

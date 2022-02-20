@@ -20,8 +20,7 @@ import { ToastContainer } from "react-toastify";
 import { hostUrl } from '../../../../../Components/Host';
 import { users } from '../../../../../Components/User';
 
-function AddProduct(props) {
-
+function UpdateProduct(props) {
     // Product Attributes
     const [ProductName, setProductName] = useState("");
     const [ProductDescription, setProductDescription] = useState("");
@@ -185,8 +184,6 @@ function AddProduct(props) {
 
         setValidated(true);
     };
-
-
 
 
     return <div>
@@ -537,4 +534,4 @@ function AddProduct(props) {
     </div>;
 }
 
-export default AddProduct;
+export default UpdateProduct

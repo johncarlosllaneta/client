@@ -1,0 +1,4 @@
+
+var product = [];
+
+export { product };

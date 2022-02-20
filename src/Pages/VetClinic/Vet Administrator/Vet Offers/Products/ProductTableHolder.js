@@ -1,9 +1,19 @@
-import React from 'react';
-import { Row, Col } from 'react-bootstrap';
+
+
 import ProductItem from './ProductItem';
 import ProductSearchBar from './ProductSearchBar';
+import React, { useState, useEffect, useRef } from 'react';
+import { Form, Offcanvas, FloatingLabel, Row, Col } from 'react-bootstrap';
+import UpdateProduct from './UpdateProduct';
+
 
 function ProductTableHolder(props) {
+
+    const [showUpdateProduct, setShowUpdateProduct] = useState(false);
+
+    const handleCloseUpdateProduct = () => setShowUpdateProduct(false);
+    const handleShowUpdateProduct = () => setShowUpdateProduct(true);
+
     return <div
         style={{
             height: 'auto',
@@ -15,6 +25,17 @@ function ProductTableHolder(props) {
         }}
 
     >
+        {/* Update Products */}
+        <Offcanvas show={showUpdateProduct} onHide={handleCloseUpdateProduct} placement='end' key={1}>
+            <Offcanvas.Header closeButton>
+                <Offcanvas.Title>Update Product</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+                <UpdateProduct />
+
+            </Offcanvas.Body>
+        </Offcanvas>
+
 
         <ProductSearchBar changeShow={props.changeShow} refreshTable={props.refreshTable} products={props.products} />
         <hr />
@@ -35,7 +56,7 @@ function ProductTableHolder(props) {
         >
             {props.products.map((item) => {
                 return (
-                    <Col><ProductItem product={item} /></Col>
+                    <Col sm={3}><ProductItem product={item} handleShowUpdateProduct={handleShowUpdateProduct} /></Col>
                 )
             })}
 

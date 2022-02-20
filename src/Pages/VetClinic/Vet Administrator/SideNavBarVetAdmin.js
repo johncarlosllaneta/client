@@ -14,6 +14,7 @@ import Axios from "axios";
 import { hostUrl } from "../../../Components/Host";
 import { MdFiberNew } from "react-icons/md";
 import { GoPrimitiveDot } from "react-icons/go";
+import { users } from "../../../Components/User";
 
 function SideNavBarVetAdmin(props) {
     const [consultationChecker, setconsultationChecker] = useState();
@@ -33,37 +34,29 @@ function SideNavBarVetAdmin(props) {
     const [counter, setcounter] = useState(0);
     const [user, setuser] = useState([]);
     useEffect(() => {
-        if (counter < 10) {
-            var token = localStorage.getItem("ajwt");
-            Axios.get(`${hostUrl}/home`, {
-                headers: { Authorization: `Bearer ${token}` },
-            }).then((response) => {
-                setuser(response.data.result[0]);
-                setvetID(response.data.result[0].vetid);
-            });
-            setconsultationChecker(user.enableConsultation);
-            setpharmacyChecker(user.enablePharmacy);
-            setproductChecker(user.enableProduct);
-            setservicesChecker(user.enableServices);
-            // console.log(user);
-            // alert(vetID.toString().replace('/', '10##01'))
 
-            Axios.get(
-                `${hostUrl}/vetclinic/notification/isNew/length/${user.vetid}`
-            ).then((response) => {
-                setnumberOfUnviewedAppointment(response.data.view);
-                // alert(response.data.view);
-            });
 
-            Axios.get(
-                `${hostUrl}/vetclinic/notification/reservation/isNew/length/${user.vetid}`
-            ).then((response) => {
-                setnumberOfUnviewedReserved(response.data.view);
-                // alert(response.data.view);
-            });
-            setcounter(counter + 1);
-        }
-    }, [user]);
+        setconsultationChecker(users[0].enableConsultation);
+        setpharmacyChecker(users[0].enablePharmacy);
+        setproductChecker(users[0].enableProduct);
+        setservicesChecker(users[0].enableServices);
+
+
+        Axios.get(
+            `${hostUrl}/vetclinic/notification/isNew/length/${users[0].vetid}`
+        ).then((response) => {
+            setnumberOfUnviewedAppointment(response.data.view);
+            // alert(response.data.view);
+        });
+
+        Axios.get(
+            `${hostUrl}/vetclinic/notification/reservation/isNew/length/${users[0].vetid}`
+        ).then((response) => {
+            setnumberOfUnviewedReserved(response.data.view);
+            // alert(response.data.view);
+        });
+
+    }, []);
 
     useEffect(() => {
         if (consultationChecker === 1) {
@@ -125,12 +118,12 @@ function SideNavBarVetAdmin(props) {
 
     function viewingReserved() {
         Axios.put(
-            `${hostUrl}/vetclinic/notification/reservation/isNew/${user.vetid}`
+            `${hostUrl}/vetclinic/notification/reservation/isNew/${users[0].vetid}`
         );
     }
 
     function viewingAppointment() {
-        Axios.put(`${hostUrl}/vetclinic/notification/isNew/${user.vetid}`);
+        Axios.put(`${hostUrl}/vetclinic/notification/isNew/${users[0].vetid}`);
     }
 
     return (
@@ -193,7 +186,7 @@ function SideNavBarVetAdmin(props) {
                 }}
             >
                 <MdPets id="icons" />
-                <a id="anchorTag" href={`/pets/${user.vetid}`}>
+                <a id="anchorTag" href={`/pets/${users[0].vetid}`}>
                     Pets
                 </a>
             </Container>
@@ -267,7 +260,7 @@ function SideNavBarVetAdmin(props) {
                         }}
                     >
                         <FaStethoscope id="icons" />
-                        <a id="anchorTag" href={`/services/consultation/${vetID}`}>
+                        <a id="anchorTag" href={`/services/consultation/${users[0].vetid}`}>
                             Consultation
                         </a>
                     </Container>
@@ -286,7 +279,7 @@ function SideNavBarVetAdmin(props) {
                         }}
                     >
                         <MdLocalPharmacy id="icons" />
-                        <a id="anchorTag" href={`/pharmacy/${vetID}`}>
+                        <a id="anchorTag" href={`/pharmacy/${users[0].vetid}`}>
                             Pharmacy
                         </a>
                     </Container>
@@ -314,7 +307,7 @@ function SideNavBarVetAdmin(props) {
                                 }}
                             >
                                 <GiDogBowl id="icons" />
-                                <a id="anchorTag" href={`/products/${vetID}`}>
+                                <a id="anchorTag" href={`/products/${users[0].vetid}`}>
                                     Products
                                 </a>
                                 <MdFiberNew
@@ -328,7 +321,7 @@ function SideNavBarVetAdmin(props) {
                         ) : (
                             <div>
                                 <GiDogBowl id="icons" />
-                                <a id="anchorTag" href={`/products/${vetID}`}>
+                                <a id="anchorTag" href={`/products/${users[0].vetid}`}>
                                     Products
                                 </a>
                             </div>
@@ -349,7 +342,7 @@ function SideNavBarVetAdmin(props) {
                         }}
                     >
                         <RiServiceFill id="icons" />
-                        <a id="anchorTag" href={`/services/${vetID}`}>
+                        <a id="anchorTag" href={`/services/${users[0].vetid}`}>
                             Services
                         </a>
                     </Container>
@@ -374,7 +367,7 @@ function SideNavBarVetAdmin(props) {
                         }}
                     >
                         <AiFillSchedule id="icons" />
-                        <a id="anchorTag" href={`/appointments/${user.vetid}`}>
+                        <a id="anchorTag" href={`/appointments/${users[0].vetid}`}>
                             Appointments
                         </a>
                         <MdFiberNew
@@ -388,7 +381,7 @@ function SideNavBarVetAdmin(props) {
                 ) : (
                     <div>
                         <AiFillSchedule id="icons" />
-                        <a id="anchorTag" href={`/appointments/${user.vetid}`}>
+                        <a id="anchorTag" href={`/appointments/${users[0].vetid}`}>
                             Appointments
                         </a>
                     </div>
@@ -402,7 +395,7 @@ function SideNavBarVetAdmin(props) {
                 }}
             >
                 <AiFillSecurityScan id="icons" />
-                <a id="anchorTag" href={`/visitor&monitoring/${user.vetid}`}>
+                <a id="anchorTag" href={`/visitors`}>
                     Visitor Monitoring
                 </a>
             </Container>
