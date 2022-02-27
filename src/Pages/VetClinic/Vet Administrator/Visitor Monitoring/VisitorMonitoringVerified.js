@@ -69,41 +69,6 @@ function VisitorMonitoringVerified() {
           <VisitorMonitoringHeader />
 
           <HistoryTab />
-          {/* <Row>
-            <Col
-              sm="5"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column",
-                rowGap: 20,
-              }}
-            >
-              <Image
-                src={qrCode}
-                alt={"QrCode"}
-                style={{ height: 350, maxWidth: "100%" }}
-              />
-
-              <Button
-                style={{
-                  backgroundColor: "#3BD2E3",
-                  borderRadius: 30,
-                  paddingLeft: 40,
-                  paddingRight: 40,
-                  borderColor: "#FFFFFF",
-                }}
-                download
-                href={qrCode}
-              >
-                Download
-              </Button>
-            </Col>
-            <Col sm="7">
-              
-            </Col>
-          </Row> */}
         </div>
       </div>
     </div>

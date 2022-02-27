@@ -17,6 +17,10 @@ import PharmacyVerified from './Vet Offers/Pharmacy/PharmacyVerified';
 import Products from './Vet Offers/Products/Product';
 import ProductVerified from './Vet Offers/Products/ProductVerified';
 import VisitorMonitoringVerified from './Visitor Monitoring/VisitorMonitoringVerified';
+import QrCode from "./Visitor Monitoring/QrCode";
+import appointmentVerified from './Appointments/appointmentVerified';
+import VetSettings from './Settings/VetSettings';
+import Thread from './Talk to Vet/Thread';
 
 
 function VetAdminHome() {
@@ -77,15 +81,29 @@ function VetAdminHome() {
                             component={VaccineStartHolder}
                         />
                         <Route
+                            path="/appointments/:vetid"
+                            exact
+                            component={appointmentVerified}
+                        />
+                        <Route
                             path="/visitors"
                             exact
                             component={VisitorMonitoringVerified}
                         />
+                        <Route
+                            path="/qrCode"
+                            exact
+                            component={QrCode}
+                        />
+                        <Route path="/vet/settings"
+                            exact
+                            component={VetSettings} />
 
-                        {/* <Route path="/dashboard" exact component={Dashboard} />
-                        <Route path="/profile" exact component={ProfileContent} />
-                        <Route path="/verification" exact component={VerifyContent} />
-                        <Route path="/vet/settings" exact component={VetSettings} /> */}
+                        <Route path="/talk to vet"
+                            exact
+                            component={Thread} />
+
+
                     </Switch>
                 </div>
             </Router>

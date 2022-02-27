@@ -23,7 +23,9 @@ function VisitorMonitoringHeader() {
                 }}
             >
                 <Button
-
+                    onClick={() => {
+                        window.open("/qrCode");
+                    }}
                     style={{
                         height: '50%',
                         width: '25%'

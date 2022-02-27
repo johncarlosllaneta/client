@@ -50,127 +50,13 @@ function NavBarVet(props) {
     }, 1000);
   }, [user]);
 
-  if (parseInt(userole) === 1) {
-    name = (
-      <div style={{ display: "inline-flex" }}>
-        <Avatar
-          round={true}
-          size={50}
-          style={{
-            marginTop: 10,
-          }}
-          src={user.profilePicture}
-          name={user.name}
-        />
 
-        <p
-          style={{
-            marginTop: 20,
-            marginLeft: 10,
-          }}
-        >
-          {" "}
-          {user.name}
-          <br />{" "}
-          <p
-            style={{
-              fontSize: 12,
-              color: "#3BD2E3",
-              marginTop: -5,
-              textAlign: "left",
-            }}
-          >
-            Pet Owner
-          </p>
-        </p>
-      </div>
-    );
-  } else if (parseInt(userole) === 2) {
-    name = (
-      <div style={{ display: "inline-flex" }}>
-        <Avatar
-          round={true}
-          size={50}
-          style={{
-            marginTop: 10,
-          }}
-          src={user.vet_picture}
-          name={user.vet_name}
-        />
-
-        <p
-          style={{
-            marginTop: 20,
-            marginLeft: 10,
-          }}
-        >
-          {" "}
-          {user.vet_name}
-          <br />{" "}
-          <p
-            style={{
-              fontSize: 12,
-              color: "#3BD2E3",
-              marginTop: -5,
-              textAlign: "left",
-            }}
-          >
-            Vet Clinic
-          </p>
-        </p>
-      </div>
-    );
-  } else if (parseInt(userole) === 3) {
-    name = (
-      <div style={{ display: "inline-flex" }}>
-        <Avatar
-          round={true}
-          size={50}
-          style={{
-            marginTop: 10,
-          }}
-          src={user.profilePicture}
-          name={user.name}
-        />
-
-        <p
-          style={{
-            marginTop: 20,
-            marginLeft: 10,
-          }}
-        >
-          {" "}
-          {user.name}
-          <br />{" "}
-          <p
-            style={{
-              fontSize: 12,
-              color: "#3BD2E3",
-              marginTop: -5,
-              textAlign: "left",
-            }}
-          >
-            System Admin
-          </p>
-        </p>
-      </div>
-    );
-  }
 
   var colors = {
     Blue: "#3BD2E3",
     LightBlue: "#F1F9FC",
   };
 
-  var logocss = {
-    width: 50,
-    height: 50,
-  };
-
-  var landingPageName = {
-    fontWeight: "bold",
-    color: colors.Blue,
-  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -190,32 +76,13 @@ function NavBarVet(props) {
     Axios.put(`${hostUrl}/logout/user/vetclinic/${users[0].vetid}`);
 
     Axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
-      name: user.vet_name,
+      name: users[0].vet_name,
     });
     localStorage.clear();
     window.location.replace("/");
   };
 
-  const vetSettings = () => {
-    // axios.delete("http://localhost:3001/logout", {
-    //   token: localStorage.getItem("rjwt"),
-    // });
-    if (parseInt(userole) === 1) {
-      window.location.replace("/petOwner/settings");
-    } else if (parseInt(userole) === 2) {
-      window.location.replace("/vet/settings");
-    } else if (parseInt(userole) === 3) {
-      window.location.replace("/admin/settings");
-    }
-  };
 
-  const [show, setShow] = useState(true);
-
-  var circleAvatar = accountImg;
-
-  function viewing() {
-    Axios.put(`${hostUrl}/vetclinic/messages/notification/${user.vetid}`);
-  }
   return (
     <Navbar
       expand="sm"
@@ -284,6 +151,7 @@ function NavBarVet(props) {
 
           <Tooltip title={"Messages"}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit"
+              hidden={props.showMessage}
               onClick={() => {
                 window.location.href = `/talk to vet`;
               }}
@@ -387,7 +255,9 @@ function NavBarVet(props) {
                 My profile
               </MenuItem>
               <Divider />
-              <MenuItem onClick={vetSettings}
+              <MenuItem onClick={() => {
+                window.location.replace("/vet/settings");
+              }}
                 style={{
                   display: 'flex',
                   justifyContent: 'start'

@@ -372,7 +372,7 @@ function SideNavBarVetAdmin(props) {
                         </a>
                         <MdFiberNew
                             style={{
-                                color: "#f8d210",
+                                color: "white",
                                 marginLeft: 25,
                                 fontSize: 28,
                             }}
