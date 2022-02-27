@@ -169,7 +169,7 @@ const PharmacyTable = () => {
             </Button>
           </OverlayTrigger>
 
-          <OverlayTrigger
+          {/* <OverlayTrigger
             placement="top-start"
             delay={{ show: 250 }}
             overlay={renderTooltip({ msg: "Edit Details" })}
@@ -214,7 +214,7 @@ const PharmacyTable = () => {
             >
               <IoMdTrash style={{ fontSize: 25 }} />
             </Button>
-          </OverlayTrigger>
+          </OverlayTrigger> */}
         </div>
       ),
     },

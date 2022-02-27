@@ -14,6 +14,7 @@ import Axios from "axios";
 import { hostUrl } from "../../../Components/Host";
 import { MdFiberNew } from "react-icons/md";
 import { GoPrimitiveDot } from "react-icons/go";
+import { users } from "../../../Components/User";
 
 function SideNavBarVetDoctor(props) {
   const [consultationChecker, setconsultationChecker] = useState();
@@ -182,7 +183,7 @@ function SideNavBarVetDoctor(props) {
         }}
       >
         <MdPets id="icons" />
-        <a id="anchorTag" href={`/pets`}>
+        <a id="anchorTag" href={`/pets/${user.vetid}`}>
           Pets
         </a>
       </Container>
@@ -256,7 +257,7 @@ function SideNavBarVetDoctor(props) {
             }}
           >
             <FaStethoscope id="icons" />
-            <a id="anchorTag" href={`/consultation`}>
+            <a id="anchorTag" href={`/consultation/${user.vetid}`}>
               Consultation
             </a>
           </Container>
@@ -293,7 +294,7 @@ function SideNavBarVetDoctor(props) {
             }}
           >
             <RiServiceFill id="icons" />
-            <a id="anchorTag" href={`/services`}>
+            <a id="anchorTag" href={`/services/${user.vetid}`}>
               Services
             </a>
           </Container>

@@ -1,4 +1,8 @@
 import React from "react";
+import { useState, useEffect, useRef } from "react";
+import Axios from "axios";
+import { hostUrl } from "../../../../../Components/Host";
+import { useParams, BrowserRouter, Link } from "react-router-dom";
 import {
   Row,
   Col,
@@ -13,16 +17,32 @@ import MaterialTable from "material-table";
 import { AiOutlineSearch } from "react-icons/ai";
 
 function PetsTable() {
+  let { vetid } = useParams();
+  var id = vetid.toString().replace("10##01", "/");
+
+  const [pet, setPet] = useState([]);
+  const [counter, setcounter] = useState(0);
+  useEffect(() => {
+    if (counter < 3) {
+      Axios.get(`${hostUrl}/vetclinic/registered/pets/${id}`)
+        .then((response) => {
+          setPet(response.data);
+        })
+        .catch((err) => console.log(err));
+      setcounter(counter + 1);
+    }
+    // console.log(pet);
+  }, [pet]);
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
   const columns = [
     {
-      title: "Pet Name",
-      field: "pet_name",
+      title: "Pet Owner Name",
+      field: "pet_owner_name",
       defaultSort: "asc",
     },
     {
-      title: "Pet Owner Name",
-      field: "pet_owner_name",
+      title: "Pet Name",
+      field: "pet_name",
       defaultSort: "asc",
     },
     {
@@ -85,7 +105,7 @@ function PetsTable() {
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
             columns={columns}
-            // data={pet}
+            data={pet}
             title={"Pets Table"}
             cellEditable={false}
             options={{

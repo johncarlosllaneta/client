@@ -5,11 +5,10 @@ function ConsultationContainer(props) {
   return (
     <div
       style={{
-        width: 550,
-        height: 235,
-        padding: 10,
         boxShadow:
           "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+        height: "20vh",
+        padding: 20,
       }}
     >
       <Row>
@@ -18,16 +17,19 @@ function ConsultationContainer(props) {
             style={{
               display: "flex",
               flexDirection: "row",
+              justifyContent: "space-between",
             }}
           >
-            {props.title}
-            <Form style={{ float: "left" }}>
-              <Form.Check
-                type="switch"
-                //  id="custom-switch"
-                //  label="Check this switch"
-              />
-            </Form>
+            <div> {props.title}</div>
+            <div>
+              <Form>
+                <Form.Check
+                  type="switch"
+                  //  id="custom-switch"
+                  //  label="Check this switch"
+                />
+              </Form>
+            </div>
           </div>
         </Row>
         <Row>{props.info}</Row>
