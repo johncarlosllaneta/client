@@ -1,8 +1,20 @@
 import React from "react";
-import NavBarVet from "../../../Verified Vet/NavBarVet";
-import SideNavBarVetDoctor from "../../SideNavBarVetDoctor";
-import ServicesPage from "./ServicesPage";
-function ServicesMain() {
+import { Container } from "react-bootstrap";
+
+import PetGroomStart from "./PetGroomStart";
+import SideNavBarVetDoctor from "../../../SideNavBarVetDoctor";
+import NavBarDoc from "../../../NavBarDoc";
+
+function PetGroomStartHolder() {
+  var aspectratioheight = window.screen.height;
+  var aspectratiowidth = window.screen.width;
+  var value;
+  if (aspectratioheight > 1920 && aspectratiowidth > 1080) {
+    value = "80%";
+  } else {
+    value = "100%";
+  }
+
   return (
     <div>
       <div
@@ -27,15 +39,14 @@ function ServicesMain() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          {/* navbar */}
-          <NavBarVet />
+          <NavBarDoc showLogo={true} showHome={true} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
-          <ServicesPage />
+          <PetGroomStart />
         </div>
       </div>
     </div>
   );
 }
 
-export default ServicesMain;
+export default PetGroomStartHolder;
