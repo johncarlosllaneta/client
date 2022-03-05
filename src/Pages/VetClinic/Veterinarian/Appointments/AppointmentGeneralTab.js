@@ -5,6 +5,9 @@ import TabContext from "@material-ui/lab/TabContext";
 import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
 import { Row } from "react-bootstrap";
+import GeneralTable from "./Tables/GeneralTable";
+import HistoryTable from "./Tables/HistoryTable";
+import PendingTable from "./Tables/PendingTable";
 function AppointmentGeneralTab() {
   const [value, setValue] = React.useState("1");
   const handleChange = (event, newValue) => {
@@ -40,14 +43,14 @@ function AppointmentGeneralTab() {
             </TabList>
           </Box>
           <TabPanel value="1">
-            <h5>General</h5>
+            <GeneralTable />
           </TabPanel>
 
           <TabPanel value="2">
-            <h5>Pending</h5>
+            <PendingTable />
           </TabPanel>
           <TabPanel value="3">
-            <h5>History</h5>
+            <HistoryTable />
           </TabPanel>
         </TabContext>
       </Row>

@@ -16,8 +16,23 @@ import { TiCancel } from "react-icons/ti";
 import MaterialTable from "material-table";
 import Axios from "axios";
 import { hostUrl } from "../../../../../Components/Host";
+import { users } from "../../../../../Components/User";
+import { dateConvertion } from "../../../../../Components/FormatDateTime";
 
 function DashboardReservationTab() {
+  ///pending/reservation/staff/
+  const [reservation, setreservation] = useState([]);
+
+  // getPendingAppointment
+
+  // alert(props.vetid);
+  useEffect(() => {
+    Axios.get(`${hostUrl}/pending/reservation/staff/${users[0].vetid}`).then(
+      (response) => {
+        setreservation(response.data);
+      }
+    );
+  }, [reservation]);
   const [showPopover, setShowPopover] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);
@@ -26,28 +41,23 @@ function DashboardReservationTab() {
   const columns = [
     {
       title: "Reservation ID",
-      field: "appointment_id",
+      field: "reserve_id",
     },
     {
       title: "Pet Owner",
-      field: "pet_owner",
+      field: "name",
       sorting: true,
     },
     {
-      title: "Pet Owner Name",
-      field: "name",
+      title: "Pet Name",
+      field: "pet_name",
+      sorting: true,
     },
     {
       title: "Date Schedule",
-      field: "date_scheduled",
       sorting: true,
       defaultSort: "desc",
-      // render: (row) => dateConvertion(String(row.date_scheduled).split("T")[0]),
-    },
-    {
-      title: "Time Schedule",
-      field: "time_scheduled",
-      sorting: true,
+      render: (row) => dateConvertion(String(row.date_scheduled).split("T")[0]),
     },
     // {
     //   title: "Action",
@@ -142,7 +152,7 @@ function DashboardReservationTab() {
             "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
         }}
         columns={columns}
-        data={[]}
+        data={reservation}
         title={"Reservation For Today"}
         cellEditable={false}
         options={{

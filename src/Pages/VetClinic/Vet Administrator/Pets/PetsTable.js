@@ -17,6 +17,7 @@ import { hostUrl } from "../../../../Components/Host";
 import { useParams } from "react-router-dom";
 import VaccinePetCard from "./VaccinePetCard";
 import HealthPetCard from "./HealthPetCard";
+import { dateConvertion } from "../../../../Components/FormatDateTime";
 function PetsTable(props) {
   let { vetid } = useParams();
   var id = vetid.toString().replace("10##01", "/");
@@ -81,8 +82,10 @@ function PetsTable(props) {
       sorting: true,
     },
     {
-      title: "birth_day",
-      render: (row) => <p>{FormatDate({ datetime: row.birth_day })}</p>,
+      title: "Birthday",
+      defaultSort: "desc",
+      render: (row) => dateConvertion(String(row.birth_day).split("T")[0]),
+      sorting: true,
     },
     {
       title: "Action",
@@ -118,19 +121,16 @@ function PetsTable(props) {
         padding: 20,
       }}
     >
-
-
       <Row>
         <Col>
           <MaterialTable
-
             columns={columns}
             data={pet}
             title={"Pets Table"}
             cellEditable={false}
             options={{
               sorting: true,
-              pageSize: '10'
+              pageSize: "10",
             }}
           />
         </Col>

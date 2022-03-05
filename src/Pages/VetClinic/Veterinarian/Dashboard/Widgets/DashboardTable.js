@@ -11,6 +11,8 @@ import {
   Row,
 } from "react-bootstrap";
 import { AiOutlineSearch, AiOutlineFileDone } from "react-icons/ai";
+import { users } from "../../../../../Components/User";
+import { dateConvertion } from "../../../../../Components/FormatDateTime";
 
 import { TiCancel } from "react-icons/ti";
 import MaterialTable from "material-table";
@@ -18,6 +20,18 @@ import Axios from "axios";
 import { hostUrl } from "../../../../../Components/Host";
 
 function DashboardTable() {
+  const [appointment, setappointment] = useState([]);
+
+  // getPendingAppointment
+
+  // alert(props.vetid);
+  useEffect(() => {
+    Axios.get(`${hostUrl}/pending/appointment/${users[0].vetid}`).then(
+      (response) => {
+        setappointment(response.data);
+      }
+    );
+  }, [appointment]);
   const [showPopover, setShowPopover] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);
@@ -27,11 +41,6 @@ function DashboardTable() {
     {
       title: "Appointment ID",
       field: "appointment_id",
-    },
-    {
-      title: "Pet Owner",
-      field: "pet_owner",
-      sorting: true,
     },
     {
       title: "Pet Owner Name",
@@ -45,10 +54,9 @@ function DashboardTable() {
     },
     {
       title: "Date Schedule",
-      field: "date_scheduled",
       sorting: true,
       defaultSort: "desc",
-      // render: (row) => dateConvertion(String(row.date_scheduled).split("T")[0]),
+      render: (row) => dateConvertion(String(row.date_scheduled).split("T")[0]),
     },
     {
       title: "Time Schedule",
@@ -148,7 +156,7 @@ function DashboardTable() {
             "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
         }}
         columns={columns}
-        data={[]}
+        data={appointment}
         title={"Appointments For Today"}
         cellEditable={false}
         options={{
