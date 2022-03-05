@@ -32,7 +32,7 @@ function HomeMain() {
   }
   return (
     <div style={{ zoom: value }}>
-      <NavBarHome />
+      <NavBarHome showHome={true} />
       <div
         style={{
           backgroundColor: "#F1F9FC",

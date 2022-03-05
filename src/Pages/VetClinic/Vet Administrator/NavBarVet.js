@@ -35,12 +35,7 @@ import { messages, numberNewThreads, users } from "../../../Components/User";
 
 function NavBarVet(props) {
   const [user, setuser] = useState([]);
-  const [userole, setuserole] = useState("");
-  const [counter, setcounter] = useState(0);
   const [numberNewThread, setnumberNewThread] = useState(0);
-  var name;
-  // var toast;
-  var accountImg;
   useEffect(() => {
     setuser(users[0]);
     messages(user);
@@ -51,11 +46,6 @@ function NavBarVet(props) {
   }, [user]);
 
 
-
-  var colors = {
-    Blue: "#3BD2E3",
-    LightBlue: "#F1F9FC",
-  };
 
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -276,9 +266,6 @@ function NavBarVet(props) {
                 }}
               >
                 <ListItemIcon>
-                  {/* <IoLogOut fontSize="large"
-                // style={{ marginLeft: 5 }}
-                /> */}
                   <Logout fontSize="small" />
                 </ListItemIcon>
                 Logout

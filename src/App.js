@@ -30,7 +30,6 @@ import ShopNow from "./Pages/PetOwner/ShopNow";
 import ProductShop from "./Pages/VetClinic/Verified Vet/Vet Offers/Products/ProductShop";
 import Pharmacy from "./Pages/PetOwner/Pharmacy";
 import PetOwnerSettings from "./Pages/PetOwner/PetOwnerSettings";
-import VideoChat from "./Pages/PetOwner/VideoChat";
 import AppointmentHistoryMain from "./Pages/PetOwner/AppointmentHistoryMain";
 import CartHistoryMain from "./Pages/PetOwner/CartHistoryMain";
 import Calling from "./Components/video-call/Calling";
@@ -45,6 +44,9 @@ import VetAdminHome from "./Pages/VetClinic/Vet Administrator/VetAdminHome";
 import DashboardMain from "./Pages/VetClinic/Veterinarian/Dashboard/DashboardMain";
 import VetDoctorHome from "./Pages/VetClinic/Veterinarian/VetDoctorHome";
 import VetStaffHome from "./Pages/VetClinic/Vet Staff/VetStaffHome";
+import VideoChat from "./Components/video-call/VideoChat";
+import Thread from "./Pages/PetOwner/Video Conference/Thread";
+
 
 function App() {
 
@@ -106,8 +108,6 @@ function App() {
   if (role === 1) {
     loginContent = (
       <Switch>
-        {/* <Route path="/" exact component={HomeMain} />
-        <Route path="/home" exact component={HomeMain} /> */}
         <Route path="/" exact component={HomeMain} />
 
         <Route path="/pets" exact component={PetsMain} />
@@ -164,7 +164,7 @@ function App() {
           exact
           children={<PetServDetail />}
         />
-        <Route path="/petOwner/talkVet" exact children={<PetChat />} />
+        {/* <Route path="/petOwner/talkVet" exact children={<PetChat />} /> */}
         <Route
           path="/petOwner/talkVet/threads"
           exact
@@ -176,8 +176,8 @@ function App() {
           children={<PetChatMessagesMobile />}
         />
 
-        <Route path="/video conference/:name" exact children={<Calling />} />
-        <Route path="/petOwner/talkVet" exact children={<PetChat />} />
+        <Route path="/video conference/:code" exact children={<Calling />} />
+        <Route path="/talk to vet" exact children={<Thread />} />
 
         <Route
           path="/petOwner/settings"
@@ -231,6 +231,9 @@ function App() {
 
               <Route path="/about us" exact children={<AboutUsPage />} />
               <Route path="/contact us" exact children={<ContactUs />} />
+              <Route path="/video conference/:code"
+                exact
+                component={VideoChat} />
             </Switch>
           </div>
         ) : (

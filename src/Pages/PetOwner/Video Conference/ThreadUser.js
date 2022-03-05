@@ -22,7 +22,7 @@ function ThreadUser(props) {
             onClick={() => {
                 // alert(props.convoUser.thread_id);
                 props.setconversationID(props.convoUser.thread_id);
-                props.setpetOwnerData(props.convoUser);
+                props.setvetClinicData(props.convoUser);
                 props.getMessage(props.convoUser.thread_id);
             }}
             style={threadTheme}
@@ -49,7 +49,7 @@ function ThreadUser(props) {
             <Row
                 style={{
                     display: 'flex',
-                    // width: '100%',
+                    width: '100%',
                     padding: 10,
                     height: 'auto'
                 }}
@@ -61,7 +61,7 @@ function ThreadUser(props) {
                     }}
                 >
                     <Avatar
-                        src={props.convoUser.profilePicture}
+                        src={props.convoUser.vet_picture}
                     />
                 </Col>
 
@@ -78,7 +78,7 @@ function ThreadUser(props) {
                             margin: 0,
                             textOverflow: 'ellipsis'
                         }}
-                    >{props.convoUser.name}</p>
+                    >{props.convoUser.vet_name}</p>
                 </Col>
 
 

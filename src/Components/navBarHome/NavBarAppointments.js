@@ -171,7 +171,7 @@ function NavBarAppointments() {
         backgroundColor: "white",
         padding: 0,
       }}
-      fixed="top"
+    // fixed="top"
     >
       <Navbar.Brand className="ml-3" href="/" style={landingPageName}>
         {" "}

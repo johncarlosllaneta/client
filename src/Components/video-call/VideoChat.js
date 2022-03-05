@@ -17,10 +17,18 @@ const VideoChat = () => {
     setUsername(event.target.value);
   }, []);
 
+  const handleUsernameDefault = useCallback((name) => {
+    setUsername(name);
+  })
+
   const handleUsernameChange = useCallback((event) => {
     // alert(event.target.value)
     setUsername(event.target.value);
   }, []);
+
+  const handleRoomDefault = useCallback((code) => {
+    setRoomName(code);
+  })
 
   const handleRoomNameChange = useCallback((event) => {
     setRoomName(event.target.value);
@@ -101,6 +109,8 @@ const VideoChat = () => {
         handleSubmit={handleSubmit}
         connecting={connecting}
         handleUsername={handleUsername}
+        handleUsernameDefault={handleUsernameDefault}
+        handleRoomDefault={handleRoomDefault}
 
       />
     );

@@ -21,6 +21,7 @@ import QrCode from "./Visitor Monitoring/QrCode";
 import appointmentVerified from './Appointments/appointmentVerified';
 import VetSettings from './Settings/VetSettings';
 import Thread from './Talk to Vet/Thread';
+import VideoChat from '../../../Components/video-call/VideoChat';
 
 
 function VetAdminHome() {
@@ -102,6 +103,10 @@ function VetAdminHome() {
                         <Route path="/talk to vet"
                             exact
                             component={Thread} />
+
+                        <Route path="/video conference/:code"
+                            exact
+                            component={VideoChat} />
 
 
                     </Switch>

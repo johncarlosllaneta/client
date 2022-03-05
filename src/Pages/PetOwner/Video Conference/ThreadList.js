@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Form, Row } from 'react-bootstrap';
-import { threadList } from '../../../../Components/Functions/GetThreadVetAdmin'
+import { threadList } from '../../../Components/Functions/GetThreadPetOwner';
+
 import ThreadUser from './ThreadUser'
 
 function ThreadList(props) {
@@ -21,7 +22,7 @@ function ThreadList(props) {
             style={{
                 backgroundColor: 'white',
                 width: '20%',
-                height: '100vh',
+                height: 'auto',
                 borderRight: '1px solid grey',
 
             }}
@@ -59,7 +60,7 @@ function ThreadList(props) {
                         borderColor: 'transparent',
                         backgroundColor: '#F5F5F5',
                     }}
-                    placeholder='Search Pet Owner'
+                    placeholder='Search Vet Clinic'
                 >
 
                 </Form.Control>
@@ -67,14 +68,14 @@ function ThreadList(props) {
 
             <div
                 style={{
-                    height: '90vh',
+                    height: '80vh',
                     overflowY: 'auto',
                     padding: 5
                 }}
             >
                 {threadList.length >= 1 ?
                     threadList[0].map((item) => {
-                        return <ThreadUser convoUser={item} setconversationID={props.setconversationID} setpetOwnerData={props.setpetOwnerData} getMessage={props.getMessage} />
+                        return <ThreadUser convoUser={item} setconversationID={props.setconversationID} setvetClinicData={props.setvetClinicData} getMessage={props.getMessage} />
                     }
                     )
                     : <div

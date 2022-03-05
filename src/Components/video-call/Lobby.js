@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { FloatingLabel, Form, Image, Container, Button } from "react-bootstrap";
 import { useParams } from "react-router";
 import logo from "../../Images/logo.png";
+import { users } from "../User";
 
 const Lobby = ({
   username,
@@ -10,15 +11,23 @@ const Lobby = ({
   handleRoomNameChange,
   handleSubmit,
   connecting,
-  handleUsername,
+  handleRoomDefault,
+  handleUsernameDefault,
 }) => {
-  let { name } = useParams();
-  // alert(name);
-  // username = name;
+  let { code } = useParams();
 
-  // useEffect(() => {
-  //   username = name;
-  // }, [])
+  useEffect(() => {
+    handleRoomDefault(code);
+    var role = localStorage.getItem('role');
+    if (role == 1) {
+      handleUsernameDefault(users[0].name);
+    } else if (role == 2) {
+      handleUsernameDefault(users[0].vet_name);
+    } else {
+      handleUsernameDefault('');
+    }
+  }, [])
+
   return (
     <div
       style={{
@@ -81,6 +90,7 @@ const Lobby = ({
                 // }}
                 onChange={handleUsernameChange}
                 readOnly={connecting}
+
               />
             </FloatingLabel>
           </div>
@@ -93,6 +103,7 @@ const Lobby = ({
                 value={roomName}
                 onChange={handleRoomNameChange}
                 readOnly={connecting}
+                disabled
                 required
               />
             </FloatingLabel>

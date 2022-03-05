@@ -17,22 +17,20 @@ import ReactStars from "react-rating-stars-component";
 import reactStars from "react-rating-stars-component";
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import "../../css/AppointmentHistory.css";
+import { users } from "../../Components/User";
 
 function AppointmentHistory(props) {
   const [appointment, setAppointment] = useState([]);
-  const [counter, setcounter] = useState(0);
   const [existRate, setexistRate] = useState(false);
   useEffect(() => {
-    if (counter < 6) {
-      Axios.get(
-        `${hostUrl}/appointments/histories/:${props.data.pet_owner_id}`
-      ).then((response) => {
-        setAppointment(response.data);
-      });
-      setcounter(counter + 1);
-    }
-    // console.log(appointment);
-  }, [appointment]);
+
+    Axios.get(
+      `${hostUrl}/appointments/histories/:${users[0].pet_owner_id}`
+    ).then((response) => {
+      setAppointment(response.data);
+    });
+
+  }, []);
 
   function dateConvertion(date) {
     var str = date.split("-");
