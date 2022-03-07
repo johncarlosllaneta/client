@@ -10,18 +10,17 @@ import { useParams } from "react-router";
 function RatingsAndFeedback(props) {
   // let { vetid } = useParams();
   // alert(props.data.vetid);
-  const [counter, setcounter] = useState(0);
+
   const [rateList, setrateList] = useState([]);
   useEffect(() => {
-    if (counter < 6) {
-      Axios.get(
-        `${hostUrl}/vetRatings/vetclinic/list/${props.data.vetid}`
-      ).then((response) => {
-        setrateList(response.data);
-      });
-      setcounter(counter + 1);
-    }
-  }, [rateList]);
+
+    Axios.get(
+      `${hostUrl}/vetRatings/vetclinic/list/${props.data.vetid}`
+    ).then((response) => {
+      setrateList(response.data);
+    });
+
+  }, []);
 
   const [show, setShow] = useState(false);
 
@@ -221,7 +220,7 @@ function RatingsAndFeedback(props) {
           );
         })
       ) : (
-        <h1>No rates</h1>
+        <p>No rates</p>
       )}
     </div>
   );

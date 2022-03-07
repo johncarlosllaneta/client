@@ -10,7 +10,7 @@ var users = [];
 Axios.get(`${hostUrl}/home`, {
   headers: { Authorization: `Bearer ${token}` },
 }).then((response) => {
-  // console.log(response.data.result[0]);
+  console.log(response.data.result[0]);
   return users.push(response.data.result[0]);
 });
 

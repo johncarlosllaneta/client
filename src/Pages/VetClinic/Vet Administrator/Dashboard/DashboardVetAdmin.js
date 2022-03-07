@@ -1,5 +1,7 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState, useEffect } from 'react'
 import { Col, Container, Row, Image } from "react-bootstrap";
+import { hostUrl } from '../../../../Components/Host';
 import HomeTab from '../../Verified Vet/Dashboard/HomeTab';
 import NavBarVet from '../NavBarVet';
 import SideNavBarVetAdmin from '../SideNavBarVetAdmin';
@@ -7,6 +9,24 @@ import SideNavBarVetAdmin from '../SideNavBarVetAdmin';
 
 
 function DashboardVetAdmin() {
+
+
+    const [user, setuser] = useState([]);
+
+    useEffect(() => {
+        var token = localStorage.getItem("ajwt");
+        axios.get(`${hostUrl}/home`, {
+            headers: { Authorization: `Bearer ${token}` },
+        }).then((response) => {
+            console.log(response.data.result[0]);
+            setuser(response.data.result[0]);
+        });
+
+
+    }, []);
+
+
+
     return (
         <div>
             <div
@@ -32,11 +52,11 @@ function DashboardVetAdmin() {
             >
                 <div style={{ height: "15%", border: "1px ", padding: 0 }}>
                     {/* navbar */}
-                    <NavBarVet showLogo={true} showHome={true} />
+                    <NavBarVet showLogo={true} showHome={true} user={user} />
                 </div>
                 <div style={{ height: "85%", border: "1px", padding: 5 }}>
 
-                    <HomeTab user={'Vet Admin'} />
+                    <HomeTab user={'Vet Admin'} userData={user} />
 
                 </div>
             </div>
