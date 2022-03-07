@@ -21,14 +21,17 @@ function HomeTab(props) {
 
   useEffect(() => {
 
-    setuser(props.userData);
-    getPet(props.userData.vetid);
-    getReserveProducts(props.userData.vetid);
-    getPendingAppointment(props.userData.vetid);
-    getRatings(props.userData.vetid);
+    if (props.userData.length != 0) {
+      setuser(props.userData);
+      getPet(props.userData.vetid);
+      getReserveProducts(props.userData.vetid);
+      getPendingAppointment(props.userData.vetid);
+      getRatings(props.userData.vetid);
+    }
 
 
-  }, []);
+
+  }, [props.userData]);
 
   const [numberOfPets, setNumberOfPets] = useState();
   const [numberOfPendingReserved, setnumberOfPendingReserved] = useState();
@@ -146,9 +149,9 @@ function HomeTab(props) {
             width: '80%'
           }}
         >
-          <div style={{ height: "55vh" }}>
+          <div style={{ height: "auto" }}>
             {props.userData.length == 0 ?
-              <Skeleton variant="rectangular" height={'100%'} />
+              <Skeleton variant="rectangular" height={'50vh'} />
               :
               userPanel
             }
@@ -159,14 +162,14 @@ function HomeTab(props) {
           // sm={4} 
           style={{ display: "flex", width: '20%' }}>
           {props.userData.length == 0 ?
-            <Skeleton variant="rectangular" height={'100%'} width={'100%'} />
+            <Skeleton variant="rectangular" height={'50vh'} width={'100%'} />
             :
             <Card
               style={{
                 boxShadow:
                   "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 width: "100%",
-                height: "59vh",
+                height: "100%",
               }}
             >
               <Card.Body>

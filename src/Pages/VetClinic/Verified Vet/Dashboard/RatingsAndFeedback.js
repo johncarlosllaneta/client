@@ -20,7 +20,7 @@ function RatingsAndFeedback(props) {
       setrateList(response.data);
     });
 
-  }, []);
+  }, [props.data]);
 
   const [show, setShow] = useState(false);
 
@@ -78,7 +78,7 @@ function RatingsAndFeedback(props) {
   // }
 
   return (
-    <div style={{ overflowY: "auto", padding: 10 }}>
+    <div style={{ overflowY: "auto", padding: 10, }}>
       <Modal centered show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Ratings and Feedback</Modal.Title>
@@ -220,7 +220,7 @@ function RatingsAndFeedback(props) {
           );
         })
       ) : (
-        <p>No rates</p>
+        <p>No ratings</p>
       )}
     </div>
   );

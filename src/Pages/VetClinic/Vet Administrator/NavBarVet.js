@@ -38,20 +38,21 @@ function NavBarVet(props) {
   const [numberNewThread, setnumberNewThread] = useState(0);
   const [user, setuser] = useState([]);
   var token = localStorage.getItem("ajwt");
-  // useEffect(() => {
-  //   Axios.get(`${hostUrl}/home`, {
-  //     headers: { Authorization: `Bearer ${token}` },
-  //   }).then((response) => {
-  //     console.log(response.data.result[0]);
-  //     setuser(response.data.result[0]);
-  //   });
 
-  //   messages(user);
-  //   // alert(numberNewThreads);
-  //   setTimeout(() => {
-  //     setnumberNewThread(numberNewThreads);
-  //   }, 1000);
-  // }, []);
+  useEffect(() => {
+    // Axios.get(`${hostUrl}/home`, {
+    //   headers: { Authorization: `Bearer ${token}` },
+    // }).then((response) => {
+    //   console.log(response.data.result[0]);
+    //   setuser(response.data.result[0]);
+    // });
+
+    messages(props.user);
+    // alert(numberNewThreads);
+    setTimeout(() => {
+      setnumberNewThread(numberNewThreads);
+    }, 1000);
+  }, [props.user]);
 
 
 

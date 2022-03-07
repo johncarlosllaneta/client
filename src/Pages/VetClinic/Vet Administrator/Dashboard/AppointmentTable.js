@@ -114,16 +114,12 @@ function AppointmentTable(props) {
                     sorting: true,
                     search: true,
                     paging: true,
+                    pageSize: '10',
+                    pageSizeOptions: []
+
 
                 }}
-                actions={[
-                    {
-                        icon: "information",
-                        tooltip: "Helper",
-                        isFreeAction: true,
-                        // onClick: handleClick,
-                    },
-                ]}
+
             />
         </div>
     )

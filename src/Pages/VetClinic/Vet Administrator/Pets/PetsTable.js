@@ -18,9 +18,8 @@ import { useParams } from "react-router-dom";
 import VaccinePetCard from "./VaccinePetCard";
 import HealthPetCard from "./HealthPetCard";
 import { dateConvertion } from "../../../../Components/FormatDateTime";
+import { Skeleton } from "@mui/material";
 function PetsTable(props) {
-  let { vetid } = useParams();
-  var id = vetid.toString().replace("10##01", "/");
 
   const [pet, setPet] = useState([]);
   //   const [checker, setchecker] = useState(false);
@@ -29,18 +28,18 @@ function PetsTable(props) {
   const handleShow = () => setShow(true);
   const [pet_Id, setpet_Id] = useState();
 
-  const [counter, setcounter] = useState(0);
+
   useEffect(() => {
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/vetclinic/registered/pets/${id}`)
+
+    if (props.user.length != 0) {
+      Axios.get(`${hostUrl}/vetclinic/registered/pets/${props.user.vetid}`)
         .then((response) => {
           setPet(response.data);
         })
         .catch((err) => console.log(err));
-      setcounter(counter + 1);
     }
-    // console.log(pet);
-  }, [pet]);
+
+  }, [props.user]);
 
   const [q, setq] = useState("");
   function search(rows) {
@@ -104,7 +103,7 @@ function PetsTable(props) {
               }}
               onClick={(e) => {
                 e.preventDefault();
-                window.location.href = `/pets/${id}/${row.pet_id}`;
+                window.location.href = `/pets/${props.user.vetid}/${row.pet_id}`;
               }}
             >
               <AiOutlineSearch style={{ fontSize: 25 }} /> View Details
@@ -118,23 +117,32 @@ function PetsTable(props) {
   return (
     <div
       style={{
-        padding: 20,
+        padding: 10,
+        height: '90vh'
       }}
     >
-      <Row>
-        <Col>
-          <MaterialTable
-            columns={columns}
-            data={pet}
-            title={"Pets Table"}
-            cellEditable={false}
-            options={{
-              sorting: true,
-              pageSize: "10",
-            }}
-          />
-        </Col>
-      </Row>
+
+      {pet.length != 0 ?
+        <Row>
+          <Col>
+            <MaterialTable
+              columns={columns}
+              data={pet}
+              title={"Pets Table"}
+              cellEditable={false}
+              options={{
+                sorting: true,
+                pageSize: "10",
+              }}
+            />
+          </Col>
+        </Row>
+        :
+
+        <Skeleton width={'100%'} height={'100%'} variant="rectangular" />
+
+      }
+
     </div>
   );
 }

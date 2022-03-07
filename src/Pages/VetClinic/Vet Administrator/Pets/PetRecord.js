@@ -14,8 +14,8 @@ import ConsultationPetCard from './ConsultationPetCard';
 import AppointmentPetCard from './AppointmentPetCard';
 
 
-function PetRecord() {
-    let { vetid, petid } = useParams();
+function PetRecord(props) {
+    let { petid } = useParams();
 
     const [value, setValue] = React.useState('1');
 
@@ -42,7 +42,7 @@ function PetRecord() {
                 >
                     <p
                         onClick={() => {
-                            window.location.href = `/pets/${vetid}`
+                            window.location.href = `/pets/${props.user.vetid}`
                         }}
                         style={{
                             marginBottom: 0,
@@ -58,7 +58,7 @@ function PetRecord() {
                     marginBottom: 20
                 }}
             >
-                <PetProfile />
+                <PetProfile petid={petid} />
             </Row>
 
             <TabContext value={value}>
@@ -97,19 +97,19 @@ function PetRecord() {
                     </TabList>
                 </Box>
                 <TabPanel value="1">
-                    <HealthPetCard pets={petid} />
+                    <HealthPetCard pets={petid} vetid={props.user.vetid} />
                 </TabPanel>
 
                 <TabPanel value="2">
-                    <VaccinePetCard pet={petid} vetid={vetid} />
+                    <VaccinePetCard pet={petid} vetid={props.user.vetid} />
                 </TabPanel>
 
                 <TabPanel value="3">
-                    <ConsultationPetCard pet={petid} vetid={vetid} />
+                    <ConsultationPetCard pet={petid} vetid={props.user.vetid} />
                 </TabPanel>
 
                 <TabPanel value="4">
-                    <AppointmentPetCard pet={petid} vetid={vetid} />
+                    <AppointmentPetCard pet={petid} vetid={props.user.vetid} />
                 </TabPanel>
 
             </TabContext>

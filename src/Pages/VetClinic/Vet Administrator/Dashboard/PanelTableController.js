@@ -17,7 +17,7 @@ function PanelTableController(props) {
     return (
         <div
             style={{
-                height: '55vh'
+
             }}
         >
             <Row>

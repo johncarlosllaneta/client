@@ -1,9 +1,24 @@
-import React from 'react'
 import SideNavBarVetAdmin from '../SideNavBarVetAdmin'
 import NavBarVet from '../NavBarVet';
 import PetRecord from './PetRecord';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { hostUrl } from "../../../../Components/Host";
 
-function PetPanelTableController(props) {
+function PetPanelTableController() {
+    const [user, setuser] = useState([]);
+
+    useEffect(() => {
+        var token = localStorage.getItem("ajwt");
+        axios.get(`${hostUrl}/home`, {
+            headers: { Authorization: `Bearer ${token}` },
+        }).then((response) => {
+            console.log(response.data.result[0]);
+            setuser(response.data.result[0]);
+        });
+
+
+    }, []);
     return (
         <div>
             <div
@@ -15,7 +30,7 @@ function PetPanelTableController(props) {
                     margin: 0,
                 }}
             >
-                <SideNavBarVetAdmin active={"pets"} />
+                <SideNavBarVetAdmin active={"pets"} user={user} />
             </div>
 
             <div
@@ -28,10 +43,10 @@ function PetPanelTableController(props) {
                 }}
             >
                 <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-                    <NavBarVet />
+                    <NavBarVet showLogo={true} showHome={true} user={user} />
                 </div>
                 <div style={{ height: "85%", border: "1px", padding: 5 }}>
-                    <PetRecord />
+                    <PetRecord user={user} />
                 </div>
             </div>
         </div>

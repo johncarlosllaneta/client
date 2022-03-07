@@ -38,7 +38,7 @@ function DashboardVetAdmin() {
                     margin: 0,
                 }}
             >
-                <SideNavBarVetAdmin active={"dashboard"} />
+                <SideNavBarVetAdmin active={"dashboard"} user={user} />
             </div>
 
             <div
