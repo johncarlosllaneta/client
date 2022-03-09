@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import Axios from "axios";
 import { hostUrl } from "./Host";
 
@@ -10,7 +10,7 @@ var users = [];
 Axios.get(`${hostUrl}/home`, {
   headers: { Authorization: `Bearer ${token}` },
 }).then((response) => {
-  console.log(response.data.result[0]);
+  // console.log(response.data.result[0]);
   return users.push(response.data.result[0]);
 });
 

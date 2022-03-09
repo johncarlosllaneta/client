@@ -15,23 +15,20 @@ import DashboardTable from "../../Veterinarian/Dashboard/Widgets/DashboardTable"
 import DashboardInfo from "../../Veterinarian/Dashboard/Widgets/DashboardInfo";
 import DashboardReservationTab from "../../Vet Staff/Dashboard/Widgets/DashboardReservationTab";
 import { Skeleton } from "@mui/material";
+import getUser from "../../../../Components/userData";
 
 function HomeTab(props) {
   const [user, setuser] = useState([]);
 
-  useEffect(() => {
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
 
-    if (props.userData.length != 0) {
-      setuser(props.userData);
-      getPet(props.userData.vetid);
-      getReserveProducts(props.userData.vetid);
-      getPendingAppointment(props.userData.vetid);
-      getRatings(props.userData.vetid);
-    }
-
-
-
-  }, [props.userData]);
+    getPet(userData.vetid);
+    getReserveProducts(userData.vetid);
+    getPendingAppointment(userData.vetid);
+    getRatings(userData.vetid);
+  }, []);
 
   const [numberOfPets, setNumberOfPets] = useState();
   const [numberOfPendingReserved, setnumberOfPendingReserved] = useState();
@@ -84,8 +81,8 @@ function HomeTab(props) {
     userPanel = <DashboardReservationTab />;
     userSidePanel = <RatingsAndFeedback data={user} />;
   } else if (props.user == "Vet Admin") {
-    userPanel = <PanelTableController vetid={props.userData.vetid} />;
-    userSidePanel = <RatingsAndFeedback data={props.userData} />;
+    userPanel = <PanelTableController vetid={user.vetid} />;
+    userSidePanel = <RatingsAndFeedback data={user} />;
   }
 
   return (

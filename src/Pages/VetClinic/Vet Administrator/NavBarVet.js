@@ -31,6 +31,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import MessageIcon from '@mui/icons-material/Message';
 import logo from "../../../Images/logo.png";
 import { messages, numberNewThreads, users } from "../../../Components/User";
+import getUser from "../../../Components/userData";
 
 
 function NavBarVet(props) {
@@ -39,15 +40,11 @@ function NavBarVet(props) {
   const [user, setuser] = useState([]);
   var token = localStorage.getItem("ajwt");
 
-  useEffect(() => {
-    // Axios.get(`${hostUrl}/home`, {
-    //   headers: { Authorization: `Bearer ${token}` },
-    // }).then((response) => {
-    //   console.log(response.data.result[0]);
-    //   setuser(response.data.result[0]);
-    // });
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
 
-    messages(props.user);
+    messages(user);
     // alert(numberNewThreads);
     setTimeout(() => {
       setnumberNewThread(numberNewThreads);
@@ -72,10 +69,10 @@ function NavBarVet(props) {
       token: localStorage.getItem("rjwt"),
     });
 
-    Axios.put(`${hostUrl}/logout/user/vetclinic/${props.user.vetid}`);
+    Axios.put(`${hostUrl}/logout/user/vetclinic/${user.vetid}`);
 
     Axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
-      name: props.user.vet_name,
+      name: user.vet_name,
     });
     localStorage.clear();
     window.location.replace("/");
@@ -167,7 +164,7 @@ function NavBarVet(props) {
             </IconButton>
           </Tooltip>
 
-          <Tooltip title={props.user.vet_name}>
+          <Tooltip title={user.vet_name}>
             <IconButton onClick={handleClick} >
 
               <Avatar
@@ -176,8 +173,8 @@ function NavBarVet(props) {
                 style={{
                   marginBottom: 0
                 }}
-                src={props.user.vet_picture}
-                name={props.user.vet_name}
+                src={user.vet_picture}
+                name={user.vet_name}
               />
               <AiFillCaretDown style={{
                 color: 'white',
@@ -228,7 +225,7 @@ function NavBarVet(props) {
                 // backgroundColor: 'whitesmoke'
               }}
             >
-              <p>Signed in as <br /> <strong>{props.user.vet_name}</strong></p>
+              <p>Signed in as <br /> <strong>{user.vet_name}</strong></p>
               <Divider />
               <MenuItem
                 onClick={() => {
@@ -247,8 +244,8 @@ function NavBarVet(props) {
 
 
                   }}
-                  src={props.user.vet_picture}
-                  name={props.user.vet_name}
+                  src={user.vet_picture}
+                  name={user.vet_name}
                 />
                 {/* <Avatar src={user.vet_picture} sizes="" /> */}
                 My profile

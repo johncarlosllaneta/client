@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
@@ -16,6 +16,13 @@ import AppointmentPetCard from './AppointmentPetCard';
 
 function PetRecord(props) {
     let { petid } = useParams();
+
+    const [pet, setpet] = useState([]);
+
+    useEffect(() => {
+
+    }, [])
+
 
     const [value, setValue] = React.useState('1');
 

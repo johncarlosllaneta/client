@@ -27,6 +27,7 @@ import ProductTableHolder from "./ProductTableHolder";
 import ProductHeader from "./ProductHeader";
 import ProductReservation from "./ProductReservation";
 import ReservationHolder from "./ReservationHolder";
+import getUser from "../../../../../Components/userData";
 
 function ProductTable(props) {
 
@@ -57,15 +58,21 @@ function ProductTable(props) {
     setShow2(true);
   };
 
-  useEffect(() => {
-    Axios.get(`${hostUrl}/products/${users[0].vetid}`).then((response) => {
+
+  const [user, setuser] = useState([]);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+    Axios.get(`${hostUrl}/products/${userData.vetid}`).then((response) => {
       setProduct(response.data);
     });
   }, []);
 
+
+
   const refreshTable = () => {
 
-    Axios.get(`${hostUrl}/products/${users[0].vetid}`).then((response) => {
+    Axios.get(`${hostUrl}/products/${user.vetid}`).then((response) => {
       setProduct(response.data);
     });
   }
@@ -242,7 +249,7 @@ function ProductTable(props) {
   };
 
   const insertProduct = () => {
-    Axios.post(`${hostUrl}/product/insert/${users[0].vetid}`, {
+    Axios.post(`${hostUrl}/product/insert/${user.vetid}`, {
       insertProductImage: imageUploadedUrl,
       insertProductName: updateProductName,
       insertProductDescription: updateProductDescription,
@@ -263,10 +270,10 @@ function ProductTable(props) {
     refreshTable();
   };
 
-  const deleteProduct = () => {
+  const deleteProduct = (product_id) => {
 
     Axios.post(`${hostUrl}/product/delete/${product_id}`, {
-      vetid: users[0].vetid,
+      vetid: user.vetid,
     }).then((reponse) => {
       if (reponse.data.message == 'Success') {
         refreshTable();
@@ -322,7 +329,7 @@ function ProductTable(props) {
       updateProductQuantity: productUpdateQuantity,
       updateProductPrice: productUpdatePrice,
       updateProductImage: productUpdateImage,
-      vetid: users[0].vetd,
+      vetid: user.vetd,
     }).then((response) => {
       if (response.data.message == 'Success') {
         refreshTable();
@@ -335,7 +342,7 @@ function ProductTable(props) {
   const addStockProduct = () => {
     Axios.post(`${hostUrl}/product/update/stockin/${productUpdateId}`, {
       quantity: stockIn,
-      vetid: users[0].vetid,
+      vetid: user.vetid,
     });
 
     const stocks = stockIn;
@@ -350,7 +357,7 @@ function ProductTable(props) {
       updateProductQuantity: total,
       updateProductPrice: productUpdatePrice,
       updateProductImage: productUpdateImage,
-      vetid: users[0].vetid,
+      vetid: user.vetid,
     });
 
     refreshTable();
@@ -362,7 +369,7 @@ function ProductTable(props) {
   const decreaseStockProduct = (e) => {
     Axios.post(`${hostUrl}/product/update/stockused/${productUpdateId}`, {
       quantity: stockUsed,
-      vetid: users[0].vetid,
+      vetid: user.vetid,
     });
 
     const stocks = stockUsed;
@@ -377,7 +384,7 @@ function ProductTable(props) {
       updateProductQuantity: total,
       updateProductPrice: productUpdatePrice,
       updateProductImage: productUpdateImage,
-      vetid: users[0].vetid,
+      vetid: user.vetid,
     });
 
     refreshTable();

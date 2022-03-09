@@ -38,7 +38,7 @@ function DashboardVetAdmin() {
                     margin: 0,
                 }}
             >
-                <SideNavBarVetAdmin active={"dashboard"} user={user} />
+                <SideNavBarVetAdmin active={"dashboard"} />
             </div>
 
             <div
@@ -52,7 +52,7 @@ function DashboardVetAdmin() {
             >
                 <div style={{ height: "15%", border: "1px ", padding: 0 }}>
                     {/* navbar */}
-                    <NavBarVet showLogo={true} showHome={true} user={user} />
+                    <NavBarVet showLogo={true} showHome={true} />
                 </div>
                 <div style={{ height: "85%", border: "1px", padding: 5 }}>
 

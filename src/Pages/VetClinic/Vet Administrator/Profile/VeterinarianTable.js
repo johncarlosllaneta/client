@@ -1,3 +1,4 @@
+import { Skeleton } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { FloatingLabel, Form, Row, Button, Col } from 'react-bootstrap'
@@ -12,16 +13,12 @@ function VeterinarianTable(props) {
     const [veterinarian, setveterinarian] = useState([]);
 
     useEffect(() => {
-
         axios.get(
-            `${hostUrl}/vetclinic/get/veterinarian/${users[0].vetid}`
+            `${hostUrl}/vetclinic/get/veterinarian/${props.user.vetid}`
         ).then((response) => {
             setveterinarian(response.data);
 
         });
-        setTimeout(() => {
-            console.log(veterinarian);
-        }, 2000);
 
     }, []);
 
@@ -81,23 +78,27 @@ function VeterinarianTable(props) {
                 }}
             >
 
-                {veterinarian.filter((val) => {
-                    if (searchItem == "") {
-                        return val;
-                    } else if (val.vet_doc_fname.toLowerCase().includes(searchItem.toLowerCase()) || val.vet_doc_lname.toLowerCase().includes(searchItem.toLowerCase())) {
-                        return val;
-                    }
-                }).map((item) => {
-                    return (
-                        <div
-                            style={{
-                                gridRow: '1/1'
-                            }}
-                        >
-                            <VeterinarianProfile user={item} />
-                        </div>
-                    )
-                })}
+
+                {
+                    veterinarian.filter((val) => {
+                        if (searchItem == "") {
+                            return val;
+                        } else if (val.vet_doc_fname.toLowerCase().includes(searchItem.toLowerCase()) || val.vet_doc_lname.toLowerCase().includes(searchItem.toLowerCase())) {
+                            return val;
+                        }
+                    }).map((item) => {
+                        return (
+                            <div
+                                style={{
+                                    gridRow: '1/1'
+                                }}
+                            >
+                                <VeterinarianProfile user={item} />
+                            </div>
+                        )
+                    })
+
+                }
 
             </Row>
         </div>

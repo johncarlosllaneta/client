@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import NavBarVet from "../../NavBarVet";
 
 import SideNavBarVetAdmin from "../../SideNavBarVetAdmin";
 
 import PharmacyTab from "./PharmacyTab";
+import axios from "axios";
+import { hostUrl } from "../../../../../Components/Host";
 
 
 function PharmacyVerified() {
@@ -16,7 +18,18 @@ function PharmacyVerified() {
   } else {
     value = "100%";
   }
+  const [user, setuser] = useState([]);
 
+  useEffect(() => {
+    var token = localStorage.getItem("ajwt");
+    axios.get(`${hostUrl}/home`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((response) => {
+      setuser(response.data.result[0]);
+    });
+
+
+  }, []);
   return (
     <div>
       <div
@@ -28,7 +41,7 @@ function PharmacyVerified() {
           margin: 0,
         }}
       >
-        <SideNavBarVetAdmin active={"pharmacy"} />
+        <SideNavBarVetAdmin active={"pharmacy"} user={user} />
 
       </div>
 
@@ -42,7 +55,7 @@ function PharmacyVerified() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavBarVet showLogo={true} showHome={true} />
+          <NavBarVet showLogo={true} showHome={true} user={user} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <PharmacyTab />

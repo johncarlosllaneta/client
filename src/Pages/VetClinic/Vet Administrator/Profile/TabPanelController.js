@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@material-ui/lab/TabContext";
@@ -6,6 +6,8 @@ import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
 import VeterinarianTable from './VeterinarianTable';
 import VetStaffTable from './VetStaffTable';
+import getUser from '../../../../Components/userData';
+import { Skeleton } from '@mui/material';
 
 function TabPanelController(props) {
     const [value, setValue] = React.useState('1');
@@ -13,6 +15,13 @@ function TabPanelController(props) {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const [user, setuser] = useState([]);
+    useEffect(async () => {
+        const userData = await getUser();
+        setuser(userData);
+
+    }, []);
 
     return (
         <div
@@ -28,11 +37,20 @@ function TabPanelController(props) {
 
                     </TabList>
                 </Box>
+
                 <TabPanel value="1">
-                    <VeterinarianTable user={props.user} />
+                    {user.length != 0 ?
+                        <VeterinarianTable user={user} />
+                        : <Skeleton variant='rectangular' height={'30vh'} />
+                    }
+
                 </TabPanel>
                 <TabPanel value="2">
-                    <VetStaffTable user={props.user} />
+                    {user.length != 0 ?
+                        <VetStaffTable user={user} />
+                        : <Skeleton variant='rectangular' height={'30vh'} />
+                    }
+
                 </TabPanel>
 
             </TabContext>

@@ -21,7 +21,7 @@ import { BsClock } from "react-icons/bs";
 import ScheduleVet from "./ScheduleVet";
 import VetInformation from "./VetInformation";
 import TabPanelController from "./TabPanelController";
-import { Badge, Tooltip, Typography } from "@mui/material";
+import { Badge, Skeleton, Tooltip, Typography } from "@mui/material";
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -37,6 +37,7 @@ import Box from '@mui/material/Box';
 import { ToastUpdate } from "../../../../Components/Toast";
 import { apps } from "../../../../Components/base";
 import { ToastContainer } from "react-toastify";
+import getUser from "../../../../Components/userData";
 
 
 
@@ -60,113 +61,108 @@ function VetProfileTab() {
   const [ClosingSaturday, setClosingSaturday] = useState("no set time");
   const [ClosingSunday, setClosingSunday] = useState("no set time");
 
-  //get user
-  const [counter, setcounter] = useState(0);
-  useEffect(() => {
-    var token = localStorage.getItem("ajwt");
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-
-        if (
-          response.data.result[0].scheduleMonday !== "" ||
-          response.data.result[0].scheduleTuesday !== "" ||
-          response.data.result[0].scheduleWednesday !== "" ||
-          response.data.result[0].scheduleThursday !== "" ||
-          response.data.result[0].scheduleFriday !== "" ||
-          response.data.result[0].scheduleSaturday !== "" ||
-          response.data.result[0].scheduleSunday !== ""
-
-          // user.scheduleMonday !== "" ||
-          // user.scheduleTuesday !== "" ||
-          // user.scheduleWednesday !== "" ||
-          // user.scheduleThursday !== "" ||
-          // user.scheduleFriday !== "" ||
-          // user.scheduleSaturday !== "" ||
-          // user.scheduleSunday !== ""
-        ) {
-          setOpeningMonday(
-            timeConvertion(
-              response.data.result[0].scheduleMonday.split(" - ")[0]
-            )
-          );
-          setClosingMonday(
-            timeConvertion(
-              response.data.result[0].scheduleMonday.split(" - ")[1]
-            )
-          );
-          setOpeningTuesday(
-            timeConvertion(
-              response.data.result[0].scheduleTuesday.split(" - ")[0]
-            )
-          );
-          setClosingTuesday(
-            timeConvertion(
-              response.data.result[0].scheduleTuesday.split(" - ")[1]
-            )
-          );
-          setOpeningWednesday(
-            timeConvertion(
-              response.data.result[0].scheduleWednesday.split(" - ")[0]
-            )
-          );
-          setClosingWednesday(
-            timeConvertion(
-              response.data.result[0].scheduleWednesday.split(" - ")[1]
-            )
-          );
-          setOpeningThursday(
-            timeConvertion(
-              response.data.result[0].scheduleThursday.split(" - ")[0]
-            )
-          );
-          setClosingThursday(
-            timeConvertion(
-              response.data.result[0].scheduleThursday.split(" - ")[1]
-            )
-          );
-          setOpeningFriday(
-            timeConvertion(
-              response.data.result[0].scheduleFriday.split(" - ")[0]
-            )
-          );
-          setClosingFriday(
-            timeConvertion(
-              response.data.result[0].scheduleFriday.split(" - ")[1]
-            )
-          );
-          setOpeningSaturday(
-            timeConvertion(
-              response.data.result[0].scheduleSaturday.split(" - ")[0]
-            )
-          );
-          setClosingSaturday(
-            timeConvertion(
-              response.data.result[0].scheduleSaturday.split(" - ")[1]
-            )
-          );
-          setOpeningSunday(
-            timeConvertion(
-              response.data.result[0].scheduleSunday.split(" - ")[0]
-            )
-          );
-          setClosingSunday(
-            timeConvertion(
-              response.data.result[0].scheduleSunday.split(" - ")[1]
-            )
-          );
-        }
-      });
-
-      setimgProfile(user.vet_picture);
-      setcounter(counter + 1);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
 
 
+    if (
+      userData.scheduleMonday !== "" ||
+      userData.scheduleTuesday !== "" ||
+      userData.scheduleWednesday !== "" ||
+      userData.scheduleThursday !== "" ||
+      userData.scheduleFriday !== "" ||
+      userData.scheduleSaturday !== "" ||
+      userData.scheduleSunday !== ""
+
+      // user.scheduleMonday !== "" ||
+      // user.scheduleTuesday !== "" ||
+      // user.scheduleWednesday !== "" ||
+      // user.scheduleThursday !== "" ||
+      // user.scheduleFriday !== "" ||
+      // user.scheduleSaturday !== "" ||
+      // user.scheduleSunday !== ""
+    ) {
+      setOpeningMonday(
+        timeConvertion(
+          userData.scheduleMonday.split(" - ")[0]
+        )
+      );
+      setClosingMonday(
+        timeConvertion(
+          userData.scheduleMonday.split(" - ")[1]
+        )
+      );
+      setOpeningTuesday(
+        timeConvertion(
+          userData.scheduleTuesday.split(" - ")[0]
+        )
+      );
+      setClosingTuesday(
+        timeConvertion(
+          userData.scheduleTuesday.split(" - ")[1]
+        )
+      );
+      setOpeningWednesday(
+        timeConvertion(
+          userData.scheduleWednesday.split(" - ")[0]
+        )
+      );
+      setClosingWednesday(
+        timeConvertion(
+          userData.scheduleWednesday.split(" - ")[1]
+        )
+      );
+      setOpeningThursday(
+        timeConvertion(
+          userData.scheduleThursday.split(" - ")[0]
+        )
+      );
+      setClosingThursday(
+        timeConvertion(
+          userData.scheduleThursday.split(" - ")[1]
+        )
+      );
+      setOpeningFriday(
+        timeConvertion(
+          userData.scheduleFriday.split(" - ")[0]
+        )
+      );
+      setClosingFriday(
+        timeConvertion(
+          userData.scheduleFriday.split(" - ")[1]
+        )
+      );
+      setOpeningSaturday(
+        timeConvertion(
+          userData.scheduleSaturday.split(" - ")[0]
+        )
+      );
+      setClosingSaturday(
+        timeConvertion(
+          userData.scheduleSaturday.split(" - ")[1]
+        )
+      );
+      setOpeningSunday(
+        timeConvertion(
+          userData.scheduleSunday.split(" - ")[0]
+        )
+      );
+      setClosingSunday(
+        timeConvertion(
+          userData.scheduleSunday.split(" - ")[1]
+        )
+      );
     }
 
-  }, [user]);
+
+    setimgProfile(user.vet_picture);
+
+
+
+
+
+  }, []);
 
 
   function refreshUser() {
@@ -535,118 +531,123 @@ function VetProfileTab() {
             "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
         }}
       >
-        <Card >
-          <div
-            style={{
-              padding: 30,
-              borderRadius: 30,
-              backgroundColor: 'white',
+        {user.length != 0
+          ?
+          <Card >
+            <div
+              style={{
+                padding: 30,
+                borderRadius: 30,
+                backgroundColor: 'white',
 
-            }}
-          >
-            <Row>
-              <Col xs={3}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-              >
-
-                <Container
+              }}
+            >
+              <Row>
+                <Col xs={3}
                   style={{
-                    display: 'block',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    // height: 'auto',
-                    // width: '100%'
+                    display: 'flex',
+                    alignItems: 'center'
                   }}
                 >
 
-                  <Tooltip title={"Change Profile Picture"}>
-                    <Badge
-                      overlap="circular"
+                  <Container
+                    style={{
+                      display: 'block',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      // height: 'auto',
+                      // width: '100%'
+                    }}
+                  >
 
-                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                      badgeContent={
-                        <IconButton color="info" aria-label="upload picture" component="span"
-                          onClick={() => {
-                            handleShowProfilePicture();
-                          }}
-                        >
-                          <PhotoCamera color="#314051" />
-                        </IconButton>
-                      }
+                    <Tooltip title={"Change Profile Picture"}>
+                      <Badge
+                        overlap="circular"
+
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                        badgeContent={
+                          <IconButton color="info" aria-label="upload picture" component="span"
+                            onClick={() => {
+                              handleShowProfilePicture();
+                            }}
+                          >
+                            <PhotoCamera color="#314051" />
+                          </IconButton>
+                        }
+                      >
+                        <Avatar
+                          round={true}
+                          name={user.vet_name}
+                          src={user.vet_picture}
+                          size={'10vh'}
+                          style={{ marginBottom: 15 }}
+                        />
+                      </Badge>
+                    </Tooltip>
+
+                    <p
+                      style={{
+                        fontWeight: 'bold',
+                        fontSize: '1.25rem',
+                        marginBottom: 0
+                      }}
                     >
-                      <Avatar
-                        round={true}
-                        name={user.vet_name}
-                        src={user.vet_picture}
-                        size={'10vh'}
-                        style={{ marginBottom: 15 }}
-                      />
-                    </Badge>
-                  </Tooltip>
+                      {user.vet_name}
+                    </p>
+                    <h6
+                      style={{
+                        color: '#3BD2E3'
+                      }}
+                    >
+                      Veterinary Clinic
+                    </h6>
 
-                  <p
-                    style={{
-                      fontWeight: 'bold',
-                      fontSize: '1.25rem',
-                      marginBottom: 0
-                    }}
-                  >
-                    {user.vet_name}
-                  </p>
-                  <h6
-                    style={{
-                      color: '#3BD2E3'
-                    }}
-                  >
-                    Veterinary Clinic
-                  </h6>
-
-                  {/* <Button>
+                    {/* <Button>
                       Edit Profile
                     </Button> */}
-                </Container>
+                  </Container>
 
-              </Col>
+                </Col>
 
-              <Col xs={9}>
-                <Row>
-                  <div
-                    style={{
-                      display: 'block'
+                <Col xs={9}>
+                  <Row>
+                    <div
+                      style={{
+                        display: 'block'
 
-                    }}
-                  >
-                    <h4>Schedule</h4>
-                    <ScheduleVet
-                      OpeningMonday={OpeningMonday}
-                      OpeningTuesday={OpeningTuesday}
-                      OpeningWednesday={OpeningWednesday}
-                      OpeningThursday={OpeningThursday}
-                      OpeningFriday={OpeningFriday}
-                      OpeningSaturday={OpeningSaturday}
-                      OpeningSunday={OpeningSunday}
-                      ClosingMonday={ClosingMonday}
-                      ClosingTuesday={ClosingTuesday}
-                      ClosingWednesday={ClosingWednesday}
-                      ClosingThursday={ClosingThursday}
-                      ClosingFriday={ClosingFriday}
-                      ClosingSaturday={ClosingSaturday}
-                      ClosingSunday={ClosingSunday}
-                    />
+                      }}
+                    >
+                      <h4>Schedule</h4>
+                      <ScheduleVet
+                        OpeningMonday={OpeningMonday}
+                        OpeningTuesday={OpeningTuesday}
+                        OpeningWednesday={OpeningWednesday}
+                        OpeningThursday={OpeningThursday}
+                        OpeningFriday={OpeningFriday}
+                        OpeningSaturday={OpeningSaturday}
+                        OpeningSunday={OpeningSunday}
+                        ClosingMonday={ClosingMonday}
+                        ClosingTuesday={ClosingTuesday}
+                        ClosingWednesday={ClosingWednesday}
+                        ClosingThursday={ClosingThursday}
+                        ClosingFriday={ClosingFriday}
+                        ClosingSaturday={ClosingSaturday}
+                        ClosingSunday={ClosingSunday}
+                      />
 
-                    <VetInformation
-                      user={user}
-                    />
-                  </div>
-                </Row>
-              </Col>
+                      <VetInformation
+                        user={user}
+                      />
+                    </div>
+                  </Row>
+                </Col>
 
-            </Row>
-          </div>
-        </Card>
+              </Row>
+            </div>
+          </Card>
+          :
+          <Skeleton variant="rectangular" height={'30vh'} />
+        }
       </div>
 
       <div>

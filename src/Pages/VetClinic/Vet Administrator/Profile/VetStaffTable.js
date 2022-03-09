@@ -13,7 +13,7 @@ function VetStaffTable(props) {
     useEffect(() => {
 
         axios.get(
-            `${hostUrl}/vetclinic/get/vetStaff/${users[0].vetid}`
+            `${hostUrl}/vetclinic/get/vetStaff/${props.user.vetid}`
         ).then((response) => {
             setvetStaff(response.data);
 

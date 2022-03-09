@@ -23,6 +23,9 @@ import { hostUrl } from "../../../../../Components/Host";
 import { useParams } from "react-router-dom";
 import { apps } from "../../../../../Components/base";
 import { users } from "../../../../../Components/User";
+import { Skeleton } from "@mui/material";
+import getUser from "../../../../../Components/userData";
+
 const PharmacyTab = (props) => {
 
   //Insert
@@ -48,15 +51,22 @@ const PharmacyTab = (props) => {
   const [viewDisableField, setviewDisableField] = useState(false);
   const [viewTitle, setviewTitle] = useState("Update Medicine Details");
 
-  useEffect(() => {
-    Axios.get(`${hostUrl}/pharmacy/${users[0].vetid}`).then((response) => {
-      setpharmacy(response.data);
-    });
-
+  const [user, setuser] = useState([]);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+    getPharmacy(userData);
   }, []);
 
+  const getPharmacy = async (userData) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/pharmacy/${userData.vetid}`);
+    // console.log(result.data);
+    setpharmacy(result.data);
+  }
+
   function refreshTable() {
-    Axios.get(`${hostUrl}/pharmacy/${users[0].vetid}`).then((response) => {
+    Axios.get(`${hostUrl}/pharmacy/${user.vetid}`).then((response) => {
       setpharmacy(response.data);
     });
   }
@@ -248,7 +258,7 @@ const PharmacyTab = (props) => {
 
   function insertMedicines() {
 
-    Axios.post(`${hostUrl}/pharmacy/insert/${users[0].vetid}`, {
+    Axios.post(`${hostUrl}/pharmacy/insert/${user.vetid}`, {
       insertMedicineImage: imageUploadedUrl,
       insertMedicineName: updateMedicineName,
       insertMedicineDescription: updateMedicineDescription,
@@ -272,7 +282,7 @@ const PharmacyTab = (props) => {
 
   const deleteMedicine = () => {
     Axios.post(`${hostUrl}/pharmacy/delete/${medicine_id}`, {
-      vetid: users[0].vetid,
+      vetid: user.vetid,
     })
       .then((response) => {
         if (response.data.message == 'Success') {
@@ -283,7 +293,7 @@ const PharmacyTab = (props) => {
 
   const updateMedicine = () => {
     Axios.put(`${hostUrl}/pharmacy/update/${pharmacyUpdateId}`, {
-      vetid: users[0].vetid,
+      vetid: user.vetid,
       medicine_image: pharmacyUpdateImage,
       medicine_name: pharmacyUpdateName,
       medicine_description: pharmacyUpdateDescription,
@@ -337,9 +347,9 @@ const PharmacyTab = (props) => {
   return (
     <div
       style={{
-        width: "77vw",
-        marginLeft: 40,
-        marginTop: 70,
+
+        // marginLeft: 40,
+        // marginTop: 70,
       }}
     >
 
@@ -499,54 +509,60 @@ const PharmacyTab = (props) => {
       </div>
 
       {/* Data Table */}
-      <Row>
-        <Col>
-          <div
-            style={{
-              boxShadow:
-                "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-              backgroundColor: "white",
-            }}
-          >
-            <Overlay
-              show={showPopover}
-              target={target}
-              placement="bottom"
-              container={ref.current}
-              containerPadding={20}
-            >
-              <Popover id="popover-contained">
-                <Popover.Header as="h3">Helper</Popover.Header>
-                <Popover.Body>
-                  <p>
-                    This table shows the list of registered medicine in the vet
-                    clinic.{" "}
-                  </p>
-                </Popover.Body>
-              </Popover>
-            </Overlay>
-
-            <MaterialTable
-              ref={ref}
-              columns={columns}
-              data={pharmacy}
-              title={"Medicine Table"}
-              cellEditable={false}
-              options={{
-                sorting: true,
+      {pharmacy.length > 0 ?
+        <Row>
+          <Col>
+            <div
+              style={{
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                backgroundColor: "white",
               }}
-              actions={[
-                {
-                  icon: "information",
-                  tooltip: "Helper",
-                  isFreeAction: true,
-                  onClick: handleClick,
-                },
-              ]}
-            />
-          </div>
-        </Col>
-      </Row>
+            >
+              <Overlay
+                show={showPopover}
+                target={target}
+                placement="bottom"
+                container={ref.current}
+                containerPadding={20}
+              >
+                <Popover id="popover-contained">
+                  <Popover.Header as="h3">Helper</Popover.Header>
+                  <Popover.Body>
+                    <p>
+                      This table shows the list of registered medicine in the vet
+                      clinic.{" "}
+                    </p>
+                  </Popover.Body>
+                </Popover>
+              </Overlay>
+
+              <MaterialTable
+                ref={ref}
+                columns={columns}
+                data={pharmacy}
+                title={"Medicine Table"}
+                cellEditable={false}
+                options={{
+                  sorting: true,
+                  pageSize: '10',
+
+                }}
+                actions={[
+                  {
+                    icon: "information",
+                    tooltip: "Helper",
+                    isFreeAction: true,
+                    onClick: handleClick,
+                  },
+                ]}
+              />
+            </div>
+          </Col>
+        </Row>
+        :
+        <Skeleton height={'70vh'} variant="rectangular" />
+      }
     </div>
   );
 };

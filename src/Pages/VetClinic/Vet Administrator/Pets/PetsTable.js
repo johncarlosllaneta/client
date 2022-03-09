@@ -93,13 +93,13 @@ function PetsTable(props) {
           <OverlayTrigger
             placement="top-start"
             delay={{ show: 250 }}
-            overlay={renderTooltip({ msg: "Vaccine History" })}
+            overlay={renderTooltip({ msg: "Health Record" })}
           >
             <Button
-              variant="info"
               style={{
                 marginRight: 5,
                 color: "white",
+                fontWeight: 'bold'
               }}
               onClick={(e) => {
                 e.preventDefault();
