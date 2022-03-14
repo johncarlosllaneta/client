@@ -26,23 +26,39 @@ import imageV from "../../../../../../Images/scopy.png";
 import imageVI from "../../../../../../Images/INHOUSEW.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
+import getUser from "../../../../../../Components/userData";
 
 const ConsultStart = (props) => {
-  let { vetid } = useParams();
-  var id = vetid.toString().replace("10##01", "/");
-  const [counter, setcounter] = useState(0);
-
+  const [user, setuser] = useState([]);
   const [consultation, setconsultation] = useState([]);
-  useEffect(() => {
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/consultation/${id}`).then((response) => {
-        setconsultation(response.data);
-        // console.log(response.data)
-      });
-      // alert(props.data.vet_admin_id);
-      setcounter(counter + 1);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+    if (userData.enableConsultation == 1) {
+      setconsulations(false);
     }
-  }, [consultation]);
+    if (userData.enableExamination == 1) {
+      setpetExamination(false);
+    }
+
+    if (userData.enableGrooming == 1) {
+      setpetGrooming(false);
+    }
+    if (userData.enableVaccination == 1) {
+      setvaccination(false);
+    }
+    if (userData.enablePreventiveControls == 1) {
+      setpreventiveControls(false);
+    }
+
+    if (userData.enableInHouseLab == 1) {
+      setinHouseLab(false);
+    }
+    Axios.get(`${hostUrl}/consultation/${userData.vetid}`).then((response) => {
+      setconsultation(response.data);
+      // console.log(response.data)
+    });
+  }, []);
 
   const [consulations, setconsulations] = useState(true);
   const [petExamination, setpetExamination] = useState(true);
@@ -51,39 +67,7 @@ const ConsultStart = (props) => {
   const [vaccination, setvaccination] = useState(true);
   const [inHouseLab, setinHouseLab] = useState(true);
 
-  const [user, setuser] = useState([]);
-  useEffect(() => {
-    if (counter < 1) {
-      var token = localStorage.getItem("ajwt");
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
 
-        if (response.data.result[0].enableConsultation == 1) {
-          setconsulations(false);
-        }
-        if (response.data.result[0].enableExamination == 1) {
-          setpetExamination(false);
-        }
-
-        if (response.data.result[0].enableGrooming == 1) {
-          setpetGrooming(false);
-        }
-        if (response.data.result[0].enableVaccination == 1) {
-          setvaccination(false);
-        }
-        if (response.data.result[0].enablePreventiveControls == 1) {
-          setpreventiveControls(false);
-        }
-
-        if (response.data.result[0].enableInHouseLab == 1) {
-          setinHouseLab(false);
-        }
-      });
-      setcounter(counter + 1);
-    }
-  }, [user]);
 
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();
@@ -140,8 +124,8 @@ const ConsultStart = (props) => {
       e.stopPropagation();
     } else {
       e.preventDefault();
-      var id = vetid.toString().replace("10##01", "/");
-      Axios.post(`${hostUrl}/services/insert/:${id}`, {
+
+      Axios.post(`${hostUrl}/services/insert/:${user.vetid}`, {
         serviceName: "Consultation",
         serviceDescription: serviceDescription,
         service_fee: serviceFee,
@@ -518,11 +502,12 @@ const ConsultStart = (props) => {
         </Form>
       </Modal>
 
+      {/* Main Panel */}
       <div
         style={{
           display: "flex",
           width: "inherit",
-          justifyContent: "space-between",
+          justifyContent: "start",
           padding: 10,
         }}
       >
@@ -534,277 +519,46 @@ const ConsultStart = (props) => {
             margin: 0,
           }}
         >
-          Service Category
+          Consultation
         </h5>
 
-        <Button
-          href={`/services/${vetid}`}
-          style={{
-            backgroundColor: "#19B9CC",
-            borderColor: "white",
-            paddingTop: 10,
-            margin: 0,
-          }}
-        >
-          General Services
-        </Button>
+
       </div>
 
+      {/* Consultation Options */}
       <div
         style={{
-          height: "20vh",
+          height: "auto",
           width: "75vw",
-          backgroundColor: "white",
+          backgroundColor: "transparent",
           padding: 25,
           marginLeft: 10,
-          boxShadow:
-            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+
         }}
       >
         <Row>
-          <Col hidden={consulations}>
-            <Link
-              to={`/services/consultation/${vetid}`}
+          <Col>
+            <div
               style={{
-                textDecoration: "none",
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                height: '20vh'
               }}
             >
-              <Container
-                style={{
-                  backgroundColor: "white",
-                  height: "15vh",
-                  width: "10vw",
-                  padding: 10,
-                  borderColor: "#3BD2E3",
-                  borderStyle: "solid",
-                  borderWidth: 5,
-                  borderRadius: 30,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                }}
-              >
-                <div>
-                  <Image
-                    src={imageI}
-                    style={{
-                      height: "8vh",
-                      width: "5vw",
-                    }}
-                  />
-                </div>
-                <div>
-                  <p
-                    style={{
-                      color: "#3BD2E3",
-                      fontWeight: "bolder",
-                      margin: 0,
-                    }}
-                  >
-                    Consultation
-                  </p>
-                </div>
-              </Container>
-            </Link>
+
+            </div>
           </Col>
 
-          <Col hidden={petExamination}>
-            <Link
-              to={`/services/pet&examination/${vetid}`}
+          <Col>
+            <div
               style={{
-                textDecoration: "none",
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                height: '20vh'
               }}
             >
-              <Container
-                style={{
-                  backgroundColor: "#3BD2E3",
-                  height: "15vh",
-                  width: "10vw",
-                  padding: 10,
-                  borderColor: "white",
-                  borderStyle: "solid",
-                  borderWidth: 5,
-                  borderRadius: 30,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                }}
-              >
-                <div>
-                  <Image
-                    src={imageII}
-                    style={{
-                      height: "8vh",
-                      width: "5vw",
-                    }}
-                  />
-                </div>
-                <div>
-                  <p
-                    style={{
-                      color: "white",
-                      fontWeight: "bolder",
-                      margin: 0,
-                    }}
-                  >
-                    Pet Examination
-                  </p>
-                </div>
-              </Container>
-            </Link>
-          </Col>
 
-          <Col hidden={petGrooming}>
-            <Link
-              to={`/services/pet&grooming/${vetid}`}
-              style={{
-                textDecoration: "none",
-              }}
-            >
-              <Container
-                style={{
-                  backgroundColor: "#3BD2E3",
-                  height: "15vh",
-                  width: "10vw",
-                  padding: 10,
-                  borderColor: "white",
-                  borderStyle: "solid",
-                  borderWidth: 5,
-                  borderRadius: 30,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                }}
-              >
-                <div>
-                  <Image
-                    src={imageIII}
-                    style={{
-                      height: "8vh",
-                      width: "5vw",
-                    }}
-                  />
-                </div>
-                <div>
-                  <p
-                    style={{
-                      color: "white",
-                      fontWeight: "bolder",
-                      margin: 0,
-                    }}
-                  >
-                    Pet Grooming
-                  </p>
-                </div>
-              </Container>
-            </Link>
-          </Col>
-
-          <Col hidden={preventiveControls}>
-            <Link
-              to={`/services/preventive&control/${vetid}`}
-              style={{
-                textDecoration: "none",
-              }}
-            >
-              <Container
-                style={{
-                  backgroundColor: "#3BD2E3",
-                  height: "15vh",
-                  padding: 10,
-                  width: "10vw",
-                  borderColor: "white",
-                  borderStyle: "solid",
-                  borderWidth: 5,
-                  borderRadius: 30,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                }}
-              >
-                <div>
-                  <Image
-                    src={imageIV}
-                    style={{
-                      height: "7vh",
-                      width: "5vw",
-                    }}
-                  />
-                </div>
-                <div>
-                  <p
-                    style={{
-                      color: "white",
-                      fontWeight: "bolder",
-                      margin: 0,
-                    }}
-                  >
-                    Preventive Control
-                  </p>
-                </div>
-              </Container>
-            </Link>
-          </Col>
-
-          <Col hidden={vaccination}>
-            <Link
-              to={`/services/vaccination/${vetid}`}
-              style={{
-                textDecoration: "none",
-              }}
-            >
-              <Container
-                style={{
-                  backgroundColor: "#3BD2E3",
-                  height: "15vh",
-                  width: "10vw",
-                  padding: 10,
-                  borderColor: "white",
-                  borderStyle: "solid",
-                  borderWidth: 5,
-                  borderRadius: 30,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  boxShadow:
-                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                }}
-              >
-                <div>
-                  <Image
-                    src={imageV}
-                    style={{
-                      height: "8vh",
-                      width: "5vw",
-                    }}
-                  />
-                </div>
-                <div>
-                  <p
-                    style={{
-                      color: "white",
-                      fontWeight: "bolder",
-                      margin: 0,
-                    }}
-                  >
-                    Vaccination
-                  </p>
-                </div>
-              </Container>
-            </Link>
+            </div>
           </Col>
         </Row>
       </div>

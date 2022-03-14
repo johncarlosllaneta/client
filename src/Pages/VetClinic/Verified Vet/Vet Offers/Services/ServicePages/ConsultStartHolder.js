@@ -40,7 +40,7 @@ function ConsultStartHolder() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavBarVet />
+          <NavBarVet showLogo={true} showHome={true} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 10 }}>
           <ConsultStart />

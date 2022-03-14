@@ -138,9 +138,6 @@ function HistoryReservation(props) {
         setappointmentDetails(response.data[0]);
       }
     );
-    // console.log(appointmentDetails);
-    // handleShowView();
-    alert(appointmentDetails.pet_name)
   }
 
   return (

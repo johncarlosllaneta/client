@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Avatar from 'react-avatar';
 import { Container, Row, Card, Col } from 'react-bootstrap';
 import ScrollableFeed from 'react-scrollable-feed'
-import { users } from '../../../../Components/User';
+
 
 function Feed(props) {
 
@@ -184,7 +184,7 @@ function Feed(props) {
                                                 >
 
                                                     {String(val.message_content).includes('http')
-                                                        ? <p>Virtual Consultation with {users[0].vet_name} <br />   <a href={val.message_content} target="_blank" title={val.message_content}> Click to enter video call</a> </p>
+                                                        ? <p>Virtual Consultation with {val.vet_name} <br />   <a href={val.message_content} target="_blank" title={val.message_content}> Click to enter video call</a> </p>
                                                         :
                                                         <p
                                                             style={{

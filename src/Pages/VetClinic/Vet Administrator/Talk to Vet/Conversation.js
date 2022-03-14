@@ -16,7 +16,7 @@ function Conversation(props) {
         >
             <ConversationHeader petOwnerData={props.petOwnerData} getMessage={props.getMessage} />
             <Feed messages={props.messages} />
-            <Send petOwnerData={props.petOwnerData} getMessage={props.getMessage} />
+            <Send petOwnerData={props.petOwnerData} getMessage={props.getMessage} user={props.user} />
         </div>
     )
 }

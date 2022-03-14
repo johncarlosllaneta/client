@@ -24,11 +24,11 @@ import imageII from "../../../../../Images/examination copy.png";
 import imageIII from "../../../../../Images/baths.png";
 import imageIV from "../../../../../Images/preventive.png";
 import imageV from "../../../../../Images/scopy.png";
+import getUser from "../../../../../Components/userData";
 
 
 const ServiceTab = (props) => {
-  let { vetid } = useParams();
-  var id = vetid.toString().replace("10##01", "/");
+
   // alert(id);
   //category
   const [consulation, setconsulation] = useState(true);
@@ -37,40 +37,42 @@ const ServiceTab = (props) => {
   const [preventiveControls, setpreventiveControls] = useState(true);
   const [vaccination, setvaccination] = useState(true);
   const [inHouseLab, setinHouseLab] = useState(true);
-  const [counter, setcounter] = useState(0);
+  const [services, setservices] = useState([]);
+
+
+
+
   const [user, setuser] = useState([]);
-  useEffect(() => {
-    if (counter < 2) {
-      var token = localStorage.getItem("ajwt");
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-
-        if (response.data.result[0].enableConsultation == 1) {
-          setconsulation(false);
-        }
-        if (response.data.result[0].enableExamination == 1) {
-          setpetExamination(false);
-        }
-
-        if (response.data.result[0].enableGrooming == 1) {
-          setpetGrooming(false);
-        }
-        if (response.data.result[0].enableVaccination == 1) {
-          setvaccination(false);
-        }
-        if (response.data.result[0].enablePreventiveControls == 1) {
-          setpreventiveControls(false);
-        }
-
-        if (response.data.result[0].enableInHouseLab == 1) {
-          setinHouseLab(false);
-        }
-      });
-      setcounter(counter + 1);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+    if (userData.enableConsultation == 1) {
+      setconsulation(false);
     }
-  }, [user]);
+    if (userData.enableExamination == 1) {
+      setpetExamination(false);
+    }
+
+    if (userData.enableGrooming == 1) {
+      setpetGrooming(false);
+    }
+    if (userData.enableVaccination == 1) {
+      setvaccination(false);
+    }
+    if (userData.enablePreventiveControls == 1) {
+      setpreventiveControls(false);
+    }
+
+    if (userData.enableInHouseLab == 1) {
+      setinHouseLab(false);
+    }
+
+    Axios.get(`${hostUrl}/services/:${userData.vetid}`).then((response) => {
+      setservices(response.data);
+      // console.log(response.data)
+    });
+  }, []);
+
 
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();
@@ -118,17 +120,7 @@ const ServiceTab = (props) => {
     setShowDelete(true);
   };
 
-  const [services, setservices] = useState([]);
-  useEffect(() => {
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/services/:${id}`).then((response) => {
-        setservices(response.data);
-        // console.log(response.data)
-      });
-      setcounter(counter + 1);
-    }
-    // alert(props.data.vet_admin_id);
-  }, [services]);
+
 
   const [validated, setValidated] = useState(false);
 
@@ -139,8 +131,7 @@ const ServiceTab = (props) => {
       e.stopPropagation();
     } else {
       e.preventDefault();
-      var id = vetid.toString().replace("10##01", "/");
-      Axios.post(`${hostUrl}/services/insert/:${id}`, {
+      Axios.post(`${hostUrl}/services/insert/:${user.vetid}`, {
         serviceName: serviceName,
         serviceDescription: serviceDescription,
         service_fee: serviceFee,
@@ -567,7 +558,7 @@ const ServiceTab = (props) => {
 
           <Col hidden={petExamination}>
             <Link
-              to={`/services/pet&examination/${vetid}`}
+              to={`/services/pet&examination/${user.vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -616,7 +607,7 @@ const ServiceTab = (props) => {
 
           <Col hidden={petGrooming}>
             <Link
-              to={`/services/pet&grooming/${vetid}`}
+              to={`/services/pet&grooming/${user.vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -665,7 +656,7 @@ const ServiceTab = (props) => {
 
           <Col hidden={preventiveControls}>
             <Link
-              to={`/services/preventive&control/${vetid}`}
+              to={`/services/preventive&control/${user.vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -714,7 +705,7 @@ const ServiceTab = (props) => {
 
           <Col hidden={vaccination}>
             <Link
-              to={`/services/vaccination/${vetid}`}
+              to={`/services/vaccination/${user.vetid}`}
               style={{
                 textDecoration: "none",
               }}

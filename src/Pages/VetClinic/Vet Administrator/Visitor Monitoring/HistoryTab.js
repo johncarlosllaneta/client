@@ -24,7 +24,7 @@ const HistoryTab = (props) => {
   const [visitor, setvisitor] = useState([]);
   useEffect(() => {
 
-    Axios.get(`${hostUrl}/vetclinic/visitor/${users[0].vetid}`).then((response) => {
+    Axios.get(`${hostUrl}/vetclinic/visitor/${props.user.vetid}`).then((response) => {
       setvisitor(response.data);
     });
 

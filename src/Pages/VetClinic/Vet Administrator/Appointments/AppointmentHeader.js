@@ -49,7 +49,7 @@ function AppointmentHeader(props) {
             setnumberOfUnviewedNotif(numberOfNotification);
         }, 2000);
 
-        Axios.get(`${hostUrl}/vetclinic/notification/${users[0].vetid}`).then(
+        Axios.get(`${hostUrl}/vetclinic/notification/${props.user.vetid}`).then(
             (response) => {
                 setnotif(response.data);
             }

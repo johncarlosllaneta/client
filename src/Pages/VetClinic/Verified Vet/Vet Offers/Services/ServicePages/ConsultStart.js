@@ -26,23 +26,43 @@ import imageV from "../../../../../../Images/scopy.png";
 import imageVI from "../../../../../../Images/INHOUSEW.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
+import getUser from "../../../../../../Components/userData";
 
 const ConsultStart = (props) => {
-  let { vetid } = useParams();
-  var id = vetid.toString().replace("10##01", "/");
-  const [counter, setcounter] = useState(0);
 
+  const [user, setuser] = useState([]);
   const [consultation, setconsultation] = useState([]);
-  useEffect(() => {
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/consultation/${id}`).then((response) => {
-        setconsultation(response.data);
-        // console.log(response.data)
-      });
-      // alert(props.data.vet_admin_id);
-      setcounter(counter + 1);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+    if (userData.enableConsultation == 1) {
+      setconsulations(false);
     }
-  }, [consultation]);
+    if (userData.enableExamination == 1) {
+      setpetExamination(false);
+    }
+
+    if (userData.enableGrooming == 1) {
+      setpetGrooming(false);
+    }
+    if (userData.enableVaccination == 1) {
+      setvaccination(false);
+    }
+    if (userData.enablePreventiveControls == 1) {
+      setpreventiveControls(false);
+    }
+
+    if (userData.enableInHouseLab == 1) {
+      setinHouseLab(false);
+    }
+    Axios.get(`${hostUrl}/consultation/${userData.vetid}`).then((response) => {
+      setconsultation(response.data);
+      // console.log(response.data)
+    });
+  }, []);
+
+
+
 
   const [consulations, setconsulations] = useState(true);
   const [petExamination, setpetExamination] = useState(true);
@@ -51,39 +71,8 @@ const ConsultStart = (props) => {
   const [vaccination, setvaccination] = useState(true);
   const [inHouseLab, setinHouseLab] = useState(true);
 
-  const [user, setuser] = useState([]);
-  useEffect(() => {
-    if (counter < 1) {
-      var token = localStorage.getItem("ajwt");
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
 
-        if (response.data.result[0].enableConsultation == 1) {
-          setconsulations(false);
-        }
-        if (response.data.result[0].enableExamination == 1) {
-          setpetExamination(false);
-        }
 
-        if (response.data.result[0].enableGrooming == 1) {
-          setpetGrooming(false);
-        }
-        if (response.data.result[0].enableVaccination == 1) {
-          setvaccination(false);
-        }
-        if (response.data.result[0].enablePreventiveControls == 1) {
-          setpreventiveControls(false);
-        }
-
-        if (response.data.result[0].enableInHouseLab == 1) {
-          setinHouseLab(false);
-        }
-      });
-      setcounter(counter + 1);
-    }
-  }, [user]);
 
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();
@@ -140,8 +129,8 @@ const ConsultStart = (props) => {
       e.stopPropagation();
     } else {
       e.preventDefault();
-      var id = vetid.toString().replace("10##01", "/");
-      Axios.post(`${hostUrl}/services/insert/:${id}`, {
+
+      Axios.post(`${hostUrl}/services/insert/:${user.vetid}`, {
         serviceName: "Consultation",
         serviceDescription: serviceDescription,
         service_fee: serviceFee,

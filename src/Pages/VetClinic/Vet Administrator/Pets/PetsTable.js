@@ -19,6 +19,7 @@ import VaccinePetCard from "./VaccinePetCard";
 import HealthPetCard from "./HealthPetCard";
 import { dateConvertion } from "../../../../Components/FormatDateTime";
 import { Skeleton } from "@mui/material";
+import getUser from "../../../../Components/userData";
 function PetsTable(props) {
 
   const [pet, setPet] = useState([]);
@@ -29,17 +30,18 @@ function PetsTable(props) {
   const [pet_Id, setpet_Id] = useState();
 
 
-  useEffect(() => {
+  const [user, setuser] = useState([]);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+    Axios.get(`${hostUrl}/vetclinic/registered/pets/${userData.vetid}`)
+      .then((response) => {
+        setPet(response.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
-    if (props.user.length != 0) {
-      Axios.get(`${hostUrl}/vetclinic/registered/pets/${props.user.vetid}`)
-        .then((response) => {
-          setPet(response.data);
-        })
-        .catch((err) => console.log(err));
-    }
 
-  }, [props.user]);
 
   const [q, setq] = useState("");
   function search(rows) {
@@ -103,7 +105,7 @@ function PetsTable(props) {
               }}
               onClick={(e) => {
                 e.preventDefault();
-                window.location.href = `/pets/${props.user.vetid}/${row.pet_id}`;
+                window.location.href = `/pets/${user.vetid}/${row.pet_id}`;
               }}
             >
               <AiOutlineSearch style={{ fontSize: 25 }} /> View Details

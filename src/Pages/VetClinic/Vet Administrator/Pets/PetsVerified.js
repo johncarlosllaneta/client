@@ -16,19 +16,7 @@ function PetsVerified() {
     value = "100%";
   }
 
-  const [user, setuser] = useState([]);
 
-  useEffect(() => {
-    var token = localStorage.getItem("ajwt");
-    axios.get(`${hostUrl}/home`, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then((response) => {
-      console.log(response.data.result[0]);
-      setuser(response.data.result[0]);
-    });
-
-
-  }, []);
 
   return (
     <div>
@@ -41,7 +29,7 @@ function PetsVerified() {
           margin: 0,
         }}
       >
-        <SideNavBarVetAdmin active={"pets"} user={user} />
+        <SideNavBarVetAdmin active={"pets"} />
       </div>
 
       <div
@@ -54,10 +42,10 @@ function PetsVerified() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavBarVet showLogo={true} showHome={true} user={user} />
+          <NavBarVet showLogo={true} showHome={true} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
-          <PetsTable user={user} />
+          <PetsTable />
         </div>
       </div>
     </div>

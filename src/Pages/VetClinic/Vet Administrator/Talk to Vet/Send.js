@@ -15,7 +15,7 @@ function Send(props) {
             axios.post(`${hostUrl}/talktovet/vetclinic/messages/sent`, {
                 thread_id: props.petOwnerData.thread_id,
                 pet_owner_id: props.petOwnerData.pet_owner_id,
-                vetid: users[0].vetid,
+                vetid: props.user.vetid,
                 user: 2,
                 message: messageSent,
             }).then((response) => {

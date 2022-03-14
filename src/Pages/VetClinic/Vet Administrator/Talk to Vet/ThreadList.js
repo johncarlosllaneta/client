@@ -1,16 +1,21 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Form, Row } from 'react-bootstrap';
 import { threadList } from '../../../../Components/Functions/GetThreadVetAdmin'
+import { hostUrl } from '../../../../Components/Host';
 import ThreadUser from './ThreadUser'
 
 function ThreadList(props) {
 
     const [threads, setthreads] = useState([]);
     useEffect(() => {
-        setTimeout(() => {
-            setthreads(threadList);
-            console.log(threadList)
-        }, 1000);
+        axios.get(`${hostUrl}/talktovet/vetclinic/thread/${props.user.vetid}`, {
+
+        }).then((response) => {
+            console.log(response.data);
+            setthreads(response.data);
+        });
+
 
 
     }, [])
@@ -72,8 +77,8 @@ function ThreadList(props) {
                     padding: 5
                 }}
             >
-                {threadList.length >= 1 ?
-                    threadList[0].map((item) => {
+                {threads != 0 ?
+                    threads.map((item) => {
                         return <ThreadUser convoUser={item} setconversationID={props.setconversationID} setpetOwnerData={props.setpetOwnerData} getMessage={props.getMessage} />
                     }
                     )

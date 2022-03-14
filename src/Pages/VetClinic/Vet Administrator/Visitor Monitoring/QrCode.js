@@ -3,16 +3,22 @@ import { Button, Card, Container, Image, Row, Col } from 'react-bootstrap'
 import { users } from '../../../../Components/User';
 import logo from "../../../../Images/logo.png";
 import QRCode from "qrcode";
+import getUser from '../../../../Components/userData';
 
 function QrCode() {
 
     const [qrCode, setqrCode] = useState("");
     const [vetName, setvetName] = useState();
-
+    const [user, setuser] = useState([]);
+    useEffect(async () => {
+        const userData = await getUser();
+        setuser(userData);
+        QRCode.toDataURL(`${userData.vetid}`).then(setqrCode);
+    }, []);
 
 
     useEffect(() => {
-        QRCode.toDataURL(`${users[0].vetid}`).then(setqrCode);
+
     }, []);
     return (
         <div>
@@ -109,7 +115,7 @@ function QrCode() {
                             fontOpticalSizing: "auto",
                         }}
                     >
-                        {users[0].vet_name}
+                        {user.vet_name}
                     </h2>
                 </div>
                 <div>

@@ -20,8 +20,6 @@ import { useParams } from "react-router-dom";
 
 const GenReservation = (props) => {
 
-  console.log(props.appointmentConfirm);
-
   const [notifService_id, setnotifService_id] = useState();
 
 
@@ -196,7 +194,7 @@ const GenReservation = (props) => {
   const declinedAppointment = () => {
     Axios.put(`${hostUrl}/vetclinic/appointment/decline/${appointmentID}`).then(
       (response) => {
-        props.refreshTables();
+        props.refreshTables(props.vetid);
         Axios.post(`${hostUrl}/notification/appointment`, {
           appointment_id: appointmentID,
           service_id: notifService_id,
@@ -215,7 +213,7 @@ const GenReservation = (props) => {
   const finishAppointment = () => {
     Axios.put(`${hostUrl}/vetclinic/appointment/done/${appointmentID}`).then(
       (response) => {
-        props.refreshTables();
+        props.refreshTables(props.vetid);
         Axios.post(`${hostUrl}/notification/appointment`, {
           appointment_id: appointmentID,
           service_id: notifService_id,
@@ -256,7 +254,7 @@ const GenReservation = (props) => {
         service_id: notifService_id,
         status: "Done",
       });
-      props.refreshTables();
+      props.refreshTables(props.vetid);
 
       setValidated(false);
       handleCloseVaccinationModal();

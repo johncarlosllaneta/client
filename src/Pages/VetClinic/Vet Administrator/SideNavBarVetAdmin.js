@@ -36,32 +36,32 @@ function SideNavBarVetAdmin(props) {
         const userData = await getUser();
         setuser(userData);
 
-        if (user.length != 0) {
-            setTimeout(() => {
-                setconsultationChecker(user.enableConsultation);
-                setpharmacyChecker(user.enablePharmacy);
-                setproductChecker(user.enableProduct);
-                setservicesChecker(user.enableServices);
-            }, 1000);
+
+
+        setconsultationChecker(userData.enableConsultation);
+        setpharmacyChecker(userData.enablePharmacy);
+        setproductChecker(userData.enableProduct);
+        setservicesChecker(userData.enableServices);
 
 
 
-            Axios.get(
-                `${hostUrl}/vetclinic/notification/isNew/length/${user.vetid}`
-            ).then((response) => {
-                setnumberOfUnviewedAppointment(response.data.view);
-                // alert(response.data.view);
-            });
 
-            Axios.get(
-                `${hostUrl}/vetclinic/notification/reservation/isNew/length/${user.vetid}`
-            ).then((response) => {
-                setnumberOfUnviewedReserved(response.data.view);
-                // alert(response.data.view);
-            });
-        }
+        Axios.get(
+            `${hostUrl}/vetclinic/notification/isNew/length/${userData.vetid}`
+        ).then((response) => {
+            setnumberOfUnviewedAppointment(response.data.view);
+            // alert(response.data.view);
+        });
 
-    }, [user]);
+        Axios.get(
+            `${hostUrl}/vetclinic/notification/reservation/isNew/length/${userData.vetid}`
+        ).then((response) => {
+            setnumberOfUnviewedReserved(response.data.view);
+            // alert(response.data.view);
+        });
+
+
+    }, []);
 
     useEffect(() => {
         if (consultationChecker === 1) {

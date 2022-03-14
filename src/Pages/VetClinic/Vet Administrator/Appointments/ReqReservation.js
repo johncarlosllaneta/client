@@ -191,7 +191,7 @@ const ReqReservation = (props) => {
   const acceptAppointment = () => {
     Axios.put(`${hostUrl}/vetclinic/appointment/accept/${appointmentID}`).then(
       (response) => {
-        props.refreshTables();
+        props.refreshTables(props.vetid);
         Axios.post(`${hostUrl}/notification/appointment`, {
           appointment_id: appointmentID,
           service_id: notifService_id,
@@ -204,7 +204,7 @@ const ReqReservation = (props) => {
   const declinedAppointment = () => {
     Axios.put(`${hostUrl}/vetclinic/appointment/decline/${appointmentID}`).then(
       (response) => {
-        props.refreshTables();
+        props.refreshTables(props.vetid);
         Axios.post(`${hostUrl}/notification/appointment`, {
           appointment_id: appointmentID,
           service_id: notifService_id,
@@ -360,7 +360,7 @@ const ReqReservation = (props) => {
             tooltip: "Refresh Table",
             isFreeAction: true,
             onClick: () => {
-              props.refreshTables();
+              props.refreshTables(props.vetid);
             },
           },
           {

@@ -10,6 +10,7 @@ import { hostUrl } from "../../../../Components/Host";
 import SideNavBarVetAdmin from "../SideNavBarVetAdmin";
 import { users } from "../../../../Components/User";
 import VisitorMonitoringHeader from "./VisitorMonitoringHeader";
+import getUser from "../../../../Components/userData";
 
 function VisitorMonitoringVerified() {
   var aspectratioheight = window.screen.height;
@@ -23,11 +24,14 @@ function VisitorMonitoringVerified() {
   const [qrCode, setqrCode] = useState("");
   const [vetName, setvetName] = useState();
 
-
-
-  useEffect(() => {
-    QRCode.toDataURL(`${users[0].vetid}`).then(setqrCode);
+  const [user, setuser] = useState([]);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+    QRCode.toDataURL(`${userData.vetid}`).then(setqrCode);
   }, []);
+
+
 
   function formatDate(dateString) {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -68,7 +72,7 @@ function VisitorMonitoringVerified() {
         >
           <VisitorMonitoringHeader />
 
-          <HistoryTab />
+          <HistoryTab user={user} />
         </div>
       </div>
     </div>
