@@ -5,14 +5,14 @@ import Axios from "axios";
 import { hostUrl } from "../../../../../Components/Host";
 import { users } from "../../../../../Components/User";
 import { dateConvertion } from "../../../../../Components/FormatDateTime";
+import { useParams } from "react-router-dom";
 function HistoryTable() {
+  let { vetid } = useParams();
   const [appointmentHistoryData, setappointmentHistoryData] = useState([]);
   useEffect(() => {
-    Axios.get(`${hostUrl}/history/appointment/${users[0].vetid}`).then(
-      (response) => {
-        setappointmentHistoryData(response.data);
-      }
-    );
+    Axios.get(`${hostUrl}/history/appointment/${vetid}`).then((response) => {
+      setappointmentHistoryData(response.data);
+    });
   }, [appointmentHistoryData]);
   const columns = [
     {

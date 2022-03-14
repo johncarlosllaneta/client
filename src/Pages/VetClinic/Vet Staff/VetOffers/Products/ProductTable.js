@@ -27,9 +27,9 @@ import ProductTableHolder from "./ProductTableHolder";
 import ProductHeader from "./ProductHeader";
 import ProductReservation from "./ProductReservation";
 import ReservationHolder from "./ReservationHolder";
+import getUser from "../../../../../Components/userData";
 
 function ProductTable(props) {
-
   const [updateProductId, setUpdateProductId] = useState("");
   const [updateProductName, setUpdateProductName] = useState("");
   const [updateProductDescription, setUpdateProductDescription] = useState("");
@@ -49,26 +49,26 @@ function ProductTable(props) {
   const [viewDisableField, setviewDisableField] = useState(false);
   const [viewTitle, setviewTitle] = useState("Update Product Details");
 
-
   //Insert
   const [show2, setShow2] = useState(false);
   const handleClose2 = () => setShow2(false);
   const handleShow2 = () => {
     setShow2(true);
   };
-
-  useEffect(() => {
-    Axios.get(`${hostUrl}/products/${users[0].vetid}`).then((response) => {
+  const [user, setuser] = useState([]);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+    Axios.get(`${hostUrl}/products/${userData.vetid}`).then((response) => {
       setProduct(response.data);
     });
   }, []);
 
   const refreshTable = () => {
-
     Axios.get(`${hostUrl}/products/${users[0].vetid}`).then((response) => {
       setProduct(response.data);
     });
-  }
+  };
 
   const [imageUrl, setimageUrl] = useState();
   const [imageUploadedUrl, setimageUploadedUrl] = useState();
@@ -264,16 +264,13 @@ function ProductTable(props) {
   };
 
   const deleteProduct = () => {
-
     Axios.post(`${hostUrl}/product/delete/${product_id}`, {
       vetid: users[0].vetid,
     }).then((reponse) => {
-      if (reponse.data.message == 'Success') {
+      if (reponse.data.message == "Success") {
         refreshTable();
       }
     });
-
-
   };
 
   const updateProductConfirmation = (e) => {
@@ -324,7 +321,7 @@ function ProductTable(props) {
       updateProductImage: productUpdateImage,
       vetid: users[0].vetd,
     }).then((response) => {
-      if (response.data.message == 'Success') {
+      if (response.data.message == "Success") {
         refreshTable();
         handleCloseUpdate();
       }
@@ -447,38 +444,34 @@ function ProductTable(props) {
     setTarget(event.target);
   };
 
-
   const [productController, setproductController] = useState(false);
   const [reservationController, setreservationController] = useState(true);
   const changeShowReservation = () => {
     setproductController(true);
     setreservationController(false);
-  }
+  };
 
   const changeShowProducts = () => {
     setproductController(false);
     setreservationController(true);
-  }
+  };
   return (
     <div
       style={{
-        padding: '5vh'
+        padding: "5vh",
       }}
     >
       <ProductHeader />
-      <div
-        hidden={productController}
-      >
-        <ProductTableHolder changeShow={changeShowReservation} products={product} refreshTable={refreshTable} />
-
+      <div hidden={productController}>
+        <ProductTableHolder
+          changeShow={changeShowReservation}
+          products={product}
+          refreshTable={refreshTable}
+        />
       </div>
-      <div
-        hidden={reservationController}
-      >
+      <div hidden={reservationController}>
         <ReservationHolder changeShowProducts={changeShowProducts} />
       </div>
-
-
     </div>
   );
 }

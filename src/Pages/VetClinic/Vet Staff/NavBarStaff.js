@@ -6,252 +6,49 @@ import { BsChatDotsFill } from "react-icons/bs";
 import Axios from "axios";
 import "../../../css/navBarHome.css";
 import { hostUrl } from "../../../Components/Host";
-import Avatar from "react-avatar";
+// import Avatar from "react-avatar";
 
-import {
-  Badge,
-  Box,
-  Divider,
-  IconButton,
-  ListItemIcon,
-  Menu,
-  MenuItem,
-  Tooltip,
-  Typography,
-} from "@material-ui/core";
-import { MailOutlined, Settings } from "@material-ui/icons";
+// import { Badge, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from "@material-ui/core";
+// import { MailOutlined, Settings } from "@material-ui/icons";
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
+import PersonAdd from "@mui/icons-material/PersonAdd";
+import Settings from "@mui/icons-material/Settings";
+import Logout from "@mui/icons-material/Logout";
+import Badge from "@mui/material/Badge";
+import { MailOutlined } from "@material-ui/icons";
 import { AiFillCaretDown } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
 import { IoLogOut } from "react-icons/io5";
+import HomeIcon from "@mui/icons-material/Home";
+import MessageIcon from "@mui/icons-material/Message";
+import logo from "../../../Images/logo.png";
+import { messages, numberNewThreads, users } from "../../../Components/User";
+import getUser from "../../../Components/userData";
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-function NavBarStaff() {
-  const [user, setuser] = useState([]);
-  const [userole, setuserole] = useState("");
-  const [counter, setcounter] = useState(0);
+function NavBarStaff(props) {
+  // const [user, setuser] = useState([]);
   const [numberNewThread, setnumberNewThread] = useState(0);
-  var name;
-  // var toast;
-  var accountImg;
-  useEffect(() => {
-    var token = localStorage.getItem("ajwt");
-    var roles = localStorage.getItem("role");
+  const [user, setuser] = useState([]);
+  var token = localStorage.getItem("ajwt");
 
-    setuserole(roles);
-    // alert(userole);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
 
-    if (counter < 6) {
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-        // console.log(user);
-      });
-
-      Axios.get(
-        `${hostUrl}/vetclinic/messages/notification/length/${user.vetid}`
-      ).then((response) => {
-        setnumberNewThread(response.data.view);
-        // alert(response.data.view);
-      });
-      setcounter(counter + 1);
-    }
+    messages(user);
+    // alert(numberNewThreads);
+    setTimeout(() => {
+      setnumberNewThread(numberNewThreads);
+    }, 1000);
   }, [user]);
-
-  if (parseInt(userole) === 1) {
-    name = (
-      <div style={{ display: "inline-flex" }}>
-        <Avatar
-          round={true}
-          size={50}
-          style={{
-            marginTop: 10,
-          }}
-          src={user.profilePicture}
-          name={user.name}
-        />
-
-        <p
-          style={{
-            marginTop: 20,
-            marginLeft: 10,
-          }}
-        >
-          {" "}
-          {user.name}
-          <br />{" "}
-          <p
-            style={{
-              fontSize: 12,
-              color: "#3BD2E3",
-              marginTop: -5,
-              textAlign: "left",
-            }}
-          >
-            Pet Owner
-          </p>
-        </p>
-      </div>
-    );
-  } else if (parseInt(userole) === 2) {
-    name = (
-      <div style={{ display: "inline-flex" }}>
-        <Avatar
-          round={true}
-          size={50}
-          style={{
-            marginTop: 10,
-          }}
-          src={user.vet_picture}
-          name={user.vet_name}
-        />
-
-        <p
-          style={{
-            marginTop: 20,
-            marginLeft: 10,
-          }}
-        >
-          {" "}
-          {user.vet_name}
-          <br />{" "}
-          <p
-            style={{
-              fontSize: 12,
-              color: "#3BD2E3",
-              marginTop: -5,
-              textAlign: "left",
-            }}
-          >
-            Vet Clinic
-          </p>
-        </p>
-      </div>
-    );
-  } else if (parseInt(userole) === 3) {
-    name = (
-      <div style={{ display: "inline-flex" }}>
-        <Avatar
-          round={true}
-          size={50}
-          style={{
-            marginTop: 10,
-          }}
-          src={user.profilePicture}
-          name={user.name}
-        />
-
-        <p
-          style={{
-            marginTop: 20,
-            marginLeft: 10,
-          }}
-        >
-          {" "}
-          {user.name}
-          <br />{" "}
-          <p
-            style={{
-              fontSize: 12,
-              color: "#3BD2E3",
-              marginTop: -5,
-              textAlign: "left",
-            }}
-          >
-            System Admin
-          </p>
-        </p>
-      </div>
-    );
-  } else if (parseInt(userole) === 4) {
-    name = (
-      <div style={{ display: "inline-flex" }}>
-        <Avatar
-          round={true}
-          size={50}
-          style={{
-            marginTop: 10,
-          }}
-          src={user.profilePicture}
-          name={user.vet_doc_fname}
-        />
-
-        <p
-          style={{
-            marginTop: 20,
-            marginLeft: 10,
-          }}
-        >
-          {" "}
-          {user.vet_doc_fname}
-          <br />{" "}
-          <p
-            style={{
-              fontSize: 12,
-              color: "#3BD2E3",
-              marginTop: -5,
-              textAlign: "left",
-            }}
-          >
-            Veterinarian
-          </p>
-        </p>
-      </div>
-    );
-  } else if (parseInt(userole) === 5) {
-    name = (
-      <div style={{ display: "inline-flex" }}>
-        <Avatar
-          round={true}
-          size={50}
-          style={{
-            marginTop: 10,
-          }}
-          src={user.vet_staff_profilePic}
-          name={
-            user.vet_staff_fname
-            // user.vet_staff_fname + user.vet_staff_lname + user.vet_staff_mname
-          }
-        />
-
-        <p
-          style={{
-            marginTop: 20,
-            marginLeft: 10,
-          }}
-        >
-          {" "}
-          {user.vet_staff_fname}
-          <br />{" "}
-          <p
-            style={{
-              fontSize: 12,
-              color: "#3BD2E3",
-              marginTop: -5,
-              textAlign: "left",
-            }}
-          >
-            Staff
-          </p>
-        </p>
-      </div>
-    );
-  }
-
-  var colors = {
-    Blue: "#3BD2E3",
-    LightBlue: "#F1F9FC",
-  };
-
-  var logocss = {
-    width: 50,
-    height: 50,
-  };
-
-  var landingPageName = {
-    fontWeight: "bold",
-    color: colors.Blue,
-  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -263,41 +60,24 @@ function NavBarStaff() {
   };
 
   const logoutUser = () => {
-    Axios.delete("http://localhost:3001/logout", {
+    Axios.delete(`${hostUrl}/logout`, {
       token: localStorage.getItem("rjwt"),
     });
 
+    Axios.put(`${hostUrl}/logout/user/vetclinic/${user.vetid}`);
+
     Axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
-      name: user.vet_name,
+      name:
+        user.vet_staff_fname +
+        " " +
+        user.vet_staff_mname +
+        " " +
+        user.vet_staff_lname,
     });
     localStorage.clear();
     window.location.replace("/");
   };
 
-  const vetSettings = () => {
-    // axios.delete("http://localhost:3001/logout", {
-    //   token: localStorage.getItem("rjwt"),
-    // });
-    if (parseInt(userole) === 1) {
-      window.location.replace("/petOwner/settings");
-    } else if (parseInt(userole) === 2) {
-      window.location.replace("/vet/settings");
-    } else if (parseInt(userole) === 3) {
-      window.location.replace("/admin/settings");
-    } else if (parseInt(userole) === 4) {
-      window.location.replace("/admin/settings");
-    } else if (parseInt(userole) === 5) {
-      window.location.replace("/admin/settings");
-    }
-  };
-
-  const [show, setShow] = useState(true);
-
-  var circleAvatar = accountImg;
-
-  function viewing() {
-    Axios.put(`${hostUrl}/vetclinic/messages/notification/${user.vetid}`);
-  }
   return (
     <Navbar
       expand="sm"
@@ -307,6 +87,20 @@ function NavBarStaff() {
         width: "inherit",
       }}
     >
+      <div hidden={props.showLogo}>
+        <Navbar.Brand href="#home" style={{ color: "white" }}>
+          <img
+            alt=""
+            src={logo}
+            width="30"
+            height="30"
+            style={{ marginLeft: 10 }}
+            className="d-inline-block align-top"
+          />{" "}
+          TERRAVET
+        </Navbar.Brand>
+      </div>
+
       <Navbar.Collapse
         style={{
           flexDirection: "row",
@@ -316,31 +110,45 @@ function NavBarStaff() {
           padding: 0,
         }}
       >
-        {/* <NavDropdown
-          style={{ fontSize: 20, marginRight: 50, margin: 0 }}
-          title={name}
-        >
-          <NavDropdown.Item onClick={vetSettings}>Settings</NavDropdown.Item>
-          <NavDropdown.Item onClick={logoutUser}>Logout</NavDropdown.Item>
-        </NavDropdown> */}
-
         <Box sx={{ flexGrow: 0, paddingTop: 0 }}>
-          <IconButton
-            size="large"
-            aria-label="show 4 new mails"
-            color="inherit"
-            onClick={() => {
-              window.location.href = `/talk to vet`;
-            }}
-          >
-            <Badge badgeContent={numberNewThread} color="error">
-              <MailOutlined
+          <Tooltip title={"Home"}>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+              hidden={props.showHome}
+              onClick={() => {
+                window.location.href = `/`;
+              }}
+            >
+              <HomeIcon
                 style={{
                   color: "white",
                 }}
               />
-            </Badge>
-          </IconButton>
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title={"Messages"}>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+              hidden={props.showMessage}
+              onClick={() => {
+                window.location.href = `/talk to vet`;
+              }}
+            >
+              <Badge badgeContent={numberNewThread} color="error">
+                <MessageIcon
+                  style={{
+                    color: "white",
+                  }}
+                />
+              </Badge>
+            </IconButton>
+          </Tooltip>
+
           <Tooltip
             title={
               user.vet_staff_fname +
@@ -387,8 +195,8 @@ function NavBarStaff() {
                 filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                 mt: 1.5,
                 "& .MuiAvatar-root": {
-                  width: 50,
-                  height: 35,
+                  width: 32,
+                  height: 32,
                   ml: -0.5,
                   mr: 1,
                 },
@@ -412,7 +220,7 @@ function NavBarStaff() {
             <div
               style={{
                 padding: 10,
-                backgroundColor: "whitesmoke",
+                // backgroundColor: 'whitesmoke'
               }}
             >
               <p>
@@ -425,54 +233,62 @@ function NavBarStaff() {
                     user.vet_staff_lname}
                 </strong>
               </p>
-            </div>
-            <Divider />
-            <MenuItem
-              style={{
-                backgroundColor: "whitesmoke",
-              }}
-            >
-              <Avatar
-                round={true}
-                size={25}
-                style={{
-                  marginBottom: 0,
-                  marginRight: 25,
+              <Divider />
+              <MenuItem
+                onClick={() => {
+                  window.location.href = `/profile`;
                 }}
-                src={user.vet_staff_profilePic}
-                name={
-                  user.vet_staff_fname +
-                  " " +
-                  user.vet_staff_mname +
-                  " " +
-                  user.vet_staff_lname
-                }
-              />{" "}
-              My profile
-            </MenuItem>
-            <Divider />
-            <MenuItem
-              onClick={vetSettings}
-              style={{
-                backgroundColor: "whitesmoke",
-              }}
-            >
-              <ListItemIcon>
-                <Settings fontSize="small" />
-              </ListItemIcon>
-              Settings
-            </MenuItem>
-            <MenuItem
-              onClick={logoutUser}
-              style={{
-                backgroundColor: "whitesmoke",
-              }}
-            >
-              <ListItemIcon>
-                <IoLogOut fontSize="large" style={{ marginLeft: 5 }} />
-              </ListItemIcon>
-              Logout
-            </MenuItem>
+                style={{
+                  display: "flex",
+                  justifyContent: "start",
+                  marginTop: 10,
+                }}
+              >
+                <Avatar
+                  round={true}
+                  size={15}
+                  style={{}}
+                  src={user.vet_staff_profilePic}
+                  name={
+                    user.vet_staff_fname +
+                    " " +
+                    user.vet_staff_mname +
+                    " " +
+                    user.vet_staff_lname
+                  }
+                />
+                {/* <Avatar src={user.vet_picture} sizes="" /> */}
+                My profile
+              </MenuItem>
+              <Divider />
+              <MenuItem
+                onClick={() => {
+                  window.location.replace("/vet/settings");
+                }}
+                style={{
+                  display: "flex",
+                  justifyContent: "start",
+                }}
+              >
+                <ListItemIcon>
+                  <Settings fontSize="small" />
+                </ListItemIcon>
+                Settings
+              </MenuItem>
+
+              <MenuItem
+                onClick={logoutUser}
+                style={{
+                  display: "flex",
+                  justifyContent: "start",
+                }}
+              >
+                <ListItemIcon>
+                  <Logout fontSize="small" />
+                </ListItemIcon>
+                Logout
+              </MenuItem>
+            </div>
           </Menu>
         </Box>
       </Navbar.Collapse>

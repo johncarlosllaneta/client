@@ -270,7 +270,7 @@ function SideNavBarVetStaff(props) {
         }}
       >
         <AiFillSecurityScan id="icons" />
-        <a id="anchorTag" href={`/visitormonitoring/${user.vetid}`}>
+        <a id="anchorTag" href={`/visitormonitoring`}>
           Visitor Monitoring
         </a>
       </Container>

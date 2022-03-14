@@ -1,5 +1,5 @@
 import React from "react";
-import NavBarVet from "../../../Verified Vet/NavBarVet";
+import NavBarDoc from "../../NavBarDoc";
 import SideNavBarVetDoctor from "../../SideNavBarVetDoctor";
 
 import ConsultationPage from "./ConsultationPage";
@@ -29,7 +29,7 @@ function ConsultationMain() {
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
           {/* navbar */}
-          <NavBarVet />
+          <NavBarDoc showLogo={false} showHome={false} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <ConsultationPage />

@@ -52,7 +52,11 @@ function VetDoctorHome() {
             component={VaccineStartHolder}
           />
           <Route path="/pharmacy/:vetid" exact component={PharmacyMain} />
-          <Route path="/appointments" exact component={AppointmentMain} />
+          <Route
+            path="/appointments/:vetid"
+            exact
+            component={AppointmentMain}
+          />
         </Switch>
       </div>
     </Router>

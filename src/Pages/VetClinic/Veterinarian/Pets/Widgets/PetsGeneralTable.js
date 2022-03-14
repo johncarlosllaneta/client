@@ -7,6 +7,8 @@ import TabPanel from "@material-ui/lab/TabPanel";
 import { Row } from "react-bootstrap";
 import Consultation from "./Tables/Consultation";
 import Vaccination from "./Tables/Vaccination";
+import Examination from "./Tables/Examination";
+import Appointment from "./Tables/Appointment";
 
 function PetsGeneralTable() {
   const [value, setValue] = React.useState("1");
@@ -27,8 +29,15 @@ function PetsGeneralTable() {
                 }}
               />
               <Tab
-                label="Consultation"
+                label="Examination"
                 value="2"
+                style={{
+                  marginRight: 15,
+                }}
+              />
+              <Tab
+                label="Appointment"
+                value="3"
                 style={{
                   marginRight: 15,
                 }}
@@ -40,7 +49,11 @@ function PetsGeneralTable() {
           </TabPanel>
 
           <TabPanel value="2">
-            <Consultation />
+            <Examination />
+          </TabPanel>
+
+          <TabPanel value="3">
+            <Appointment />
           </TabPanel>
         </TabContext>
       </Row>

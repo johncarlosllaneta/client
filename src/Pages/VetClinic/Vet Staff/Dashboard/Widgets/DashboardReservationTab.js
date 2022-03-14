@@ -19,7 +19,7 @@ import { hostUrl } from "../../../../../Components/Host";
 import { users } from "../../../../../Components/User";
 import { dateConvertion } from "../../../../../Components/FormatDateTime";
 
-function DashboardReservationTab() {
+function DashboardReservationTab(props) {
   ///pending/reservation/staff/
   const [reservation, setreservation] = useState([]);
 
@@ -27,7 +27,7 @@ function DashboardReservationTab() {
 
   // alert(props.vetid);
   useEffect(() => {
-    Axios.get(`${hostUrl}/pending/reservation/staff/${users[0].vetid}`).then(
+    Axios.get(`${hostUrl}/pending/reservation/staff/${props.vetid}`).then(
       (response) => {
         setreservation(response.data);
       }

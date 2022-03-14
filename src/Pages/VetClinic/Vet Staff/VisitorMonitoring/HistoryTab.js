@@ -6,19 +6,18 @@ import { AiOutlineSearch } from "react-icons/ai";
 import MaterialTable from "material-table";
 import { hostUrl } from "../../../../Components/Host";
 import { useParams } from "react-router-dom";
-
+import { Skeleton, useMediaQuery } from "@mui/material";
+import getUser from "../../../../Components/userData";
 const HistoryTab = (props) => {
-  let { vetid } = useParams();
-  const [counter, setcounter] = useState(0);
   const [visitor, setvisitor] = useState([]);
-  useEffect(() => {
-    if (counter < 2) {
-      Axios.get(`${hostUrl}/vetclinic/visitor/${vetid}`).then((response) => {
-        setvisitor(response.data);
-      });
-      setcounter(counter + 1);
-    }
-  }, [visitor]);
+  useEffect(async () => {
+    getVisitor(props.vetid);
+  }, []);
+  function getVisitor(id) {
+    Axios.get(`${hostUrl}/vetclinic/visitor/${id}`).then((response) => {
+      setvisitor(response.data);
+    });
+  }
 
   function dateConvertion(date) {
     var str = date.split("-");

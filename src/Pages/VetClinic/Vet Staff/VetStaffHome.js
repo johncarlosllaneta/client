@@ -36,7 +36,7 @@ function VetStaffHome() {
           <Route path="/product/:vetid" exact component={ProductVerified} />
           <Route path="/pharmacy/:vetid" exact component={PharmacyMain} />
           <Route
-            path="/visitormonitoring/:vetid"
+            path="/visitormonitoring"
             exact
             component={VisitorMonitoringVerified}
           />

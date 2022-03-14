@@ -6,22 +6,20 @@ import { Button, Col, Row } from "react-bootstrap";
 import SampleImage from "../../../../../Images/JCEL.jpg";
 import ProfileContainer from "./ProfileContainer";
 import { MdEmail, MdPlace, MdPermContactCalendar } from "react-icons/md";
+import { Skeleton, useMediaQuery } from "@mui/material";
+import getUser from "../../../../../Components/userData";
 function ProfilePage() {
-  const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
   const [imgProfile, setimgProfile] = useState("");
 
-  useEffect(() => {
+  useEffect(async () => {
     var token = localStorage.getItem("ajwt");
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-      });
-      setimgProfile(user.vet_staff_profilePic);
-      setcounter(counter + 1);
-    }
+    Axios.get(`${hostUrl}/home`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((response) => {
+      setuser(response.data.result[0]);
+    });
+    setimgProfile(user.vet_staff_profilePic);
   }, [user]);
   return (
     <div
@@ -44,41 +42,58 @@ function ProfilePage() {
                   display: "flex",
                 }}
               >
-                <Avatar
-                  round={true}
-                  size={210}
-                  style={{
-                    marginTop: 10,
-                  }}
-                  src={user.vet_staff_profilePic}
-                  name={user.vet_staff_fname}
-                />
+                {user.vet_staff_profilePic == null ? (
+                  <Skeleton variant="circular" height={"100%"} />
+                ) : (
+                  <Avatar
+                    round={true}
+                    size={210}
+                    style={{
+                      marginTop: 10,
+                    }}
+                    src={user.vet_staff_profilePic}
+                    name={
+                      user.vet_staff_fname +
+                      " " +
+                      user.vet_staff_mname +
+                      " " +
+                      user.vet_staff_lname
+                    }
+                  />
+                )}
               </div>
             </Col>
+
             <Col>
-              <div style={{ paddingTop: 40 }}>
-                <Row style={{ fontSize: 20 }}>My name is</Row>
-                <Row style={{ fontSize: 32 }}>
-                  {user.vet_staff_fname +
-                    " " +
-                    user.vet_staff_mname +
-                    " " +
-                    user.vet_staff_lname}
-                </Row>
-                <Row style={{ fontSize: 10, color: "#33C1D2" }}>Staff</Row>
-                <Row>
-                  <Button
-                    style={{
-                      backgroundColor: "#18A0FB",
-                      borderRadius: 10,
-                      color: "#FFFFFF",
-                      width: 117,
-                    }}
-                  >
-                    Edit Profile
-                  </Button>
-                </Row>
-              </div>
+              {user.vet_staff_fname == null ||
+              user.vet_staff_lname == null ||
+              user.vet_staff_lname == null ? (
+                <Skeleton variant="rectangular" height={"100%"} />
+              ) : (
+                <div style={{ paddingTop: 40 }}>
+                  <Row style={{ fontSize: 20 }}>My name is</Row>
+                  <Row style={{ fontSize: 32 }}>
+                    {user.vet_staff_fname +
+                      " " +
+                      user.vet_staff_mname +
+                      " " +
+                      user.vet_staff_lname}
+                  </Row>
+                  <Row style={{ fontSize: 15, color: "#33C1D2" }}>Staff</Row>
+                  <Row>
+                    <Button
+                      style={{
+                        backgroundColor: "#18A0FB",
+                        borderRadius: 10,
+                        color: "#FFFFFF",
+                        width: 117,
+                      }}
+                    >
+                      Edit Profile
+                    </Button>
+                  </Row>
+                </div>
+              )}
             </Col>
           </Row>
         </div>
@@ -101,11 +116,15 @@ function ProfilePage() {
               paddingTop: 20,
             }}
           >
-            <ProfileContainer
-              icon={<MdEmail style={{ color: "#62D7FF", fontSize: 90 }} />}
-              title={user.vet_staff_email}
-              subtext={"Email Address"}
-            />
+            {user.vet_staff_email == null ? (
+              <Skeleton variant="rectangular" height={"100%"} />
+            ) : (
+              <ProfileContainer
+                icon={<MdEmail style={{ color: "#62D7FF", fontSize: 90 }} />}
+                title={user.vet_staff_email}
+                subtext={"Email Address"}
+              />
+            )}
           </div>
           <div
             style={{
@@ -116,11 +135,15 @@ function ProfilePage() {
               paddingTop: 20,
             }}
           >
-            <ProfileContainer
-              icon={<MdPlace style={{ color: "#62D7FF", fontSize: 90 }} />}
-              title={"2529 Legarda Sampaloc Manila"}
-              subtext={"Address"}
-            />
+            {user.vet_staff_email == null ? (
+              <Skeleton variant="rectangular" height={"100%"} />
+            ) : (
+              <ProfileContainer
+                icon={<MdPlace style={{ color: "#62D7FF", fontSize: 90 }} />}
+                title={"2529 Legarda Sampaloc Manila"}
+                subtext={"Address"}
+              />
+            )}
           </div>
           <div
             style={{
@@ -131,15 +154,19 @@ function ProfilePage() {
               paddingTop: 20,
             }}
           >
-            <ProfileContainer
-              icon={
-                <MdPermContactCalendar
-                  style={{ color: "#62D7FF", fontSize: 90 }}
-                />
-              }
-              title={user.vet_staff_contactNumber}
-              subtext={"Contact Number"}
-            />
+            {user.vet_staff_contactNumber == null ? (
+              <Skeleton variant="rectangular" height={"100%"} />
+            ) : (
+              <ProfileContainer
+                icon={
+                  <MdPermContactCalendar
+                    style={{ color: "#62D7FF", fontSize: 90 }}
+                  />
+                }
+                title={user.vet_staff_contactNumber}
+                subtext={"Contact Number"}
+              />
+            )}
           </div>
         </div>
       </Row>

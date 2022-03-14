@@ -7,6 +7,8 @@ import Axios from "axios";
 import { hostUrl } from "../../../../Components/Host";
 import SideNavBarVetStaff from "../SideNavBarVetStaff";
 import NavBarStaff from "../NavBarStaff";
+import { Skeleton, useMediaQuery } from "@mui/material";
+import getUser from "../../../../Components/userData";
 
 function VisitorMonitoringVerified() {
   // let { vetid } = useParams();
@@ -23,19 +25,13 @@ function VisitorMonitoringVerified() {
   const [vetName, setvetName] = useState();
 
   const [counter, setcounter] = useState(0);
-  useEffect(() => {
+  useEffect(async () => {
     var token = localStorage.getItem("ajwt");
-    if (counter < 2) {
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-      });
-      setcounter(counter + 1);
-    }
-  }, [user]);
+    const userData = await getUser();
+    setuser(userData);
+  }, []);
 
-  useEffect(() => {
+  useEffect(async () => {
     QRCode.toDataURL(`${user.vetid}`).then(setqrCode);
   }, [user]);
 
@@ -67,7 +63,7 @@ function VisitorMonitoringVerified() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavBarStaff />
+          <NavBarStaff showLogo={false} showHome={false} />
         </div>
         <div
           style={{
@@ -82,38 +78,55 @@ function VisitorMonitoringVerified() {
             </div>
           </Row>
           <Row>
-            <Col
-              sm="5"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column",
-                rowGap: 20,
-              }}
-            >
-              <Image
-                src={qrCode}
-                alt={"QrCode"}
-                style={{ height: 350, maxWidth: "100%" }}
-              />
+            <Col sm="5">
+              {qrCode == null ? (
+                <Skeleton
+                  variant="rectangular"
+                  height={"100%"}
+                  width={"100%"}
+                />
+              ) : (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    rowGap: 20,
+                  }}
+                >
+                  <Image
+                    src={qrCode}
+                    alt={"QrCode"}
+                    style={{ height: 350, maxWidth: "100%" }}
+                  />
 
-              <Button
-                style={{
-                  backgroundColor: "#3BD2E3",
-                  borderRadius: 30,
-                  paddingLeft: 40,
-                  paddingRight: 40,
-                  borderColor: "#FFFFFF",
-                }}
-                download
-                href={qrCode}
-              >
-                Download
-              </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "#3BD2E3",
+                      borderRadius: 30,
+                      paddingLeft: 40,
+                      paddingRight: 40,
+                      borderColor: "#FFFFFF",
+                    }}
+                    download
+                    href={qrCode}
+                  >
+                    Download
+                  </Button>
+                </div>
+              )}
             </Col>
             <Col sm="7">
-              <HistoryTab />
+              {user.length == 0 ? (
+                <Skeleton
+                  variant="rectangular"
+                  height={"100%"}
+                  width={"100%"}
+                />
+              ) : (
+                <HistoryTab user={user} />
+              )}
             </Col>
           </Row>
         </div>

@@ -5,15 +5,14 @@ import Axios from "axios";
 import { hostUrl } from "../../../../../Components/Host";
 import { users } from "../../../../../Components/User";
 import { dateConvertion } from "../../../../../Components/FormatDateTime";
-
+import { useParams } from "react-router-dom";
 function PendingTable() {
+  let { vetid } = useParams();
   const [appointmentPending, setappointmentPending] = useState([]);
   useEffect(() => {
-    Axios.get(`${hostUrl}/pending/appointment/${users[0].vetid}`).then(
-      (response) => {
-        setappointmentPending(response.data);
-      }
-    );
+    Axios.get(`${hostUrl}/pending/appointment/${vetid}`).then((response) => {
+      setappointmentPending(response.data);
+    });
   }, [appointmentPending]);
   const columns = [
     {
