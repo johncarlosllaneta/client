@@ -6,20 +6,20 @@ import Axios from "axios";
 import { hostUrl } from "../../../../../../Components/Host";
 import { useParams, BrowserRouter, Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
-function Vaccination() {
+function Examination() {
   let { vetid } = useParams();
   var id = vetid.toString().replace("10##01", "/");
 
-  const [vaccination, setvaccination] = useState([]);
+  const [examination, setexamination] = useState([]);
   const [counter, setcounter] = useState(0);
   useEffect(() => {
-    Axios.get(`${hostUrl}/doc/pets/vaccination/${id}`)
+    Axios.get(`${hostUrl}/doc/pets/examination/${id}`)
       .then((response) => {
-        setvaccination(response.data);
+        setexamination(response.data);
       })
       .catch((err) => console.log(err));
     // console.log(pet);
-  }, [vaccination]);
+  }, [examination]);
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
   const columns = [
     {
@@ -53,6 +53,7 @@ function Vaccination() {
       field: "appointment_status",
       sorting: true,
     },
+
     {
       title: "Action",
       render: (row) => (
@@ -90,7 +91,7 @@ function Vaccination() {
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
             columns={columns}
-            data={vaccination}
+            data={examination}
             title={" "}
             cellEditable={false}
             options={{
@@ -103,4 +104,4 @@ function Vaccination() {
   );
 }
 
-export default Vaccination;
+export default Examination;

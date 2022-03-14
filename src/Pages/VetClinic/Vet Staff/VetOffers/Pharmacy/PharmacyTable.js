@@ -49,14 +49,11 @@ const PharmacyTable = () => {
   const [viewTitle, setviewTitle] = useState("Update Medicine Details");
 
   const [counter, setcounter] = useState(0);
-  useEffect(() => {
-    if (counter < 3) {
-      var id = vetid.toString().replace("10##01", "/");
-      Axios.get(`${hostUrl}/pharmacy/${id}`).then((response) => {
-        setpharmacy(response.data);
-      });
-      setcounter(counter + 1);
-    }
+  useEffect(async () => {
+    var id = vetid.toString().replace("10##01", "/");
+    Axios.get(`${hostUrl}/pharmacy/${id}`).then((response) => {
+      setpharmacy(response.data);
+    });
   }, [pharmacy]);
 
   function refreshTable() {

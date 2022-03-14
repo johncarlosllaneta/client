@@ -23,7 +23,7 @@ import imageII from "../../../../../Images/examination copy.png";
 import imageIII from "../../../../../Images/baths.png";
 import imageIV from "../../../../../Images/preventive.png";
 import imageV from "../../../../../Images/scopy.png";
-import { users } from "../../../../../Components/User";
+import getUser from "../../../../../Components/userData";
 
 const ServiceTab = (props) => {
   let { vetid } = useParams();
@@ -38,9 +38,15 @@ const ServiceTab = (props) => {
   const [inHouseLab, setinHouseLab] = useState(true);
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
-  useEffect(() => {
-    Axios.get(`${hostUrl}/doc/${users[0].vet_doc_id}`).then((response) => {
-      console.log(response.data[0].enableExamination);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+
+    getServices(userData.vet_doc_id);
+  }, []);
+
+  function getServices(id) {
+    Axios.get(`${hostUrl}/doc/${id}`).then((response) => {
       if (response.data[0].enableExamination == 1) {
         setpetExamination(false);
       }
@@ -55,7 +61,7 @@ const ServiceTab = (props) => {
         setpreventiveControls(false);
       }
     });
-  }, []);
+  }
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();
   const [serviceFee, setserviceFee] = useState();
@@ -104,13 +110,10 @@ const ServiceTab = (props) => {
 
   const [services, setservices] = useState([]);
   useEffect(() => {
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/services/:${id}`).then((response) => {
-        setservices(response.data);
-        // console.log(response.data)
-      });
-      setcounter(counter + 1);
-    }
+    Axios.get(`${hostUrl}/services/:${id}`).then((response) => {
+      setservices(response.data);
+      // console.log(response.data)
+    });
     // alert(props.data.vet_admin_id);
   }, [services]);
 

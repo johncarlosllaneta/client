@@ -34,36 +34,33 @@ function SideNavBarVetDoctor(props) {
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
   useEffect(() => {
-    if (counter < 10) {
-      var token = localStorage.getItem("ajwt");
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-        setvetID(response.data.result[0].vetid);
-      });
-      setconsultationChecker(1);
-      setpharmacyChecker(1);
-      setproductChecker(user.enableProduct);
-      setservicesChecker(1);
-      // console.log(user);
-      // alert(vetID.toString().replace('/', '10##01'))
+    var token = localStorage.getItem("ajwt");
+    Axios.get(`${hostUrl}/home`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((response) => {
+      setuser(response.data.result[0]);
+      setvetID(response.data.result[0].vetid);
+    });
+    setconsultationChecker(1);
+    setpharmacyChecker(1);
+    setproductChecker(user.enableProduct);
+    setservicesChecker(1);
+    // console.log(user);
+    // alert(vetID.toString().replace('/', '10##01'))
 
-      Axios.get(
-        `${hostUrl}/vetclinic/notification/isNew/length/${user.vetid}`
-      ).then((response) => {
-        setnumberOfUnviewedAppointment(response.data.view);
-        // alert(response.data.view);
-      });
+    Axios.get(
+      `${hostUrl}/vetclinic/notification/isNew/length/${user.vetid}`
+    ).then((response) => {
+      setnumberOfUnviewedAppointment(response.data.view);
+      // alert(response.data.view);
+    });
 
-      Axios.get(
-        `${hostUrl}/vetclinic/notification/reservation/isNew/length/${user.vetid}`
-      ).then((response) => {
-        setnumberOfUnviewedReserved(response.data.view);
-        // alert(response.data.view);
-      });
-      setcounter(counter + 1);
-    }
+    Axios.get(
+      `${hostUrl}/vetclinic/notification/reservation/isNew/length/${user.vetid}`
+    ).then((response) => {
+      setnumberOfUnviewedReserved(response.data.view);
+      // alert(response.data.view);
+    });
   }, [user]);
 
   useEffect(() => {
@@ -319,7 +316,7 @@ function SideNavBarVetDoctor(props) {
             }}
           >
             <AiFillSchedule id="icons" />
-            <a id="anchorTag" href={`/appointments`}>
+            <a id="anchorTag" href={`/appointments/${user.vetid}`}>
               Appointments
             </a>
             <MdFiberNew
@@ -333,7 +330,7 @@ function SideNavBarVetDoctor(props) {
         ) : (
           <div>
             <AiFillSchedule id="icons" />
-            <a id="anchorTag" href={`/appointments`}>
+            <a id="anchorTag" href={`/appointments/${user.vetid}`}>
               Appointments
             </a>
           </div>

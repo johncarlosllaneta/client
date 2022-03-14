@@ -29,7 +29,7 @@ function ProfileMain() {
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
           {/* navbar */}
-          <NavBarStaff />
+          <NavBarStaff showLogo={false} showHome={false} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <ProfilePage />

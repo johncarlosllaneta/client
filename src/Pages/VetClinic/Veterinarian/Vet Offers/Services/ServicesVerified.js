@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { useState } from "react";
+import Axios from "axios";
+import { hostUrl } from "../../../../../Components/Host";
 import ServiceTab from "./ServiceTab";
 import NavBarDoc from "../../NavBarDoc";
 import SideNavBarVetDoctor from "../../SideNavBarVetDoctor";
@@ -37,7 +40,7 @@ function ServicesVerified() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavBarDoc showLogo={true} showHome={true} />
+          <NavBarDoc showLogo={false} showHome={false} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <ServiceTab />

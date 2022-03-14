@@ -1,52 +1,54 @@
 import React from "react";
+import { useState, useEffect, useRef } from "react";
 import { Popover } from "react-bootstrap";
 import MaterialTable from "material-table";
+import Axios from "axios";
+import { hostUrl } from "../../../../../../Components/Host";
+import { useParams, BrowserRouter, Link } from "react-router-dom";
 function Appointment() {
+  let { vetid } = useParams();
+  var id = vetid.toString().replace("10##01", "/");
+
+  const [appointment, setappointment] = useState([]);
+  const [counter, setcounter] = useState(0);
+  useEffect(() => {
+    Axios.get(`${hostUrl}/doc/pets/appointment/${id}`)
+      .then((response) => {
+        setappointment(response.data);
+      })
+      .catch((err) => console.log(err));
+  }, [appointment]);
   const columns = [
     {
-      title: "Vaccine Name",
-      field: "vaccine_name",
+      title: "Appointment ID",
+      field: "appointment_id",
       defaultSort: "asc",
-      render: (row) => <p>{row.vaccine_name}</p>,
     },
     {
-      title: "Againts",
-      field: "againts",
+      title: "Pet Owner",
+      field: "pet_owner_name",
       sorting: true,
     },
     {
-      title: "Vaccine Number",
-      field: "vaccine_number",
+      title: "Pet",
+      field: "pet_name",
+      sorting: true,
+    },
+    {
+      title: "Service Name",
+      field: "service_name",
       sorting: true,
     },
 
     {
-      title: "Manufacturer",
-      field: "manufacturer",
+      title: "Category",
+      field: "Category",
       sorting: true,
     },
     {
-      title: "Weight",
-      field: "pet_weight",
+      title: "Status",
+      field: "appointment_status",
       sorting: true,
-    },
-    {
-      title: "Vaccination Date",
-      sorting: true,
-      // field: "date",
-      // render: (row) => dateConvertion(row.date.substring().split("T")[0]),
-    },
-    {
-      title: "Vaccination Time",
-      sorting: true,
-      // field: "date",
-      // render: (row) =>
-      //     timeFormatter(
-      //         row.date
-      //             .substring()
-      //             .split("T")[1]
-      //             .substring(0, row.date.substring().split("T")[1].length - 5)
-      //     ),
     },
   ];
 
@@ -55,14 +57,11 @@ function Appointment() {
     <div>
       <MaterialTable
         columns={columns}
-        // data={vaccine}
-        title={"Appointment Record"}
+        data={appointment}
+        title={""}
         cellEditable={false}
         options={{
           sorting: true,
-          search: true,
-          pageSize: 10,
-          pageSizeOptions: [10],
         }}
         style={{
           borderColor: "white",

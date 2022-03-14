@@ -5,15 +5,16 @@ import Axios from "axios";
 import { hostUrl } from "../../../../../Components/Host";
 import { users } from "../../../../../Components/User";
 import { dateConvertion } from "../../../../../Components/FormatDateTime";
+import getUser from "../../../../../Components/userData";
+import { useParams } from "react-router-dom";
 
 function GeneralTable() {
+  let { vetid } = useParams();
   const [appointmentConfirm, setappointmentConfirm] = useState([]);
   useEffect(() => {
-    Axios.get(`${hostUrl}/general/appointment/${users[0].vetid}`).then(
-      (response) => {
-        setappointmentConfirm(response.data);
-      }
-    );
+    Axios.get(`${hostUrl}/general/appointment/${vetid}`).then((response) => {
+      setappointmentConfirm(response.data);
+    });
   }, [appointmentConfirm]);
   //   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
 
