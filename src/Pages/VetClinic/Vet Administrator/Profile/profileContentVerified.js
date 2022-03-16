@@ -17,18 +17,6 @@ function profileContentVerified() {
 
   return (
     <div>
-      {/* <div
-        style={{
-          width: "20%",
-          border: "1px solid transparent",
-          float: "left",
-          padding: 0,
-          margin: 0,
-        }}
-      >
-        <SideNavBarVetAdmin active={"profile"} />
-      </div> */}
-
       <div
         style={{
           width: "100%",

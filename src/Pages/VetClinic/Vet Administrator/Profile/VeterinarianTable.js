@@ -1,10 +1,11 @@
-import { Skeleton } from '@mui/material';
+import { Skeleton, Button } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { FloatingLabel, Form, Row, Button, Col } from 'react-bootstrap'
+import { FloatingLabel, Form, Row, Col, Offcanvas } from 'react-bootstrap'
 import { getVeterinarian, veterinarians } from '../../../../Components/Functions/GetVetDoctors';
 import { hostUrl } from '../../../../Components/Host';
 import { users } from '../../../../Components/User';
+import VeterinarianRegistration from './Registration/Veterinarian/VeterinarianRegistration';
 import VeterinarianProfile from './VeterinarianProfile'
 
 function VeterinarianTable(props) {
@@ -23,10 +24,25 @@ function VeterinarianTable(props) {
     }, []);
 
 
+    const [showVeterinarianRegistration, setShowVeterinarianRegistration] = useState(false);
 
+    const handleClose = () => setShowVeterinarianRegistration(false);
+    const handleShow = () => setShowVeterinarianRegistration(true);
 
     return (
         <div>
+
+            <Offcanvas show={showVeterinarianRegistration} onHide={handleClose} placement={'end'} key={1} backdrop={false}>
+                <Offcanvas.Header >
+                    <Offcanvas.Title>Register Veterinarian</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                    <VeterinarianRegistration handleClose={handleClose} vetid={props.user.vetid} />
+                </Offcanvas.Body>
+            </Offcanvas>
+
+
+
             <Row
 
             >
@@ -51,8 +67,10 @@ function VeterinarianTable(props) {
                         </FloatingLabel>
                     </div>
                     <Button
+                        variant="contained"
                         onClick={() => {
-                            window.open("/registration/veterinarian", "_blank").focus();
+                            // window.open("/registration/veterinarian", "_blank").focus();
+                            handleShow();
 
                         }}
                         style={{
