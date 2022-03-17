@@ -90,7 +90,7 @@ function NavBarVet(props) {
       }}
     >
       <div hidden={props.showLogo}>
-        <Navbar.Brand href="#home" style={{ color: "white" }}>
+        <Navbar.Brand href="/" style={{ color: "white" }}>
           <img
             alt=""
             src={logo}

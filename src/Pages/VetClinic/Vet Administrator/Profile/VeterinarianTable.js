@@ -85,13 +85,9 @@ function VeterinarianTable(props) {
 
             <Row
                 style={{
-                    marginTop: 20,
-                    display: 'grid',
-                    gridTemplateColumns: 'auto auto auto auto',
-                    gridGap: 10,
-                    padding: 10
-
-                    // justifyContent: 'start'
+                    overflowY: 'auto',
+                    display: 'flex',
+                    justifyContent: 'start',
 
                 }}
             >
@@ -106,13 +102,11 @@ function VeterinarianTable(props) {
                         }
                     }).map((item) => {
                         return (
-                            <div
-                                style={{
-                                    gridRow: '1/1'
-                                }}
+                            <Col
+                                sm={3}
                             >
                                 <VeterinarianProfile user={item} />
-                            </div>
+                            </Col>
                         )
                     })
 

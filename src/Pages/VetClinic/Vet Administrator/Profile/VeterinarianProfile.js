@@ -2,6 +2,8 @@ import React from 'react'
 import Avatar from 'react-avatar'
 import { Card, Row } from 'react-bootstrap'
 import Badge from '@mui/material/Badge';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 
 function VeterinarianProfile(props) {
     return (
@@ -47,7 +49,7 @@ function VeterinarianProfile(props) {
                             style={{
                                 marginBottom: 0
                             }}
-                        >{props.user.vet_doc_gender == "Male" ? 'Dr.' : 'Dra.'} {props.user.vet_doc_fname + " " + String(props.user.vet_doc_mname).charAt(0) + ". " + props.user.vet_doc_fname} </h6>
+                        >{props.user.vet_doc_gender == "Male" ? 'Dr.' : 'Dra.'} {props.user.vet_doc_fname + " " + props.user.vet_doc_lname} {props.user.isVerified == 1 ? <VerifiedIcon color="info" titleAccess='Verified' /> : <GppMaybeIcon color="secondary" titleAccess='Unverified' />}</h6>
                         <p
                             style={{
                                 color: '#33C1D2'

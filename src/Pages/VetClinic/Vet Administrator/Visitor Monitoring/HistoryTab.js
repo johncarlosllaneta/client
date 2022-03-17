@@ -66,6 +66,19 @@ const HistoryTab = (props) => {
     return month + " " + day + ", " + year;
   }
 
+
+  function formatAMPM(date) {
+    var formatDate = new Date(date);
+    var hours = formatDate.getHours;
+    var minutes = formatDate.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
+
   function tConvert(time) {
     // Check correct time format and split into components
     time = time
@@ -97,17 +110,16 @@ const HistoryTab = (props) => {
       title: "Time",
       sorting: true,
       render: (row) =>
-        tConvert(
-          row.time_visited
-            .toString()
-            .split("T")[1]
-            .substring(0, row.time_visited.toString().split("T")[1].length - 5)
-        ),
+        formatAMPM(row.time_visited)
+
+
     },
     {
       title: "Temperature",
       sorting: true,
-      field: "temperature",
+      render: (row) =>
+        row.temperature > 36.5 ? <p style={{ color: 'red' }}> {row.temperature}</p> : <p style={{ color: 'red' }}> {row.temperature}</p>
+
 
     },
   ];
