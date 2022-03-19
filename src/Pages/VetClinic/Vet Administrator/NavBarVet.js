@@ -60,17 +60,24 @@ function NavBarVet(props) {
   };
 
   const logoutUser = () => {
-    Axios.delete(`${hostUrl}/logout`, {
-      token: localStorage.getItem("rjwt"),
-    });
 
-    Axios.put(`${hostUrl}/logout/user/vetclinic/${user.vetid}`);
 
-    Axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
-      name: user.vet_name,
-    });
-    localStorage.clear();
-    window.location.replace("/");
+    Axios.put(`${hostUrl}/logout/user/vetclinic/${user.vetid}`).then(
+      (response) => {
+        if (response.data.message == "Success") {
+          Axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
+            name: user.vet_name,
+          });
+          Axios.delete(`${hostUrl}/logout`, {
+            token: localStorage.getItem("rjwt"),
+          });
+          localStorage.clear();
+          window.location.replace("/");
+        }
+      }
+    );
+
+
   };
 
   return (
@@ -83,7 +90,7 @@ function NavBarVet(props) {
       }}
     >
       <div hidden={props.showLogo}>
-        <Navbar.Brand href="#home" style={{ color: "white" }}>
+        <Navbar.Brand href="/" style={{ color: "white" }}>
           <img
             alt=""
             src={logo}

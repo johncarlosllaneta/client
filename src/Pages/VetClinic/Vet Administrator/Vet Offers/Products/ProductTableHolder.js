@@ -42,11 +42,12 @@ function ProductTableHolder(props) {
         <Row
             style={{
                 width: '100%',
+                height: '60vh',
                 paddingLeft: '2vh',
 
                 paddingBottom: '2vh',
                 overflowY: 'auto',
-                height: '60vh',
+
                 rowGap: '5vh',
                 display: 'flex',
                 justifyContent: 'start',

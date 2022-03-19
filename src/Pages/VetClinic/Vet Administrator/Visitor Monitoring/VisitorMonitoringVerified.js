@@ -11,6 +11,7 @@ import SideNavBarVetAdmin from "../SideNavBarVetAdmin";
 import { users } from "../../../../Components/User";
 import VisitorMonitoringHeader from "./VisitorMonitoringHeader";
 import getUser from "../../../../Components/userData";
+import { Skeleton } from "@mui/material";
 
 function VisitorMonitoringVerified() {
   var aspectratioheight = window.screen.height;
@@ -71,8 +72,11 @@ function VisitorMonitoringVerified() {
           }}
         >
           <VisitorMonitoringHeader />
+          {user.length == 0 ?
+            <Skeleton variant="rectangular" height={'50vh'} width={'100%'} />
+            : <HistoryTab user={user} />
+          }
 
-          <HistoryTab user={user} />
         </div>
       </div>
     </div>

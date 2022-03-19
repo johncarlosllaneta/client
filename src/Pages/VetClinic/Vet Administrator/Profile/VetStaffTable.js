@@ -1,9 +1,11 @@
+import { Button } from '@mui/material';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import { FloatingLabel, Form, Row, Button, Col } from 'react-bootstrap'
+import { FloatingLabel, Form, Row, Col, Offcanvas } from 'react-bootstrap'
 import { ItemAssignmentPage } from 'twilio/lib/rest/numbers/v2/regulatoryCompliance/bundle/itemAssignment';
 import { hostUrl } from '../../../../Components/Host';
 import { users } from '../../../../Components/User';
+import VetStaffRegistration from './Registration/VetStaff/VetStaffRegistration';
 import VetStaffProfile from './VetStaffProfile'
 
 function VetStaffTable(props) {
@@ -24,9 +26,22 @@ function VetStaffTable(props) {
 
     }, []);
 
+    const [showVetStaffRegistration, setShowVetStaffRegistration] = useState(false);
+
+    const handleClose = () => setShowVetStaffRegistration(false);
+    const handleShow = () => setShowVetStaffRegistration(true);
 
     return (
         <div>
+
+            <Offcanvas show={showVetStaffRegistration} onHide={handleClose} placement={'end'} key={1} backdrop={false}>
+                <Offcanvas.Header >
+                    <Offcanvas.Title>Register Vet Staff</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                    <VetStaffRegistration handleClose={handleClose} vetid={props.user.vetid} />
+                </Offcanvas.Body>
+            </Offcanvas>
             <Row
 
             >
@@ -51,8 +66,9 @@ function VetStaffTable(props) {
                         </FloatingLabel>
                     </div>
                     <Button
+                        variant='contained'
                         onClick={() => {
-                            window.open("/registration/vet staff", "_blank").focus();
+                            handleShow();
 
                         }}
                         style={{
@@ -67,7 +83,9 @@ function VetStaffTable(props) {
 
             <Row
                 style={{
-                    marginTop: 20
+                    marginTop: 20,
+                    display: 'flex',
+                    justifyContent: 'start',
                 }}
             >
                 {vetStaff.filter((val) => {
@@ -78,7 +96,7 @@ function VetStaffTable(props) {
                     }
                 }).map((item) => {
                     return (
-                        <Col>
+                        <Col sm={3}>
                             <VetStaffProfile user={item} />
                         </Col>
                     )

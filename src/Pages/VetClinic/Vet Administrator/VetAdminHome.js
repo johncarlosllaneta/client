@@ -6,8 +6,6 @@ import PetsVerified from './Pets/PetsVerified';
 import profileContentVerified from './Profile/profileContentVerified';
 import PetPanelTableController from './Pets/PetPanelTableController';
 import ServicesVerified from './Vet Offers/Services/ServicesVerified';
-
-import RegistrationVeterinarian from './Profile/Registration/Veterinarian/RegistrationVeterinarian';
 import RegistrationVetStaff from './Profile/Registration/VetStaff/RegistrationVetStaff';
 import PreControlStartHolder from './Vet Offers/Services/ServicePages/PreControlStartHolder';
 import PetExamStartHolder from './Vet Offers/Services/ServicePages/PetExamStartHolder';
@@ -23,6 +21,7 @@ import VetSettings from './Settings/VetSettings';
 import Thread from './Talk to Vet/Thread';
 import VideoChat from '../../../Components/video-call/VideoChat';
 import ConsultStartHolder from './Vet Offers/Services/ServicePages/ConsultStartHolder';
+import NotFound from '../../../Components/NotFound';
 
 
 function VetAdminHome() {
@@ -36,7 +35,6 @@ function VetAdminHome() {
                         <Route path="/" exact component={DashboardVetAdmin} />
                         <Route path="/dashboard" exact component={DashboardVetAdmin} />
                         <Route path="/profile" exact component={profileContentVerified} />
-                        <Route path="/registration/veterinarian" exact component={RegistrationVeterinarian} />
                         <Route path="/registration/vet staff" exact component={RegistrationVetStaff} />
                         <Route path="/pets/:vetid" exact component={PetsVerified} />
                         <Route path="/pets/:vetid/:petid" exact component={PetPanelTableController} />
@@ -109,6 +107,7 @@ function VetAdminHome() {
                             exact
                             component={VideoChat} />
 
+                        <Route component={NotFound} />
 
                     </Switch>
                 </div>
