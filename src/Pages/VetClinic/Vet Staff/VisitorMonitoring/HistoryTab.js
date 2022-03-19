@@ -10,14 +10,14 @@ import { Skeleton, useMediaQuery } from "@mui/material";
 import getUser from "../../../../Components/userData";
 const HistoryTab = (props) => {
   const [visitor, setvisitor] = useState([]);
+  const [counter, setcounter] = useState(0);
   useEffect(async () => {
-    getVisitor(props.vetid);
+    Axios.get(`${hostUrl}/vetclinic/visitor/${props.visitor}`).then(
+      (response) => {
+        setvisitor(response.data);
+      }
+    );
   }, []);
-  function getVisitor(id) {
-    Axios.get(`${hostUrl}/vetclinic/visitor/${id}`).then((response) => {
-      setvisitor(response.data);
-    });
-  }
 
   function dateConvertion(date) {
     var str = date.split("-");

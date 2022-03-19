@@ -5,6 +5,7 @@ import AppointmentMain from "./Appointments/AppointmentMain";
 import AppointmentPage from "./Appointments/AppointmentPage";
 import DashboardMain from "./Dashboard/DashboardMain";
 import PetsMain from "./Pets/PetsMain";
+import PetPanelTableController from "./Pets/Widgets/PetPanelTableController";
 import ProfileMain from "./Profile/ProfileMain";
 import ConsultationMain from "./Vet Offers/Consultation/ConsultationMain";
 import PharmacyMain from "./Vet Offers/Pharmacy/PharmacyMain";
@@ -24,6 +25,11 @@ function VetDoctorHome() {
           <Route path="/dashboard" exact component={DashboardMain} />
           <Route path="/profile" exact component={ProfileMain} />
           <Route path="/pets/:vetid" exact component={PetsMain} />
+          <Route
+            path="/pets/:vetid/:petid"
+            exact
+            component={PetPanelTableController}
+          />
           <Route
             path="/consultation/:vetid"
             exact

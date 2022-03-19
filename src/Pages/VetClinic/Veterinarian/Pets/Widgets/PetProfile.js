@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "react-avatar";
 import { Card, Col, Row } from "react-bootstrap";
-function PetContainerProfile() {
+import Axios from "axios";
+import { hostUrl } from "../../../../../Components/Host";
+import { dateConvertion } from "../../../../../Components/FormatDateTime";
+
+function PetProfile(props) {
+  const [pet, setpet] = useState([]);
+  const [counter, setcounter] = useState(0);
+
+  useEffect(() => {
+    if (counter < 3) {
+      Axios.get(`${hostUrl}/doc/pets/${props.petid}`).then((response) => {
+        setpet(response.data[0]);
+      });
+      setcounter(counter + 1);
+    }
+  }, [pet]);
+  // alert(pet.pet_name);
   return (
     <div
       style={{
@@ -32,12 +48,10 @@ function PetContainerProfile() {
             }}
           >
             <Avatar
-              name={"lukas"}
+              name={pet.pet_name}
               round
               size={200}
-              src={
-                "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-              }
+              src={pet.pet_picture}
             />
           </div>
 
@@ -54,14 +68,14 @@ function PetContainerProfile() {
                 marginBottom: 0,
               }}
             >
-              Lukas
+              {pet.pet_name}
             </h3>
             <p
               style={{
                 textAlign: "left",
               }}
             >
-              Aspin
+              {pet.breed_of_pet}
             </p>
           </div>
 
@@ -101,7 +115,7 @@ function PetContainerProfile() {
                   >
                     Type of Pet
                   </h5>
-                  <p>Dog</p>
+                  <p>{pet.type_of_pet}</p>
                 </div>
                 <div>
                   <h5
@@ -111,7 +125,7 @@ function PetContainerProfile() {
                   >
                     Gender
                   </h5>
-                  <p>Male</p>
+                  <p>{pet.gender}</p>
                 </div>
               </div>
 
@@ -130,7 +144,7 @@ function PetContainerProfile() {
                   >
                     Birthday
                   </h5>
-                  <p>September 5, 2017</p>
+                  <p>{dateConvertion(String(pet.birth_day).split("T")[0])}</p>
                 </div>
 
                 <div>
@@ -141,7 +155,7 @@ function PetContainerProfile() {
                   >
                     Pet Owner
                   </h5>
-                  <p>Jhaycee Llaneta</p>
+                  <p>{pet.pet_owner_name}</p>
                 </div>
               </div>
             </div>
@@ -152,4 +166,4 @@ function PetContainerProfile() {
   );
 }
 
-export default PetContainerProfile;
+export default PetProfile;

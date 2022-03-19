@@ -1,41 +1,41 @@
-import { Button } from '@mui/material';
-import React from 'react';
-import { messages, users } from '../../../../../Components/User';
+import { Button } from "@mui/material";
+import React from "react";
+import { messages, users } from "../../../../../Components/User";
+import ProductTableHolder from "./ProductTableHolder";
 
 function ProductHeader() {
-    return <div
-        style={{
-            display: 'inline-flex',
-            justifyContent: 'space-between',
-            width: '100%'
-        }}
+  return (
+    <div
+      style={{
+        display: "inline-flex",
+        justifyContent: "space-between",
+        width: "100%",
+      }}
     >
-        <div>
+      <div>
+        <h1>Products</h1>
+      </div>
+      <div
+        style={{
+          display: "flex",
 
-            <h1>Products</h1>
-        </div>
-        <div
-            style={{
-                display: 'flex',
-
-                alignItems: 'center'
-            }}
+          alignItems: "center",
+        }}
+      >
+        <Button
+          onClick={() => {
+            // messages(users[0].vetid);
+            // <ProductTableHolder />;
+          }}
+          style={{
+            height: "50%",
+          }}
         >
-            <Button
-                onClick={() => {
-                    messages(users[0].vetid);
-                }}
-                style={{
-                    height: '50%'
-                }}
-            >
-                Order History
-            </Button>
-
-        </div>
-
-
-    </div>;
+          Order History
+        </Button>
+      </div>
+    </div>
+  );
 }
 
 export default ProductHeader;

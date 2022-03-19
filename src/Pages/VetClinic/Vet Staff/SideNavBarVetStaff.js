@@ -235,7 +235,7 @@ function SideNavBarVetStaff(props) {
             }}
           >
             <RiServiceFill id="icons" />
-            <a id="anchorTag" href={`/product/${user.vetid}`}>
+            <a id="anchorTag" href={`/products/${user.vetid}`}>
               Product
             </a>
           </Container>

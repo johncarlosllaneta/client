@@ -1,9 +1,9 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import NavBarStaff from "../../NavBarStaff";
 import SideNavBarVetStaff from "../../SideNavBarVetStaff";
 
 import ProductTable from "./ProductTable";
-import NavBarStaff from "../../NavBarStaff";
 function ProductVerified() {
   var aspectratioheight = window.screen.height;
   var aspectratiowidth = window.screen.width;

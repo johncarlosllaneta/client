@@ -33,7 +33,7 @@ function VetStaffHome() {
           <Route path="/" exact component={DashboardMain} />
           <Route path="/dashboard" exact component={DashboardMain} />
           <Route path="/profile" exact component={ProfileMain} />
-          <Route path="/product/:vetid" exact component={ProductVerified} />
+          <Route path="/products/:vetid" exact component={ProductVerified} />
           <Route path="/pharmacy/:vetid" exact component={PharmacyMain} />
           <Route
             path="/visitormonitoring"

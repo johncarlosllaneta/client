@@ -26,7 +26,6 @@ function VisitorMonitoringVerified() {
 
   const [counter, setcounter] = useState(0);
   useEffect(async () => {
-    var token = localStorage.getItem("ajwt");
     const userData = await getUser();
     setuser(userData);
   }, []);
@@ -125,7 +124,7 @@ function VisitorMonitoringVerified() {
                   width={"100%"}
                 />
               ) : (
-                <HistoryTab user={user} />
+                <HistoryTab visitor={user.vetid} />
               )}
             </Col>
           </Row>

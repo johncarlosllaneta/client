@@ -10,17 +10,15 @@ import { Skeleton, useMediaQuery } from "@mui/material";
 import getUser from "../../../../../Components/userData";
 function ProfilePage() {
   const [user, setuser] = useState([]);
+  const [user1, setuser1] = useState([]);
   const [imgProfile, setimgProfile] = useState("");
 
   useEffect(async () => {
-    var token = localStorage.getItem("ajwt");
-    Axios.get(`${hostUrl}/home`, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then((response) => {
-      setuser(response.data.result[0]);
+    const userData = await getUser();
+    Axios.get(`${hostUrl}/staff/${userData.vet_staff_id}`).then((response) => {
+      setuser(response.data[0]);
     });
-    setimgProfile(user.vet_staff_profilePic);
-  }, [user]);
+  }, []);
   return (
     <div
       style={{
@@ -79,7 +77,9 @@ function ProfilePage() {
                       " " +
                       user.vet_staff_lname}
                   </Row>
-                  <Row style={{ fontSize: 15, color: "#33C1D2" }}>Staff</Row>
+                  <Row style={{ fontSize: 15, color: "#33C1D2" }}>
+                    {"Staff of" + " " + user.vet_name}
+                  </Row>
                   <Row>
                     <Button
                       style={{
@@ -116,12 +116,12 @@ function ProfilePage() {
               paddingTop: 20,
             }}
           >
-            {user.vet_staff_email == null ? (
+            {user.email == null ? (
               <Skeleton variant="rectangular" height={"100%"} />
             ) : (
               <ProfileContainer
                 icon={<MdEmail style={{ color: "#62D7FF", fontSize: 90 }} />}
-                title={user.vet_staff_email}
+                title={user.email}
                 subtext={"Email Address"}
               />
             )}
@@ -135,12 +135,12 @@ function ProfilePage() {
               paddingTop: 20,
             }}
           >
-            {user.vet_staff_email == null ? (
+            {user.vet_address == null ? (
               <Skeleton variant="rectangular" height={"100%"} />
             ) : (
               <ProfileContainer
                 icon={<MdPlace style={{ color: "#62D7FF", fontSize: 90 }} />}
-                title={"2529 Legarda Sampaloc Manila"}
+                title={user.vet_address}
                 subtext={"Address"}
               />
             )}

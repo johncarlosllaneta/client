@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@material-ui/lab/TabContext";
 import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
+import HealthPetCard from "./HealthPetCard";
+import VaccinePetCard from "./VaccinePetCard";
 import { Row } from "react-bootstrap";
 import { IoChevronBack } from "react-icons/io5";
-import Consultation from "./Tables/Consultation";
-import Vaccination from "./Tables/Vaccination";
-import HealthCard from "./Tables/HealthCard";
-import Appointment from "./Tables/Appointment";
-import PetContainerProfile from "./PetContainerProfile";
-function PetProfilePage() {
+import PetProfile from "./PetProfile";
+import ConsultationPetCard from "./ConsultationPetCard";
+import AppointmentPetCard from "./AppointmentPetCard";
+
+function PetRecord(props) {
+  let { petid } = useParams();
   const [value, setValue] = React.useState("1");
 
   const handleChange = (event, newValue) => {
@@ -37,7 +39,7 @@ function PetProfilePage() {
         >
           <p
             onClick={() => {
-              window.location.href = `/pets`;
+              window.location.href = `/pets/${props.user.vetid}`;
             }}
             style={{
               marginBottom: 0,
@@ -57,7 +59,7 @@ function PetProfilePage() {
           marginBottom: 20,
         }}
       >
-        <PetContainerProfile />
+        <PetProfile petid={petid} />
       </Row>
 
       <TabContext value={value}>
@@ -96,23 +98,23 @@ function PetProfilePage() {
           </TabList>
         </Box>
         <TabPanel value="1">
-          <HealthCard />
+          <HealthPetCard pets={petid} vetid={props.user.vetid} />
         </TabPanel>
 
         <TabPanel value="2">
-          <Vaccination />
+          <VaccinePetCard pet={petid} vetid={props.user.vetid} />
         </TabPanel>
 
         <TabPanel value="3">
-          <Consultation />
+          <ConsultationPetCard pet={petid} vetid={props.user.vetid} />
         </TabPanel>
 
         <TabPanel value="4">
-          <Appointment />
+          <AppointmentPetCard pet={petid} vetid={props.user.vetid} />
         </TabPanel>
       </TabContext>
     </div>
   );
 }
 
-export default PetProfilePage;
+export default PetRecord;
