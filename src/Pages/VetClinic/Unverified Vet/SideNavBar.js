@@ -5,19 +5,33 @@ import "../../../css/SideNavBar.css";
 import { HiHome } from "react-icons/hi";
 import { GoVerified } from "react-icons/go";
 import { IoPersonCircleSharp } from "react-icons/io5";
+import PersonIcon from '@mui/icons-material/Person';
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
+import getUser from "../../../Components/userData";
+
 function SideNavBar(props) {
   const [dashboard, setdashboard] = useState();
   const [profile, setprofile] = useState();
+  const [vetOffers, setvetOffers] = useState();
   const [verify, setverify] = useState();
   useEffect(() => {
     if (props.active === "dashboard") {
       setdashboard("#19B9CC");
-    } else if (props.active === "profile") {
-      setprofile("#19B9CC");
     } else if (props.active === "verify") {
       setverify("#19B9CC");
+    } else if (props.active === "profile") {
+      setprofile("#19B9CC");
+    } else if (props.active === "vet offers") {
+      setvetOffers("#19B9CC");
     }
   }, []);
+
+  const [user, setuser] = useState([]);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+  }, []);
+
   return (
     <div id="sideNavBar">
       <Container
@@ -59,17 +73,44 @@ function SideNavBar(props) {
         </a>
       </Container>
 
-      <Container
-        id="ContainerNavItem"
-        style={{
-          backgroundColor: profile,
-        }}
-      >
-        <IoPersonCircleSharp id="icons" />
-        <a id="anchorTag" href="/profile">
-          Profile
-        </a>
-      </Container>
+
+      {
+        user.length != 0
+          ?
+          <div
+            hidden={user.isEmailVerify != 0 ? false : true}
+          >
+            <Container
+              id="ContainerNavItem"
+              style={{
+                backgroundColor: profile,
+              }}
+            >
+              <a id="anchorTag" href="/profile">
+                <PersonIcon id="icons" />
+                Profile
+              </a>
+            </Container>
+
+
+            <Container
+              id="ContainerNavItem"
+              style={{
+                backgroundColor: vetOffers,
+              }}
+            >
+              <a id="anchorTag" href="/vetOffers">
+                <AddBusinessIcon id="icons" />
+                Vet Offers
+              </a>
+            </Container>
+          </div>
+          :
+          <></>
+      }
+
+
+
 
       <Container
         id="ContainerNavItem"

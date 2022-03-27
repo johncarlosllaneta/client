@@ -7,7 +7,6 @@ import { MdPets } from "react-icons/md";
 import { FaClinicMedical, FaStethoscope } from "react-icons/fa";
 import { MdLocalPharmacy } from "react-icons/md";
 import { AiFillSchedule, AiFillSecurityScan } from "react-icons/ai";
-import { IoPersonCircleSharp } from "react-icons/io5";
 import { RiServiceFill } from "react-icons/ri";
 import { GiDogBowl } from "react-icons/gi";
 import Axios from "axios";
@@ -79,7 +78,7 @@ function SideNavBarVetAdmin(props) {
     }, [pharmacyChecker, productChecker, servicesChecker, consultationChecker]);
 
     const [dashboard, setdashboard] = useState();
-    const [profile, setprofile] = useState();
+
     const [pets, setpets] = useState();
     const [vetoffer, setvetoffer] = useState();
     const [visitormonitoring, setvisitormonitoring] = useState();
@@ -92,8 +91,6 @@ function SideNavBarVetAdmin(props) {
     useEffect(() => {
         if (props.active === "dashboard") {
             setdashboard("#19B9CC");
-        } else if (props.active === "profile") {
-            setprofile("#19B9CC");
         } else if (props.active === "pets") {
             setpets("#19B9CC");
         } else if (props.active === "vetoffer") {
@@ -192,7 +189,7 @@ function SideNavBarVetAdmin(props) {
                     backgroundColor: vetoffer,
                 }}
             >
-                {numberOfUnviewedReserved != 0 ? (
+                {numberOfUnviewedReserved !== 0 ? (
                     <div
                         style={{
                             display: "flex",
@@ -292,7 +289,7 @@ function SideNavBarVetAdmin(props) {
                         }}
                         onClick={viewingReserved}
                     >
-                        {numberOfUnviewedReserved != 0 ? (
+                        {numberOfUnviewedReserved !== 0 ? (
                             <div
                                 style={{
                                     display: "flex",
@@ -352,7 +349,7 @@ function SideNavBarVetAdmin(props) {
                 }}
                 onClick={viewingAppointment}
             >
-                {numberOfUnviewedAppointment != 0 ? (
+                {numberOfUnviewedAppointment !== 0 ? (
                     <div
                         style={{
                             display: "flex",

@@ -9,11 +9,9 @@ import Landing from "./Pages/General/Landing";
 import TermsAndCondition from "./Pages/General/TermsAndCondition";
 import axios from "axios";
 import SystemAdminHome from "./Pages/SystemAdmin/SystemAdminHome";
-import VetHome from "./Pages/VetClinic/VetHome";
 import PetVetDetails from "./Pages/PetOwner/PetVetDetails";
 import PetProdServ from "./Pages/PetOwner/PetProdServ";
 import PetServDetail from "./Pages/PetOwner/PetServDetail";
-import PetChat from "./Pages/PetOwner/PetChat";
 import { hostUrl } from "./Components/Host";
 import RegistrationVet from "./Components/RegistrationVet";
 import RegistrationPetOwner from "./Components/RegistrationPetOwner";
@@ -26,26 +24,23 @@ import ContactTracingMain from "./Pages/PetOwner/ContactTracingMain";
 import FindVetMain from "./Pages/PetOwner/FindVetMain";
 import PetDetailsInformationMain from "./Pages/PetOwner/PetDetailsInformationMain";
 import VetCategory from "./Pages/PetOwner/VetCategory";
-import ShopNow from "./Pages/PetOwner/ShopNow";
 import ProductShop from "./Pages/VetClinic/Verified Vet/Vet Offers/Products/ProductShop";
 import Pharmacy from "./Pages/PetOwner/Pharmacy";
 import PetOwnerSettings from "./Pages/PetOwner/PetOwnerSettings";
 import AppointmentHistoryMain from "./Pages/PetOwner/AppointmentHistoryMain";
 import CartHistoryMain from "./Pages/PetOwner/CartHistoryMain";
 import Calling from "./Components/video-call/Calling";
-import HomePage from "./Pages/PetOwner/HomePage";
 import PetChatMobile from "./Pages/PetOwner/PetChatMobile";
 import PetChatMessagesMobile from "./Pages/PetOwner/PetChatMessagesMobile";
-
 import PrivacyPolicy from "./Pages/General/PrivacyPolicy";
 import ContactUs from "./Pages/General/ContactUs";
 import AboutUsPage from "./Pages/General/AboutUsPage";
 import VetAdminHome from "./Pages/VetClinic/Vet Administrator/VetAdminHome";
-import DashboardMain from "./Pages/VetClinic/Veterinarian/Dashboard/DashboardMain";
 import VetDoctorHome from "./Pages/VetClinic/Veterinarian/VetDoctorHome";
 import VetStaffHome from "./Pages/VetClinic/Vet Staff/VetStaffHome";
 import VideoChat from "./Components/video-call/VideoChat";
 import Thread from "./Pages/PetOwner/Video Conference/Thread";
+import NotFound from "./Components/NotFound";
 
 
 function App() {
@@ -56,7 +51,6 @@ function App() {
   const [token, settoken] = useState("");
   var loginContent;
 
-  const [counter, setcounter] = useState(0);
   useEffect(() => {
     let tokens = localStorage.getItem("ajwt");
     const loginState = localStorage.getItem("isLogin");
@@ -64,10 +58,7 @@ function App() {
     const roleuser = parseInt(localStorage.getItem("role"));
     setRole(roleuser);
     settoken(localStorage.getItem("ajwt"));
-    // alert(tokens)
-
     let roles = parseInt(localStorage.getItem("role"));
-    // alert(roles);
 
     if (roles == NaN) {
       window.location.replace("/");
@@ -80,8 +71,6 @@ function App() {
       }
       )
         .then((res) => {
-
-          // alert(res.status);
           if (res.status == 200) {
             setRole(roles);
           } else {
@@ -89,8 +78,6 @@ function App() {
             localStorage.clear();
             window.location.href = '/login';
           }
-
-          // setRole(res.data.result[0].password);
         })
         .catch((error) => {
           console.log(error);
@@ -234,6 +221,7 @@ function App() {
               <Route path="/video conference/:code"
                 exact
                 component={VideoChat} />
+              <Route children={<NotFound />} />
             </Switch>
           </div>
         ) : (

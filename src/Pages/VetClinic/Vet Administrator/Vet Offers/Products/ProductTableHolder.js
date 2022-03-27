@@ -3,8 +3,9 @@
 import ProductItem from './ProductItem';
 import ProductSearchBar from './ProductSearchBar';
 import React, { useState, useEffect, useRef } from 'react';
-import { Form, Offcanvas, FloatingLabel, Row, Col } from 'react-bootstrap';
+import { Form, Offcanvas, FloatingLabel, Row, Col, Modal } from 'react-bootstrap';
 import UpdateProduct from './UpdateProduct';
+import ProductDescription from './ProductDescription';
 
 
 function ProductTableHolder(props) {
@@ -14,6 +15,14 @@ function ProductTableHolder(props) {
     const handleCloseUpdateProduct = () => setShowUpdateProduct(false);
     const handleShowUpdateProduct = () => setShowUpdateProduct(true);
 
+
+
+    // view details
+    const [productInfo, setproductInfo] = useState([]);
+    const [showProductDetails, setShowProductDetails] = useState(false);
+
+    const handleCloseProductDetails = () => setShowProductDetails(false);
+    const handleShowProductDetails = () => setShowProductDetails(true);
     return <div
         style={{
             height: 'auto',
@@ -25,6 +34,14 @@ function ProductTableHolder(props) {
         }}
 
     >
+
+
+        {/* View Details */}
+        <Modal show={showProductDetails} onHide={handleCloseProductDetails}>
+            <ProductDescription productInfo={productInfo} />
+        </Modal>
+
+
         {/* Update Products */}
         <Offcanvas show={showUpdateProduct} onHide={handleCloseUpdateProduct} placement='end' key={1}>
             <Offcanvas.Header closeButton>
@@ -57,7 +74,7 @@ function ProductTableHolder(props) {
         >
             {props.products.map((item) => {
                 return (
-                    <Col sm={3}><ProductItem product={item} handleShowUpdateProduct={handleShowUpdateProduct} /></Col>
+                    <Col sm={3}><ProductItem product={item} handleShowUpdateProduct={handleShowUpdateProduct} setproductInfo={setproductInfo} handleShowProductDetails={handleShowProductDetails} /></Col>
                 )
             })}
 

@@ -43,12 +43,12 @@ function NavBarVet(props) {
     const userData = await getUser();
     setuser(userData);
 
-    messages(user);
+    messages(userData);
     // alert(numberNewThreads);
     setTimeout(() => {
       setnumberNewThread(numberNewThreads);
     }, 1000);
-  }, [props.user]);
+  }, []);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);

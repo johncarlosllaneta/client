@@ -37,7 +37,7 @@ function VerifyContent() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavUnverifiedVet />
+          <NavUnverifiedVet showLogo={true} showHome={true} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
           <VerificationTab />

@@ -22,8 +22,6 @@ function LoginUpdated() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [validated, setValidated] = useState(false);
-
   const [invalidLogin, setinvalidLogin] = useState(1)
   const [invalidButtonController, setinvalidButtonController] = useState(false);
   function refreshInvalidLogin() {
@@ -44,7 +42,7 @@ function LoginUpdated() {
         password: password,
       })
         .then((response) => {
-          if (response.data.message === "Correct") {
+          if (response.data.message == "Correct") {
             localStorage.setItem("ajwt", response.data.accessToken);
             localStorage.setItem("rjwt", response.data.refreshToken);
             localStorage.setItem("isLogin", true);
