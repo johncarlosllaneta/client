@@ -27,23 +27,20 @@ function ProductTableTabController() {
   const [numberOfUnviewedReserved, setnumberOfUnviewedReserved] = useState(0);
 
   const [counter, setcounter] = useState(0);
-  useEffect(() => {
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/vetclinic/notification/reservation/${vetid}`).then(
-        (response) => {
-          setnotifReserved(response.data);
-        }
-      );
+  useEffect(async () => {
+    Axios.get(`${hostUrl}/vetclinic/notification/reservation/${vetid}`).then(
+      (response) => {
+        setnotifReserved(response.data);
+      }
+    );
 
-      Axios.get(
-        `${hostUrl}/vetclinic/notification/reservation/length/${vetid}`
-      ).then((response) => {
-        setnumberOfUnviewedReserved(response.data.view);
-        // alert(response.data.view);
-      });
-      setcounter(counter + 1);
-    }
-  }, [notifReserved, numberOfUnviewedReserved]);
+    Axios.get(
+      `${hostUrl}/vetclinic/notification/reservation/length/${vetid}`
+    ).then((response) => {
+      setnumberOfUnviewedReserved(response.data.view);
+      // alert(response.data.view);
+    });
+  }, []);
 
   function dateConvertion(date) {
     var str = date.split("-");

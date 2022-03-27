@@ -11,11 +11,11 @@ import { useParams } from "react-router-dom";
 function GeneralTable() {
   let { vetid } = useParams();
   const [appointmentConfirm, setappointmentConfirm] = useState([]);
-  useEffect(() => {
+  useEffect(async () => {
     Axios.get(`${hostUrl}/general/appointment/${vetid}`).then((response) => {
       setappointmentConfirm(response.data);
     });
-  }, [appointmentConfirm]);
+  }, []);
   //   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
 
   const columns = [

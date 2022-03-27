@@ -16,38 +16,28 @@ import { hostUrl } from "../../../../../../Components/Host";
 import { BiPencil } from "react-icons/bi";
 import { IoMdTrash } from "react-icons/io";
 import { AiOutlineSearch } from "react-icons/ai";
+import getUser from "../../../../../Components/userData";
 function ProductTable() {
   // let { staffId } = useParams();
 
   const [user, setuser] = useState([]);
 
   const [counter1, setcounter1] = useState(0);
-  useEffect(() => {
-    var token = localStorage.getItem("ajwt");
-    if (counter < 6) {
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-        // console.log(user);
-      });
-      setcounter1(counter + 1);
-    }
-  }, [user]);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+  }, []);
 
   const [counter, setcounter] = useState(0);
   const [product, setProduct] = useState([]);
-  useEffect(() => {
-    if (counter < 3) {
-      // var id = vetid.toString().replace("10##01", "/");
-      // var id = staffId;
-      Axios.get(`${hostUrl}/products/staff/${user.vet_staff_id}`).then(
-        (response) => {
-          setProduct(response.data);
-        }
-      );
-      setcounter(counter + 1);
-    }
+  useEffect(async () => {
+    // var id = vetid.toString().replace("10##01", "/");
+    // var id = staffId;
+    Axios.get(`${hostUrl}/products/staff/${user.vet_staff_id}`).then(
+      (response) => {
+        setProduct(response.data);
+      }
+    );
   }, [product]);
 
   // function refreshTable() {

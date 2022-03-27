@@ -26,7 +26,7 @@ import imageV from "../../../../../../Images/scopy.png";
 import imageVI from "../../../../../../Images/INHOUSEW.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
-import { users } from "../../../../../../Components/User";
+import getUser from "../../../../../../Components/userData";
 
 const PetGroomStart = (props) => {
   let { vetid } = useParams();
@@ -40,8 +40,14 @@ const PetGroomStart = (props) => {
   const [inHouseLab, setinHouseLab] = useState(true);
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
-  useEffect(() => {
-    Axios.get(`${hostUrl}/doc/${users[0].vet_doc_id}`).then((response) => {
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+
+    getServices(userData.vet_doc_id);
+  }, []);
+  function getServices(id) {
+    Axios.get(`${hostUrl}/doc/${id}`).then((response) => {
       if (response.data[0].enableExamination == 1) {
         setpetExamination(false);
       }
@@ -56,7 +62,7 @@ const PetGroomStart = (props) => {
         setpreventiveControls(false);
       }
     });
-  }, []);
+  }
 
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();
@@ -109,8 +115,8 @@ const PetGroomStart = (props) => {
   };
 
   const [petGroomings, setpetGroomings] = useState([]);
-  useEffect(() => {
-    Axios.get(`${hostUrl}/petGrooming/${users[0].vetid}`).then((response) => {
+  useEffect(async () => {
+    Axios.get(`${hostUrl}/petGrooming/${id}`).then((response) => {
       setpetGroomings(response.data);
       // console.log(response.data)
     });
@@ -118,7 +124,7 @@ const PetGroomStart = (props) => {
   }, []);
 
   function reloadPetGrooming() {
-    Axios.get(`${hostUrl}/petGrooming/${users[0].vetid}`).then((response) => {
+    Axios.get(`${hostUrl}/petGrooming/${id}`).then((response) => {
       setpetGroomings(response.data);
       // console.log(response.data)
     });
@@ -131,7 +137,7 @@ const PetGroomStart = (props) => {
       e.stopPropagation();
     } else {
       e.preventDefault();
-      Axios.post(`${hostUrl}/services/insert/:${users[0].vetid}`, {
+      Axios.post(`${hostUrl}/services/insert/:${id}`, {
         serviceName: serviceName,
         serviceDescription: serviceDescription,
         service_fee: serviceFee,
@@ -224,13 +230,14 @@ const PetGroomStart = (props) => {
               className="mr-3"
               style={{
                 color: "white",
-                marginRight: 10,
+                marginRight: 5,
               }}
               onClick={() => {
                 handleShowServices(row);
               }}
             >
               <AiOutlineSearch style={{ fontSize: 25 }} />
+              View Details
             </Button>
           </OverlayTrigger>
         </div>

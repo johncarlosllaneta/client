@@ -26,13 +26,13 @@ function DashboardReservationTab(props) {
   // getPendingAppointment
 
   // alert(props.vetid);
-  useEffect(() => {
+  useEffect(async () => {
     Axios.get(`${hostUrl}/pending/reservation/staff/${props.vetid}`).then(
       (response) => {
-        setreservation(response.data);
+        setreservation(response.data[0]);
       }
     );
-  }, [reservation]);
+  }, []);
   const [showPopover, setShowPopover] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);

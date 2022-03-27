@@ -7,17 +7,14 @@ import { hostUrl } from "../../../../../Components/Host";
 function VaccinePetCard(props) {
   const [counter, setcounter] = useState(0);
   const [vaccine, setvaccine] = useState([]);
-  useEffect(() => {
+  useEffect(async () => {
     // alert(props.pet);
-    if (counter < 3) {
-      Axios.get(
-        `${hostUrl}/pet/immunization/history/${props.vetid}/${props.pet}`
-      ).then((response) => {
-        setvaccine(response.data);
-      });
-      setcounter(counter + 1);
-    }
-  }, [vaccine]);
+    Axios.get(
+      `${hostUrl}/pet/immunization/history/${props.vetid}/${props.pet}`
+    ).then((response) => {
+      setvaccine(response.data);
+    });
+  }, []);
 
   const columns = [
     {

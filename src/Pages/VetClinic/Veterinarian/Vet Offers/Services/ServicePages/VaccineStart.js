@@ -26,7 +26,7 @@ import imageV from "../../../../../../Images/PetOwner/Vaccination.png";
 import imageVI from "../../../../../../Images/INHOUSEW.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
-import { users } from "../../../../../../Components/User";
+import getUser from "../../../../../../Components/userData";
 
 const VaccineStart = (props) => {
   let { vetid } = useParams();
@@ -40,8 +40,14 @@ const VaccineStart = (props) => {
   const [inHouseLab, setinHouseLab] = useState(true);
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
-  useEffect(() => {
-    Axios.get(`${hostUrl}/doc/${users[0].vet_doc_id}`).then((response) => {
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+
+    getServices(userData.vet_doc_id);
+  }, []);
+  function getServices(id) {
+    Axios.get(`${hostUrl}/doc/${id}`).then((response) => {
       if (response.data[0].enableExamination == 1) {
         setpetExamination(false);
       }
@@ -56,7 +62,7 @@ const VaccineStart = (props) => {
         setpreventiveControls(false);
       }
     });
-  }, []);
+  }
 
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();
@@ -108,18 +114,17 @@ const VaccineStart = (props) => {
   };
 
   const [vaccine, setvaccine] = useState([]);
-  useEffect(() => {
-    if (counter < 1) {
-      Axios.get(`${hostUrl}/vaccine/${users[0].vetid}`).then((response) => {
-        setvaccine(response.data);
-        // console.log(response.data)
-      });
-    }
+  useEffect(async () => {
+    Axios.get(`${hostUrl}/vaccine/${id}`).then((response) => {
+      setvaccine(response.data);
+      // console.log(response.data)
+    });
+
     // alert(props.data.vet_admin_id);
   }, []);
 
   function reloadVaccine() {
-    Axios.get(`${hostUrl}/vaccine/${users[0].vetid}`).then((response) => {
+    Axios.get(`${hostUrl}/vaccine/${id}`).then((response) => {
       setvaccine(response.data);
       // console.log(response.data)
       setValidated(false);
@@ -134,7 +139,7 @@ const VaccineStart = (props) => {
     } else {
       e.preventDefault();
 
-      Axios.post(`${hostUrl}/services/insert/:${users[0].vetid}`, {
+      Axios.post(`${hostUrl}/services/insert/:${id}`, {
         serviceName: serviceName,
         serviceDescription: serviceDescription,
         service_fee: serviceFee,
@@ -226,13 +231,14 @@ const VaccineStart = (props) => {
               className="mr-3"
               style={{
                 color: "white",
-                marginRight: 10,
+                marginRight: 5,
               }}
               onClick={() => {
                 handleShowServices(row);
               }}
             >
               <AiOutlineSearch style={{ fontSize: 25 }} />
+              View Details
             </Button>
           </OverlayTrigger>
         </div>

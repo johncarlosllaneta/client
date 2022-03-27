@@ -36,27 +36,21 @@ function HomeTab(props) {
   const [averageRating, setaverageRating] = useState();
 
   function getPet(id) {
-    axios
-      .get(`${hostUrl}/pets/vetclinic/length/${id}`)
-      .then((response) => {
-        setNumberOfPets(response.data.pets);
-      });
+    axios.get(`${hostUrl}/pets/vetclinic/length/${id}`).then((response) => {
+      setNumberOfPets(response.data.pets);
+    });
   }
 
   function getReserveProducts(id) {
-    axios
-      .get(`${hostUrl}/reserved/vetclinic/length/${id}`)
-      .then((response) => {
-        setnumberOfPendingReserved(response.data.reserved);
-      });
+    axios.get(`${hostUrl}/reserved/vetclinic/length/${id}`).then((response) => {
+      setnumberOfPendingReserved(response.data.reserved);
+    });
   }
 
   function getPendingAppointment(id) {
-    axios
-      .get(`${hostUrl}/pending/vetclinic/length/${id}`)
-      .then((response) => {
-        setNumberOfPendingRequest(response.data.pending);
-      });
+    axios.get(`${hostUrl}/pending/vetclinic/length/${id}`).then((response) => {
+      setNumberOfPendingRequest(response.data.pending);
+    });
   }
 
   function getRatings(id) {
@@ -75,10 +69,10 @@ function HomeTab(props) {
   var userSidePanel;
   // Vet clinic dashboard
   if (props.user == "Veterinarian") {
-    userPanel = <DashboardTable />;
+    userPanel = <DashboardTable data={user.vetid} />;
     userSidePanel = <DashboardInfo />;
   } else if (props.user == "Vet Staff") {
-    userPanel = <DashboardReservationTab />;
+    userPanel = <DashboardReservationTab data={user.vetid} />;
     userSidePanel = <RatingsAndFeedback data={user} />;
   } else if (props.user == "Vet Admin") {
     userPanel = <PanelTableController vetid={user.vetid} />;
@@ -89,53 +83,48 @@ function HomeTab(props) {
     <div style={{ padding: 20 }}>
       <Row className=" ml-5 " style={{ paddingBottom: 30 }}>
         <Col>
-          {props.userData.length == 0 ?
-            <Skeleton variant="rectangular" height={'100%'} />
-            :
+          {props.userData.length == 0 ? (
+            <Skeleton variant="rectangular" height={"100%"} />
+          ) : (
             <DashboardContainer
               icon={<FaPaw style={{ fontSize: 100 }} />}
               category={"Pet Population"}
               quantity={numberOfPets}
             />
-          }
-
+          )}
         </Col>
         <Col>
-
-          {props.userData.length == 0 ?
-            <Skeleton variant="rectangular" height={'100%'} />
-            :
+          {props.userData.length == 0 ? (
+            <Skeleton variant="rectangular" height={"100%"} />
+          ) : (
             <DashboardContainer
               icon={<FaUserAlt style={{ fontSize: 100 }} />}
               category={"Pending Reserved Products"}
               quantity={numberOfPendingReserved}
             />
-          }
-
+          )}
         </Col>
         <Col>
-          {props.userData.length == 0 ?
-            <Skeleton variant="rectangular" height={'100%'} />
-            :
+          {props.userData.length == 0 ? (
+            <Skeleton variant="rectangular" height={"100%"} />
+          ) : (
             <DashboardContainer
               icon={<FaClinicMedical style={{ fontSize: 100 }} />}
               category={"Pending Request Appointment"}
               quantity={numberOfPendingRequest}
             />
-          }
-
+          )}
         </Col>
         <Col>
-          {props.userData.length == 0 ?
-            <Skeleton variant="rectangular" height={'15vh'} />
-            :
+          {props.userData.length == 0 ? (
+            <Skeleton variant="rectangular" height={"15vh"} />
+          ) : (
             <DashboardContainer
               icon={<BsFillStarFill style={{ fontSize: 100 }} />}
               category={"Average Ratings"}
               quantity={oneDecimal(averageRating)}
             />
-          }
-
+          )}
         </Col>
       </Row>
 
@@ -143,24 +132,25 @@ function HomeTab(props) {
         <div
           // sm={8}
           style={{
-            width: '80%'
+            width: "80%",
           }}
         >
           <div style={{ height: "auto" }}>
-            {props.userData.length == 0 ?
-              <Skeleton variant="rectangular" height={'50vh'} />
-              :
+            {props.userData.length == 0 ? (
+              <Skeleton variant="rectangular" height={"50vh"} />
+            ) : (
               userPanel
-            }
+            )}
           </div>
         </div>
 
         <div
-          // sm={4} 
-          style={{ display: "flex", width: '20%' }}>
-          {props.userData.length == 0 ?
-            <Skeleton variant="rectangular" height={'50vh'} width={'100%'} />
-            :
+          // sm={4}
+          style={{ display: "flex", width: "20%" }}
+        >
+          {props.userData.length == 0 ? (
+            <Skeleton variant="rectangular" height={"50vh"} width={"100%"} />
+          ) : (
             <Card
               style={{
                 boxShadow:
@@ -179,7 +169,11 @@ function HomeTab(props) {
                   </h5>
                 ) : (
                   <p
-                    style={{ color: "#19B9CC", textAlign: "left", fontSize: '100%' }}
+                    style={{
+                      color: "#19B9CC",
+                      textAlign: "left",
+                      fontSize: "100%",
+                    }}
                     className="mt-2"
                   >
                     Ratings and Feedback
@@ -192,8 +186,7 @@ function HomeTab(props) {
                 </Card>
               </Card.Body>
             </Card>
-          }
-
+          )}
         </div>
       </Row>
     </div>

@@ -11,13 +11,13 @@ function Appointment() {
 
   const [appointment, setappointment] = useState([]);
   const [counter, setcounter] = useState(0);
-  useEffect(() => {
+  useEffect(async () => {
     Axios.get(`${hostUrl}/doc/pets/appointment/${id}`)
       .then((response) => {
         setappointment(response.data);
       })
       .catch((err) => console.log(err));
-  }, [appointment]);
+  }, []);
   const columns = [
     {
       title: "Appointment ID",

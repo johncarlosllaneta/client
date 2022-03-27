@@ -14,7 +14,7 @@ import Axios from "axios";
 import { hostUrl } from "../../../Components/Host";
 import { MdFiberNew } from "react-icons/md";
 import { GoPrimitiveDot } from "react-icons/go";
-import { users } from "../../../Components/User";
+import getUser from "../../../Components/userData";
 
 function SideNavBarVetDoctor(props) {
   const [consultationChecker, setconsultationChecker] = useState();
@@ -33,13 +33,10 @@ function SideNavBarVetDoctor(props) {
   const [vetID, setvetID] = useState("");
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
-  useEffect(() => {
-    var token = localStorage.getItem("ajwt");
-    Axios.get(`${hostUrl}/home`, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then((response) => {
-      setuser(response.data.result[0]);
-      setvetID(response.data.result[0].vetid);
+  useEffect(async () => {
+    const userData = await getUser();
+    Axios.get(`${hostUrl}/doc/${userData.vet_doc_id}`).then((response) => {
+      setuser(response.data[0]);
     });
     setconsultationChecker(1);
     setpharmacyChecker(1);
@@ -61,7 +58,7 @@ function SideNavBarVetDoctor(props) {
       setnumberOfUnviewedReserved(response.data.view);
       // alert(response.data.view);
     });
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     if (consultationChecker === 1) {

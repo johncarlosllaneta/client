@@ -26,7 +26,7 @@ import imageV from "../../../../../../Images/scopy.png";
 import imageVI from "../../../../../../Images/INHOUSEW.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
-import { users } from "../../../../../../Components/User";
+import getUser from "../../../../../../Components/userData";
 
 const PetExamStart = (props) => {
   let { vetid } = useParams();
@@ -39,8 +39,15 @@ const PetExamStart = (props) => {
   const [vaccination, setvaccination] = useState(true);
   const [inHouseLab, setinHouseLab] = useState(true);
   const [counter, setcounter] = useState(0);
-  useEffect(() => {
-    Axios.get(`${hostUrl}/doc/${users[0].vet_doc_id}`).then((response) => {
+  const [user, setuser] = useState([]);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+
+    getServices(userData.vet_doc_id);
+  }, []);
+  function getServices(id) {
+    Axios.get(`${hostUrl}/doc/${id}`).then((response) => {
       if (response.data[0].enableExamination == 1) {
         setpetExamination(false);
       }
@@ -55,7 +62,7 @@ const PetExamStart = (props) => {
         setpreventiveControls(false);
       }
     });
-  }, []);
+  }
 
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();
@@ -108,24 +115,20 @@ const PetExamStart = (props) => {
   };
 
   const [petExaminations, setpetExaminations] = useState([]);
-  useEffect(() => {
-    if (counter < 2) {
-      Axios.get(`${hostUrl}/petExamination/${id}`).then((response) => {
-        setpetExaminations(response.data);
-        // console.log(response.data)
-      });
-      setcounter(counter + 1);
-    }
+  useEffect(async () => {
+    Axios.get(`${hostUrl}/petExamination/${id}`).then((response) => {
+      setpetExaminations(response.data);
+      // console.log(response.data)
+    });
+
     // alert(props.data.vet_admin_id);
-  }, [petExaminations]);
+  }, []);
 
   function reloadPetExamination() {
-    Axios.get(`${hostUrl}/petExamination/${users[0].vetid}`).then(
-      (response) => {
-        setpetExaminations(response.data);
-        // console.log(response.data)
-      }
-    );
+    Axios.get(`${hostUrl}/petExamination/${id}`).then((response) => {
+      setpetExaminations(response.data);
+      // console.log(response.data)
+    });
   }
 
   const submitService = (e) => {
@@ -136,7 +139,7 @@ const PetExamStart = (props) => {
     } else {
       e.preventDefault();
 
-      Axios.post(`${hostUrl}/services/insert/:${users[0].vetid}`, {
+      Axios.post(`${hostUrl}/services/insert/:${id}`, {
         serviceName: serviceName,
         serviceDescription: serviceDescription,
         service_fee: serviceFee,
@@ -223,13 +226,14 @@ const PetExamStart = (props) => {
               className="mr-3"
               style={{
                 color: "white",
-                marginRight: 10,
+                margin: 5,
               }}
               onClick={() => {
                 handleShowServices(row);
               }}
             >
               <AiOutlineSearch style={{ fontSize: 25 }} />
+              View Details
             </Button>
           </OverlayTrigger>
         </div>

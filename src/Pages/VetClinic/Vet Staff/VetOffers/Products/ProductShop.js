@@ -24,36 +24,26 @@ import { BiMinus } from "react-icons/bi";
 import axios from "axios";
 import { FaShoppingCart } from "react-icons/fa";
 import { HiOutlineShoppingCart } from "react-icons/hi";
-
+import getUser from "../../../../../Components/userData";
 
 function ProductShop() {
   let { vetid } = useParams();
 
   const [counters, setcounters] = useState(0);
   const [user, setuser] = useState([]);
-  useEffect(() => {
-    if (counters < 6) {
-      var token = localStorage.getItem("ajwt");
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-        // console.log(user);
-      });
-    }
-  }, [counters, user]);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+  }, []);
 
   const [products, setproducts] = useState([]);
 
-  useEffect(() => {
-    if (counters < 6) {
-      Axios.get(`${hostUrl}/products/${vetid}`).then((response) => {
-        setproducts(response.data);
-        // console.log(products);
-      });
-      setcounters(counters + 1);
-    }
-  }, [products]);
+  useEffect(async () => {
+    Axios.get(`${hostUrl}/products/${vetid}`).then((response) => {
+      setproducts(response.data);
+      // console.log(products);
+    });
+  }, []);
 
   // Product details
   const [productImage, setproductImage] = useState();
@@ -111,11 +101,12 @@ function ProductShop() {
   const handleShowProductDetails = () => setShowProductDetails(true);
 
   // Modal Controller
-  const [showProductDetailsMobile, setShowProductDetailsMobile] = useState(false);
-  const handleCloseProductDetailsMobile = () => setShowProductDetailsMobile(false);
-  const handleShowProductDetailsMobile = () => setShowProductDetailsMobile(true);
-
-
+  const [showProductDetailsMobile, setShowProductDetailsMobile] =
+    useState(false);
+  const handleCloseProductDetailsMobile = () =>
+    setShowProductDetailsMobile(false);
+  const handleShowProductDetailsMobile = () =>
+    setShowProductDetailsMobile(true);
 
   // Modal Spinner Controller
   const [showSpinner, setShowSpinner] = useState(false);
@@ -189,78 +180,86 @@ function ProductShop() {
     // alert('sorting');
     // alert(category);
     // alert(typePet);
-    if (category != '' && typePet != '') {
-      axios.post(`${hostUrl}/vetclinic/product/filtered`, {
-        typeOfPet: typePet,
-        category: category,
-        vetid: vetid
-      }).then((response) => {
-        setproducts(response.data);
-        // console.log(products);
-      });
-    } else if (category != '' && typePet == '') {
-      axios.post(`${hostUrl}/vetclinic/product/filtered/category`, {
-        category: category,
-        vetid: vetid
-      }).then((response) => {
-        setproducts(response.data);
-        // console.log(products);
-      });
-    }
-    else if (category == '' && typePet != '') {
-      axios.post(`${hostUrl}/vetclinic/product/filtered/typeOfPet`, {
-        typeOfPet: typePet,
-        vetid: vetid
-      }).then((response) => {
-        setproducts(response.data);
-        // console.log(products);
-      });
+    if (category != "" && typePet != "") {
+      axios
+        .post(`${hostUrl}/vetclinic/product/filtered`, {
+          typeOfPet: typePet,
+          category: category,
+          vetid: vetid,
+        })
+        .then((response) => {
+          setproducts(response.data);
+          // console.log(products);
+        });
+    } else if (category != "" && typePet == "") {
+      axios
+        .post(`${hostUrl}/vetclinic/product/filtered/category`, {
+          category: category,
+          vetid: vetid,
+        })
+        .then((response) => {
+          setproducts(response.data);
+          // console.log(products);
+        });
+    } else if (category == "" && typePet != "") {
+      axios
+        .post(`${hostUrl}/vetclinic/product/filtered/typeOfPet`, {
+          typeOfPet: typePet,
+          vetid: vetid,
+        })
+        .then((response) => {
+          setproducts(response.data);
+          // console.log(products);
+        });
     } else {
       Axios.get(`${hostUrl}/products/${vetid}`).then((response) => {
         setproducts(response.data);
         // console.log(products);
       });
     }
-
   }
 
-  const [category, setcategory] = useState('');
-  const [typePet, settypePet] = useState('');
+  const [category, setcategory] = useState("");
+  const [typePet, settypePet] = useState("");
   useEffect(() => {
-    if (category != '' && typePet != '') {
-      axios.post(`${hostUrl}/vetclinic/product/filtered`, {
-        typeOfPet: typePet,
-        category: category,
-        vetid: vetid
-      }).then((response) => {
-        setproducts(response.data);
-        // console.log(products);
-      });
-    } else if (category != '' && typePet == '') {
-      axios.post(`${hostUrl}/vetclinic/product/filtered/category`, {
-        category: category,
-        vetid: vetid
-      }).then((response) => {
-        setproducts(response.data);
-        // console.log(products);
-      });
-    }
-    else if (category == '' && typePet != '') {
-      axios.post(`${hostUrl}/vetclinic/product/filtered/typeOfPet`, {
-        typeOfPet: typePet,
-        vetid: vetid
-      }).then((response) => {
-        setproducts(response.data);
-        // console.log(products);
-      });
+    if (category != "" && typePet != "") {
+      axios
+        .post(`${hostUrl}/vetclinic/product/filtered`, {
+          typeOfPet: typePet,
+          category: category,
+          vetid: vetid,
+        })
+        .then((response) => {
+          setproducts(response.data);
+          // console.log(products);
+        });
+    } else if (category != "" && typePet == "") {
+      axios
+        .post(`${hostUrl}/vetclinic/product/filtered/category`, {
+          category: category,
+          vetid: vetid,
+        })
+        .then((response) => {
+          setproducts(response.data);
+          // console.log(products);
+        });
+    } else if (category == "" && typePet != "") {
+      axios
+        .post(`${hostUrl}/vetclinic/product/filtered/typeOfPet`, {
+          typeOfPet: typePet,
+          vetid: vetid,
+        })
+        .then((response) => {
+          setproducts(response.data);
+          // console.log(products);
+        });
     } else {
       Axios.get(`${hostUrl}/products/${vetid}`).then((response) => {
         setproducts(response.data);
         // console.log(products);
       });
     }
-
-  }, [category, typePet])
+  }, [category, typePet]);
 
   const [show, setShow] = useState(false);
 
@@ -525,48 +524,44 @@ function ProductShop() {
         </Modal.Body>
       </Modal>
 
-
-
-
-
-
-
-
       {/* --------------------------------------------------------------------------- */}
       {/* mobile */}
       <Modal
         show={showProductDetailsMobile}
         onHide={handleCloseProductDetailsMobile}
         centered
-
       >
         <Modal.Body>
           <Row>
             <Col
               style={{
-                display: 'flex',
-                justifyContent: 'center'
+                display: "flex",
+                justifyContent: "center",
               }}
             >
               {/* Image */}
-              <Image src={productImage} style={{
-                width: 150
-              }} />
+              <Image
+                src={productImage}
+                style={{
+                  width: 150,
+                }}
+              />
             </Col>
             <Col>
               {/* Content */}
               <h1>{productName}</h1>
               <div
                 style={{
-                  height: 'auto',
-
+                  height: "auto",
                 }}
               >
                 <p
                   style={{
-                    fontSize: '3vw'
+                    fontSize: "3vw",
                   }}
-                >{productDescription}</p>
+                >
+                  {productDescription}
+                </p>
               </div>
 
               <div>
@@ -619,12 +614,11 @@ function ProductShop() {
                 hidden={notToCart}
                 // hidden={false}
                 style={{
-                  padding: 0
-
+                  padding: 0,
                 }}
               >
                 <Row>
-                  <Col >
+                  <Col>
                     <Button
                       variant="primary"
                       disabled={minusController}
@@ -651,21 +645,20 @@ function ProductShop() {
                   </Col>
                   <Col
                     style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center'
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     <h6
                       style={{
                         textAlign: "center",
-
                       }}
                     >
                       {counter}
                     </h6>
                   </Col>
-                  <Col >
+                  <Col>
                     <Button
                       variant="primary"
                       style={{
@@ -692,17 +685,15 @@ function ProductShop() {
                 </Row>
                 <Row
                   style={{
-                    marginTop: 15
+                    marginTop: 15,
                   }}
                 >
-                  <Col
-
-                  >
+                  <Col>
                     <Button
                       variant="secondary"
                       style={{
                         width: "100%",
-                        marginBottom: 10
+                        marginBottom: 10,
                       }}
                       onClick={(e) => {
                         setaddToCart(false);
@@ -718,7 +709,6 @@ function ProductShop() {
                       variant="primary"
                       disabled={placeOrderController}
                       style={{
-
                         width: "100%",
                       }}
                       onClick={(e) => {
@@ -760,7 +750,7 @@ function ProductShop() {
                       onClick={handleCloseProductDetailsMobile}
                       style={{
                         width: "100%",
-                        marginBottom: 10
+                        marginBottom: 10,
                       }}
                     >
                       Close
@@ -787,9 +777,6 @@ function ProductShop() {
           </Row>
         </Modal.Body>
       </Modal>
-
-
-
 
       <NavBarAppointments />
 
@@ -821,9 +808,7 @@ function ProductShop() {
 
       {/* Web */}
 
-      <div
-        id='rowWeb'
-      >
+      <div id="rowWeb">
         <Row>
           <Col sm={9}>
             <Container
@@ -900,7 +885,7 @@ function ProductShop() {
                               e.preventDefault();
                             }}
                           >
-                            <option value={''}>All</option>
+                            <option value={""}>All</option>
                             <option value={"Accessories"}>Accessories</option>
                             <option value={"Food"}>Food</option>
                             <option value={"Merchandise"}>Merchandise</option>
@@ -930,7 +915,7 @@ function ProductShop() {
                               e.preventDefault();
                             }}
                           >
-                            <option value={''}>All</option>
+                            <option value={""}>All</option>
                             <option value={"Cat"}>Cat</option>
                             <option value={"Dogs"}>Dog</option>
                           </Form.Select>
@@ -1239,7 +1224,9 @@ function ProductShop() {
                       paddingTop: 10,
                     }}
                   >
-                    <Form.Text className="text-muted">Done shopping ?</Form.Text>
+                    <Form.Text className="text-muted">
+                      Done shopping ?
+                    </Form.Text>
                   </div>
                 </Col>
 
@@ -1266,40 +1253,31 @@ function ProductShop() {
         </Row>
       </div>
 
-
-
-
-
       {/* -------------------------------------------------------------------------------------- */}
 
       {/*Mobile */}
 
-      <div
-        id='rowMobile'
-      >
-
-        <Offcanvas show={show} onHide={handleClose} >
+      <div id="rowMobile">
+        <Offcanvas show={show} onHide={handleClose}>
           <Offcanvas.Header closeButton>
             <Offcanvas.Title>My Cart</Offcanvas.Title>
           </Offcanvas.Header>
-          <Offcanvas.Body >
+          <Offcanvas.Body>
             <Container
               style={{
                 backgroundColor: "white",
 
-                display: 'block',
-                justifyContent: 'center',
-
+                display: "block",
+                justifyContent: "center",
               }}
             >
-
               <Container
                 style={{
                   backgroundColor: "grey",
                   overflowY: "auto",
                   height: "50vh",
                   width: 350,
-                  padding: 10
+                  padding: 10,
                 }}
               >
                 {/* my cart content */}
@@ -1312,16 +1290,11 @@ function ProductShop() {
                           backgroundColor: "white",
                           height: 100,
                           padding: 10,
-                          marginBottom: 10
+                          marginBottom: 10,
                         }}
                       >
                         <Row>
-                          <Col
-                            xs={3}
-                            style={{
-
-                            }}
-                          >
+                          <Col xs={3} style={{}}>
                             {/* image */}
                             <Image
                               src={val.productImage}
@@ -1329,9 +1302,7 @@ function ProductShop() {
                               width={50}
                             />
                           </Col>
-                          <Col
-                            xs={9}
-                          >
+                          <Col xs={9}>
                             {/* Content */}
                             <p
                               style={{
@@ -1348,7 +1319,7 @@ function ProductShop() {
                             </p>
                             <div
                               style={{
-                                lineHeight: '0.75'
+                                lineHeight: "0.75",
                               }}
                             >
                               <p style={{ fontSize: 15 }}>
@@ -1364,7 +1335,7 @@ function ProductShop() {
 
                               <p
                                 style={{
-                                  fontSize: 15
+                                  fontSize: 15,
                                 }}
                               >
                                 <strong
@@ -1422,7 +1393,9 @@ function ProductShop() {
                       paddingTop: 10,
                     }}
                   >
-                    <Form.Text className="text-muted">Done shopping ?</Form.Text>
+                    <Form.Text className="text-muted">
+                      Done shopping ?
+                    </Form.Text>
                   </div>
                 </Col>
 
@@ -1448,7 +1421,6 @@ function ProductShop() {
           </Offcanvas.Body>
         </Offcanvas>
         <Row>
-
           <Col sm={9}>
             <Container
               style={{
@@ -1459,25 +1431,28 @@ function ProductShop() {
                 width: 350,
                 marginTop: 10,
                 paddingTop: 20,
-                paddingBottom: 15
+                paddingBottom: 15,
               }}
             >
               <Row
                 style={{
-                  display: 'flex',
-                  justifyContent: 'end'
+                  display: "flex",
+                  justifyContent: "end",
                 }}
               >
                 <div
                   style={{
-                    display: 'flex',
-                    justifyContent: 'end'
+                    display: "flex",
+                    justifyContent: "end",
                   }}
                 >
-                  <HiOutlineShoppingCart style={{
-                    fontSize: 30,
-                    color: '#19B9CC'
-                  }} onClick={handleShow} />
+                  <HiOutlineShoppingCart
+                    style={{
+                      fontSize: 30,
+                      color: "#19B9CC",
+                    }}
+                    onClick={handleShow}
+                  />
                 </div>
               </Row>
 
@@ -1512,24 +1487,17 @@ function ProductShop() {
                         controlId="formHorizontalEmail"
                         style={{
                           marginTop: 0,
-
                         }}
                       >
                         <Form.Control
                           type="text"
                           placeholder="Search"
                           onChange={(e) => setq(e.target.value)}
-
                         />
                       </Form.Group>
                     </div>
                   </Col>
-
-
-
-
                 </Row>
-
 
                 <Row
                   style={{
@@ -1543,13 +1511,12 @@ function ProductShop() {
                         className="mb-3"
                         controlId="formHorizontalEmail"
                       >
-                        <Form.Label column sm={3} style={{ textAlign: 'left' }}>
+                        <Form.Label column sm={3} style={{ textAlign: "left" }}>
                           Category
                         </Form.Label>
                         <Col sm={9}>
                           <Form.Select
                             onChange={(e) => {
-
                               setcategory(e.target.value);
 
                               // category = e.target.value;
@@ -1557,7 +1524,7 @@ function ProductShop() {
                               e.preventDefault();
                             }}
                           >
-                            <option value={''}>All</option>
+                            <option value={""}>All</option>
                             <option value={"Accessories"}>Accessories</option>
                             <option value={"Food"}>Food</option>
                             <option value={"Merchandise"}>Merchandise</option>
@@ -1575,31 +1542,26 @@ function ProductShop() {
                         className="mb-3"
                         controlId="formHorizontalEmail"
                       >
-                        <Form.Label column sm={4} style={{ textAlign: 'left' }}>
+                        <Form.Label column sm={4} style={{ textAlign: "left" }}>
                           Type of pet
                         </Form.Label>
                         <Col sm={8}>
                           <Form.Select
                             onChange={(e) => {
-
                               settypePet(e.target.value);
                               // typePet = e.target.value
                               sortProduct();
                               e.preventDefault();
                             }}
                           >
-                            <option value={''}>All</option>
+                            <option value={""}>All</option>
                             <option value={"Cat"}>Cat</option>
                             <option value={"Dogs"}>Dog</option>
-
                           </Form.Select>
                         </Col>
                       </Form.Group>
                     </div>
                   </Col>
-
-
-
                 </Row>
               </div>
 
@@ -1612,9 +1574,9 @@ function ProductShop() {
                   padding: 0,
                   columnGap: 10,
                   rowGap: 20,
-                  display: 'grid',
-                  gridTemplateColumns: 'auto auto',
-                  justifyContent: 'center'
+                  display: "grid",
+                  gridTemplateColumns: "auto auto",
+                  justifyContent: "center",
                 }}
               >
                 {search(products).map((val) => {
@@ -1633,12 +1595,11 @@ function ProductShop() {
                         backgroundColor: "white",
                         boxShadow:
                           "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                        height: 'auto',
+                        height: "auto",
                         width: 150,
                         paddingLeft: 0,
                         paddingRight: 0,
                         paddingBottom: 10,
-
                       }}
                     >
                       <Container>
@@ -1720,9 +1681,7 @@ function ProductShop() {
                           display: "flex",
                           justifyContent: "flex-end",
                         }}
-                      >
-
-                      </Container>
+                      ></Container>
                     </div>
                   );
                 })}
@@ -1731,9 +1690,6 @@ function ProductShop() {
           </Col>
         </Row>
       </div>
-
-
-
     </div>
   );
 }

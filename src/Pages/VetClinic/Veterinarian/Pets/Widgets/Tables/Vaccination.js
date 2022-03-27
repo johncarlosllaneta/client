@@ -12,14 +12,14 @@ function Vaccination() {
 
   const [vaccination, setvaccination] = useState([]);
   const [counter, setcounter] = useState(0);
-  useEffect(() => {
+  useEffect(async () => {
     Axios.get(`${hostUrl}/doc/pets/vaccination/${id}`)
       .then((response) => {
         setvaccination(response.data);
       })
       .catch((err) => console.log(err));
     // console.log(pet);
-  }, [vaccination]);
+  }, []);
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
   const columns = [
     {

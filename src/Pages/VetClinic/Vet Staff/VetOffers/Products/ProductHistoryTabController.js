@@ -1,8 +1,13 @@
-import React from "react";
-import NavBarStaff from "../../NavBarStaff";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { hostUrl } from "../../../../../Components/Host";
 import SideNavBarVetStaff from "../../SideNavBarVetStaff";
-import PharmacyTable from "./PharmacyTable";
-function PharmacyMain() {
+import NavBarStaff from "../../NavBarStaff";
+import ProductReservationHistory from "./ProductReservationHistory";
+import { useParams } from "react-router";
+
+function ProductHistoryTabController() {
+  let { vetid } = useParams();
   return (
     <div>
       <div
@@ -14,7 +19,7 @@ function PharmacyMain() {
           margin: 0,
         }}
       >
-        <SideNavBarVetStaff active={"pharmacy"} />
+        <SideNavBarVetStaff active={"products"} />
       </div>
 
       <div
@@ -27,15 +32,14 @@ function PharmacyMain() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          {/* navbar */}
           <NavBarStaff showLogo={true} showHome={true} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
-          <PharmacyTable />
+          <ProductReservationHistory user={vetid} />
         </div>
       </div>
     </div>
   );
 }
 
-export default PharmacyMain;
+export default ProductHistoryTabController;

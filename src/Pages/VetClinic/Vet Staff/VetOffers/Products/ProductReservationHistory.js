@@ -8,6 +8,7 @@ import {
   Overlay,
   Image,
   Container,
+  Row,
 } from "react-bootstrap";
 import Axios from "axios";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -15,7 +16,8 @@ import MaterialTable from "material-table";
 import { hostUrl } from "../../../../../Components/Host";
 import { useParams } from "react-router-dom";
 import { FormatDateAndTime } from "../../../../../Components/FormatDateTime";
-function ProductReservationHistory() {
+import { IoChevronBack } from "react-icons/io5";
+function ProductReservationHistory(props) {
   let { vetid } = useParams();
 
   const [showView, setShowView] = useState(false);
@@ -30,15 +32,12 @@ function ProductReservationHistory() {
 
   const [reservation, setreservation] = useState([]);
   const [counter, setcounter] = useState(0);
-  useEffect(() => {
-    if (counter < 3) {
-      var id = vetid.toString().replace("10##01", "/");
-      Axios.get(`${hostUrl}/history/reservation/${id}`).then((response) => {
-        setreservation(response.data);
-      });
-      setcounter(counter + 1);
-    }
-  }, [reservation]);
+  useEffect(async () => {
+    var id = props.user.toString().replace("10##01", "/");
+    Axios.get(`${hostUrl}/history/reservation/${id}`).then((response) => {
+      setreservation(response.data);
+    });
+  }, []);
 
   // const [reservationDetails, setreservationDetails] = useState([]);
   // function viewDetails(reservation_id) {
@@ -190,7 +189,7 @@ function ProductReservationHistory() {
   const handleShowProductDetails = () => setShowProductDetails(true);
 
   return (
-    <div>
+    <div style={{ margin: 20 }}>
       {/* View Details */}
       <Modal show={showProductDetails} onHide={handleCloseProductDetails}>
         <Modal.Header closeButton>
@@ -310,7 +309,6 @@ function ProductReservationHistory() {
           </Container>
         </Modal.Body>
       </Modal>
-
       <Overlay
         show={showPopover}
         target={target}
@@ -328,9 +326,35 @@ function ProductReservationHistory() {
           </Popover.Body>
         </Popover>
       </Overlay>
-
       {/* Data Table */}
-
+      <Row
+        style={{
+          marginBottom: 20,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "start",
+            marginTop: 10,
+          }}
+        >
+          <p
+            onClick={() => {
+              window.location.href = `/products/${vetid}`;
+            }}
+            style={{
+              marginBottom: 0,
+              color: "#3BD2E3",
+              cursor: "pointer",
+            }}
+          >
+            {" "}
+            <IoChevronBack style={{ fontSize: 18 }} />{" "}
+            <strong style={{ fontSize: 18 }}>Back</strong>
+          </p>
+        </div>
+      </Row>
       <MaterialTable
         columns={columns}
         data={reservation}

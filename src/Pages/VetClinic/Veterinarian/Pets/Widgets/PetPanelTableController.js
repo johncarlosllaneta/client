@@ -4,20 +4,13 @@ import axios from "axios";
 import { hostUrl } from "../../../../../Components/Host";
 import SideNavBarVetDoctor from "../../SideNavBarVetDoctor";
 import NavBarDoc from "../../NavBarDoc";
-
+import getUser from "../../../../../Components/userData";
 function PetPanelTableController() {
   const [user, setuser] = useState([]);
 
-  useEffect(() => {
-    var token = localStorage.getItem("ajwt");
-    axios
-      .get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        console.log(response.data.result[0]);
-        setuser(response.data.result[0]);
-      });
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
   }, []);
   return (
     <div>

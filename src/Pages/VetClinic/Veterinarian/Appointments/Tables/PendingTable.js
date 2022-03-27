@@ -9,11 +9,11 @@ import { useParams } from "react-router-dom";
 function PendingTable() {
   let { vetid } = useParams();
   const [appointmentPending, setappointmentPending] = useState([]);
-  useEffect(() => {
+  useEffect(async () => {
     Axios.get(`${hostUrl}/pending/appointment/${vetid}`).then((response) => {
       setappointmentPending(response.data);
     });
-  }, [appointmentPending]);
+  }, []);
   const columns = [
     {
       title: "Appointment ID",

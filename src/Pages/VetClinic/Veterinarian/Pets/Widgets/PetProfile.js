@@ -9,14 +9,11 @@ function PetProfile(props) {
   const [pet, setpet] = useState([]);
   const [counter, setcounter] = useState(0);
 
-  useEffect(() => {
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/doc/pets/${props.petid}`).then((response) => {
-        setpet(response.data[0]);
-      });
-      setcounter(counter + 1);
-    }
-  }, [pet]);
+  useEffect(async () => {
+    Axios.get(`${hostUrl}/doc/pets/${props.petid}`).then((response) => {
+      setpet(response.data[0]);
+    });
+  }, []);
   // alert(pet.pet_name);
   return (
     <div

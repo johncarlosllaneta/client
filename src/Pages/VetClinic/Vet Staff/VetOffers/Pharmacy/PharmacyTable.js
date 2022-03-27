@@ -37,6 +37,7 @@ const PharmacyTable = () => {
   const [updateMedicineDescription, setUpdateMedicineDescription] =
     useState("");
   const [updateMedicinePrice, setUpdateMedicinePrice] = useState();
+  const [updateMedicineNumber, setupdateMedicineNumber] = useState();
   const [pharmacy, setpharmacy] = useState([]);
   const [pharmacyUpdateId, setpharmacyUpdateId] = useState();
   const [pharmacyUpdateImage, setpharmacyUpdateImage] = useState();
@@ -44,6 +45,7 @@ const PharmacyTable = () => {
   const [pharmacyUpdateDescription, setpharmacyUpdateDescription] = useState();
   const [pharmacyUpdatePrice, setpharmacyUpdatePrice] = useState();
   const [pharmacyUpdateStatus, setpharmacyUpdateStatus] = useState();
+  const [pharmacyUpdateNumber, setpharmacyUpdateNumber] = useState();
   const [viewMedicine, setviewMedicine] = useState("block");
   const [viewDisableField, setviewDisableField] = useState(false);
   const [viewTitle, setviewTitle] = useState("Update Medicine Details");
@@ -54,7 +56,7 @@ const PharmacyTable = () => {
     Axios.get(`${hostUrl}/pharmacy/${id}`).then((response) => {
       setpharmacy(response.data);
     });
-  }, [pharmacy]);
+  }, []);
 
   function refreshTable() {
     var id = vetid.toString().replace("10##01", "/");
@@ -96,6 +98,11 @@ const PharmacyTable = () => {
 
   const columns = [
     {
+      title: "Medicine ID",
+      field: "med_id",
+      defaultSort: "asc",
+    },
+    {
       title: "Medicine Image",
       render: (row) => (
         <div>
@@ -109,11 +116,6 @@ const PharmacyTable = () => {
           />
         </div>
       ),
-    },
-    {
-      title: "Medicine ID",
-      field: "med_id",
-      defaultSort: "asc",
     },
     {
       title: "Medicine Name",
@@ -132,6 +134,11 @@ const PharmacyTable = () => {
       field: "price",
       sorting: true,
       render: (rowData) => rowData.price !== "" && "₱" + rowData.price + ".00",
+    },
+    {
+      title: "Lot ID",
+      field: "medicine_number",
+      sorting: true,
     },
     {
       title: "Action",
@@ -156,6 +163,7 @@ const PharmacyTable = () => {
                 setpharmacyUpdateDescription(row.medicine_description);
                 setpharmacyUpdateStatus(row.status);
                 setpharmacyUpdatePrice(row.price);
+                setpharmacyUpdateNumber(row.medicine_number);
                 handleShowUpdate();
                 setviewDisableField(true);
                 setviewMedicine("none");
@@ -186,6 +194,7 @@ const PharmacyTable = () => {
                 setpharmacyUpdateDescription(row.medicine_description);
                 setpharmacyUpdateStatus(row.status);
                 setpharmacyUpdatePrice(row.price);
+                setpharmacyUpdateNumber(row.medicine_number);
                 handleShowUpdate();
               }}
             >
@@ -252,6 +261,7 @@ const PharmacyTable = () => {
       insertMedicineName: updateMedicineName,
       insertMedicineDescription: updateMedicineDescription,
       insertMedicinePrice: updateMedicinePrice,
+      insertMedicineNumber: updateMedicineNumber,
     });
 
     setimageUploadedUrl("");
@@ -259,6 +269,7 @@ const PharmacyTable = () => {
     setUpdateMedicineName("");
     setUpdateMedicineDescription("");
     setUpdateMedicinePrice("");
+    setupdateMedicineNumber("");
     handleClose2();
     Axios.get(`${hostUrl}/pharmacy/${id}`).then((response) => {
       setpharmacy(response.data);
@@ -281,6 +292,7 @@ const PharmacyTable = () => {
       medicine_description: pharmacyUpdateDescription,
       medicine_price: pharmacyUpdatePrice,
       status: pharmacyUpdateStatus,
+      medicine_number: pharmacyUpdateNumber,
     });
 
     Axios.get(`${hostUrl}/pharmacy/${vetid}`).then((response) => {
@@ -480,12 +492,12 @@ const PharmacyTable = () => {
                       required
                       name="profile_pet"
                       // value={profile}
-                      // key='profile_petowner'
+                      // key="profile_petowner"
                       onChange={(event) => {
                         const file = event.target.files[0];
                         if (file && file.type.substr(0, 5) === "image") {
                           console.log(event.target.value);
-                          // setprofile(event.target.value)
+                          // setprofile(event.target.value);
                           setimageUrl(file);
                           uploadImage(file);
                         } else {
@@ -499,6 +511,39 @@ const PharmacyTable = () => {
                     <Form.Control.Feedback type="invalid">
                       Image is required in this form.
                     </Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group
+                    controlId="formBasicProduct"
+                    style={{
+                      marginTop: 10,
+                    }}
+                  >
+                    <FloatingLabel
+                      controlId="floatingInputPrice"
+                      label="Medicine Number"
+                    >
+                      <Form.Control
+                        type="text"
+                        value={updateMedicineNumber}
+                        pattern="\d*"
+                        maxLength={15}
+                        required
+                        onChange={(e) => {
+                          setupdateMedicineNumber(e.target.value);
+                        }}
+                        minLength={8}
+                      />
+
+                      <Form.Control.Feedback type="valid">
+                        You've input a valid medicine number .
+                      </Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">
+                        Please input a valid medicine number.
+                      </Form.Control.Feedback>
+                      {/* <Form.Text id="passwordHelpBlock" muted>
+                        Price should be exact. ex. ₱ 100
+                      </Form.Text> */}
+                    </FloatingLabel>
                   </Form.Group>
                 </Col>
                 <Col>
@@ -657,6 +702,39 @@ const PharmacyTable = () => {
                         }
                       }}
                     />
+                  </Form.Group>
+                  <Form.Group
+                    controlId="formBasicProduct"
+                    style={{
+                      marginTop: 10,
+                    }}
+                  >
+                    <FloatingLabel
+                      controlId="floatingInputPrice"
+                      label="Medicine Number"
+                    >
+                      <Form.Control
+                        type="text"
+                        value={pharmacyUpdateNumber}
+                        maxLength={15}
+                        disabled={viewDisableField}
+                        required
+                        onChange={(e) => {
+                          setupdateMedicineNumber(e.target.value);
+                        }}
+                        minLength={8}
+                      />
+
+                      <Form.Control.Feedback type="valid">
+                        You've input a valid medicine number .
+                      </Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">
+                        Please input a valid medicine number.
+                      </Form.Control.Feedback>
+                      {/* <Form.Text id="passwordHelpBlock" muted>
+                        Price should be exact. ex. ₱ 100
+                      </Form.Text> */}
+                    </FloatingLabel>
                   </Form.Group>
                 </Col>
                 <Col sm={6}>

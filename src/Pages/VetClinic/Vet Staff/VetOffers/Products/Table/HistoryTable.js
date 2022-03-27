@@ -16,27 +16,20 @@ import { TiCancel } from "react-icons/ti";
 import MaterialTable from "material-table";
 import Axios from "axios";
 import { hostUrl } from "../../../../../../Components/Host";
+import getUser from "../../../../../Components/userData";
 function HistoryTable() {
   const [user, setuser] = useState([]);
 
   const [counter1, setcounter1] = useState(0);
   useEffect(() => {
-    var token = localStorage.getItem("ajwt");
-    if (counter < 6) {
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-        // console.log(user);
-      });
-      setcounter1(counter + 1);
-    }
-  }, [user]);
+    const userData = await getUser();
+    setuser(userData);
+  }, []);
 
   const [counter, setcounter] = useState(0);
   const [reservation, setReservation] = useState([]);
-  useEffect(() => {
-    if (counter < 3) {
+  useEffect(async() => {
+   
       // var id = vetid.toString().replace("10##01", "/");
       // var id = staffId;
       Axios.get(
@@ -44,9 +37,8 @@ function HistoryTable() {
       ).then((response) => {
         setReservation(response.data);
       });
-      setcounter(counter + 1);
-    }
-  }, [reservation]);
+      
+  }, []);
 
   function formatDate(dateString) {
     const options = { year: "numeric", month: "long", day: "numeric" };

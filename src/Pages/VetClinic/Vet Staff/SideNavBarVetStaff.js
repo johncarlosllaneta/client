@@ -14,12 +14,10 @@ import Axios from "axios";
 import { hostUrl } from "../../../Components/Host";
 import { MdFiberNew } from "react-icons/md";
 import { GoPrimitiveDot } from "react-icons/go";
+import getUser from "../../../Components/userData";
 function SideNavBarVetStaff(props) {
-  const [consultationChecker, setconsultationChecker] = useState();
   const [pharmacyChecker, setpharmacyChecker] = useState();
   const [productChecker, setproductChecker] = useState();
-  const [consultationCheckerEnabler, setconsultationCheckerEnabler] =
-    useState("none");
   const [pharmacyCheckerEnabler, setpharmacyCheckerEnabler] = useState("none");
   const [productCheckerEnabler, setproductCheckerEnabler] = useState("none");
 
@@ -27,39 +25,36 @@ function SideNavBarVetStaff(props) {
   const [numberOfUnviewedAppointment, setnumberOfUnviewedAppointment] =
     useState(0);
 
-  const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
-  useEffect(() => {
-    if (counter < 10) {
-      var token = localStorage.getItem("ajwt");
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-      });
-      setpharmacyChecker(1);
-      setproductChecker(1);
+  useEffect(async () => {
+    const userData = await getUser();
 
-      // console.log(user);
-      // alert(vetID.toString().replace('/', '10##01'))
+    Axios.get(`${hostUrl}/staff/${userData.vet_staff_id}`).then((response) => {
+      setuser(response.data[0]);
+    });
 
-      Axios.get(
-        `${hostUrl}/vetclinic/notification/isNew/length/${user.vetid}`
-      ).then((response) => {
-        setnumberOfUnviewedAppointment(response.data.view);
-        // alert(response.data.view);
-      });
+    setpharmacyChecker(1);
+    setproductChecker(1);
 
-      Axios.get(
-        `${hostUrl}/vetclinic/notification/reservation/isNew/length/${user.vetid}`
-      ).then((response) => {
-        setnumberOfUnviewedReserved(response.data.view);
-        // alert(response.data.view);
-      });
-      setcounter(counter + 1);
-    }
-  }, [user]);
+    Axios.get(
+      `${hostUrl}/vetclinic/notification/isNew/length/${user.vetid}`
+    ).then((response) => {
+      setnumberOfUnviewedAppointment(response.data.view);
+      // alert(response.data.view);
+    });
 
+    Axios.get(
+      `${hostUrl}/vetclinic/notification/reservation/isNew/length/${user.vetid}`
+    ).then((response) => {
+      setnumberOfUnviewedReserved(response.data.view);
+      // alert(response.data.view);
+    });
+  }, []);
+
+  // useEffect(() => {
+  //   setpharmacyChecker(user.enablePharmacy);
+  //   setproductChecker(user.enableProduct);
+  // }, []);
   useEffect(() => {
     if (pharmacyChecker === 1) {
       setpharmacyCheckerEnabler("block");

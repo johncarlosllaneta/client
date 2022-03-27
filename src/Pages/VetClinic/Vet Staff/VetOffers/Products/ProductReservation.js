@@ -22,21 +22,16 @@ import { useParams } from "react-router-dom";
 
 function ProductReservation() {
   let { vetid } = useParams();
-
+  var id = vetid.toString().replace("10##01", "/");
   const [counter, setcounter] = useState(0);
   const [reservation, setreservation] = useState([]);
-  useEffect(() => {
-    var id = vetid.toString().replace("10##01", "/");
+  useEffect(async () => {
+    Axios.get(`${hostUrl}/pending/reservation/${id}`).then((response) => {
+      setreservation(response.data);
+    });
+    // console.log(reservation);
 
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/pending/reservation/${id}`).then((response) => {
-        setreservation(response.data);
-      });
-      // console.log(reservation);
-
-      Axios.put(`${hostUrl}/expiration/reservation/${id}`);
-      setcounter(counter + 1);
-    }
+    Axios.put(`${hostUrl}/expiration/reservation/${id}`);
   }, []);
 
   function formatDateAndTime(dateString) {

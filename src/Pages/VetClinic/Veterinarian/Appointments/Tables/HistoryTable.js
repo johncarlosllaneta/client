@@ -9,11 +9,11 @@ import { useParams } from "react-router-dom";
 function HistoryTable() {
   let { vetid } = useParams();
   const [appointmentHistoryData, setappointmentHistoryData] = useState([]);
-  useEffect(() => {
+  useEffect(async () => {
     Axios.get(`${hostUrl}/history/appointment/${vetid}`).then((response) => {
       setappointmentHistoryData(response.data);
     });
-  }, [appointmentHistoryData]);
+  }, []);
   const columns = [
     {
       title: "Pet Owner Name",

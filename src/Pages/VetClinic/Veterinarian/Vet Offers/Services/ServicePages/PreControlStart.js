@@ -27,6 +27,7 @@ import imageVI from "../../../../../../Images/INHOUSEW.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import { users } from "../../../../../../Components/User";
+import getUser from "../../../../../../Components/userData";
 
 const PreControlStart = (props) => {
   let { vetid } = useParams();
@@ -40,8 +41,14 @@ const PreControlStart = (props) => {
   const [inHouseLab, setinHouseLab] = useState(true);
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
-  useEffect(() => {
-    Axios.get(`${hostUrl}/doc/${users[0].vet_doc_id}`).then((response) => {
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+
+    getServices(userData.vet_doc_id);
+  }, []);
+  function getServices(id) {
+    Axios.get(`${hostUrl}/doc/${id}`).then((response) => {
       if (response.data[0].enableExamination == 1) {
         setpetExamination(false);
       }
@@ -56,7 +63,7 @@ const PreControlStart = (props) => {
         setpreventiveControls(false);
       }
     });
-  }, []);
+  }
 
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();
@@ -109,22 +116,18 @@ const PreControlStart = (props) => {
   };
 
   const [preventiveControl, setpreventiveControl] = useState([]);
-  useEffect(() => {
-    Axios.get(`${hostUrl}/preventiveControls/${users[0].vetid}`).then(
-      (response) => {
-        setpreventiveControl(response.data);
-        // console.log(response.data)
-      }
-    );
+  useEffect(async () => {
+    Axios.get(`${hostUrl}/preventiveControls/${id}`).then((response) => {
+      setpreventiveControl(response.data);
+      // console.log(response.data)
+    });
   }, []);
 
   function reloadPetControl() {
-    Axios.get(`${hostUrl}/preventiveControls/${users[0].vetid}`).then(
-      (response) => {
-        setpreventiveControl(response.data);
-        // console.log(response.data)
-      }
-    );
+    Axios.get(`${hostUrl}/preventiveControls/${id}`).then((response) => {
+      setpreventiveControl(response.data);
+      // console.log(response.data)
+    });
   }
 
   const submitService = (e) => {
@@ -135,7 +138,7 @@ const PreControlStart = (props) => {
     } else {
       e.preventDefault();
 
-      Axios.post(`${hostUrl}/services/insert/:${users[0].vetid}`, {
+      Axios.post(`${hostUrl}/services/insert/:${id}`, {
         serviceName: serviceName,
         serviceDescription: serviceDescription,
         service_fee: serviceFee,
@@ -226,13 +229,14 @@ const PreControlStart = (props) => {
               className="mr-3"
               style={{
                 color: "white",
-                marginRight: 10,
+                marginRight: 5,
               }}
               onClick={() => {
                 handleShowServices(row);
               }}
             >
               <AiOutlineSearch style={{ fontSize: 25 }} />
+              View Details
             </Button>
           </OverlayTrigger>
         </div>

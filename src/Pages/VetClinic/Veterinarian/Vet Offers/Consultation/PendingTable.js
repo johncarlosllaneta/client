@@ -55,16 +55,13 @@ function PendingTable() {
 
     return month + " " + day + ", " + year;
   }
-  useEffect(() => {
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/doc/pending/appointment/${id}`).then((response) => {
-        setconsultation(response.data);
-        // console.log(response.data)
-      });
-      // alert(props.data.vet_admin_id);
-      setcounter(counter + 1);
-    }
-  }, [consultation]);
+  useEffect(async () => {
+    Axios.get(`${hostUrl}/doc/pending/appointment/${id}`).then((response) => {
+      setconsultation(response.data);
+      // console.log(response.data)
+    });
+    // alert(props.data.vet_admin_id);
+  }, []);
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
   const columns = [
     {

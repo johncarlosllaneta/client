@@ -8,24 +8,10 @@ import PharmacyMain from "./VetOffers/Pharmacy/PharmacyMain";
 // import ProductMain from "./VetOffers/Products/ProductMain";
 import VisitorMonitoringVerified from "./VisitorMonitoring/VisitorMonitoringVerified";
 import ProductVerified from "./VetOffers/Products/ProductVerified";
+import ProductTableTabController from "./VetOffers/Products/ProductTableTabController";
+import ProductHistoryTabController from "./VetOffers/Products/ProductHistoryTabController";
 
 function VetStaffHome() {
-  const [user, setuser] = useState([]);
-
-  const [counter, setcounter] = useState(0);
-  useEffect(() => {
-    var token = localStorage.getItem("ajwt");
-    if (counter < 6) {
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-        // console.log(user);
-      });
-      setcounter(counter + 1);
-    }
-  }, [user]);
-
   return (
     <Router>
       <div>
@@ -34,6 +20,11 @@ function VetStaffHome() {
           <Route path="/dashboard" exact component={DashboardMain} />
           <Route path="/profile" exact component={ProfileMain} />
           <Route path="/products/:vetid" exact component={ProductVerified} />
+          <Route
+            path="/history/:vetid"
+            exact
+            component={ProductHistoryTabController}
+          />
           <Route path="/pharmacy/:vetid" exact component={PharmacyMain} />
           <Route
             path="/visitormonitoring"

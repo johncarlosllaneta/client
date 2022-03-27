@@ -149,6 +149,8 @@ const PharmacyTable = () => {
               variant="info"
               style={{
                 marginRight: 5,
+                color: "white",
+                fontWeight: "bold",
               }}
               onClick={(e) => {
                 // View medicine
@@ -166,6 +168,7 @@ const PharmacyTable = () => {
               }}
             >
               <AiOutlineSearch style={{ fontSize: 25 }} />
+              View details
             </Button>
           </OverlayTrigger>
 

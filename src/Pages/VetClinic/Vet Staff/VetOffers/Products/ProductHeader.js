@@ -2,8 +2,10 @@ import { Button } from "@mui/material";
 import React from "react";
 import { messages, users } from "../../../../../Components/User";
 import ProductTableHolder from "./ProductTableHolder";
+import { useParams } from "react-router";
 
 function ProductHeader() {
+  let { vetid } = useParams();
   return (
     <div
       style={{
@@ -26,6 +28,7 @@ function ProductHeader() {
           onClick={() => {
             // messages(users[0].vetid);
             // <ProductTableHolder />;
+            window.location.href = `/history/${vetid}`;
           }}
           style={{
             height: "50%",

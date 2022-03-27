@@ -33,16 +33,12 @@ const ConsultStart = (props) => {
   const [counter, setcounter] = useState(0);
 
   const [consultation, setconsultation] = useState([]);
-  useEffect(() => {
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/consultation/${id}`).then((response) => {
-        setconsultation(response.data);
-        // console.log(response.data)
-      });
-      // alert(props.data.vet_admin_id);
-      setcounter(counter + 1);
-    }
-  }, [consultation]);
+  useEffect(async () => {
+    Axios.get(`${hostUrl}/consultation/${id}`).then((response) => {
+      setconsultation(response.data[0]);
+      // console.log(response.data)
+    });
+  }, []);
 
   const [consulations, setconsulations] = useState(true);
   const [petExamination, setpetExamination] = useState(true);
@@ -52,38 +48,38 @@ const ConsultStart = (props) => {
   const [inHouseLab, setinHouseLab] = useState(true);
 
   const [user, setuser] = useState([]);
-  useEffect(() => {
-    if (counter < 1) {
-      var token = localStorage.getItem("ajwt");
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
+  // useEffect(() => {
+  //   if (counter < 1) {
+  //     var token = localStorage.getItem("ajwt");
+  //     Axios.get(`${hostUrl}/home`, {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     }).then((response) => {
+  //       setuser(response.data.result[0]);
 
-        if (response.data.result[0].enableConsultation == 1) {
-          setconsulations(false);
-        }
-        if (response.data.result[0].enableExamination == 1) {
-          setpetExamination(false);
-        }
+  //       if (response.data.result[0].enableConsultation == 1) {
+  //         setconsulations(false);
+  //       }
+  //       if (response.data.result[0].enableExamination == 1) {
+  //         setpetExamination(false);
+  //       }
 
-        if (response.data.result[0].enableGrooming == 1) {
-          setpetGrooming(false);
-        }
-        if (response.data.result[0].enableVaccination == 1) {
-          setvaccination(false);
-        }
-        if (response.data.result[0].enablePreventiveControls == 1) {
-          setpreventiveControls(false);
-        }
+  //       if (response.data.result[0].enableGrooming == 1) {
+  //         setpetGrooming(false);
+  //       }
+  //       if (response.data.result[0].enableVaccination == 1) {
+  //         setvaccination(false);
+  //       }
+  //       if (response.data.result[0].enablePreventiveControls == 1) {
+  //         setpreventiveControls(false);
+  //       }
 
-        if (response.data.result[0].enableInHouseLab == 1) {
-          setinHouseLab(false);
-        }
-      });
-      setcounter(counter + 1);
-    }
-  }, [user]);
+  //       if (response.data.result[0].enableInHouseLab == 1) {
+  //         setinHouseLab(false);
+  //       }
+  //     });
+  //     setcounter(counter + 1);
+  //   }
+  // }, [user]);
 
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();

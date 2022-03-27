@@ -21,16 +21,13 @@ function HistoryTable() {
   const [counter, setcounter] = useState(0);
 
   const [consultation, setconsultation] = useState([]);
-  useEffect(() => {
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/doc/history/appointment/${id}`).then((response) => {
-        setconsultation(response.data);
-        // console.log(response.data)
-      });
-      // alert(props.data.vet_admin_id);
-      setcounter(counter + 1);
-    }
-  }, [consultation]);
+  useEffect(async () => {
+    Axios.get(`${hostUrl}/doc/history/appointment/${id}`).then((response) => {
+      setconsultation(response.data);
+      // console.log(response.data)
+    });
+    // alert(props.data.vet_admin_id);
+  }, []);
   function dateConvertion(date) {
     var str = date.split("-");
     var year = str[0];

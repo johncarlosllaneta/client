@@ -12,14 +12,14 @@ function Examination() {
 
   const [examination, setexamination] = useState([]);
   const [counter, setcounter] = useState(0);
-  useEffect(() => {
+  useEffect(async () => {
     Axios.get(`${hostUrl}/doc/pets/examination/${id}`)
       .then((response) => {
         setexamination(response.data);
       })
       .catch((err) => console.log(err));
     // console.log(pet);
-  }, [examination]);
+  }, []);
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
   const columns = [
     {

@@ -202,13 +202,13 @@ const ServiceTab = (props) => {
               className="mr-3"
               style={{
                 color: "white",
-                marginRight: 10,
+                marginRight: 5,
               }}
               onClick={() => {
                 handleShowServices(row);
               }}
             >
-              <AiOutlineSearch style={{ fontSize: 25 }} />
+              <AiOutlineSearch style={{ fontSize: 25 }} />View Details
             </Button>
           </OverlayTrigger>
         </div>

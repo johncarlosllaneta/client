@@ -19,19 +19,19 @@ import MaterialTable from "material-table";
 import Axios from "axios";
 import { hostUrl } from "../../../../../Components/Host";
 
-function DashboardTable() {
+function DashboardTable(props) {
   const [appointment, setappointment] = useState([]);
 
   // getPendingAppointment
 
   // alert(props.vetid);
-  useEffect(() => {
-    Axios.get(`${hostUrl}/pending/appointment/${users[0].vetid}`).then(
+  useEffect(async () => {
+    Axios.get(`${hostUrl}/pending/appointment/${props.data}`).then(
       (response) => {
         setappointment(response.data);
       }
     );
-  }, [appointment]);
+  }, []);
   const [showPopover, setShowPopover] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);

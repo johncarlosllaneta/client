@@ -10,17 +10,15 @@ import { useParams } from "react-router";
 function HealthPetCard(props) {
   const [counter, setcounter] = useState(0);
   const [healthCard, sethealthCard] = useState([]);
-  useEffect(() => {
+  useEffect(async () => {
     // alert(props.pets);
-    if (counter < 3) {
-      Axios.get(`${hostUrl}/petOwner/services/health/card/${props.pets}`).then(
-        (response) => {
-          sethealthCard(response.data);
-        }
-      );
-      setcounter(counter + 1);
-    }
-  }, [healthCard]);
+
+    Axios.get(`${hostUrl}/petOwner/services/health/card/${props.pets}`).then(
+      (response) => {
+        sethealthCard(response.data);
+      }
+    );
+  }, []);
 
   function dateConvertion(date) {
     var str = date.split("-");
