@@ -117,6 +117,14 @@ function LoginUpdated() {
 
 
           }
+          else if (response.data.message === "Your account is not verified") {
+            setAlertLogin(
+              "Your account is not yet verified, please check your email to verify your account. Thank you"
+            );
+            setVariant("danger");
+            setIdx("3");
+            setdisplay("block");
+          }
           else if (response.data.message === "Already login with other device") {
             setAlertLogin(
               "Already login with other device. Please double-check and try again."
@@ -153,22 +161,7 @@ function LoginUpdated() {
 
   return (
     <div>
-      <div style={{ paddingTop: 30 }}>
-        <a
-          href="/"
-          className="ml-5"
-          style={{
-            textDecoration: "none",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "start",
-            fontSize: 20,
-          }}
-        >
-          <IoChevronBack style={{ marginTop: 5 }} />
-          Return
-        </a>
-      </div>
+
       {/* Form Email and Password */}
       <div
         style={{

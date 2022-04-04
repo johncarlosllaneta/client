@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, Skeleton } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { Container, Row } from 'react-bootstrap';
 import NavUnverifiedVet from '../../../../Components/navBarHome/NavUnverifiedVet';
@@ -6,12 +6,17 @@ import getUser from '../../../../Components/userData';
 import VetOffersHandler from './VetOffersHandler';
 
 function VetOffersContent() {
+
+
+
     const [user, setuser] = useState([]);
     useEffect(async () => {
         const userData = await getUser();
         setuser(userData);
 
     }, []);
+
+
     return (
         <div
             style={{
@@ -32,47 +37,7 @@ function VetOffersContent() {
                         padding: 30,
                     }}
                 >
-                    <div
-                        style={{
-                            backgroundColor: "white",
-                            width: "75vw",
-                            height: "auto",
-                        }}
-                    >
-                        <Row>
-                            <Container
-                                style={{
-                                    textAlign: 'left'
-                                }}
-                            >
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        justifyContent: 'space-between'
-                                    }}
-                                >
-                                    <h3
-                                        style={{
-                                            marginBottom: 0
-                                        }}
-                                    >Vet Offers Page</h3>
-
-                                    <Button>
-                                        Update Vet Offer
-                                    </Button>
-                                </div>
-                                <p
-                                    style={{
-                                        color: 'grey'
-                                    }}
-                                >create a service profile here.</p>
-                            </Container>
-
-                            <VetOffersHandler />
-
-
-                        </Row>
-                    </div>
+                    {user.length != 0 ? <VetOffersHandler user={user} /> : <Skeleton variant='rectangular' height={'30vh'} />}
                 </div>
             </div>
         </div>

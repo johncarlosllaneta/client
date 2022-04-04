@@ -238,13 +238,13 @@ function SideNavBarVetAdmin(props) {
             </Container>
 
             <div hidden={dropdownVetOffer}>
-                <div
+                {/* <div
                     style={{
                         display: consultationCheckerEnabler,
                     }}
-                >
-                    {/* Consultation */}
-                    <Container
+                > */}
+                {/* Consultation */}
+                {/* <Container
                         id="ContainerNavItemDropDown"
                         style={{
                             backgroundColor: consultation,
@@ -254,8 +254,8 @@ function SideNavBarVetAdmin(props) {
                         <a id="anchorTag" href={`/services/consultation/${user.vetid}`}>
                             Consultation
                         </a>
-                    </Container>
-                </div>
+                    </Container> */}
+                {/* </div> */}
 
                 <div
                     style={{
