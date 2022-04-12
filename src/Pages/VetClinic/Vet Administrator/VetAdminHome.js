@@ -27,6 +27,7 @@ import Dashboard from '../Unverified Vet/Dashboard';
 import { Skeleton } from '@mui/material';
 import Profile from '../Unverified Vet/Profile/Profile';
 import VetOffers from '../Unverified Vet/Vet Offers/VetOffers';
+import Subscription from '../Unverified Vet/Subscription/Subscription';
 
 
 function VetAdminHome() {
@@ -125,6 +126,7 @@ function VetAdminHome() {
                 <Route path="/profile" exact component={Profile} />
                 <Route path="/vetOffers" exact component={VetOffers} />
                 <Route path="/verification" exact component={VerifyContent} />
+                <Route path="/subscription" exact component={Subscription} />
                 <Route path="*" component={NotFound} />
             </Switch>
         )

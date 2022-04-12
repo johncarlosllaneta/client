@@ -9,11 +9,14 @@ import PersonIcon from '@mui/icons-material/Person';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import getUser from "../../../Components/userData";
 
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+
 function SideNavBar(props) {
   const [dashboard, setdashboard] = useState();
   const [profile, setprofile] = useState();
   const [vetOffers, setvetOffers] = useState();
   const [verify, setverify] = useState();
+  const [subscription, setsubscription] = useState();
   useEffect(() => {
     if (props.active === "dashboard") {
       setdashboard("#19B9CC");
@@ -23,6 +26,9 @@ function SideNavBar(props) {
       setprofile("#19B9CC");
     } else if (props.active === "vet offers") {
       setvetOffers("#19B9CC");
+    }
+    else if (props.active === "subscription") {
+      setsubscription("#19B9CC");
     }
   }, []);
 
@@ -121,6 +127,19 @@ function SideNavBar(props) {
         <GoVerified id="icons" />
         <a id="anchorTag" href="/verification">
           Verification
+        </a>
+      </Container>
+
+
+      <Container
+        id="ContainerNavItem"
+        style={{
+          backgroundColor: subscription,
+        }}
+      >
+        <LocalOfferIcon id="icons" />
+        <a id="anchorTag" href="/subscription">
+          Subscription
         </a>
       </Container>
 

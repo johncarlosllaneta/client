@@ -33,4 +33,28 @@ const ToastDelete = () =>
     progress: undefined,
   });
 
-export { ToastUpdate, ToastDelete, ToastSuccess };
+
+const ToastSuccessSubscribe = () =>
+  toast.success("Subscription Submitted", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+
+const ToastUpdateSubscribe = () =>
+  toast.info("Redirecting to subscription page", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+export { ToastUpdate, ToastDelete, ToastSuccess, ToastSuccessSubscribe, ToastUpdateSubscribe };
