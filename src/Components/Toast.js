@@ -55,6 +55,17 @@ const ToastExamine = () =>
     progress: undefined,
   });
 
+const ToastSuccessSubscribe = () =>
+  toast.success("Subscription Submitted", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
 const ToastVaccine = () =>
   toast.success("Vaccination Successfully", {
     position: "top-right",
@@ -88,6 +99,17 @@ const ToastClaim = () =>
     progress: undefined,
   });
 
+const ToastUpdateSubscribe = () =>
+  toast.info("Redirecting to subscription page", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
 export {
   ToastUpdate,
   ToastDelete,
@@ -97,4 +119,6 @@ export {
   ToastVaccine,
   ToastConsultation,
   ToastClaim,
+  ToastSuccessSubscribe,
+  ToastUpdateSubscribe,
 };

@@ -22,6 +22,7 @@ import { hostUrl, hostUrlWeb } from "../../../Components/Host";
 import { apps } from "../../../Components/base";
 import uploadImage from "../../../Images/upload_permit.jpg";
 import uploadImageForm from "../../../Images/upload_permit_form.jpg";
+import getUser from "../../../Components/userData";
 
 const VerificationTab = () => {
   var imagecss = {
@@ -57,43 +58,22 @@ const VerificationTab = () => {
   const [submittedFile, setsubmittedFile] = useState("none");
   const [submittedNot, setsubmittedNot] = useState("block");
 
-  const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
-  useEffect(() => {
-    if (counter < 6) {
-      var token = localStorage.getItem("ajwt");
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-        // console.log(user);
-        setvetPermitLink(response.data.result[0].vet_permit);
-      });
-      setcounter(counter + 1);
-    }
-  }, [counter, user]);
-
-  function getUser() {
-    var token = localStorage.getItem("ajwt");
-    Axios.get(`${hostUrl}/home`, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then((response) => {
-      setuser(response.data.result[0]);
-      console.log(user);
-      setvetPermitLink(response.data.result[0].vet_permit);
-    });
-  }
-
-  useEffect(() => {
-    // alert(vetPermitLink)
-    if (vetPermitLink === "") {
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+    setvetPermitLink(userData.vet_permit);
+    if (userData.vet_permit == "" || userData.vet_permit == null) {
       setsubmittedNot("block");
       setsubmittedFile("none");
     } else {
       setsubmittedNot("none");
       setsubmittedFile("block");
     }
-  }, [vetPermitLink, user]);
+  }, []);
+
+
+
 
   const [show, setShow] = useState(false);
 
@@ -440,9 +420,10 @@ const VerificationTab = () => {
                       e.preventDefault();
                     }}
                   />
-                  <Form.Control.Feedback type="invalid">
+                  <Form.Text className="text-muted">
                     This form only accept pdf file format.
-                  </Form.Control.Feedback>
+                  </Form.Text>
+
                 </Form.Group>
 
                 <p hidden={submitShowDelayLabel}>

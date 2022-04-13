@@ -8,6 +8,7 @@ import axios from 'axios';
 import { hostUrl } from '../../../../Components/Host';
 import { ToastContainer } from "react-toastify";
 import { ToastUpdate } from "../../../../Components/Toast";
+import ProfileVetInfo from './ProfileVetInfo';
 
 function InfoFields(props) {
 
@@ -80,92 +81,104 @@ function InfoFields(props) {
                 >Vet Clinic Information</h3>
 
             </div>
-            <Row>
-                <Form
-                    noValidate
-                    validated={validated}
-                    onSubmit={submitCredentials}
-                >
 
-                    <FloatingLabel
-                        controlId="floatingInput"
-                        label="Contact Number"
-                        className="mb-3"
-                    >
-                        <Form.Control type="text"
-                            placeholder="09** *** ****"
-                            required
-                            pattern="\d{11}"
-                            maxLength="11"
-                            style={{
-                                width: '50%'
-                            }}
-                            onChange={(e) => {
-                                setcontactNumber(e.target.value);
-                            }}
-                        />
-                    </FloatingLabel>
-
-                    <Row>
-                        <Col
-                            sm={8}
-                        >
-
-                            <FloatingLabel
-                                controlId="floatingInput"
-                                label="Address Information"
-                                className="mb-3"
-                            >
-                                <Form.Control type="text"
-                                    placeholder='address'
-                                    minLength={5}
-                                    required
-                                    onChange={(e) => {
-                                        setaddressNumber(e.target.value);
-                                    }}
-
-                                />
-                            </FloatingLabel>
-
-                        </Col>
-
-                        <Col
-                            sm={4}
-                        >
-
-                            <FloatingLabel
-                                controlId="floatingInput"
-                                label="City"
-                                className="mb-3"
-                            >
-                                <Form.Control type="text"
-                                    placeholder='address'
-                                    minLength={5}
-                                    required
-                                    onChange={(e) => {
-                                        setcity(e.target.value);
-                                    }}
-
-                                />
-                            </FloatingLabel>
-
-                        </Col>
-                    </Row>
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'start'
-                        }}
-                    >
-                        <Button
-                            type='submit'
-                            variant='contained'
-                        >
-                            Create profile
-                        </Button>
+            {
+                props.user.vet_contact_number != null
+                    ?
+                    <div>
+                        <ProfileVetInfo user={props.user} />
                     </div>
-                </Form>
-            </Row>
+                    :
+                    <Row>
+                        <Form
+                            noValidate
+                            validated={validated}
+                            onSubmit={submitCredentials}
+                        >
+
+                            <FloatingLabel
+                                controlId="floatingInput"
+                                label="Contact Number"
+                                className="mb-3"
+                            >
+                                <Form.Control type="text"
+                                    placeholder="09** *** ****"
+                                    required
+                                    pattern="\d{11}"
+                                    maxLength="11"
+                                    style={{
+                                        width: '50%'
+                                    }}
+                                    onChange={(e) => {
+                                        setcontactNumber(e.target.value);
+                                    }}
+                                />
+                            </FloatingLabel>
+
+                            <Row>
+                                <Col
+                                    sm={8}
+                                >
+
+                                    <FloatingLabel
+                                        controlId="floatingInput"
+                                        label="Address Information"
+                                        className="mb-3"
+                                    >
+                                        <Form.Control type="text"
+                                            placeholder='address'
+                                            minLength={5}
+                                            required
+                                            onChange={(e) => {
+                                                setaddressNumber(e.target.value);
+                                            }}
+
+                                        />
+                                    </FloatingLabel>
+
+                                </Col>
+
+                                <Col
+                                    sm={4}
+                                >
+
+                                    <FloatingLabel
+                                        controlId="floatingInput"
+                                        label="City"
+                                        className="mb-3"
+                                    >
+                                        <Form.Control type="text"
+                                            placeholder='address'
+                                            minLength={5}
+                                            required
+                                            onChange={(e) => {
+                                                setcity(e.target.value);
+                                            }}
+
+                                        />
+                                    </FloatingLabel>
+
+                                </Col>
+                            </Row>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'start'
+                                }}
+                            >
+                                <Button
+                                    type='submit'
+                                    variant='contained'
+                                >
+                                    Create profile
+                                </Button>
+                            </div>
+                        </Form>
+                    </Row>
+            }
+
+
+
 
             <div
                 style={{
@@ -201,9 +214,11 @@ function InfoFields(props) {
                     height: '70vh'
                 }}
             >
-                {/* Operating Hours */}
 
-                <OperatingHours />
+
+                {/* Operating Hours insert */}
+
+                <OperatingHours user={props.user} />
             </div>
 
         </div>

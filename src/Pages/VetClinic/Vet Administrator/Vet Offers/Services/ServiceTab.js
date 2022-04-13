@@ -556,6 +556,55 @@ const ServiceTab = (props) => {
         <Row>
 
 
+          <Col hidden={consulation}>
+            <Link
+              to={`/services/consultation/${user.vetid}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  width: "10vw",
+                  padding: 10,
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageI}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Consultation
+                  </p>
+                </div>
+              </Container>
+            </Link>
+          </Col>
+
           <Col hidden={petExamination}>
             <Link
               to={`/services/pet&examination/${user.vetid}`}

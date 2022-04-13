@@ -12,6 +12,7 @@ import {
   Form,
   Modal,
   FloatingLabel,
+  Card,
 } from "react-bootstrap";
 import Axios from "axios";
 import { useParams, BrowserRouter, Link } from "react-router-dom";
@@ -169,87 +170,7 @@ const ConsultStart = (props) => {
 
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
 
-  const columns = [
-    {
-      title: "Service Name",
-      field: "service_name",
-      sorting: true,
-      defaultSort: "asc",
-    },
-    {
-      title: "Description",
-      // field: "category",
-      sorting: true,
-      render: (row) => <p>{row.service_description}</p>,
-    },
-    {
-      title: "Fee",
-      field: "service_fee",
-      render: (rowData) =>
-        rowData.price !== "" && "₱" + rowData.service_fee + ".00",
-    },
-    {
-      title: "Action",
-      render: (row) => (
-        <div>
-          <OverlayTrigger
-            placement="top-start"
-            delay={{ show: 250 }}
-            overlay={renderTooltip({ msg: "View Information" })}
-          >
-            <Button
-              variant="info"
-              className="mr-3"
-              style={{
-                color: "white",
-                marginRight: 10,
-              }}
-              onClick={() => {
-                handleShowServices(row);
-              }}
-            >
-              <AiOutlineSearch style={{ fontSize: 25 }} />
-            </Button>
-          </OverlayTrigger>
 
-          <OverlayTrigger
-            placement="top-start"
-            delay={{ show: 250 }}
-            overlay={renderTooltip({ msg: "Edit Details" })}
-          >
-            <Button
-              variant="primary"
-              className="mr-3"
-              style={{
-                color: "white",
-                marginRight: 10,
-              }}
-              onClick={() => {
-                handleShowUpdate(row);
-              }}
-            >
-              <FaRegEdit style={{ fontSize: 25 }} />
-            </Button>
-          </OverlayTrigger>
-
-          <OverlayTrigger
-            placement="top-start"
-            delay={{ show: 250 }}
-            overlay={renderTooltip({ msg: "Delete Details" })}
-          >
-            <Button
-              variant="danger"
-              onClick={() => {
-                handleShowDelete(row);
-              }}
-            >
-              <AiOutlineDelete style={{ fontSize: 25 }} />
-            </Button>
-          </OverlayTrigger>
-        </div>
-      ),
-    },
-  ];
 
   // Popover Overlay
   const [showPopover, setShowPopover] = useState(false);
@@ -507,7 +428,7 @@ const ConsultStart = (props) => {
         style={{
           display: "flex",
           width: "inherit",
-          justifyContent: "start",
+          justifyContent: "space-between",
           padding: 10,
         }}
       >
@@ -519,99 +440,385 @@ const ConsultStart = (props) => {
             margin: 0,
           }}
         >
-          Consultation
+          Service Category
         </h5>
 
-
+        <Button
+          href={`/services/${user.vetid}`}
+          style={{
+            backgroundColor: "#19B9CC",
+            borderColor: "white",
+            paddingTop: 10,
+            margin: 0,
+          }}
+        >
+          General Services
+        </Button>
       </div>
 
-      {/* Consultation Options */}
       <div
         style={{
-          height: "auto",
+          height: "20vh",
           width: "75vw",
-          backgroundColor: "transparent",
+          backgroundColor: "white",
           padding: 25,
           marginLeft: 10,
-
+          boxShadow:
+            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
         }}
       >
         <Row>
-          <Col>
-            <div
+          <Col hidden={consulations}>
+            <Link
+              to={`/services/consultation/${user.vetid}`}
               style={{
-                boxShadow:
-                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                height: '20vh'
+                textDecoration: "none",
               }}
             >
+              <Container
+                style={{
+                  backgroundColor: "white",
+                  height: "15vh",
+                  width: "10vw",
+                  borderColor: "#3BD2E3",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageI}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
 
-            </div>
+                <div>
+                  <p
+                    style={{
+                      color: "#3BD2E3",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Consultation
+                  </p>
+                </div>
+              </Container>
+            </Link>
           </Col>
 
-          <Col>
-            <div
+          <Col hidden={petExamination}>
+            <Link
+              to={`/services/pet&examination/${user.vetid}`}
               style={{
-                boxShadow:
-                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                height: '20vh'
+                textDecoration: "none",
               }}
             >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  width: "10vw",
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageII}
+                    style={{
+                      height: "7vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
 
-            </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Pet Examination
+                  </p>
+                </div>
+              </Container>
+            </Link>
+          </Col>
+
+          <Col hidden={petGrooming}>
+            <Link
+              to={`/services/pet&grooming/${user.vetid}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  width: "10vw",
+                  padding: 10,
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageIII}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Pet Grooming
+                  </p>
+                </div>
+              </Container>
+            </Link>
+          </Col>
+
+          <Col hidden={preventiveControls}>
+            <Link
+              to={`/services/preventive&control/${user.vetid}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  padding: 10,
+                  width: "10vw",
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageIV}
+                    style={{
+                      height: "7vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Preventive Control
+                  </p>
+                </div>
+              </Container>
+            </Link>
+          </Col>
+
+          <Col hidden={vaccination}>
+            <Link
+              to={`/services/vaccination/${user.vetid}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  width: "10vw",
+                  padding: 10,
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageV}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Vaccination
+                  </p>
+                </div>
+              </Container>
+            </Link>
           </Col>
         </Row>
       </div>
 
-      {/* Data Table */}
+      {/* Content */}
+      <Row
+        style={{
+          marginTop: '2vh',
+          padding: 10
+        }}
+      >
+        <Col>
+          <Card
+            style={{
+              padding: 20
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between'
+              }}
+            >
+              <div>
+                <h6>Physical Consultation</h6>
+              </div>
 
-      {/* tables */}
-      <Row>
-        <Overlay
-          show={showPopover}
-          target={target}
-          placement="bottom"
-          container={ref.current}
-          containerPadding={20}
-        >
-          <Popover id="popover-contained">
-            <Popover.Header as="h3">Helper</Popover.Header>
-            <Popover.Body>
-              <p>This table shows the consultation services. </p>
-            </Popover.Body>
-          </Popover>
-        </Overlay>
-        <MaterialTable
-          style={{
-            boxShadow:
-              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-            width: "75vw",
-            marginTop: 10,
-            marginLeft: 20,
-          }}
-          columns={columns}
-          data={consultation}
-          title={"Consultation Services"}
-          cellEditable={false}
-          options={{
-            sorting: true,
-          }}
-          actions={[
-            {
-              icon: "add",
-              tooltip: "Add Services",
-              isFreeAction: true,
-              onClick: (event) => handleShowInsert(),
-            },
-            {
-              icon: "information",
-              tooltip: "Helper",
-              isFreeAction: true,
-              onClick: handleClick,
-            },
-          ]}
-        />
+              <div>
+                <Form.Switch />
+              </div>
+
+            </div>
+
+            <div>
+              <p style={{ textAlign: "left" }}>
+                A trip to the veterinarian’s office with your pet, similar to a
+                visit to the doctor’s office, often proves costly. It can be
+                difficult to predict how much a vet visit will cost, and
+                sometimes, it’s shocking when you see the bill.
+              </p>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between'
+              }}
+            >
+              <div>
+                <h5 style={{ textAlign: "left" }}>Price: {'200.00'}</h5>
+              </div>
+              <div style={{ display: "flex", justifyContent: "end" }}>
+                <Button variant="primary" style={{ width: 153 }}>
+                  Edit
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </Col>
+
+        <Col>
+          <Card
+            style={{
+              padding: 20
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between'
+              }}
+            >
+              <div>
+                <h6>Physical Consultation</h6>
+              </div>
+
+              <div>
+                <Form.Switch />
+              </div>
+
+            </div>
+
+            <div>
+              <p style={{ textAlign: "left" }}>
+                A trip to the veterinarian’s office with your pet, similar to a
+                visit to the doctor’s office, often proves costly. It can be
+                difficult to predict how much a vet visit will cost, and
+                sometimes, it’s shocking when you see the bill.
+              </p>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between'
+              }}
+            >
+              <div>
+                <h5 style={{ textAlign: "left" }}>Price: {'200.00'}</h5>
+              </div>
+              <div style={{ display: "flex", justifyContent: "end" }}>
+                <Button variant="primary" style={{ width: 153 }}>
+                  Edit
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </Col>
       </Row>
+
     </div>
   );
 };
