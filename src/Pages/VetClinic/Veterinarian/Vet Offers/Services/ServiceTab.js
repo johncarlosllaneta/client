@@ -26,23 +26,22 @@ import imageV from "../../../../../Images/scopy.png";
 import getUser from "../../../../../Components/userData";
 
 const ServiceTab = (props) => {
-  let { vetid } = useParams();
-  var id = vetid.toString().replace("10##01", "/");
   // alert(id);
   //category
-  const [consulation, setconsulation] = useState(true);
+  // const [consulation, setconsulation] = useState(true);
   const [petExamination, setpetExamination] = useState(true);
   const [petGrooming, setpetGrooming] = useState(true);
   const [preventiveControls, setpreventiveControls] = useState(true);
   const [vaccination, setvaccination] = useState(true);
-  const [inHouseLab, setinHouseLab] = useState(true);
-  const [counter, setcounter] = useState(0);
+  // const [inHouseLab, setinHouseLab] = useState(true);
+  // const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
   useEffect(async () => {
     const userData = await getUser();
     setuser(userData);
 
     getServices(userData.vet_doc_id);
+    getAllServices(userData.vetid);
   }, []);
 
   function getServices(id) {
@@ -62,6 +61,13 @@ const ServiceTab = (props) => {
       }
     });
   }
+
+  const getAllServices = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/services/:${id}`);
+    // console.log(result.data);
+    setservices(result.data);
+  };
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();
   const [serviceFee, setserviceFee] = useState();
@@ -109,13 +115,6 @@ const ServiceTab = (props) => {
   };
 
   const [services, setservices] = useState([]);
-  useEffect(() => {
-    Axios.get(`${hostUrl}/services/:${id}`).then((response) => {
-      setservices(response.data);
-      // console.log(response.data)
-    });
-    // alert(props.data.vet_admin_id);
-  }, [services]);
 
   const [validated, setValidated] = useState(false);
 
@@ -126,8 +125,7 @@ const ServiceTab = (props) => {
       e.stopPropagation();
     } else {
       e.preventDefault();
-      var id = vetid.toString().replace("10##01", "/");
-      Axios.post(`${hostUrl}/services/insert/:${id}`, {
+      Axios.post(`${hostUrl}/services/insert/:${user.vetid}`, {
         serviceName: serviceName,
         serviceDescription: serviceDescription,
         service_fee: serviceFee,
@@ -208,7 +206,8 @@ const ServiceTab = (props) => {
                 handleShowServices(row);
               }}
             >
-              <AiOutlineSearch style={{ fontSize: 25 }} />View Details
+              <AiOutlineSearch style={{ fontSize: 25 }} />
+              View Details
             </Button>
           </OverlayTrigger>
         </div>
@@ -517,7 +516,7 @@ const ServiceTab = (props) => {
         <Row>
           <Col hidden={petExamination}>
             <Link
-              to={`/services/pet&examination/${vetid}`}
+              to={`/services/pet&examination/${user.vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -566,7 +565,7 @@ const ServiceTab = (props) => {
 
           <Col hidden={petGrooming}>
             <Link
-              to={`/services/pet&grooming/${vetid}`}
+              to={`/services/pet&grooming/${user.vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -615,7 +614,7 @@ const ServiceTab = (props) => {
 
           <Col hidden={preventiveControls}>
             <Link
-              to={`/services/preventive&control/${vetid}`}
+              to={`/services/preventive&control/${user.vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -664,7 +663,7 @@ const ServiceTab = (props) => {
 
           <Col hidden={vaccination}>
             <Link
-              to={`/services/vaccination/${vetid}`}
+              to={`/services/vaccination/${user.vetid}`}
               style={{
                 textDecoration: "none",
               }}

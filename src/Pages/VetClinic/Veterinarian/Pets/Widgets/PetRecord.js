@@ -39,7 +39,7 @@ function PetRecord(props) {
         >
           <p
             onClick={() => {
-              window.location.href = `/pets/${props.user.vetid}`;
+              window.location.href = `/pets`;
             }}
             style={{
               marginBottom: 0,

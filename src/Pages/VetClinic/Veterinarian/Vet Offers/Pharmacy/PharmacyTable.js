@@ -23,9 +23,7 @@ import MaterialTable from "material-table";
 import { hostUrl } from "../../../../../Components/Host";
 import { useParams } from "react-router-dom";
 import { apps } from "../../../../../Components/base";
-const PharmacyTable = () => {
-  let { vetid } = useParams();
-
+const PharmacyTable = (props) => {
   //Insert
   const [show2, setShow2] = useState(false);
   const handleClose2 = () => setShow2(false);
@@ -50,18 +48,13 @@ const PharmacyTable = () => {
 
   const [counter, setcounter] = useState(0);
   useEffect(() => {
-    if (counter < 3) {
-      var id = vetid.toString().replace("10##01", "/");
-      Axios.get(`${hostUrl}/pharmacy/${id}`).then((response) => {
-        setpharmacy(response.data);
-      });
-      setcounter(counter + 1);
-    }
-  }, [pharmacy]);
+    Axios.get(`${hostUrl}/pharmacy/${props.medicine}`).then((response) => {
+      setpharmacy(response.data);
+    });
+  }, []);
 
   function refreshTable() {
-    var id = vetid.toString().replace("10##01", "/");
-    Axios.get(`${hostUrl}/pharmacy/${id}`).then((response) => {
+    Axios.get(`${hostUrl}/pharmacy/${props.medicine}`).then((response) => {
       setpharmacy(response.data);
     });
   }
@@ -252,8 +245,7 @@ const PharmacyTable = () => {
   };
 
   function insertMedicines() {
-    var id = vetid.toString().replace("10##01", "/");
-    Axios.post(`${hostUrl}/pharmacy/insert/${id}`, {
+    Axios.post(`${hostUrl}/pharmacy/insert/${props.medicine}`, {
       insertMedicineImage: imageUploadedUrl,
       insertMedicineName: updateMedicineName,
       insertMedicineDescription: updateMedicineDescription,
@@ -266,22 +258,20 @@ const PharmacyTable = () => {
     setUpdateMedicineDescription("");
     setUpdateMedicinePrice("");
     handleClose2();
-    Axios.get(`${hostUrl}/pharmacy/${id}`).then((response) => {
+    Axios.get(`${hostUrl}/pharmacy/${props.medicine}`).then((response) => {
       setpharmacy(response.data);
     });
   }
 
   const deleteMedicine = () => {
-    const vet = vetid;
-    var id = vetid.toString().replace("10##01", "/");
     Axios.post(`${hostUrl}/pharmacy/delete/${medicine_id}`, {
-      vetid: id,
+      vetid: props.medicine,
     });
   };
 
   const updateMedicine = () => {
     Axios.put(`${hostUrl}/pharmacy/update/${pharmacyUpdateId}`, {
-      vetid: vetid,
+      vetid: props.medicine,
       medicine_image: pharmacyUpdateImage,
       medicine_name: pharmacyUpdateName,
       medicine_description: pharmacyUpdateDescription,
@@ -289,7 +279,7 @@ const PharmacyTable = () => {
       status: pharmacyUpdateStatus,
     });
 
-    Axios.get(`${hostUrl}/pharmacy/${vetid}`).then((response) => {
+    Axios.get(`${hostUrl}/pharmacy/${props.medicine}`).then((response) => {
       setpharmacy(response.data);
     });
     handleCloseUpdate();
@@ -335,8 +325,7 @@ const PharmacyTable = () => {
     <div
       style={{
         width: "77vw",
-        marginLeft: 40,
-        marginTop: 70,
+        padding: 10,
       }}
     >
       {/* Delete */}
@@ -833,6 +822,7 @@ const PharmacyTable = () => {
               cellEditable={false}
               options={{
                 sorting: true,
+                pageSize: 10,
               }}
               actions={[
                 // {

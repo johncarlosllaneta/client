@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState, useEffect, useParams } from "react";
 import NavBarDoc from "../NavBarDoc";
 import SideNavBarVetDoctor from "../SideNavBarVetDoctor";
 import AppointmentPage from "./AppointmentPage";
+import getUser from "../../../../Components/userData";
+import { Skeleton, useMediaQuery } from "@mui/material";
 function AppointmentMain() {
+  const [user, setuser] = useState([]);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+  }, []);
   return (
     <div>
       <div
@@ -30,9 +37,13 @@ function AppointmentMain() {
           {/* navbar */}
           <NavBarDoc showLogo={false} showHome={false} />
         </div>
-        <div style={{ height: "85%", border: "1px", padding: 5 }}>
-          <AppointmentPage />
-        </div>
+        {user.length == 0 ? (
+          <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+        ) : (
+          <div style={{ height: "85%", border: "1px", padding: 5 }}>
+            <AppointmentPage />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState, useEffect, useParams } from "react";
 import NavBarStaff from "../../NavBarStaff";
 import SideNavBarVetStaff from "../../SideNavBarVetStaff";
 import PharmacyTable from "./PharmacyTable";
+import getUser from "../../../../../Components/userData";
+import { Skeleton, useMediaQuery } from "@mui/material";
 function PharmacyMain() {
+  const [user, setuser] = useState([]);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+  }, []);
   return (
     <div>
       <div
@@ -30,9 +37,13 @@ function PharmacyMain() {
           {/* navbar */}
           <NavBarStaff showLogo={true} showHome={true} />
         </div>
-        <div style={{ height: "85%", border: "1px", padding: 5 }}>
-          <PharmacyTable />
-        </div>
+        {user == 0 ? (
+          <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+        ) : (
+          <div style={{ height: "85%", border: "1px", padding: 5 }}>
+            <PharmacyTable id={user.vetid} />
+          </div>
+        )}
       </div>
     </div>
   );

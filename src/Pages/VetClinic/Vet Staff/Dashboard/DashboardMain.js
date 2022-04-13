@@ -5,19 +5,13 @@ import { hostUrl } from "../../../../Components/Host";
 import HomeTab from "../../../VetClinic/Verified Vet/Dashboard/HomeTab";
 import NavBarStaff from "../NavBarStaff";
 import SideNavBarVetStaff from "../SideNavBarVetStaff";
+import getUser from "../../../../Components/userData";
 function DashboardMain() {
   const [user, setuser] = useState([]);
 
-  useEffect(() => {
-    var token = localStorage.getItem("ajwt");
-    axios
-      .get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        console.log(response.data.result[0]);
-        setuser(response.data.result[0]);
-      });
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
   }, []);
   return (
     <div>

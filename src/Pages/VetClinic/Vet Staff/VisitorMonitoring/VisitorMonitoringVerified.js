@@ -64,71 +64,26 @@ function VisitorMonitoringVerified() {
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
           <NavBarStaff showLogo={false} showHome={false} />
         </div>
-        <div
-          style={{
-            height: "85%",
-            border: "1px",
-            padding: 20,
-          }}
-        >
-          <Row>
-            <div style={{ padding: 20, textAlign: "left", color: "#3BD2E3" }}>
-              <h1>Visitor Monitoring</h1>
-            </div>
-          </Row>
-          <Row>
-            <Col sm="5">
-              {qrCode == null ? (
-                <Skeleton
-                  variant="rectangular"
-                  height={"100%"}
-                  width={"100%"}
-                />
-              ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flexDirection: "column",
-                    rowGap: 20,
-                  }}
-                >
-                  <Image
-                    src={qrCode}
-                    alt={"QrCode"}
-                    style={{ height: 350, maxWidth: "100%" }}
-                  />
 
-                  <Button
-                    style={{
-                      backgroundColor: "#3BD2E3",
-                      borderRadius: 30,
-                      paddingLeft: 40,
-                      paddingRight: 40,
-                      borderColor: "#FFFFFF",
-                    }}
-                    download
-                    href={qrCode}
-                  >
-                    Download
-                  </Button>
-                </div>
-              )}
-            </Col>
-            <Col sm="7">
-              {user.length == 0 ? (
-                <Skeleton
-                  variant="rectangular"
-                  height={"100%"}
-                  width={"100%"}
-                />
-              ) : (
-                <HistoryTab visitor={user.vetid} />
-              )}
-            </Col>
-          </Row>
-        </div>
+        {user.length == 0 ? (
+          <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+        ) : (
+          <div
+            style={{
+              height: "85%",
+              border: "1px",
+            }}
+          >
+            <Row>
+              <div style={{ padding: 20, textAlign: "left", color: "#3BD2E3" }}>
+                <h1>Visitor Monitoring</h1>
+              </div>
+            </Row>
+            <Row>
+              <HistoryTab visitor={user.vetid} />
+            </Row>
+          </div>
+        )}
       </div>
     </div>
   );

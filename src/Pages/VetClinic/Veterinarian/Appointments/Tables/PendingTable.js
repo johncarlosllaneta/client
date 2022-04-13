@@ -6,14 +6,24 @@ import { hostUrl } from "../../../../../Components/Host";
 import { users } from "../../../../../Components/User";
 import { dateConvertion } from "../../../../../Components/FormatDateTime";
 import { useParams } from "react-router-dom";
+import getUser from "../../../../../Components/userData";
 function PendingTable() {
-  let { vetid } = useParams();
   const [appointmentPending, setappointmentPending] = useState([]);
+  const [user, setuser] = useState([]);
   useEffect(async () => {
-    Axios.get(`${hostUrl}/pending/appointment/${vetid}`).then((response) => {
-      setappointmentPending(response.data);
-    });
+    const userData = await getUser();
+    setuser(userData);
+
+    getPending(userData.vetid);
   }, []);
+  //   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
+
+  const getPending = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/pending/appointment/${id}`);
+    // console.log(result.data);
+    setappointmentPending(result.data);
+  };
   const columns = [
     {
       title: "Appointment ID",

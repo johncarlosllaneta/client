@@ -19,13 +19,13 @@ function VetStaffHome() {
           <Route path="/" exact component={DashboardMain} />
           <Route path="/dashboard" exact component={DashboardMain} />
           <Route path="/profile" exact component={ProfileMain} />
-          <Route path="/products/:vetid" exact component={ProductVerified} />
+          <Route path="/products" exact component={ProductVerified} />
           <Route
-            path="/history/:vetid"
+            path="/history"
             exact
             component={ProductHistoryTabController}
           />
-          <Route path="/pharmacy/:vetid" exact component={PharmacyMain} />
+          <Route path="/pharmacy" exact component={PharmacyMain} />
           <Route
             path="/visitormonitoring"
             exact

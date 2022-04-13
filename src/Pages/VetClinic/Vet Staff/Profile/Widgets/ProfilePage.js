@@ -15,10 +15,13 @@ function ProfilePage() {
 
   useEffect(async () => {
     const userData = await getUser();
-    Axios.get(`${hostUrl}/staff/${userData.vet_staff_id}`).then((response) => {
-      setuser(response.data[0]);
-    });
+    getInfo(userData.vet_staff_id);
   }, []);
+
+  const getInfo = async (id) => {
+    const result = await Axios.get(`${hostUrl}/staff/${id}`);
+    setuser(result.data[0]);
+  };
   return (
     <div
       style={{

@@ -12,12 +12,15 @@ const HistoryTab = (props) => {
   const [visitor, setvisitor] = useState([]);
   const [counter, setcounter] = useState(0);
   useEffect(async () => {
-    Axios.get(`${hostUrl}/vetclinic/visitor/${props.visitor}`).then(
-      (response) => {
-        setvisitor(response.data);
-      }
-    );
+    getVisitor(props.visitor);
   }, []);
+
+  const getVisitor = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/vetclinic/visitor/${id}`);
+    // console.log(result.data);
+    setvisitor(result.data);
+  };
 
   function dateConvertion(date) {
     var str = date.split("-");
@@ -109,11 +112,12 @@ const HistoryTab = (props) => {
         style={{ color: "#3BD2E3" }}
         columns={columns}
         data={visitor}
-        title={"Visitor Monitoring Table"}
+        title={""}
         cellEditable={false}
         options={{
           sorting: true,
           search: true,
+          pageSize: 10,
         }}
       />
     </div>

@@ -25,6 +25,7 @@ import { apps } from "../../../../../Components/base";
 import { ToastContainer } from "react-toastify";
 import { hostUrl } from "../../../../../Components/Host";
 import { users } from "../../../../../Components/User";
+import { ToastSuccess } from "../../../../../Components/Toast";
 
 function AddProduct(props) {
   // Product Attributes

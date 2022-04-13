@@ -24,18 +24,14 @@ function VetDoctorHome() {
           <Route path="/" exact component={DashboardMain} />
           <Route path="/dashboard" exact component={DashboardMain} />
           <Route path="/profile" exact component={ProfileMain} />
-          <Route path="/pets/:vetid" exact component={PetsMain} />
+          <Route path="/pets" exact component={PetsMain} />
           <Route
             path="/pets/:vetid/:petid"
             exact
             component={PetPanelTableController}
           />
-          <Route
-            path="/consultation/:vetid"
-            exact
-            component={ConsultationMain}
-          />
-          <Route path="/services/:vetid" exact component={ServicesVerified} />
+          <Route path="/consultation" exact component={ConsultationMain} />
+          <Route path="/services" exact component={ServicesVerified} />
           <Route
             path="/services/preventive&control/:vetid"
             exact
@@ -57,12 +53,8 @@ function VetDoctorHome() {
             exact
             component={VaccineStartHolder}
           />
-          <Route path="/pharmacy/:vetid" exact component={PharmacyMain} />
-          <Route
-            path="/appointments/:vetid"
-            exact
-            component={AppointmentMain}
-          />
+          <Route path="/pharmacy" exact component={PharmacyMain} />
+          <Route path="/appointments" exact component={AppointmentMain} />
         </Switch>
       </div>
     </Router>

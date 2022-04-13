@@ -23,9 +23,14 @@ import MaterialTable from "material-table";
 import { hostUrl } from "../../../../../Components/Host";
 import { useParams } from "react-router-dom";
 import { apps } from "../../../../../Components/base";
-const PharmacyTable = () => {
-  let { vetid } = useParams();
+import {
+  ToastSuccess,
+  ToastUpdate,
+  ToastDelete,
+} from "../../../../../Components/Toast";
+import { ToastContainer } from "react-toastify";
 
+const PharmacyTable = (props) => {
   //Insert
   const [show2, setShow2] = useState(false);
   const handleClose2 = () => setShow2(false);
@@ -52,18 +57,15 @@ const PharmacyTable = () => {
 
   const [counter, setcounter] = useState(0);
   useEffect(async () => {
-    var id = vetid.toString().replace("10##01", "/");
-    Axios.get(`${hostUrl}/pharmacy/${id}`).then((response) => {
-      setpharmacy(response.data);
-    });
+    getPharmacy(props.id);
   }, []);
 
-  function refreshTable() {
-    var id = vetid.toString().replace("10##01", "/");
-    Axios.get(`${hostUrl}/pharmacy/${id}`).then((response) => {
-      setpharmacy(response.data);
-    });
-  }
+  const getPharmacy = async (userid) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/pharmacy/${userid}`);
+    // console.log(result.data);
+    setpharmacy(result.data);
+  };
 
   const [imageUrl, setimageUrl] = useState();
   const [imageUploadedUrl, setimageUploadedUrl] = useState();
@@ -186,7 +188,6 @@ const PharmacyTable = () => {
               }}
               onClick={(e) => {
                 // Edit Medicine
-                // alert(row.medicine_id);
                 e.preventDefault();
                 setpharmacyUpdateId(row.med_id);
                 setpharmacyUpdateImage(row.medicine_image);
@@ -236,6 +237,7 @@ const PharmacyTable = () => {
     } else {
       e.preventDefault();
       handleShowConfirmationInsert();
+      handleClose2();
     }
 
     setValidated(true);
@@ -249,14 +251,14 @@ const PharmacyTable = () => {
     } else {
       e.preventDefault();
       handleShowConfirmationUpdate();
+      handleCloseUpdate();
     }
 
     setValidated(true);
   };
 
   function insertMedicines() {
-    var id = vetid.toString().replace("10##01", "/");
-    Axios.post(`${hostUrl}/pharmacy/insert/${id}`, {
+    Axios.post(`${hostUrl}/pharmacy/insert/${props.id}`, {
       insertMedicineImage: imageUploadedUrl,
       insertMedicineName: updateMedicineName,
       insertMedicineDescription: updateMedicineDescription,
@@ -271,22 +273,29 @@ const PharmacyTable = () => {
     setUpdateMedicinePrice("");
     setupdateMedicineNumber("");
     handleClose2();
-    Axios.get(`${hostUrl}/pharmacy/${id}`).then((response) => {
+    Axios.get(`${hostUrl}/pharmacy/${props.id}`).then((response) => {
       setpharmacy(response.data);
     });
+
+    ToastSuccess();
+    refreshTable();
   }
 
   const deleteMedicine = () => {
-    const vet = vetid;
-    var id = vetid.toString().replace("10##01", "/");
     Axios.post(`${hostUrl}/pharmacy/delete/${medicine_id}`, {
-      vetid: id,
+      vetid: props.id,
     });
+    ToastDelete();
+    refreshTable();
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
   };
 
   const updateMedicine = () => {
     Axios.put(`${hostUrl}/pharmacy/update/${pharmacyUpdateId}`, {
-      vetid: vetid,
+      vetid: props.id,
       medicine_image: pharmacyUpdateImage,
       medicine_name: pharmacyUpdateName,
       medicine_description: pharmacyUpdateDescription,
@@ -295,10 +304,12 @@ const PharmacyTable = () => {
       medicine_number: pharmacyUpdateNumber,
     });
 
-    Axios.get(`${hostUrl}/pharmacy/${vetid}`).then((response) => {
+    Axios.get(`${hostUrl}/pharmacy/${props.id}`).then((response) => {
       setpharmacy(response.data);
     });
     handleCloseUpdate();
+    ToastUpdate();
+    refreshTable();
   };
 
   // Modal Delete
@@ -337,6 +348,12 @@ const PharmacyTable = () => {
     setTarget(event.target);
   };
 
+  function refreshTable() {
+    Axios.get(`${hostUrl}/pharmacy/${props.id}`).then((response) => {
+      setpharmacy(response.data);
+    });
+  }
+
   return (
     <div
       style={{
@@ -345,6 +362,8 @@ const PharmacyTable = () => {
         marginTop: 70,
       }}
     >
+      <ToastContainer />
+
       {/* Delete */}
       <Modal show={showDelete} onHide={handleCloseDelete}>
         <Modal.Header closeButton>
@@ -404,7 +423,12 @@ const PharmacyTable = () => {
         </Modal.Header>
         <Modal.Body>Are you sure you want to add this Medicine? </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseConfirmationInsert}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              handleCloseConfirmationInsert();
+            }}
+          >
             No
           </Button>
           <Button
@@ -901,10 +925,11 @@ const PharmacyTable = () => {
               ref={ref}
               columns={columns}
               data={pharmacy}
-              title={"Medicine Table"}
+              title={"Pharmacy Table"}
               cellEditable={false}
               options={{
                 sorting: true,
+                pageSize: 10,
               }}
               actions={[
                 {

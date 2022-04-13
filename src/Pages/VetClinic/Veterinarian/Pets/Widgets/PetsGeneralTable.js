@@ -5,7 +5,6 @@ import TabContext from "@material-ui/lab/TabContext";
 import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
 import { Row } from "react-bootstrap";
-import Consultation from "./Tables/Consultation";
 import Vaccination from "./Tables/Vaccination";
 import Examination from "./Tables/Examination";
 import Appointment from "./Tables/Appointment";

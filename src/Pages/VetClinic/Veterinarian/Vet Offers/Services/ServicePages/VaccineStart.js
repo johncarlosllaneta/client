@@ -536,7 +536,7 @@ const VaccineStart = (props) => {
         </h5>
 
         <Button
-          href={`/services/${vetid}`}
+          href={`/services`}
           style={{
             backgroundColor: "#19B9CC",
             borderColor: "white",
@@ -790,12 +790,12 @@ const VaccineStart = (props) => {
           sorting: true,
         }}
         actions={[
-          {
-            icon: "add",
-            tooltip: "Add Services",
-            isFreeAction: true,
-            onClick: (event) => handleShowInsert(),
-          },
+          // {
+          //   icon: "add",
+          //   tooltip: "Add Services",
+          //   isFreeAction: true,
+          //   onClick: (event) => handleShowInsert(),
+          // },
           {
             icon: "information",
             tooltip: "Helper",

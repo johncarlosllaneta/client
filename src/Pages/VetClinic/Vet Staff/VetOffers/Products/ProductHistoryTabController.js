@@ -5,9 +5,13 @@ import SideNavBarVetStaff from "../../SideNavBarVetStaff";
 import NavBarStaff from "../../NavBarStaff";
 import ProductReservationHistory from "./ProductReservationHistory";
 import { useParams } from "react-router";
-
+import getUser from "../../../../../Components/userData";
 function ProductHistoryTabController() {
-  let { vetid } = useParams();
+  const [user, setuser] = useState([]);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+  }, []);
   return (
     <div>
       <div
@@ -35,7 +39,7 @@ function ProductHistoryTabController() {
           <NavBarStaff showLogo={true} showHome={true} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
-          <ProductReservationHistory user={vetid} />
+          <ProductReservationHistory user={user} />
         </div>
       </div>
     </div>

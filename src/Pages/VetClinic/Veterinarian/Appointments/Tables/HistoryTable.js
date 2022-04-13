@@ -6,14 +6,23 @@ import { hostUrl } from "../../../../../Components/Host";
 import { users } from "../../../../../Components/User";
 import { dateConvertion } from "../../../../../Components/FormatDateTime";
 import { useParams } from "react-router-dom";
+import getUser from "../../../../../Components/userData";
 function HistoryTable() {
-  let { vetid } = useParams();
   const [appointmentHistoryData, setappointmentHistoryData] = useState([]);
+  const [user, setuser] = useState([]);
   useEffect(async () => {
-    Axios.get(`${hostUrl}/history/appointment/${vetid}`).then((response) => {
-      setappointmentHistoryData(response.data);
-    });
+    const userData = await getUser();
+    setuser(userData);
+
+    getHistory(userData.vetid);
   }, []);
+
+  const getHistory = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/history/appointment/${id}`);
+    // console.log(result.data);
+    setappointmentHistoryData(result.data);
+  };
   const columns = [
     {
       title: "Pet Owner Name",

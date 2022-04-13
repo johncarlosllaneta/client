@@ -2,9 +2,6 @@ import { useEffect } from "react";
 import Axios from "axios";
 import { hostUrl } from "./Host";
 
-
-
-
 var token = localStorage.getItem("ajwt");
 var users = [];
 Axios.get(`${hostUrl}/home`, {
@@ -24,5 +21,34 @@ function messages(user) {
   });
 }
 
+var numberNewReserved = 0;
 
-export { users, messages, numberNewThreads };
+function notifReserved(user) {
+  Axios.get(
+    `${hostUrl}/vetclinic/notification/reservation/length/${user}`
+  ).then((response) => {
+    numberNewReserved = response.data.view;
+    // alert(response.data.view);
+  });
+}
+
+var numberNewAppointment = 0;
+
+function notifAppointment(user) {
+  Axios.get(`${hostUrl}/vetclinic/notification/length/${user}`).then(
+    (response) => {
+      numberNewAppointment = response.data.view;
+      // alert(response.data.view);
+    }
+  );
+}
+
+export {
+  users,
+  messages,
+  numberNewThreads,
+  notifAppointment,
+  notifReserved,
+  numberNewAppointment,
+  numberNewReserved,
+};

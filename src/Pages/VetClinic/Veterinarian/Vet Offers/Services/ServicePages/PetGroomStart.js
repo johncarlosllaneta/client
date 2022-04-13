@@ -32,19 +32,20 @@ const PetGroomStart = (props) => {
   let { vetid } = useParams();
   var id = vetid.toString().replace("10##01", "/");
   //category
-  const [consulation, setconsulation] = useState(true);
+  // const [consulation, setconsulation] = useState(true);
   const [petExamination, setpetExamination] = useState(true);
   const [petGrooming, setpetGrooming] = useState(true);
   const [preventiveControls, setpreventiveControls] = useState(true);
   const [vaccination, setvaccination] = useState(true);
-  const [inHouseLab, setinHouseLab] = useState(true);
-  const [counter, setcounter] = useState(0);
+  // const [inHouseLab, setinHouseLab] = useState(true);
+  // const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
   useEffect(async () => {
     const userData = await getUser();
     setuser(userData);
 
     getServices(userData.vet_doc_id);
+    getGrooming(userData.vetid);
   }, []);
   function getServices(id) {
     Axios.get(`${hostUrl}/doc/${id}`).then((response) => {
@@ -115,13 +116,20 @@ const PetGroomStart = (props) => {
   };
 
   const [petGroomings, setpetGroomings] = useState([]);
-  useEffect(async () => {
-    Axios.get(`${hostUrl}/petGrooming/${id}`).then((response) => {
-      setpetGroomings(response.data);
-      // console.log(response.data)
-    });
-    // alert(props.data.vet_admin_id);
-  }, []);
+  // useEffect(async () => {
+  //   Axios.get(`${hostUrl}/petGrooming/${id}`).then((response) => {
+  //     setpetGroomings(response.data);
+  //     // console.log(response.data)
+  //   });
+  //   // alert(props.data.vet_admin_id);
+  // }, []);
+
+  const getGrooming = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/petGrooming/${id}`);
+    // console.log(result.data);
+    setpetGroomings(result.data);
+  };
 
   function reloadPetGrooming() {
     Axios.get(`${hostUrl}/petGrooming/${id}`).then((response) => {
@@ -535,7 +543,7 @@ const PetGroomStart = (props) => {
         </h5>
 
         <Button
-          href={`/services/${vetid}`}
+          href={`/services`}
           style={{
             backgroundColor: "#19B9CC",
             borderColor: "white",
@@ -792,12 +800,12 @@ const PetGroomStart = (props) => {
           sorting: true,
         }}
         actions={[
-          {
-            icon: "add",
-            tooltip: "Add Services",
-            isFreeAction: true,
-            onClick: (event) => handleShowInsert(),
-          },
+          // {
+          //   icon: "add",
+          //   tooltip: "Add Services",
+          //   isFreeAction: true,
+          //   onClick: (event) => handleShowInsert(),
+          // },
           {
             icon: "information",
             tooltip: "Helper",

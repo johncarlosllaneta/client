@@ -9,15 +9,22 @@ import getUser from "../../../../../Components/userData";
 import { useParams } from "react-router-dom";
 
 function GeneralTable() {
-  let { vetid } = useParams();
   const [appointmentConfirm, setappointmentConfirm] = useState([]);
+  const [user, setuser] = useState([]);
   useEffect(async () => {
-    Axios.get(`${hostUrl}/general/appointment/${vetid}`).then((response) => {
-      setappointmentConfirm(response.data);
-    });
+    const userData = await getUser();
+    setuser(userData);
+
+    getGeneral(userData.vetid);
   }, []);
   //   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
 
+  const getGeneral = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/general/appointment/${id}`);
+    // console.log(result.data);
+    setappointmentConfirm(result.data);
+  };
   const columns = [
     {
       title: "Appointment ID",

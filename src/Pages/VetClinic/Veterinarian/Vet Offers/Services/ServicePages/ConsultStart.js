@@ -33,12 +33,12 @@ const ConsultStart = (props) => {
   const [counter, setcounter] = useState(0);
 
   const [consultation, setconsultation] = useState([]);
-  useEffect(async () => {
-    Axios.get(`${hostUrl}/consultation/${id}`).then((response) => {
-      setconsultation(response.data[0]);
-      // console.log(response.data)
-    });
-  }, []);
+  // useEffect(async () => {
+  //   Axios.get(`${hostUrl}/consultation/${id}`).then((response) => {
+  //     setconsultation(response.data[0]);
+  //     // console.log(response.data)
+  //   });
+  // }, []);
 
   const [consulations, setconsulations] = useState(true);
   const [petExamination, setpetExamination] = useState(true);

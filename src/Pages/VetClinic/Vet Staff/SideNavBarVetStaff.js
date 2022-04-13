@@ -29,32 +29,39 @@ function SideNavBarVetStaff(props) {
   useEffect(async () => {
     const userData = await getUser();
 
-    Axios.get(`${hostUrl}/staff/${userData.vet_staff_id}`).then((response) => {
-      setuser(response.data[0]);
-    });
-
+    getInfo(userData.vet_staff_id);
+    getNotifLength(userData.vetid);
+    getReservedLength(userData.vetid);
     setpharmacyChecker(1);
     setproductChecker(1);
-
-    Axios.get(
-      `${hostUrl}/vetclinic/notification/isNew/length/${user.vetid}`
-    ).then((response) => {
-      setnumberOfUnviewedAppointment(response.data.view);
-      // alert(response.data.view);
-    });
-
-    Axios.get(
-      `${hostUrl}/vetclinic/notification/reservation/isNew/length/${user.vetid}`
-    ).then((response) => {
-      setnumberOfUnviewedReserved(response.data.view);
-      // alert(response.data.view);
-    });
   }, []);
 
-  // useEffect(() => {
-  //   setpharmacyChecker(user.enablePharmacy);
-  //   setproductChecker(user.enableProduct);
-  // }, []);
+  const getInfo = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/staff/${id}`);
+    // console.log(result.data);
+    setuser(result.data);
+  };
+
+  const getNotifLength = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(
+      `${hostUrl}/vetclinic/notification/isNew/length/${id}`
+    );
+
+    // console.log(result.data);
+    setnumberOfUnviewedAppointment(result.data.view);
+  };
+
+  const getReservedLength = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(
+      `${hostUrl}/vetclinic/notification/reservation/isNew/length/${id}`
+    );
+    // console.log(result.data);
+    setnumberOfUnviewedReserved(result.data.view);
+  };
+
   useEffect(() => {
     if (pharmacyChecker === 1) {
       setpharmacyCheckerEnabler("block");
@@ -73,7 +80,6 @@ function SideNavBarVetStaff(props) {
   const [consultation, setconsultation] = useState("#181c21");
   const [pharmacy, setpharmacy] = useState("#181c21");
   const [product, setproduct] = useState("#181c21");
-  const [appointment, setappointment] = useState();
   useEffect(() => {
     if (props.active === "dashboard") {
       setdashboard("#19B9CC");
@@ -168,52 +174,24 @@ function SideNavBarVetStaff(props) {
           backgroundColor: vetoffer,
         }}
       >
-        {numberOfUnviewedReserved != 0 ? (
-          <div
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+          }}
+        >
+          <FaClinicMedical id="icons" />
+          <p
+            id="anchorTag"
             style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
+              cursor: "pointer",
             }}
+            onClick={handleDropdown}
           >
-            <FaClinicMedical id="icons" />
-            <p
-              id="anchorTag"
-              style={{
-                cursor: "pointer",
-              }}
-              onClick={handleDropdown}
-            >
-              Vet Offers
-            </p>
-            <GoPrimitiveDot
-              style={{
-                color: "#f8d210",
-                marginLeft: 25,
-                fontSize: 28,
-              }}
-            />
-          </div>
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
-            }}
-          >
-            <FaClinicMedical id="icons" />
-            <p
-              id="anchorTag"
-              style={{
-                cursor: "pointer",
-              }}
-              onClick={handleDropdown}
-            >
-              Vet Offers
-            </p>
-          </div>
-        )}
+            Vet Offers
+          </p>
+        </div>
       </Container>
 
       <div hidden={dropdownVetOffer}>
@@ -230,7 +208,7 @@ function SideNavBarVetStaff(props) {
             }}
           >
             <RiServiceFill id="icons" />
-            <a id="anchorTag" href={`/products/${user.vetid}`}>
+            <a id="anchorTag" href={`/products`}>
               Product
             </a>
           </Container>
@@ -249,7 +227,7 @@ function SideNavBarVetStaff(props) {
             }}
           >
             <MdLocalPharmacy id="icons" />
-            <a id="anchorTag" href={`/pharmacy/${user.vetid}`}>
+            <a id="anchorTag" href={`/pharmacy`}>
               Pharmacy
             </a>
           </Container>

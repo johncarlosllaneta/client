@@ -29,13 +29,25 @@ import { BiLogOut } from "react-icons/bi";
 import { IoLogOut } from "react-icons/io5";
 import HomeIcon from "@mui/icons-material/Home";
 import MessageIcon from "@mui/icons-material/Message";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import logo from "../../../Images/logo.png";
-import { messages, numberNewThreads, users } from "../../../Components/User";
+// import {
+//   messages,
+//   numberNewThreads,
+//   users,
+//   notifAppointment,
+//   numberNewAppointment,
+// } from "../../../Components/User";
 import getUser from "../../../Components/userData";
+import {
+  dateConvertion,
+  timeFormatter,
+} from "../../../Components/FormatDateTime";
+import { MenuList } from "@material-ui/core";
 
 function NavBarDoc(props) {
   // const [user, setuser] = useState([]);
-  const [numberNewThread, setnumberNewThread] = useState(0);
+  // const [numberNewAppoint, setnumberNewAppoint] = useState(0);
   const [user, setuser] = useState([]);
   var token = localStorage.getItem("ajwt");
 
@@ -43,12 +55,9 @@ function NavBarDoc(props) {
     const userData = await getUser();
     setuser(userData);
 
-    messages(user);
-    // alert(numberNewThreads);
-    setTimeout(() => {
-      setnumberNewThread(numberNewThreads);
-    }, 1000);
-  }, [user]);
+    notifAppointment(userData.vetid);
+    notifDetails(userData.vetid);
+  }, []);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -57,6 +66,17 @@ function NavBarDoc(props) {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const [notifAnchor, setnotifAnchor] = React.useState(null);
+  const openNotif = Boolean(notifAnchor);
+  const notifhandleClick = (event) => {
+    setnotifAnchor(event.currentTarget);
+    viewNotif(user.vetid);
+    notifAppointment(user.vetid);
+  };
+  const notifhandleClose = () => {
+    setnotifAnchor(null);
   };
 
   const logoutUser = () => {
@@ -77,6 +97,38 @@ function NavBarDoc(props) {
     localStorage.clear();
     window.location.replace("/");
   };
+
+  const [numberNewAppointment, setnumberNewAppointment] = useState(0);
+
+  const notifAppointment = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(
+      `${hostUrl}/vetclinic/notification/length/${id}`
+    );
+    // console.log(result.data);
+    setnumberNewAppointment(result.data.view);
+  };
+
+  const [notif, setnotif] = useState([]);
+  const notifDetails = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/vetclinic/notification/${id}`);
+    // console.log(result.data);
+    setnotif(result.data);
+  };
+
+  // function notifAppointment(id) {
+  //   Axios.get(`${hostUrl}/vetclinic/notification/length/${id}`).then(
+  //     (response) => {
+  //       setnumberNewAppointment(response.data.view);
+  //       // alert(response.data.view);
+  //     }
+  //   );
+  // }
+
+  function viewNotif(id) {
+    Axios.put(`${hostUrl}/vetclinic/notification/viewed/${id}`);
+  }
 
   return (
     <Navbar
@@ -129,18 +181,20 @@ function NavBarDoc(props) {
             </IconButton>
           </Tooltip>
 
-          <Tooltip title={"Messages"}>
+          <Tooltip title={"Notification"}>
             <IconButton
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
               hidden={props.showMessage}
-              onClick={() => {
-                window.location.href = `/talk to vet`;
-              }}
+              // onClick={() => {
+              //   // viewNotif(user.vetid);
+              //   // notifAppointment(user.vetid);
+              // }}
+              onClick={notifhandleClick}
             >
-              <Badge badgeContent={numberNewThread} color="error">
-                <MessageIcon
+              <Badge badgeContent={numberNewAppointment} color="error">
+                <NotificationsIcon
                   style={{
                     color: "white",
                   }}
@@ -148,6 +202,104 @@ function NavBarDoc(props) {
               </Badge>
             </IconButton>
           </Tooltip>
+          <Menu
+            anchorEl={notifAnchor}
+            id="notif-menu"
+            open={openNotif}
+            onClose={notifhandleClose}
+            PaperProps={{
+              elevation: 0,
+              sx: {
+                overflow: "visible",
+                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                mt: 1.5,
+                "& .MuiAvatar-root": {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                "&:before": {
+                  content: '""',
+                  display: "block",
+                  position: "absolute",
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: "background.paper",
+                  transform: "translateY(-50%) rotate(45deg)",
+                  zIndex: 0,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          >
+            <div style={{ height: 400, width: 400, overflowY: "auto" }}>
+              {notif.length > 0 ? (
+                notif.map((val) => {
+                  return (
+                    <MenuList>
+                      <Row style={{ width: 380 }}>
+                        <div style={{ paddingRight: 20, paddingLeft: 30 }}>
+                          <Row>
+                            <Col>
+                              <text>
+                                {dateConvertion(
+                                  val.date_time_created.toString().split("T")[0]
+                                )}
+                              </text>
+                            </Col>
+                            <Col>
+                              <text style={{ float: "right" }}>
+                                {timeFormatter(
+                                  val.date_time_created
+                                    .toString()
+                                    .split("T")[1]
+                                    .substring(
+                                      0,
+                                      val.date_time_created
+                                        .toString()
+                                        .split("T")[1].length - 5
+                                    )
+                                )}
+                              </text>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col
+                              sm={3}
+                              style={{
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              {" "}
+                              <Avatar
+                                round={true}
+                                size={60}
+                                src={val.profilePicture}
+                                name={val.name}
+                              />
+                            </Col>
+                            <Col sm={9}>
+                              <Row>Name:{val.name}</Row>
+                              <Row>Service:{val.service_name}</Row>
+                              <Row>Status:{val.status}</Row>
+                            </Col>
+                          </Row>
+                        </div>
+                      </Row>
+                      <Divider />
+                    </MenuList>
+                  );
+                })
+              ) : (
+                <h5>No notification</h5>
+              )}
+            </div>
+          </Menu>
 
           <Tooltip
             title={

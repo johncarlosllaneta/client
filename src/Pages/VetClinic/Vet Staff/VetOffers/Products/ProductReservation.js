@@ -1,17 +1,17 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import {
+  Col,
   Button,
   Modal,
+  Row,
+  Form,
   OverlayTrigger,
   Popover,
-  Overlay,
   Image,
   Container,
-  Navbar,
-  NavDropdown,
-  Row,
-  Col,
+  FloatingLabel,
+  Overlay,
 } from "react-bootstrap";
 import Axios from "axios";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -19,20 +19,44 @@ import { BiPurchaseTagAlt } from "react-icons/bi";
 import MaterialTable from "material-table";
 import { hostUrl } from "../../../../../Components/Host";
 import { useParams } from "react-router-dom";
+import getUser from "../../../../../Components/userData";
+import Cardproduct from "./CardProduct";
+import { autocompleteClasses } from "@mui/material";
+import { ToastClaim } from "../../../../../Components/Toast";
+import { ToastContainer } from "react-toastify";
 
 function ProductReservation() {
-  let { vetid } = useParams();
-  var id = vetid.toString().replace("10##01", "/");
   const [counter, setcounter] = useState(0);
   const [reservation, setreservation] = useState([]);
+  const [user, setuser] = useState([]);
   useEffect(async () => {
-    Axios.get(`${hostUrl}/pending/reservation/${id}`).then((response) => {
-      setreservation(response.data);
-    });
-    // console.log(reservation);
+    const userData = await getUser();
+    setuser(userData);
 
-    Axios.put(`${hostUrl}/expiration/reservation/${id}`);
+    getReservation(userData.vetid);
   }, []);
+
+  const getReservation = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(
+      `${hostUrl}/staff/pending/order/reservation/${id}`
+    );
+    // console.log(result.data);
+    setreservation(result.data);
+  };
+  function refreshTable() {
+    Axios.get(`${hostUrl}/staff/pending/order/reservation/${user.vetid}`).then(
+      (response) => {
+        setreservation(response.data);
+      }
+    );
+  }
+  const [total, settotal] = useState(0);
+  function totalPrice(id) {
+    Axios.get(`${hostUrl}/staff/order/total/${id}`).then((response) => {
+      settotal(response.data[0].totalprice);
+    });
+  }
 
   function formatDateAndTime(dateString) {
     const options = {
@@ -60,19 +84,9 @@ function ProductReservation() {
       sorting: true,
     },
     {
-      title: "Product Name",
-      field: "name",
+      title: "Order Id",
+      field: "order_id",
       sorting: true,
-      render: (row) => (
-        <div>
-          {" "}
-          <Image
-            src={row.product_image}
-            style={{ height: 50, display: "inline" }}
-          />{" "}
-          <p style={{ display: "inline" }}>{row.product_name}</p>
-        </div>
-      ),
     },
     {
       title: "Pet Owner Name",
@@ -85,12 +99,6 @@ function ProductReservation() {
       defaultSort: "asc",
       render: (row) => <div>{formatDate(row.date_reserve)}</div>,
     },
-
-    {
-      title: "Quantity",
-      field: "reserve_quantity",
-      sorting: true,
-    },
     {
       title: "Action",
       render: (row) => (
@@ -98,41 +106,25 @@ function ProductReservation() {
           <OverlayTrigger
             placement="top-start"
             delay={{ show: 250 }}
-            overlay={renderTooltip({ msg: "View Information" })}
+            overlay={renderTooltip({ msg: "View Reservation" })}
           >
             <Button
               variant="info"
               style={{ color: "white", marginRight: 5 }}
               onClick={(e) => {
                 e.preventDefault();
-                setproductInfo(row);
+                listProducts(row.order_id);
+                totalPrice(row.order_id);
+                setreservationID(row.reserve_id);
+                setorderId(row.order_id);
+                setpetOwnerName(row.name);
+                setdate(formatDate(row.date_reserve));
                 handleShowProductDetails();
               }}
             >
               <AiOutlineSearch style={{ fontSize: 25, color: "white" }} />
+              View Reservation
               {/* View Reservation */}
-            </Button>
-          </OverlayTrigger>
-
-          <OverlayTrigger
-            placement="top-start"
-            delay={{ show: 250 }}
-            overlay={renderTooltip({ msg: "Reservation Done" })}
-          >
-            <Button
-              variant="primary"
-              style={{ marginRight: 5 }}
-              onClick={(e) => {
-                e.preventDefault();
-                setreservationID(row.reserve_id);
-                setstockUsed(row.quantity);
-                setquantity(row.reserve_quantity);
-                setproduct_id(row.product_id);
-                handleShowProductConfirmation();
-              }}
-            >
-              <BiPurchaseTagAlt style={{ fontSize: 25 }} />
-              {/* Accept Reservation */}
             </Button>
           </OverlayTrigger>
         </div>
@@ -154,7 +146,9 @@ function ProductReservation() {
   const [productInfo, setproductInfo] = useState([]);
   const [showProductDetails, setShowProductDetails] = useState(false);
 
-  const handleCloseProductDetails = () => setShowProductDetails(false);
+  const handleCloseProductDetails = () => {
+    setShowProductDetails(false);
+  };
   const handleShowProductDetails = () => setShowProductDetails(true);
 
   // Done reservation
@@ -178,17 +172,17 @@ function ProductReservation() {
             status: "Purchased",
           });
 
-          var id = vetid.toString().replace("10##01", "/");
-
           // var decreaseStock = stockUsed - quantity;
           // Axios.put(`${hostUrl}/stockUsed/decrease/product/${product_id}`, {
           //   decreaseStock: decreaseStock,
           // });
           // // alert(stockUsed - quantity);
 
-          Axios.get(`${hostUrl}/pending/reservation/${id}`).then((response) => {
-            setreservation(response.data);
-          });
+          Axios.get(`${hostUrl}/pending/reservation/${user.vetid}`).then(
+            (response) => {
+              setreservation(response.data);
+            }
+          );
           handleCloseProductConfirmation();
         }
       }
@@ -196,110 +190,262 @@ function ProductReservation() {
     // alert(reservationID);
   }
 
+  const [listProd, setlistProd] = useState([]);
+  function listProducts(id) {
+    Axios.get(`${hostUrl}/staff/order/${id}`).then((response) => {
+      setlistProd(response.data);
+    });
+  }
+
+  function insertClaim(id) {
+    Axios.put(`${hostUrl}/staff/reservation/claim/${id}`, {
+      mop: mop,
+      claimBy: claimBy,
+    });
+    setmop("");
+    setclaimBy("");
+    handleClose2();
+    refreshTable();
+    ToastClaim();
+  }
+
+  const [viewDisableField, setviewDisableField] = useState(false);
+  //details
+  const [orderId, setorderId] = useState();
+  const [petOwnerName, setpetOwnerName] = useState();
+  const [date, setdate] = useState();
+  const [claimBy, setclaimBy] = useState();
+  const [mop, setmop] = useState();
+
+  const [show2, setShow2] = useState(false);
+  const handleClose2 = () => setShow2(false);
+  const handleShow2 = () => {
+    setShow2(true);
+  };
+  // Modal Confirmation Update
+  const [showConfirmationInsert, setshowConfirmationInsert] = useState(false);
+  const handleCloseConfirmationInsert = () => setshowConfirmationInsert(false);
+  const handleShowConfirmationInsert = () => setshowConfirmationInsert(true);
+
+  const [showUpdate, setShowUpdate] = useState(false);
+  const [validated, setValidated] = useState(false);
+
+  const insertClaimed = (e) => {
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    } else {
+      e.preventDefault();
+      handleShowConfirmationInsert();
+      handleCloseProductDetails();
+    }
+
+    setValidated(true);
+  };
   return (
     <div>
-      {/* View Details */}
-      <Modal show={showProductDetails} onHide={handleCloseProductDetails}>
+      <ToastContainer />
+      <Modal
+        show={showConfirmationInsert}
+        onHide={handleCloseConfirmationInsert}
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Reservation Infomation</Modal.Title>
+          <Modal.Title>Warning</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <Container>
-            <Container
-              style={{
-                display: "flex",
-                justifyContent: "center",
-
-                padding: 0,
-                margin: 0,
-              }}
-            >
-              <Image
-                src={productInfo.product_image}
-                rounded
-                style={{
-                  width: 450,
-                  height: 450,
-                }}
-              />
-            </Container>
-            <h2
-              style={{
-                fontWeight: "bold",
-                color: "#19B9CC",
-              }}
-            >
-              Product Name
-            </h2>
-            <p
-              style={{
-                fontWeight: "bold",
-              }}
-            >
-              {productInfo.product_name}
-            </p>
-
-            <h2
-              style={{
-                fontWeight: "bold",
-                color: "#19B9CC",
-              }}
-            >
-              Product Description
-            </h2>
-            <p
-              style={{
-                fontWeight: "bold",
-              }}
-            >
-              {productInfo.product_desc}
-            </p>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
+        <Modal.Body>Are you sure you want you are save? </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseConfirmationInsert}>
+            No
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              insertClaim(reservationID);
+              handleCloseConfirmationInsert();
+              refreshTable();
+            }}
+          >
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* View Details */}
+      <Modal
+        show={showProductDetails}
+        onHide={handleCloseProductDetails}
+        size="lg"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Reservation</Modal.Title>
+        </Modal.Header>
+        <Row>
+          <Form noValidate validated={true} onSubmit={insertClaimed}>
+            <Modal.Body>
               <div>
-                <h2
-                  style={{
-                    fontWeight: "bold",
-                    color: "#19B9CC",
-                  }}
-                >
-                  Quantity
-                </h2>
-                <p
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  {productInfo.reserve_quantity}
-                </p>
+                <Row>
+                  <Col>
+                    <h5>Details:</h5>
+                    <h6>Date reserved:{date}</h6>
+                    <Form.Group
+                      controlId="formBasicProduct"
+                      style={{
+                        marginTop: 30,
+                      }}
+                    >
+                      <FloatingLabel
+                        controlId="floatingInputPrice"
+                        label="Order Id"
+                      >
+                        <Form.Control
+                          type="text"
+                          value={orderId}
+                          disabled={viewDisableField}
+                        />
+                      </FloatingLabel>
+                    </Form.Group>
+
+                    <Form.Group
+                      controlId="formBasicProduct"
+                      style={{
+                        marginTop: 17,
+                      }}
+                    >
+                      <FloatingLabel
+                        controlId="floatingInputPrice"
+                        label="PetOwner Name"
+                      >
+                        <Form.Control
+                          type="text"
+                          value={petOwnerName}
+                          disabled={viewDisableField}
+                        />
+                      </FloatingLabel>
+                    </Form.Group>
+
+                    <Form.Group
+                      controlId="formBasicProduct"
+                      style={{
+                        marginTop: 17,
+                      }}
+                    >
+                      <FloatingLabel
+                        controlId="floatingInputPrice"
+                        label="Total Price"
+                      >
+                        <Form.Control
+                          type="text"
+                          value={total}
+                          disabled={viewDisableField}
+                        />
+                      </FloatingLabel>
+                    </Form.Group>
+
+                    <Form.Group
+                      controlId="formBasicProduct"
+                      style={{
+                        marginTop: 17,
+                      }}
+                    >
+                      <FloatingLabel
+                        controlId="floatingInputPrice"
+                        label="Claim By"
+                      >
+                        <Form.Control
+                          value={claimBy}
+                          placeholder="Name"
+                          required
+                          onChange={(e) => {
+                            setclaimBy(e.target.value);
+                          }}
+                        />
+
+                        {/* <Form.Control.Feedback type="valid">
+                        You've input a valid name.
+                      </Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">
+                        Please input a valid medicine name.
+                      </Form.Control.Feedback> */}
+                      </FloatingLabel>
+                    </Form.Group>
+
+                    <Form.Group
+                      controlId="formBasicProduct"
+                      style={{
+                        marginTop: 17,
+                      }}
+                    >
+                      <FloatingLabel
+                        controlId="floatingInputPrice"
+                        label="Mode of Payment"
+                      >
+                        {/* <Form.Control
+                          type="text"
+                          value={mop}
+                          placeholder="Mode of Payment"
+                          required
+                          onChange={(e) => {
+                            setmop(e.target.value);
+                          }}
+                        /> */}
+                        <Form.Select
+                          placeholder="Mode of Payment"
+                          required
+                          defaultValue={mop}
+                          onChange={(e) => {
+                            setmop(e.target.value);
+                          }}
+                        >
+                          <option value="">Choose payment method</option>
+                          <option value="Cash">Cash</option>
+                          <option value="E-wallet">E-wallet</option>
+                          <option value="Card">Card</option>
+                        </Form.Select>
+                      </FloatingLabel>
+                    </Form.Group>
+                  </Col>
+
+                  <Col>
+                    <h5>List of Products:</h5>
+                    <div
+                      style={{
+                        height: 400,
+                        width: 440,
+                        padding: 10,
+                        overflowY: "auto",
+                        overflowX: "hidden",
+                      }}
+                    >
+                      {listProd.length != 0 ? (
+                        listProd.map((val) => {
+                          return (
+                            <Cardproduct
+                              image={val.product_image}
+                              prodName={val.product_name}
+                              category={val.category}
+                              quantity={val.res_quantity}
+                              price={val.price}
+                            />
+                          );
+                        })
+                      ) : (
+                        <p>No Products</p>
+                      )}
+                    </div>
+                  </Col>
+                </Row>
               </div>
-              <div>
-                <h2
-                  style={{
-                    fontWeight: "bold",
-                    color: "#19B9CC",
-                  }}
-                >
-                  Total Price
-                </h2>
-                <p
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  {"₱ " +
-                    productInfo.reserve_quantity * productInfo.price +
-                    ".00"}
-                </p>
-              </div>
-            </div>
-          </Container>
-        </Modal.Body>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseProductDetails}>
+                Close
+              </Button>
+              <Button variant="primary" type="submit">
+                Claimed
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Row>
       </Modal>
       {/* modal for confirmation of reservation */}
       <Modal
@@ -346,7 +492,6 @@ function ProductReservation() {
         </Popover>
       </Overlay>
       {/* Data Table */}
-
       <MaterialTable
         columns={columns}
         data={reservation}

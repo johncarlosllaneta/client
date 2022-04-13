@@ -35,30 +35,41 @@ function SideNavBarVetDoctor(props) {
   const [user, setuser] = useState([]);
   useEffect(async () => {
     const userData = await getUser();
-    Axios.get(`${hostUrl}/doc/${userData.vet_doc_id}`).then((response) => {
-      setuser(response.data[0]);
-    });
+    getInfo(userData.vet_doc_id);
+    getNotifLength(userData.vetid);
+    getReservedLength(userData.vetid);
     setconsultationChecker(1);
     setpharmacyChecker(1);
     setproductChecker(user.enableProduct);
     setservicesChecker(1);
     // console.log(user);
     // alert(vetID.toString().replace('/', '10##01'))
-
-    Axios.get(
-      `${hostUrl}/vetclinic/notification/isNew/length/${user.vetid}`
-    ).then((response) => {
-      setnumberOfUnviewedAppointment(response.data.view);
-      // alert(response.data.view);
-    });
-
-    Axios.get(
-      `${hostUrl}/vetclinic/notification/reservation/isNew/length/${user.vetid}`
-    ).then((response) => {
-      setnumberOfUnviewedReserved(response.data.view);
-      // alert(response.data.view);
-    });
   }, []);
+
+  const getInfo = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/doc/${id}`);
+    // console.log(result.data);
+    setuser(result.data);
+  };
+
+  const getNotifLength = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(
+      `${hostUrl}/vetclinic/notification/isNew/length/${id}`
+    );
+    // console.log(result.data);
+    setnumberOfUnviewedAppointment(result.data.view);
+  };
+
+  const getReservedLength = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(
+      `${hostUrl}/vetclinic/notification/reservation/isNew/length/${id}`
+    );
+    // console.log(result.data);
+    setnumberOfUnviewedReserved(result.data.view);
+  };
 
   useEffect(() => {
     if (consultationChecker === 1) {
@@ -177,7 +188,7 @@ function SideNavBarVetDoctor(props) {
         }}
       >
         <MdPets id="icons" />
-        <a id="anchorTag" href={`/pets/${user.vetid}`}>
+        <a id="anchorTag" href={`/pets`}>
           Pets
         </a>
       </Container>
@@ -189,61 +200,33 @@ function SideNavBarVetDoctor(props) {
           backgroundColor: vetoffer,
         }}
       >
-        {numberOfUnviewedReserved != 0 ? (
-          <div
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around",
+          }}
+        >
+          <FaClinicMedical id="icons" />
+          <p
+            id="anchorTag"
             style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
+              cursor: "pointer",
             }}
+            onClick={handleDropdown}
           >
-            <FaClinicMedical id="icons" />
-            <p
-              id="anchorTag"
-              style={{
-                cursor: "pointer",
-              }}
-              onClick={handleDropdown}
-            >
-              Vet Offers
-            </p>
-            <GoPrimitiveDot
-              style={{
-                color: "#f8d210",
-                marginLeft: 25,
-                fontSize: 28,
-              }}
-            />
-          </div>
-        ) : (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
-            }}
-          >
-            <FaClinicMedical id="icons" />
-            <p
-              id="anchorTag"
-              style={{
-                cursor: "pointer",
-              }}
-              onClick={handleDropdown}
-            >
-              Vet Offers
-            </p>
-          </div>
-        )}
+            Vet Offers
+          </p>
+        </div>
       </Container>
 
       <div hidden={dropdownVetOffer}>
-        <div
+        {/* <div
           style={{
             display: consultationCheckerEnabler,
           }}
         >
-          {/* Consultation */}
+        
           <Container
             id="ContainerNavItemDropDown"
             style={{
@@ -251,11 +234,11 @@ function SideNavBarVetDoctor(props) {
             }}
           >
             <FaStethoscope id="icons" />
-            <a id="anchorTag" href={`/consultation/${user.vetid}`}>
+            <a id="anchorTag" href={`/consultation`}>
               Consultation
             </a>
           </Container>
-        </div>
+        </div> */}
 
         <div
           style={{
@@ -270,7 +253,7 @@ function SideNavBarVetDoctor(props) {
             }}
           >
             <MdLocalPharmacy id="icons" />
-            <a id="anchorTag" href={`/pharmacy/${user.vetid}`}>
+            <a id="anchorTag" href={`/pharmacy`}>
               Pharmacy
             </a>
           </Container>
@@ -288,7 +271,7 @@ function SideNavBarVetDoctor(props) {
             }}
           >
             <RiServiceFill id="icons" />
-            <a id="anchorTag" href={`/services/${user.vetid}`}>
+            <a id="anchorTag" href={`/services`}>
               Services
             </a>
           </Container>
@@ -304,34 +287,12 @@ function SideNavBarVetDoctor(props) {
         }}
         // onClick={viewingAppointment}
       >
-        {numberOfUnviewedAppointment != 0 ? (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
-            }}
-          >
-            <AiFillSchedule id="icons" />
-            <a id="anchorTag" href={`/appointments/${user.vetid}`}>
-              Appointments
-            </a>
-            <MdFiberNew
-              style={{
-                color: "#f8d210",
-                marginLeft: 25,
-                fontSize: 28,
-              }}
-            />
-          </div>
-        ) : (
-          <div>
-            <AiFillSchedule id="icons" />
-            <a id="anchorTag" href={`/appointments/${user.vetid}`}>
-              Appointments
-            </a>
-          </div>
-        )}
+        <div>
+          <AiFillSchedule id="icons" />
+          <a id="anchorTag" href={`/appointments`}>
+            Appointments
+          </a>
+        </div>
       </Container>
 
       {/* <Container

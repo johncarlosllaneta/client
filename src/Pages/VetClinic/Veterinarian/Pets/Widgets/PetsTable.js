@@ -28,13 +28,18 @@ function PetsTable(props) {
   useEffect(async () => {
     const userData = await getUser();
     setuser(userData);
-    Axios.get(`${hostUrl}/vetclinic/registered/pets/${userData.vetid}`)
-      .then((response) => {
-        setPet(response.data);
-      })
-      .catch((err) => console.log(err));
+
+    getPets(userData.vetid);
   }, []);
 
+  const getPets = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(
+      `${hostUrl}/vetclinic/registered/pets/${id}`
+    );
+    // console.log(result.data);
+    setPet(result.data);
+  };
   const [q, setq] = useState("");
   function search(rows) {
     const columns = rows[0] && Object.keys(rows[0]);
@@ -115,24 +120,20 @@ function PetsTable(props) {
         height: "90vh",
       }}
     >
-      {pet.length != 0 ? (
-        <Row>
-          <Col>
-            <MaterialTable
-              columns={columns}
-              data={pet}
-              title={"Pets Table"}
-              cellEditable={false}
-              options={{
-                sorting: true,
-                pageSize: "10",
-              }}
-            />
-          </Col>
-        </Row>
-      ) : (
-        <Skeleton width={"100%"} height={"100%"} variant="rectangular" />
-      )}
+      <Row>
+        <Col>
+          <MaterialTable
+            columns={columns}
+            data={pet}
+            title={"Pets Table"}
+            cellEditable={false}
+            options={{
+              sorting: true,
+              pageSize: "10",
+            }}
+          />
+        </Col>
+      </Row>
     </div>
   );
 }

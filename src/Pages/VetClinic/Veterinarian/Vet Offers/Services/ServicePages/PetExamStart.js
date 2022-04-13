@@ -27,24 +27,26 @@ import imageVI from "../../../../../../Images/INHOUSEW.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import getUser from "../../../../../../Components/userData";
+import { Skeleton, useMediaQuery } from "@mui/material";
 
 const PetExamStart = (props) => {
   let { vetid } = useParams();
   var id = vetid.toString().replace("10##01", "/");
   //category
-  const [consulation, setconsulation] = useState(true);
+  // const [consulation, setconsulation] = useState(true);
   const [petExamination, setpetExamination] = useState(true);
   const [petGrooming, setpetGrooming] = useState(true);
   const [preventiveControls, setpreventiveControls] = useState(true);
   const [vaccination, setvaccination] = useState(true);
-  const [inHouseLab, setinHouseLab] = useState(true);
-  const [counter, setcounter] = useState(0);
+  // const [inHouseLab, setinHouseLab] = useState(true);
+  // const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
   useEffect(async () => {
     const userData = await getUser();
     setuser(userData);
 
     getServices(userData.vet_doc_id);
+    getExamination(userData.vetid);
   }, []);
   function getServices(id) {
     Axios.get(`${hostUrl}/doc/${id}`).then((response) => {
@@ -63,6 +65,12 @@ const PetExamStart = (props) => {
       }
     });
   }
+  const getExamination = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/petExamination/${id}`);
+    // console.log(result.data);
+    setpetExaminations(result.data);
+  };
 
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();
@@ -115,14 +123,6 @@ const PetExamStart = (props) => {
   };
 
   const [petExaminations, setpetExaminations] = useState([]);
-  useEffect(async () => {
-    Axios.get(`${hostUrl}/petExamination/${id}`).then((response) => {
-      setpetExaminations(response.data);
-      // console.log(response.data)
-    });
-
-    // alert(props.data.vet_admin_id);
-  }, []);
 
   function reloadPetExamination() {
     Axios.get(`${hostUrl}/petExamination/${id}`).then((response) => {
@@ -530,7 +530,7 @@ const PetExamStart = (props) => {
         </h5>
 
         <Button
-          href={`/services/${vetid}`}
+          href={`/services`}
           style={{
             backgroundColor: "#19B9CC",
             borderColor: "white",
@@ -755,52 +755,56 @@ const PetExamStart = (props) => {
       {/* Data Table */}
 
       {/* tables */}
-      <Row>
-        <Overlay
-          show={showPopover}
-          target={target}
-          placement="bottom"
-          container={ref.current}
-          containerPadding={20}
-        >
-          <Popover id="popover-contained">
-            <Popover.Header as="h3">Helper</Popover.Header>
-            <Popover.Body>
-              <p>This table shows the pet examination services. </p>
-            </Popover.Body>
-          </Popover>
-        </Overlay>
-        <MaterialTable
-          style={{
-            boxShadow:
-              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-            width: "75vw",
-            marginTop: 10,
-            marginLeft: 20,
-          }}
-          columns={columns}
-          data={petExaminations}
-          title={"Pet Examination Services"}
-          cellEditable={false}
-          options={{
-            sorting: true,
-          }}
-          actions={[
-            {
-              icon: "add",
-              tooltip: "Add Services",
-              isFreeAction: true,
-              onClick: (event) => handleShowInsert(),
-            },
-            {
-              icon: "information",
-              tooltip: "Helper",
-              isFreeAction: true,
-              onClick: handleClick,
-            },
-          ]}
-        />
-      </Row>
+      {user.length == 0 ? (
+        <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+      ) : (
+        <Row>
+          <Overlay
+            show={showPopover}
+            target={target}
+            placement="bottom"
+            container={ref.current}
+            containerPadding={20}
+          >
+            <Popover id="popover-contained">
+              <Popover.Header as="h3">Helper</Popover.Header>
+              <Popover.Body>
+                <p>This table shows the pet examination services. </p>
+              </Popover.Body>
+            </Popover>
+          </Overlay>
+          <MaterialTable
+            style={{
+              boxShadow:
+                "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+              width: "75vw",
+              marginTop: 10,
+              marginLeft: 20,
+            }}
+            columns={columns}
+            data={petExaminations}
+            title={"Pet Examination Services"}
+            cellEditable={false}
+            options={{
+              sorting: true,
+            }}
+            actions={[
+              // {
+              //   icon: "add",
+              //   tooltip: "Add Services",
+              //   isFreeAction: true,
+              //   onClick: (event) => handleShowInsert(),
+              // },
+              {
+                icon: "information",
+                tooltip: "Helper",
+                isFreeAction: true,
+                onClick: handleClick,
+              },
+            ]}
+          />
+        </Row>
+      )}
     </div>
   );
 };

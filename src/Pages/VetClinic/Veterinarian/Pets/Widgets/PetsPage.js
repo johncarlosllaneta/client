@@ -2,7 +2,7 @@ import React from "react";
 import PetsGeneralTable from "./PetsGeneralTable";
 import PetsTable from "./PetsTable";
 import { Row } from "react-bootstrap";
-function PetsPage() {
+function PetsPage(props) {
   return (
     <div>
       <Row>

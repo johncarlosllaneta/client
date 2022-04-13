@@ -49,7 +49,61 @@ function dateConvertion(date) {
 
   return month + " " + day + ", " + year;
 }
-export { FormatDate, FormatDateAndTime, dateConvertion };
+
+function timeFormatter(time) {
+  var timeCurrent = time.split(":");
+
+  if (timeCurrent[0] === "16") {
+    return "12:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+  } else if (timeCurrent[0] === "17") {
+    return "1:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+  } else if (timeCurrent[0] === "18") {
+    return "2:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+  } else if (timeCurrent[0] === "19") {
+    return "3:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+  } else if (timeCurrent[0] === "20") {
+    return "4:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+  } else if (timeCurrent[0] === "21") {
+    return "5:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+  } else if (timeCurrent[0] === "22") {
+    return "6:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+  } else if (timeCurrent[0] === "23") {
+    return "7:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+  } else if (timeCurrent[0] === "24") {
+    return "8:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+  } else if (timeCurrent[0] === "01") {
+    return "9:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+  } else if (timeCurrent[0] === "02") {
+    return "10:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+  } else if (timeCurrent[0] === "03") {
+    return "11:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+  } else if (timeCurrent[0] === "04") {
+    return "12:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+  } else if (timeCurrent[0] === "05") {
+    return "1:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+  } else if (timeCurrent[0] === "06") {
+    return "2:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+  } else if (timeCurrent[0] === "07") {
+    return "3:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+  } else if (timeCurrent[0] === "08") {
+    return "4:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+  } else if (timeCurrent[0] === "09") {
+    return "5:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+  } else if (timeCurrent[0] === "10") {
+    return "6:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+  } else if (timeCurrent[0] === "11") {
+    return "7:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+  } else if (timeCurrent[0] === "12") {
+    return "8:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+  } else if (timeCurrent[0] === "13") {
+    return "9:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+  } else if (timeCurrent[0] === "14") {
+    return "10:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+  } else if (timeCurrent[0] === "15") {
+    return "11:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+  }
+}
+export { FormatDate, FormatDateAndTime, dateConvertion, timeFormatter };
 
 // function formatDateAndTime(dateString) {
 //     const options = { year: "numeric", month: "long", day: "numeric", hour: '2-digit', minute: '2-digit', second: '2-digit' }
