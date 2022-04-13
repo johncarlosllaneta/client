@@ -1,126 +1,126 @@
-import React from 'react'
-import { Card, Col, Container, Row } from 'react-bootstrap'
-import CheckIcon from '@mui/icons-material/Check';
-import { Button } from '@mui/material';
+import React from "react";
+import { Card, Col, Container, Row } from "react-bootstrap";
+import CheckIcon from "@mui/icons-material/Check";
+import { Button } from "@mui/material";
 
 function Pro(props) {
-    return (
-        <div>
+  return (
+    <div>
+      <Card>
+        <Container
+          style={{
+            padding: 20,
+          }}
+        >
+          <h2>PRO</h2>
+          <h6>Information System + Customer Management System</h6>
+          <h4>₱ 1,000.00 / Monthly</h4>
+        </Container>
 
-            <Card
+        <hr />
+        <Container
+          style={{
+            textAlign: "left",
+          }}
+        >
+          <h6>PLUS</h6>
 
+          <Container>
+            <div
+              style={{
+                display: "inline-flex",
+              }}
             >
-                <Container
-                    style={{
-                        padding: 20
-                    }}
-                >
-                    <h2>PRO</h2>
-                    <h6>Information System + Customer Management System</h6>
-                    <h4>₱ 1,000.00 / Monthly</h4>
-                </Container>
+              <CheckIcon />
+              <p style={{ marginLeft: 15 }}>
+                1 Vet Clinic Administrator Account
+              </p>
+            </div>
+          </Container>
+          <Container>
+            <div
+              style={{
+                display: "inline-flex",
+              }}
+            >
+              <CheckIcon />
+              <p style={{ marginLeft: 15 }}>
+                Up to 10 Veterinarian and Vet Staff Account
+              </p>
+            </div>
+          </Container>
 
-                <hr />
-                <Container
-                    style={{
-                        textAlign: 'left'
-                    }}
-                >
-                    <h6>PLUS</h6>
+          <Container>
+            <div
+              style={{
+                display: "inline-flex",
+              }}
+            >
+              <CheckIcon />
+              <p style={{ marginLeft: 15 }}>
+                Services and Appointment Management
+              </p>
+            </div>
+          </Container>
 
-                    <Container>
-                        <div
-                            style={{
-                                display: 'inline-flex'
-                            }}
-                        >
-                            <CheckIcon />
-                            <p style={{ marginLeft: 15 }}>1 Vet Clinic Administrator Account</p>
-                        </div>
-                    </Container>
-                    <Container>
-                        <div
-                            style={{
-                                display: 'inline-flex'
-                            }}
-                        >
-                            <CheckIcon />
-                            <p style={{ marginLeft: 15 }}>Up to 10 Veterinarian and Vet Staff Account</p>
-                        </div>
-                    </Container>
+          <Container>
+            <div
+              style={{
+                display: "inline-flex",
+              }}
+            >
+              <CheckIcon />
+              <p style={{ marginLeft: 15 }}>Pharmacy and Product Reservation</p>
+            </div>
+          </Container>
 
-                    <Container>
-                        <div
-                            style={{
-                                display: 'inline-flex'
-                            }}
-                        >
-                            <CheckIcon />
-                            <p style={{ marginLeft: 15 }}>Services and Appointment Management</p>
-                        </div>
-                    </Container>
+          <Container>
+            <div
+              style={{
+                display: "inline-flex",
+              }}
+            >
+              <CheckIcon />
+              <p style={{ marginLeft: 15 }}>Inquiry Management</p>
+            </div>
+          </Container>
 
-                    <Container>
-                        <div
-                            style={{
-                                display: 'inline-flex'
-                            }}
-                        >
-                            <CheckIcon />
-                            <p style={{ marginLeft: 15 }}>Pharmacy and Product Reservation</p>
-                        </div>
-                    </Container>
+          <Container>
+            <div
+              style={{
+                display: "inline-flex",
+              }}
+            >
+              <CheckIcon />
+              <p style={{ marginLeft: 15 }}>Video Consultation</p>
+            </div>
+          </Container>
+        </Container>
 
-                    <Container>
-                        <div
-                            style={{
-                                display: 'inline-flex'
-                            }}
-                        >
-                            <CheckIcon />
-                            <p style={{ marginLeft: 15 }}>Inquiry Management</p>
-                        </div>
-                    </Container>
-
-                    <Container>
-                        <div
-                            style={{
-                                display: 'inline-flex'
-                            }}
-                        >
-                            <CheckIcon />
-                            <p style={{ marginLeft: 15 }}>Video Consultation</p>
-                        </div>
-                    </Container>
-                </Container>
-
-                <div
-                    style={{
-                        padding: 20,
-                        display: 'flex'
-                    }}
-                    hidden={props.buttonChecker == true ? false : true}
-                >
-                    <Button
-                        variant='outlined'
-                        color='error'
-                        style={{
-                            width: '100%'
-                        }}
-
-                        onClick={() => {
-                            props.setsubscriptionType('Pro');
-                            props.handleShowModal();
-                        }}
-                    >
-                        SUBSCRIBE NOW
-                    </Button>
-
-                </div>
-
-            </Card>
+        <div
+          style={{
+            padding: 20,
+            display: "flex",
+          }}
+          hidden={props.buttonChecker == true ? false : true}
+        >
+          <Button
+            variant="outlined"
+            color="error"
+            style={{
+              width: "100%",
+            }}
+            onClick={() => {
+              props.setsubscriptionType("Pro");
+              props.handleShowModal();
+            }}
+          >
+            SUBSCRIBE NOW
+          </Button>
         </div>
-    )
+      </Card>
+    </div>
+  );
 }
 
-export default Pro
+export default Pro;
