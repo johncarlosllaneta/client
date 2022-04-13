@@ -3,6 +3,7 @@ import { FloatingLabel, Form, Image, Container, Button } from "react-bootstrap";
 import { useParams } from "react-router";
 import logo from "../../Images/logo.png";
 import { users } from "../User";
+import getUser from "../userData";
 
 const Lobby = ({
   username,
@@ -16,13 +17,16 @@ const Lobby = ({
 }) => {
   let { code } = useParams();
 
-  useEffect(() => {
+  useEffect(async () => {
+
+    const userData = await getUser();
+
     handleRoomDefault(code);
     var role = localStorage.getItem('role');
     if (role == 1) {
-      handleUsernameDefault(users[0].name);
+      handleUsernameDefault(userData.name);
     } else if (role == 2) {
-      handleUsernameDefault(users[0].vet_name);
+      handleUsernameDefault(userData.vet_name);
     } else {
       handleUsernameDefault('');
     }
