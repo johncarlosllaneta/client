@@ -55,6 +55,9 @@ function ProductSearchBar(props) {
           style={{
             width: "20vw",
           }}
+          onChange={(e) => {
+            props.setsearch(e.target.value);
+          }}
         />
       </div>
       <div

@@ -14,13 +14,11 @@ function RatingsAndFeedback(props) {
 
   const [rateList, setrateList] = useState([]);
   useEffect(() => {
-
-    Axios.get(
-      `${hostUrl}/vetRatings/vetclinic/list/${props.data.vetid}`
-    ).then((response) => {
-      setrateList(response.data);
-    });
-
+    Axios.get(`${hostUrl}/vetRatings/vetclinic/list/${props.data.vetid}`).then(
+      (response) => {
+        setrateList(response.data);
+      }
+    );
   }, [props.data]);
 
   const [show, setShow] = useState(false);
@@ -79,7 +77,7 @@ function RatingsAndFeedback(props) {
   // }
 
   return (
-    <div style={{ overflowY: "auto", height: '63vh' }}>
+    <div style={{ overflowY: "auto", height: "63vh" }}>
       <Modal centered show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Ratings and Feedback</Modal.Title>
@@ -153,7 +151,12 @@ function RatingsAndFeedback(props) {
           return (
             <Card
               title="View ratings"
-              style={{ width: "99%", padding: 10, cursor: 'pointer', marginBottom: 20 }}
+              style={{
+                width: "99%",
+                padding: 10,
+                cursor: "pointer",
+                marginBottom: 20,
+              }}
               onClick={() => {
                 setname(val.name);
                 setservice(val.service_name);
@@ -169,7 +172,15 @@ function RatingsAndFeedback(props) {
             >
               <Row>
                 <Row className="mt-2">
-                  <h6 style={{ fontWeight: "bold", marginBottom: 0, textAlign: 'left' }}>{val.name}</h6>
+                  <h6
+                    style={{
+                      fontWeight: "bold",
+                      marginBottom: 0,
+                      textAlign: "left",
+                    }}
+                  >
+                    {val.name}
+                  </h6>
                   <ReactStars
                     count={5}
                     value={val.ratings}
@@ -177,38 +188,33 @@ function RatingsAndFeedback(props) {
                     activeColor="#ffd700"
                     edit={false}
                   />
-
                 </Row>
-
               </Row>
               <Row
                 style={{
-                  textAlign: 'left'
+                  textAlign: "left",
                 }}
               >
-
                 <Col>
-                  <p style={{ fontSize: 12, marginBottom: 0 }}>{val.service_name}</p>
+                  <p style={{ fontSize: 12, marginBottom: 0 }}>
+                    {val.service_name}
+                  </p>
                 </Col>
 
                 <Col>
-                  <p style={{ fontWeight: "bold", fontSize: 12, marginBottom: 0 }}>
+                  <p
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: 12,
+                      marginBottom: 0,
+                    }}
+                  >
                     Date:
                     {dateConvertion(
                       val.date_scheduled.toString().split("T")[0]
                     )}
                   </p>
                 </Col>
-
-
-
-
-
-
-
-
-
-
               </Row>
             </Card>
           );

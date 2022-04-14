@@ -26,12 +26,22 @@ function DashboardTable(props) {
 
   // alert(props.vetid);
   useEffect(async () => {
-    Axios.get(`${hostUrl}/pending/appointment/${props.data}`).then(
+    Axios.get(`${hostUrl}/doc/pending/appointment/${props.data}`).then(
       (response) => {
         setappointment(response.data);
       }
     );
+
+    getVaccination(props.data);
   }, []);
+
+  const [vaccination, setvaccination] = useState([]);
+  const getVaccination = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/doc/pets/vaccination/${id}`);
+    // console.log(result.data);
+    setvaccination(result.data);
+  };
   const [showPopover, setShowPopover] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);
@@ -63,70 +73,47 @@ function DashboardTable(props) {
       field: "time_scheduled",
       sorting: true,
     },
-    // {
-    //   title: "Action",
-    //   render: (row) => (
-    //     <div style={{ display: "flex", flexDirection: "row " }}>
-    //       <OverlayTrigger
-    //         placement="top-start"
-    //         delay={{ show: 250 }}
-    //         overlay={renderTooltip({ msg: "View Information" })}
-    //       >
-    //         <Button
-    //           variant="info"
-    //           style={{
-    //             marginRight: 5,
-    //           }}
-    //           onClick={() => {
-    //             // viewDetails(row.appointment_id);
-    //             // ModalView();
-    //           }}
-    //         >
-    //           <AiOutlineSearch style={{ fontSize: 25, color: "white" }} />
-    //         </Button>
-    //       </OverlayTrigger>
+  ];
 
-    //       <OverlayTrigger
-    //         placement="top-start"
-    //         delay={{ show: 250 }}
-    //         overlay={renderTooltip({ msg: "Done Appointment" })}
-    //       >
-    //         <Button
-    //           variant="primary"
-    //           style={{
-    //             marginRight: 5,
-    //           }}
-    //           onClick={() => {
-    //             // setpet_id(row.pet_id);
-    //             // setappointmentID(row.appointment_id);
-    //             // setcategory(row.category);
-    //             // setnotifService_id(row.service_id);
-    //             // handleShowModalFinish();
-    //           }}
-    //         >
-    //           <AiOutlineFileDone style={{ fontSize: 25 }} />
-    //         </Button>
-    //       </OverlayTrigger>
+  const renderTooltipVaccination = (props) => <Popover>{props.msg}</Popover>;
+  const columnsVaccination = [
+    {
+      title: "Appointment ID",
+      field: "appointment_id",
+      defaultSort: "asc",
+    },
+    {
+      title: "Pet Owner",
+      field: "pet_owner_name",
+      sorting: true,
+    },
+    {
+      title: "Pet",
+      field: "pet_name",
+      sorting: true,
+    },
+    {
+      title: "Service Name",
+      field: "service_name",
+      sorting: true,
+    },
 
-    //       <OverlayTrigger
-    //         placement="top-start"
-    //         delay={{ show: 250 }}
-    //         overlay={renderTooltip({ msg: "Void Appointment" })}
-    //       >
-    //         <Button
-    //           variant="danger"
-    //           onClick={() => {
-    //             // setappointmentID(row.appointment_id);
-    //             // setnotifService_id(row.service_id);
-    //             // handleShowModalDecline();
-    //           }}
-    //         >
-    //           <TiCancel style={{ fontSize: 25 }} />
-    //         </Button>
-    //       </OverlayTrigger>
-    //     </div>
-    //   ),
-    // },
+    {
+      title: "Category",
+      field: "category",
+      sorting: true,
+    },
+    {
+      title: "Date",
+      render: (row) =>
+        dateConvertion(row.date_scheduled.toString().split("T")[0]),
+      sorting: true,
+    },
+    {
+      title: "Time",
+      field: "time_scheduled",
+      sorting: true,
+    },
   ];
   return (
     <div>
@@ -149,30 +136,57 @@ function DashboardTable(props) {
           </Popover.Body>
         </Popover>
       </Overlay>
-
-      <MaterialTable
-        style={{
-          boxShadow:
-            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-        }}
-        columns={columns}
-        data={appointment}
-        title={"Appointments For Today"}
-        cellEditable={false}
-        options={{
-          sorting: true,
-          search: true,
-          paging: true,
-        }}
-        actions={[
-          {
-            icon: "information",
-            tooltip: "Helper",
-            isFreeAction: true,
-            // onClick: handleClick,
-          },
-        ]}
-      />
+      <Row>
+        <MaterialTable
+          style={{
+            boxShadow:
+              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+          }}
+          columns={columns}
+          data={appointment}
+          title={"Appointments For Today"}
+          cellEditable={false}
+          options={{
+            sorting: true,
+            search: true,
+            paging: true,
+          }}
+          actions={[
+            {
+              icon: "information",
+              tooltip: "New Apppointment",
+              isFreeAction: true,
+              // onClick: handleClick,
+            },
+          ]}
+        />
+      </Row>
+      <div style={{ height: 30 }}></div>
+      <Row>
+        <MaterialTable
+          style={{
+            boxShadow:
+              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+          }}
+          columns={columnsVaccination}
+          data={vaccination}
+          title={"Vaccination For Today"}
+          cellEditable={false}
+          options={{
+            sorting: true,
+            search: true,
+            paging: true,
+          }}
+          actions={[
+            {
+              icon: "information",
+              tooltip: "New Vaccination",
+              isFreeAction: true,
+              // onClick: handleClick,
+            },
+          ]}
+        />
+      </Row>
     </div>
   );
 }

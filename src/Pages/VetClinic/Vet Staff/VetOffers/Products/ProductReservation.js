@@ -79,11 +79,6 @@ function ProductReservation() {
 
   const columns = [
     {
-      title: "Reservation ID",
-      field: "reserve_id",
-      sorting: true,
-    },
-    {
       title: "Order Id",
       field: "order_id",
       sorting: true,
@@ -96,7 +91,7 @@ function ProductReservation() {
     {
       title: "Date Schedule",
       sorting: true,
-      defaultSort: "asc",
+      defaultSort: "desc",
       render: (row) => <div>{formatDate(row.date_reserve)}</div>,
     },
     {

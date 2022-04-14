@@ -10,6 +10,7 @@ import VisitorMonitoringVerified from "./VisitorMonitoring/VisitorMonitoringVeri
 import ProductVerified from "./VetOffers/Products/ProductVerified";
 import ProductTableTabController from "./VetOffers/Products/ProductTableTabController";
 import ProductHistoryTabController from "./VetOffers/Products/ProductHistoryTabController";
+import VetSettings from "./Settings/VetSettings";
 
 function VetStaffHome() {
   return (
@@ -20,6 +21,7 @@ function VetStaffHome() {
           <Route path="/dashboard" exact component={DashboardMain} />
           <Route path="/profile" exact component={ProfileMain} />
           <Route path="/products" exact component={ProductVerified} />
+          <Route path="/staff/settings" exact component={VetSettings} />
           <Route
             path="/history"
             exact
