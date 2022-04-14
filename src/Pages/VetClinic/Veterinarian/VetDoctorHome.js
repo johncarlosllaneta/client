@@ -7,6 +7,7 @@ import DashboardMain from "./Dashboard/DashboardMain";
 import PetsMain from "./Pets/PetsMain";
 import PetPanelTableController from "./Pets/Widgets/PetPanelTableController";
 import ProfileMain from "./Profile/ProfileMain";
+import VetSettings from "./Settings/VetSettings";
 import ConsultationMain from "./Vet Offers/Consultation/ConsultationMain";
 import PharmacyMain from "./Vet Offers/Pharmacy/PharmacyMain";
 import ConsultStartHolder from "./Vet Offers/Services/ServicePages/ConsultStartHolder";
@@ -55,6 +56,7 @@ function VetDoctorHome() {
           />
           <Route path="/pharmacy" exact component={PharmacyMain} />
           <Route path="/appointments" exact component={AppointmentMain} />
+          <Route path="/veterinarian/settings" exact component={VetSettings} />
         </Switch>
       </div>
     </Router>

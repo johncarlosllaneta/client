@@ -415,7 +415,7 @@ function NavBarDoc(props) {
               <Divider />
               <MenuItem
                 onClick={() => {
-                  window.location.replace("/vet/settings");
+                  window.location.replace("/veterinarian/settings");
                 }}
                 style={{
                   display: "flex",

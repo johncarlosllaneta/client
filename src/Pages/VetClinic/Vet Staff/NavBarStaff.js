@@ -406,7 +406,7 @@ function NavBarStaff(props) {
               <Divider />
               <MenuItem
                 onClick={() => {
-                  window.location.replace("/vet/settings");
+                  window.location.replace("/staff/settings");
                 }}
                 style={{
                   display: "flex",
