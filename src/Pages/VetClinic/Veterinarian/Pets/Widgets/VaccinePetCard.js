@@ -9,11 +9,11 @@ function VaccinePetCard(props) {
   const [vaccine, setvaccine] = useState([]);
   useEffect(async () => {
     // alert(props.pet);
-    Axios.get(
-      `${hostUrl}/pet/immunization/history/${props.vetid}/${props.pet}`
-    ).then((response) => {
-      setvaccine(response.data);
-    });
+    Axios.get(`${hostUrl}/pet/vaccine/record/${props.vetid}/${props.pet}`).then(
+      (response) => {
+        setvaccine(response.data);
+      }
+    );
   }, []);
 
   const columns = [
@@ -21,7 +21,6 @@ function VaccinePetCard(props) {
       title: "Vaccine Name",
       field: "vaccine_name",
       defaultSort: "asc",
-      render: (row) => <p>{row.vaccine_name}</p>,
     },
     {
       title: "Againts",
@@ -61,6 +60,11 @@ function VaccinePetCard(props) {
             .split("T")[1]
             .substring(0, row.date.substring().split("T")[1].length - 5)
         ),
+    },
+    {
+      title: "Prescription",
+      field: "prescription",
+      sorting: true,
     },
   ];
 

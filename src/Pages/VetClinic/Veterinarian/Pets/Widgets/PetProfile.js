@@ -7,7 +7,6 @@ import { dateConvertion } from "../../../../../Components/FormatDateTime";
 
 function PetProfile(props) {
   const [pet, setpet] = useState([]);
-  const [counter, setcounter] = useState(0);
 
   useEffect(async () => {
     Axios.get(`${hostUrl}/doc/pets/${props.petid}`).then((response) => {

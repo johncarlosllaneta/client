@@ -11,7 +11,7 @@ function ConsultationPetCard(props) {
     // alert(props.pet);
 
     Axios.get(
-      `${hostUrl}/pet/immunization/history/${props.vetid}/${props.pet}`
+      `${hostUrl}/pet/consultation/record/${props.vetid}/${props.pet}`
     ).then((response) => {
       setvaccine(response.data);
     });
@@ -19,49 +19,30 @@ function ConsultationPetCard(props) {
 
   const columns = [
     {
-      title: "Vaccine Name",
-      field: "vaccine_name",
+      title: "Consultation Type",
+      field: "consultation_type",
       defaultSort: "asc",
-      render: (row) => <p>{row.vaccine_name}</p>,
     },
     {
-      title: "Againts",
-      field: "againts",
-      sorting: true,
-    },
-    {
-      title: "Vaccine Number",
-      field: "vaccine_number",
-      sorting: true,
-    },
-
-    {
-      title: "Manufacturer",
-      field: "manufacturer",
-      sorting: true,
-    },
-    {
-      title: "Weight",
-      field: "pet_weight",
-      sorting: true,
-    },
-    {
-      title: "Vaccination Date",
-      sorting: true,
-      // field: "date",
-      render: (row) => dateConvertion(row.date.substring().split("T")[0]),
-    },
-    {
-      title: "Vaccination Time",
-      sorting: true,
-      // field: "date",
+      title: "Date",
       render: (row) =>
-        timeFormatter(
-          row.date
-            .substring()
-            .split("T")[1]
-            .substring(0, row.date.substring().split("T")[1].length - 5)
-        ),
+        dateConvertion(row.date_scheduled.toString().split("T")[0]),
+      sorting: true,
+    },
+    {
+      title: "Time",
+      field: "time_scheduled",
+      sorting: true,
+    },
+    {
+      title: "Prescription",
+      field: "prescription",
+      sorting: true,
+    },
+    {
+      title: "Findings",
+      field: "findings",
+      sorting: true,
     },
   ];
 

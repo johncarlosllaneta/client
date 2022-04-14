@@ -13,11 +13,11 @@ function HealthPetCard(props) {
   useEffect(async () => {
     // alert(props.pets);
 
-    Axios.get(`${hostUrl}/petOwner/services/health/card/${props.pets}`).then(
-      (response) => {
-        sethealthCard(response.data);
-      }
-    );
+    Axios.get(
+      `${hostUrl}/pet/medical/history/record/${props.vetid}/${props.pets}`
+    ).then((response) => {
+      sethealthCard(response.data);
+    });
   }, []);
 
   function dateConvertion(date) {
@@ -121,11 +121,6 @@ function HealthPetCard(props) {
       sorting: true,
     },
     {
-      title: "Vet name",
-      field: "vet_name",
-      sorting: true,
-    },
-    {
       title: "Category",
       field: "category",
       sorting: true,
@@ -147,49 +142,16 @@ function HealthPetCard(props) {
             )
         ),
     },
-
-    // {
-    //   title: "Action",
-    //   render: (row) => (
-    //     <div>
-    //       <OverlayTrigger
-    //         placement="top-start"
-    //         delay={{ show: 250 }}
-    //         overlay={renderTooltip({ msg: "View Information" })}
-    //       >
-    //         <Button
-    //           variant="info"
-    //           className="mr-3"
-    //           onClick={() => {
-    //             alert("hi");
-    //           }}
-    //         >
-    //           <AiOutlineSearch style={{ fontSize: 25 }} />
-    //         </Button>
-    //       </OverlayTrigger>
-
-    //       <OverlayTrigger
-    //         placement="top-start"
-    //         delay={{ show: 250 }}
-    //         overlay={renderTooltip({ msg: "Edit Details" })}
-    //       >
-    //         <Button variant="primary" className="mr-3" onClick={() => {}}>
-    //           <FaRegEdit style={{ fontSize: 25 }} />
-    //         </Button>
-    //       </OverlayTrigger>
-
-    //       <OverlayTrigger
-    //         placement="top-start"
-    //         delay={{ show: 250 }}
-    //         overlay={renderTooltip({ msg: "Delete Details" })}
-    //       >
-    //         <Button variant="danger" onClick={() => {}}>
-    //           <AiOutlineDelete style={{ fontSize: 25 }} />
-    //         </Button>
-    //       </OverlayTrigger>
-    //     </div>
-    //   ),
-    // },
+    {
+      title: "Prescription",
+      field: "prescription",
+      sorting: true,
+    },
+    {
+      title: "Findings",
+      field: "findings",
+      sorting: true,
+    },
   ];
 
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
