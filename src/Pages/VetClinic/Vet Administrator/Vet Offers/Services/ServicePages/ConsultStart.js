@@ -28,6 +28,7 @@ import imageVI from "../../../../../../Images/INHOUSEW.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import getUser from "../../../../../../Components/userData";
+import { Skeleton } from "@mui/material";
 
 const ConsultStart = (props) => {
   const [user, setuser] = useState([]);
@@ -55,6 +56,13 @@ const ConsultStart = (props) => {
     if (userData.enableInHouseLab == 1) {
       setinHouseLab(false);
     }
+    if (userData.enableOnlineConsultation == 1) {
+      setenableConsultationVirtual(true);
+    }
+    if (userData.enablePhysicalConsultation == 1) {
+      setenableConsultationPhysical(true);
+    }
+
     Axios.get(`${hostUrl}/consultation/${userData.vetid}`).then((response) => {
       setconsultation(response.data);
       // console.log(response.data)
@@ -67,6 +75,8 @@ const ConsultStart = (props) => {
   const [preventiveControls, setpreventiveControls] = useState(true);
   const [vaccination, setvaccination] = useState(true);
   const [inHouseLab, setinHouseLab] = useState(true);
+  const [enableConsultationPhysical, setenableConsultationPhysical] = useState(false);
+  const [enableConsultationVirtual, setenableConsultationVirtual] = useState(false);
 
 
 
@@ -716,108 +726,104 @@ const ConsultStart = (props) => {
       </div>
 
       {/* Content */}
-      <Row
-        style={{
-          marginTop: '2vh',
-          padding: 10
-        }}
-      >
-        <Col>
-          <Card
+
+      {
+        user.length != 0
+          ?
+          <Row
             style={{
-              padding: 20
+              marginTop: '2vh',
+              padding: 10
             }}
           >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between'
-              }}
-            >
-              <div>
-                <h6>Physical Consultation</h6>
-              </div>
+            <Col>
+              <Card
+                style={{
+                  padding: 20
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <div>
+                    <h6>Physical Consultation</h6>
+                  </div>
 
-              <div>
-                <Form.Switch />
-              </div>
+                  <div>
+                    <Form.Switch type='switch' checked={enableConsultationPhysical} />
+                  </div>
 
-            </div>
+                </div>
 
-            <div>
-              <p style={{ textAlign: "left" }}>
-                A trip to the veterinarian’s office with your pet, similar to a
-                visit to the doctor’s office, often proves costly. It can be
-                difficult to predict how much a vet visit will cost, and
-                sometimes, it’s shocking when you see the bill.
-              </p>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between'
-              }}
-            >
-              <div>
-                <h5 style={{ textAlign: "left" }}>Price: {'200.00'}</h5>
-              </div>
-              <div style={{ display: "flex", justifyContent: "end" }}>
-                <Button variant="primary" style={{ width: 153 }}>
-                  Edit
-                </Button>
-              </div>
-            </div>
-          </Card>
-        </Col>
+                <div>
+                  <p style={{ textAlign: "left" }}>
+                    A trip to the veterinarian’s office with your pet, similar to a
+                    visit to the doctor’s office, often proves costly. It can be
+                    difficult to predict how much a vet visit will cost, and
+                    sometimes, it’s shocking when you see the bill.
+                  </p>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                </div>
+              </Card>
+            </Col>
 
-        <Col>
-          <Card
-            style={{
-              padding: 20
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between'
-              }}
-            >
-              <div>
-                <h6>Physical Consultation</h6>
-              </div>
+            <Col>
+              <Card
+                style={{
+                  padding: 20
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <div>
+                    <h6>Virtual Consultation</h6>
+                  </div>
 
-              <div>
-                <Form.Switch />
-              </div>
+                  <div>
+                    <Form.Switch type='switch' checked={enableConsultationVirtual} />
+                  </div>
 
-            </div>
+                </div>
 
-            <div>
-              <p style={{ textAlign: "left" }}>
-                A trip to the veterinarian’s office with your pet, similar to a
-                visit to the doctor’s office, often proves costly. It can be
-                difficult to predict how much a vet visit will cost, and
-                sometimes, it’s shocking when you see the bill.
-              </p>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between'
-              }}
-            >
-              <div>
-                <h5 style={{ textAlign: "left" }}>Price: {'200.00'}</h5>
-              </div>
-              <div style={{ display: "flex", justifyContent: "end" }}>
-                <Button variant="primary" style={{ width: 153 }}>
-                  Edit
-                </Button>
-              </div>
-            </div>
-          </Card>
-        </Col>
-      </Row>
+                <div>
+                  <p style={{ textAlign: "left" }}>
+                    A virtual consultation for diagnostic of pets using video conference.
+                  </p>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                  }}
+                >
+
+                  <div style={{ display: "flex", justifyContent: "end" }}>
+                    <Button variant="primary" style={{ width: '100%' }}>
+                      Add virtual appointment
+                    </Button>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+          </Row>
+          :
+          <Skeleton variant="rectangular" height={'30vh'} />
+
+      }
+
 
     </div>
   );

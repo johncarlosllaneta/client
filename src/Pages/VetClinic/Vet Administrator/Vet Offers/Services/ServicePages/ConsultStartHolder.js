@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 
 import NavBarVet from "../../../NavBarVet";
@@ -15,6 +15,8 @@ function ConsultStartHolder() {
   } else {
     value = "100%";
   }
+
+
 
   return (
     <div>
