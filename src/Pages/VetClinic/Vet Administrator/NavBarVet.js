@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, NavDropdown, Row, Col } from "react-bootstrap";
+import { Navbar, NavDropdown, Row, Col, Container } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BsChatDotsFill } from "react-icons/bs";
@@ -50,12 +50,10 @@ function NavBarVet(props) {
     setuser(userData);
 
     messages(userData);
-    // alert(numberNewThreads);
-    setTimeout(() => {
-      setnumberNewThread(numberNewThreads);
-    }, 1000);
+
     notifReserved(userData.vetid);
     notifDetails(userData.vetid);
+    notifMessage(userData.vetid);
   }, []);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -105,7 +103,7 @@ function NavBarVet(props) {
   const notifReserved = async (id) => {
     // alert(userData.vetid);
     const result = await Axios.get(
-      `${hostUrl}/vetclinic/notification/reservation/length/${id}`
+      `${hostUrl}/vetadmin/notification/length/${id}`
     );
     // console.log(result.data);
     setnumberNewReserved(result.data.view);
@@ -115,15 +113,26 @@ function NavBarVet(props) {
   const notifDetails = async (id) => {
     // alert(userData.vetid);
     const result = await Axios.get(
-      `${hostUrl}/vetclinic/notification/reservation/${id}`
+      `${hostUrl}/vetadmin/notification/${id}`
     );
     // console.log(result.data);
     setnotif(result.data);
   };
 
   function viewNotif(id) {
-    Axios.put(`${hostUrl}/vetclinic/notification/reservation/viewed/${id}`);
+    Axios.put(`${hostUrl}/vetadmin/notification/viewed/${id}`);
   }
+
+  const notifMessage = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(
+      `${hostUrl}/vetadmin/notification/messages/length/${id}`
+    );
+    // console.log(result.data);
+    setnumberNewThread(result.data.view);
+  };
+
+
 
   return (
     <Navbar
@@ -233,6 +242,9 @@ function NavBarVet(props) {
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
+            <Container style={{
+              textAlign: 'center'
+            }}><h6 style={{}}>Notification</h6> <hr style={{ marginTop: 0 }} /></Container>
             <div style={{ height: 400, width: 400, overflowY: "auto" }}>
               {notif.length > 0 ? (
                 notif.map((val) => {
@@ -282,7 +294,7 @@ function NavBarVet(props) {
                             </Col>
                             <Col sm={9}>
                               <Row>Name:{val.name}</Row>
-                              <Row>OrderId:{val.order_id}</Row>
+                              <Row>{val.category}</Row>
                               <Row>Status:{val.status}</Row>
                             </Col>
                           </Row>
@@ -293,7 +305,7 @@ function NavBarVet(props) {
                   );
                 })
               ) : (
-                <h5>No notification</h5>
+                <h5></h5>
               )}
             </div>
           </Menu>
@@ -311,7 +323,14 @@ function NavBarVet(props) {
               color="inherit"
               hidden={props.showMessage}
               onClick={() => {
-                window.location.href = `/talk to vet`;
+                Axios.put(`${hostUrl}/vetadmin/notification/messages/viewed/${user.vetid}`)
+                  .then((response) => {
+                    if (response.data.message == 'Correct') {
+                      window.location.href = `/talk to vet`;
+                    }
+                  })
+                  ;
+
               }}
             >
               <Badge badgeContent={numberNewThread} color="error">

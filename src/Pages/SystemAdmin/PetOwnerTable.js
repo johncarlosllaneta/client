@@ -127,24 +127,7 @@ function PetOwnerTable() {
             </Button>
           </OverlayTrigger>
 
-          <OverlayTrigger
-            placement="top-start"
-            delay={{ show: 250 }}
-            overlay={renderTooltip({ msg: "Edit Details" })}
-          >
-            <Button
-              variant="primary"
-              className="mr-3"
-              style={{
-                marginRight: 10,
-              }}
-              onClick={() => {
-                handleShow(row);
-              }}
-            >
-              <FaRegEdit style={{ fontSize: 25 }} />
-            </Button>
-          </OverlayTrigger>
+
 
           <OverlayTrigger
             placement="top-start"
@@ -608,7 +591,7 @@ function PetOwnerTable() {
                         </Row>
                         <Row
                           className="ml-3"
-                          style={profileDetails}
+
                           style={{
                             display: "flex",
                             alignItems: "center",
