@@ -44,11 +44,6 @@ function DashboardReservationTab(props) {
 
   const columns = [
     {
-      title: "Reservation ID",
-      field: "reserve_id",
-      sorting: true,
-    },
-    {
       title: "Order Id",
       field: "order_id",
       sorting: true,

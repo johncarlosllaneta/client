@@ -108,7 +108,7 @@ function ProductReservationHistory() {
     return month + " " + day + ", " + year;
   }
 
-  const [viewDisableField, setviewDisableField] = useState(false);
+  const [viewDisableField, setviewDisableField] = useState(true);
   //details
   const [reservationID, setreservationID] = useState();
   const [orderId, setorderId] = useState();
@@ -121,11 +121,6 @@ function ProductReservationHistory() {
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
 
   const columns = [
-    {
-      title: "Reservation ID",
-      field: "reserve_id",
-      sorting: true,
-    },
     {
       title: "Order Id",
       field: "order_id",
