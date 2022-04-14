@@ -170,7 +170,7 @@ function SideNavBarVetAdmin(props) {
             </Container>
 
 
-            <Container
+            {/* <Container
                 id="ContainerNavItem"
                 style={{
                     backgroundColor: pets,
@@ -180,7 +180,7 @@ function SideNavBarVetAdmin(props) {
                 <a id="anchorTag" href={`/pets/${user.vetid}`}>
                     Pets
                 </a>
-            </Container>
+            </Container> */}
 
             {/* --- drop down */}
             <Container

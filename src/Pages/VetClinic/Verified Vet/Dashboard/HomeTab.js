@@ -180,7 +180,7 @@ function HomeTab(props) {
                   </p>
                 )}
 
-                <Card style={{ height: "50vh", padding: 10 }}>
+                <Card style={{ height: "auto", padding: 10 }}>
                   {userSidePanel}
                   {/* <h5>Hello</h5> */}
                 </Card>

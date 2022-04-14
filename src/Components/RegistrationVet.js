@@ -52,11 +52,13 @@ function RegistrationVet() {
   }, [activeStep]);
 
   const NextStep = () => {
-    setactiveStep(activeStep + 1);
+    if (navigator.geolocation) {
+      setactiveStep(activeStep + 1);
+    } else {
+      alert('Need to allow location')
+    }
+
   }
-
-
-
 
 
 

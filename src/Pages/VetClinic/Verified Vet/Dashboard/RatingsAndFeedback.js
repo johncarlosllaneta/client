@@ -6,6 +6,7 @@ import { hostUrl } from "../../../../Components/Host";
 import Axios from "axios";
 import { BsFillStarFill } from "react-icons/bs";
 import { useParams } from "react-router";
+import ReactStars from "react-rating-stars-component";
 
 function RatingsAndFeedback(props) {
   // let { vetid } = useParams();
@@ -78,7 +79,7 @@ function RatingsAndFeedback(props) {
   // }
 
   return (
-    <div style={{ overflowY: "auto", padding: 10, }}>
+    <div style={{ overflowY: "auto", height: '63vh' }}>
       <Modal centered show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Ratings and Feedback</Modal.Title>
@@ -151,7 +152,8 @@ function RatingsAndFeedback(props) {
         rateList.map((val) => {
           return (
             <Card
-              style={{ width: "100%", padding: 10 }}
+              title="View ratings"
+              style={{ width: "99%", padding: 10, cursor: 'pointer', marginBottom: 20 }}
               onClick={() => {
                 setname(val.name);
                 setservice(val.service_name);
@@ -166,55 +168,47 @@ function RatingsAndFeedback(props) {
               }}
             >
               <Row>
-                <Col sm={4}>
-                  <Avatar round={50} src={val.profilePicture} name={val.name} />
+                <Row className="mt-2">
+                  <h6 style={{ fontWeight: "bold", marginBottom: 0, textAlign: 'left' }}>{val.name}</h6>
+                  <ReactStars
+                    count={5}
+                    value={val.ratings}
+                    size={24}
+                    activeColor="#ffd700"
+                    edit={false}
+                  />
+
+                </Row>
+
+              </Row>
+              <Row
+                style={{
+                  textAlign: 'left'
+                }}
+              >
+
+                <Col>
+                  <p style={{ fontSize: 12, marginBottom: 0 }}>{val.service_name}</p>
                 </Col>
 
-                <Col sm={4}>
-                  <Row className="mt-2">
-                    <h6 style={{ fontWeight: "bold" }}>{val.name}</h6>
-                  </Row>
-                  <Row>
-                    <p style={{ fontSize: 12 }}>{val.service_name}</p>
-                  </Row>
-
-                  <Row>
-                    <p style={{ fontWeight: "bold", fontSize: 12 }}>
-                      Date:
-                      {dateConvertion(
-                        val.date_scheduled.toString().split("T")[0]
-                      )}
-                    </p>
-                  </Row>
+                <Col>
+                  <p style={{ fontWeight: "bold", fontSize: 12, marginBottom: 0 }}>
+                    Date:
+                    {dateConvertion(
+                      val.date_scheduled.toString().split("T")[0]
+                    )}
+                  </p>
                 </Col>
 
-                <Col sm={4}>
-                  <Row
-                    className="mt-2"
-                    style={{
-                      textAlign: "center",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <h6 style={{ fontWeight: "bold" }}>Ratings</h6>
-                  </Row>
-                  <Row
-                    style={{
-                      textAlign: "center",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <p style={{ fontSize: 12 }}>{val.ratings} stars</p>
-                  </Row>
 
-                  <Row>
-                    <p style={{ fontWeight: "bold", fontSize: 12 }}>
-                      Time:{val.time_scheduled}
-                    </p>
-                  </Row>
-                </Col>
+
+
+
+
+
+
+
+
               </Row>
             </Card>
           );

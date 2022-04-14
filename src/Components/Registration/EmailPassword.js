@@ -28,46 +28,56 @@ function EmailPassword() {
             e.stopPropagation();
         } else {
             e.preventDefault();
-            Axios.post(`${hostUrl}/emailChecker`, {
-                email: email
-            }).then((response) => {
-                if (response.data == true) {
-                    setemailControllerNessage(false);
-                } else {
-                    Axios.post(`${hostUrl}/vetclinic/insert`, {
-                        email: email,
-                        password: password,
-                        name: name
-                    }).then((response) => {
-                        if (response.data.message == 'Registered') {
-                            Axios.post(`${hostUrl}/api/login`, {
-                                email: email,
-                                password: password,
-                            }).then((response) => {
-                                if (response.data.message == "Correct") {
-
-                                    localStorage.setItem("ajwt", response.data.accessToken);
-                                    localStorage.setItem("rjwt", response.data.refreshToken);
-                                    localStorage.setItem("isLogin", true);
-                                    localStorage.setItem("role", response.data.role);
-                                    if (response.data.role == 2) {
-                                        localStorage.setItem("vetStatus", response.data.vetStatus);
-                                        localStorage.setItem("id", response.data.id);
-                                        Axios.post(`${hostUrl}/vetclinic/register/system/logs`, {
-                                            name: name,
-                                        });
-                                    }
-                                    window.location.href = `/`;
-                                }
-                            });
-                        }
-                    })
-                }
-            })
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert('Need to allow location')
+            }
 
         }
 
         setValidated(true);
+    }
+
+    function showPosition(position) {
+        Axios.post(`${hostUrl}/emailChecker`, {
+            email: email
+        }).then((response) => {
+            if (response.data == true) {
+                setemailControllerNessage(false);
+            } else {
+                Axios.post(`${hostUrl}/vetclinic/insert`, {
+                    email: email,
+                    password: password,
+                    name: name,
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                }).then((response) => {
+                    if (response.data.message == 'Registered') {
+                        Axios.post(`${hostUrl}/api/login`, {
+                            email: email,
+                            password: password,
+                        }).then((response) => {
+                            if (response.data.message == "Correct") {
+
+                                localStorage.setItem("ajwt", response.data.accessToken);
+                                localStorage.setItem("rjwt", response.data.refreshToken);
+                                localStorage.setItem("isLogin", true);
+                                localStorage.setItem("role", response.data.role);
+                                if (response.data.role == 2) {
+                                    localStorage.setItem("vetStatus", response.data.vetStatus);
+                                    localStorage.setItem("id", response.data.id);
+                                    Axios.post(`${hostUrl}/vetclinic/register/system/logs`, {
+                                        name: name,
+                                    });
+                                }
+                                window.location.href = `/`;
+                            }
+                        });
+                    }
+                })
+            }
+        })
     }
 
     return (

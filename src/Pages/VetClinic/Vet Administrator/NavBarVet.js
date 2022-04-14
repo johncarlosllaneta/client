@@ -32,6 +32,12 @@ import MessageIcon from "@mui/icons-material/Message";
 import logo from "../../../Images/logo.png";
 import { messages, numberNewThreads, users } from "../../../Components/User";
 import getUser from "../../../Components/userData";
+import { MenuList } from "@material-ui/core";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import {
+  dateConvertion,
+  timeFormatter,
+} from "../../../Components/FormatDateTime";
 
 function NavBarVet(props) {
   // const [user, setuser] = useState([]);
@@ -48,6 +54,8 @@ function NavBarVet(props) {
     setTimeout(() => {
       setnumberNewThread(numberNewThreads);
     }, 1000);
+    notifReserved(userData.vetid);
+    notifDetails(userData.vetid);
   }, []);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -57,6 +65,17 @@ function NavBarVet(props) {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const [notifAnchor, setnotifAnchor] = React.useState(null);
+  const openNotif = Boolean(notifAnchor);
+  const notifhandleClick = (event) => {
+    setnotifAnchor(event.currentTarget);
+    viewNotif(user.vetid);
+    notifReserved(user.vetid);
+  };
+  const notifhandleClose = () => {
+    setnotifAnchor(null);
   };
 
   const logoutUser = () => {
@@ -79,6 +98,32 @@ function NavBarVet(props) {
 
 
   };
+
+
+  const [numberNewReserved, setnumberNewReserved] = useState(0);
+
+  const notifReserved = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(
+      `${hostUrl}/vetclinic/notification/reservation/length/${id}`
+    );
+    // console.log(result.data);
+    setnumberNewReserved(result.data.view);
+  };
+
+  const [notif, setnotif] = useState([]);
+  const notifDetails = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(
+      `${hostUrl}/vetclinic/notification/reservation/${id}`
+    );
+    // console.log(result.data);
+    setnotif(result.data);
+  };
+
+  function viewNotif(id) {
+    Axios.put(`${hostUrl}/vetclinic/notification/reservation/viewed/${id}`);
+  }
 
   return (
     <Navbar
@@ -130,6 +175,134 @@ function NavBarVet(props) {
               />
             </IconButton>
           </Tooltip>
+
+
+          {/* notification */}
+          <Tooltip title={"Notification"}>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+              hidden={props.showMessage}
+              // onClick={() => {
+              //   window.location.href = `/talk to vet`;
+              // }}
+              onClick={notifhandleClick}
+            >
+              <Badge badgeContent={numberNewReserved} color="error">
+                <NotificationsIcon
+                  style={{
+                    color: "white",
+                  }}
+                />
+              </Badge>
+            </IconButton>
+          </Tooltip>
+
+          <Menu
+            anchorEl={notifAnchor}
+            id="notif-menu"
+            open={openNotif}
+            onClose={notifhandleClose}
+            PaperProps={{
+              elevation: 0,
+              sx: {
+                overflow: "visible",
+                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                mt: 1.5,
+                "& .MuiAvatar-root": {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                "&:before": {
+                  content: '""',
+                  display: "block",
+                  position: "absolute",
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: "background.paper",
+                  transform: "translateY(-50%) rotate(45deg)",
+                  zIndex: 0,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          >
+            <div style={{ height: 400, width: 400, overflowY: "auto" }}>
+              {notif.length > 0 ? (
+                notif.map((val) => {
+                  return (
+                    <MenuList>
+                      <Row style={{ width: 380 }}>
+                        <div style={{ paddingRight: 20, paddingLeft: 30 }}>
+                          <Row>
+                            <Col>
+                              <text>
+                                {dateConvertion(
+                                  val.date_time_created.toString().split("T")[0]
+                                )}
+                              </text>
+                            </Col>
+                            <Col>
+                              <text style={{ float: "right" }}>
+                                {timeFormatter(
+                                  val.date_time_created
+                                    .toString()
+                                    .split("T")[1]
+                                    .substring(
+                                      0,
+                                      val.date_time_created
+                                        .toString()
+                                        .split("T")[1].length - 5
+                                    )
+                                )}
+                              </text>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col
+                              sm={3}
+                              style={{
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              {" "}
+                              <Avatar
+                                round={true}
+                                size={60}
+                                src={val.profilePicture}
+                                name={val.name}
+                              />
+                            </Col>
+                            <Col sm={9}>
+                              <Row>Name:{val.name}</Row>
+                              <Row>OrderId:{val.order_id}</Row>
+                              <Row>Status:{val.status}</Row>
+                            </Col>
+                          </Row>
+                        </div>
+                      </Row>
+                      <Divider />
+                    </MenuList>
+                  );
+                })
+              ) : (
+                <h5>No notification</h5>
+              )}
+            </div>
+          </Menu>
+
+
+
+
+
+
 
           <Tooltip title={"Messages"}>
             <IconButton
