@@ -23,6 +23,7 @@ import getUser from "../../../../../Components/userData";
 import Cardproduct from "./CardProduct";
 import { autocompleteClasses } from "@mui/material";
 import { ToastClaim } from "../../../../../Components/Toast";
+import { dateConvertion } from "../../../../../Components/FormatDateTime";
 import { ToastContainer } from "react-toastify";
 
 function ProductReservation() {
@@ -92,7 +93,9 @@ function ProductReservation() {
       title: "Date Schedule",
       sorting: true,
       defaultSort: "desc",
-      render: (row) => <div>{formatDate(row.date_reserve)}</div>,
+      render: (row) => (
+        <div>{dateConvertion(row.date_reserve.toString().split("T")[0])}</div>
+      ),
     },
     {
       title: "Action",
@@ -113,7 +116,9 @@ function ProductReservation() {
                 setreservationID(row.reserve_id);
                 setorderId(row.order_id);
                 setpetOwnerName(row.name);
-                setdate(formatDate(row.date_reserve));
+                setdate(
+                  dateConvertion(row.date_reserve.toString().split("T")[0])
+                );
                 handleShowProductDetails();
               }}
             >
@@ -167,11 +172,11 @@ function ProductReservation() {
             status: "Purchased",
           });
 
-          // var decreaseStock = stockUsed - quantity;
-          // Axios.put(`${hostUrl}/stockUsed/decrease/product/${product_id}`, {
-          //   decreaseStock: decreaseStock,
-          // });
-          // // alert(stockUsed - quantity);
+          var decreaseStock = stockUsed - quantity;
+          Axios.put(`${hostUrl}/stockUsed/decrease/product/${product_id}`, {
+            decreaseStock: decreaseStock,
+          });
+          // alert(stockUsed - quantity);
 
           Axios.get(`${hostUrl}/pending/reservation/${user.vetid}`).then(
             (response) => {
@@ -192,17 +197,50 @@ function ProductReservation() {
     });
   }
 
-  function insertClaim(id) {
+  async function insertClaim(id) {
     Axios.put(`${hostUrl}/staff/reservation/claim/${id}`, {
       mop: mop,
       claimBy: claimBy,
     });
+
+    var prodList = [];
+
+    const result = await getProdList(orderId);
+    prodList.push(result);
+    // console.log(result);
+    console.log(prodList);
+    for (var i = 0; i < prodList.length; i++) {
+      alert(prodList[0][i].res_quantity);
+      var decreaseStock = prodList[0][i].quantity - prodList[0][i].res_quantity;
+      Axios.put(
+        `${hostUrl}/stockUsed/decrease/product/${prodList[0][i].product_id}`,
+        {
+          decreaseStock: decreaseStock,
+        }
+      );
+    }
+    // prodList.forEach((item) => {
+    //   alert(item.res_quantity + " " + item.quantity + " " + item.product_id);
+    //   var decreaseStock = item.quantity - item.res_quantity;
+    //   // Axios.put(`${hostUrl}/stockUsed/decrease/product/${item.product_id}`, {
+    //   //   decreaseStock: decreaseStock,
+    //   // });
+    // });
+
     setmop("");
     setclaimBy("");
     handleClose2();
     refreshTable();
     ToastClaim();
   }
+
+  const getProdList = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/staff/order/${id}`);
+    // console.log(result.data);
+    console.log(result.data);
+    return result.data;
+  };
 
   const [viewDisableField, setviewDisableField] = useState(false);
   //details

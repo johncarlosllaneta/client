@@ -70,6 +70,9 @@ const VetSettings = (props) => {
 
   const [vetId, setvetId] = useState("");
   const [vetName, setvetName] = useState();
+  const [fname, setfname] = useState();
+  const [mname, setmname] = useState();
+  const [lname, setlname] = useState();
   const [vetEmail, setvetEmail] = useState();
   const [vetAddress, setvetAddress] = useState();
   const [vetContactNumber, setvetContactNumber] = useState();
@@ -188,19 +191,21 @@ const VetSettings = (props) => {
   }
 
   function SaveVetInfo() {
-    Axios.put(`${hostUrl}/vetclinic/update/${vetId}`, {
-      vet_name: vetName,
+    Axios.put(`${hostUrl}/doc/update/${vetId}`, {
+      vetFname: fname,
+      vetMname: mname,
+      vetLname: lname,
       email: vetEmail,
       vet_address: vetAddress,
       vet_contact_number: vetContactNumber,
-      oldnumber: user.vet_contact_number,
+      oldnumber: user.vet_doc_contactNumber,
     }).then((response) => {
       // alert(response.data.message);
       if (response.data.message === "Update Successfully") {
         // alert("logging in");
         Axios.get(`${hostUrl}/vet/uploads`, {
           params: {
-            email: user.email,
+            email: user.vet_doc_email,
           },
         }).then((response) => {
           if (response.data.message === "Correct") {
@@ -209,15 +214,15 @@ const VetSettings = (props) => {
             localStorage.setItem("rjwt", response.data.refreshToken);
             localStorage.setItem("isLogin", true);
             localStorage.setItem("role", response.data.role);
-            if (response.data.role === 2) {
-              localStorage.setItem("vetStatus", response.data.vetStatus);
+            if (response.data.role === 4) {
+              // localStorage.setItem("vetStatus", response.data.vetStatus);
               localStorage.setItem("id", response.data.id);
             }
 
             handleCloseOffers();
             ToastUpdate();
             setTimeout(() => {
-              window.location.href = `/vet/settings`;
+              window.location.reload();
             }, 3000);
           }
         });
@@ -514,7 +519,7 @@ const VetSettings = (props) => {
 
   useEffect(() => {
     Axios.post(`${hostUrl}/web/user/compare`, {
-      currentHashPassword: user.password,
+      currentHashPassword: user.vet_doc_password,
       currentPassword: password,
     }).then((response) => {
       setresultVerify(response.data);
@@ -542,13 +547,13 @@ const VetSettings = (props) => {
   }
 
   function savePassword() {
-    Axios.put(`${hostUrl}/web/vetclinic/password/${vetId}`, {
+    Axios.put(`${hostUrl}/web/doc/password/${vetId}`, {
       newPassword: newPass,
     }).then((response) => {
       if (response.data.message === "Successfully") {
         Axios.get(`${hostUrl}/vet/uploads`, {
           params: {
-            email: user.email,
+            email: user.vet_doc_email,
           },
         }).then((response) => {
           if (response.data.message === "Correct") {
@@ -556,15 +561,15 @@ const VetSettings = (props) => {
             localStorage.setItem("rjwt", response.data.refreshToken);
             localStorage.setItem("isLogin", true);
             localStorage.setItem("role", response.data.role);
-            if (response.data.role === 2) {
-              localStorage.setItem("vetStatus", response.data.vetStatus);
+            if (response.data.role === 4) {
+              // localStorage.setItem("vetStatus", response.data.vetStatus);
               localStorage.setItem("id", response.data.id);
             }
           }
           handleCloseHours();
           ToastUpdate();
           setTimeout(() => {
-            window.location.href = `/vet/settings`;
+            window.location.reload();
           }, 3000);
         });
       }
@@ -637,11 +642,12 @@ const VetSettings = (props) => {
           <Button
             variant="primary"
             onClick={() => {
-              setvetName(user.vet_name);
-              setvetEmail(user.email);
-              setvetAddress(user.vet_address);
-              setvetContactNumber(user.vet_contact_number);
-              setvetId(user.vet_admin_id);
+              setfname(user.vet_doc_fname);
+              setmname(user.vet_doc_mname);
+              setlname(user.vet_doc_lname);
+              setvetEmail(user.vet_doc_email);
+              setvetContactNumber(user.vet_doc_contactNumber);
+              setvetId(user.vet_doc_id);
               SaveVetInfo();
             }}
           >
@@ -854,7 +860,7 @@ const VetSettings = (props) => {
                                   width: "50vw",
                                   backgroundColor: "white",
                                 }}
-                                type="password"
+                                type="text"
                                 placeholder="Password"
                                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                 title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
@@ -1010,15 +1016,10 @@ const VetSettings = (props) => {
                         onClick={() => {
                           EditCredController(!handleChecker);
                           sethandleChecker(!handleChecker);
-                          setvetName(
-                            user.vet_doc_fname +
-                              " " +
-                              user.vet_doc_mname +
-                              " " +
-                              user.vet_doc_lname
-                          );
+                          setfname(user.vet_doc_fname);
+                          setmname(user.vet_doc_mname);
+                          setlname(user.vet_doc_lname);
                           setvetEmail(user.vet_doc_email);
-                          setvetAddress(user.vet_address);
                           setvetContactNumber(user.vet_doc_contactNumber);
                           setvetId(user.vet_doc_id);
                         }}
@@ -1030,15 +1031,10 @@ const VetSettings = (props) => {
                         onClick={() => {
                           EditCredController(!handleChecker);
                           sethandleChecker(!handleChecker);
-                          setvetName(
-                            user.vet_doc_fname +
-                              " " +
-                              user.vet_doc_mname +
-                              " " +
-                              user.vet_doc_lname
-                          );
+                          setfname(user.vet_doc_fname);
+                          setmname(user.vet_doc_mname);
+                          setlname(user.vet_doc_lname);
                           setvetEmail(user.vet_doc_email);
-                          setvetAddress(user.vet_address);
                           setvetContactNumber(user.vet_doc_contactNumber);
                           setvetId(user.vet_doc_id);
                         }}
@@ -1060,12 +1056,24 @@ const VetSettings = (props) => {
                             <Col sm="7">
                               <Form.Control
                                 type="text"
-                                value={vetName}
-                                placeholder="Vet Name"
+                                value={fname}
+                                placeholder="First name"
                                 minLength={5}
                                 required
                                 onChange={(e) => {
-                                  setvetName(e.target.value);
+                                  setfname(e.target.value);
+                                }}
+                              />
+
+                              <div style={{ height: 10 }}></div>
+                              <Form.Control
+                                type="text"
+                                value={lname}
+                                placeholder="Last name"
+                                minLength={5}
+                                required
+                                onChange={(e) => {
+                                  setlname(e.target.value);
                                 }}
                               />
                             </Col>

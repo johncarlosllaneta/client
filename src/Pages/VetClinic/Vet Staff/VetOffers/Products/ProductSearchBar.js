@@ -9,12 +9,28 @@ import { hostUrl } from "../../../../../Components/Host";
 import { users } from "../../../../../Components/User";
 import { BsFillImageFill } from "react-icons/bs";
 import AddProduct from "./AddProduct";
+import getUser from "../../../../../Components/userData";
 
 function ProductSearchBar(props) {
   const [showAddProduct, setShowAddProduct] = useState(false);
 
   const handleCloseAddProduct = () => setShowAddProduct(false);
   const handleShowAddProduct = () => setShowAddProduct(true);
+
+  useEffect(async () => {
+    const userData = await getUser();
+    getReservation(userData.vetid);
+  }, []);
+
+  const [reservation, setreservation] = useState([]);
+  const getReservation = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(
+      `${hostUrl}/staff/pending/order/reservation/${id}`
+    );
+    // console.log(result.data);
+    setreservation(result.data);
+  };
 
   return (
     <div
@@ -85,7 +101,7 @@ function ProductSearchBar(props) {
             color="inherit"
             onClick={props.changeShow}
           >
-            <Badge badgeContent={4} color="error">
+            <Badge badgeContent={reservation.length} color="error">
               <IoMdCart
                 style={{
                   color: "#354A5F",

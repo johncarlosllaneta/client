@@ -3,6 +3,8 @@ import ProductSearchBar from "./ProductSearchBar";
 import React, { useState, useEffect, useRef } from "react";
 import { Form, Offcanvas, FloatingLabel, Row, Col } from "react-bootstrap";
 import UpdateProduct from "./UpdateProduct";
+import { ToastAdd } from "../../../../../Components/Toast";
+import { ToastContainer } from "react-toastify";
 
 function ProductTableHolder(props) {
   const [showUpdateProduct, setShowUpdateProduct] = useState(false);
@@ -23,6 +25,7 @@ function ProductTableHolder(props) {
         paddingBottom: "2vh",
       }}
     >
+      <ToastContainer />
       {/* Update Products */}
       <Offcanvas
         show={showUpdateProduct}

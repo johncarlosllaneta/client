@@ -91,6 +91,11 @@ function ProfilePage() {
                         color: "#FFFFFF",
                         width: 117,
                       }}
+                      onClick={() => {
+                        // messages(users[0].vetid);
+                        // <ProductTableHolder />;
+                        window.location.href = `/staff/settings`;
+                      }}
                     >
                       Edit Profile
                     </Button>

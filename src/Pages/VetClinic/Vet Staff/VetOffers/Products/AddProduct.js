@@ -22,10 +22,10 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
 import { ToastUpdate } from "../../../../../Components/Toast";
 import { apps } from "../../../../../Components/base";
-import { ToastContainer } from "react-toastify";
 import { hostUrl } from "../../../../../Components/Host";
 import { users } from "../../../../../Components/User";
-import { ToastSuccess } from "../../../../../Components/Toast";
+import { ToastAdd } from "../../../../../Components/Toast";
+import { ToastContainer } from "react-toastify";
 
 function AddProduct(props) {
   // Product Attributes
@@ -172,6 +172,7 @@ function AddProduct(props) {
         setValidated(false);
         props.handleCloseAddProduct();
         props.refreshTable();
+        ToastAdd();
       }
     });
   };
@@ -466,16 +467,6 @@ function AddProduct(props) {
                   <Typography>Upload Image File</Typography>
                 </Col>
               </Row>
-
-              <Button
-                onClick={() => {
-                  // setprogressUploadController(false);
-                  // counters();
-                  // updateProfilePicture();
-                }}
-              >
-                Upload
-              </Button>
             </Container>
             <Container
               hidden={progressUploadController}

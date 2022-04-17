@@ -11,6 +11,7 @@ import {
   Row,
 } from "react-bootstrap";
 import { AiOutlineSearch, AiOutlineFileDone } from "react-icons/ai";
+import { dateConvertion } from "../../../../../Components/FormatDateTime";
 
 import { TiCancel } from "react-icons/ti";
 import MaterialTable from "material-table";
@@ -57,72 +58,10 @@ function DashboardReservationTab(props) {
       title: "Date Schedule",
       sorting: true,
       defaultSort: "asc",
-      render: (row) => <div>{formatDate(row.date_reserve)}</div>,
+      render: (row) => (
+        <div>{dateConvertion(row.date_reserve.toString().split("T")[0])}</div>
+      ),
     },
-    // {
-    //   title: "Action",
-    //   render: (row) => (
-    //     <div style={{ display: "flex", flexDirection: "row " }}>
-    //       <OverlayTrigger
-    //         placement="top-start"
-    //         delay={{ show: 250 }}
-    //         overlay={renderTooltip({ msg: "View Information" })}
-    //       >
-    //         <Button
-    //           variant="info"
-    //           style={{
-    //             marginRight: 5,
-    //           }}
-    //           onClick={() => {
-    //             // viewDetails(row.appointment_id);
-    //             // ModalView();
-    //           }}
-    //         >
-    //           <AiOutlineSearch style={{ fontSize: 25, color: "white" }} />
-    //         </Button>
-    //       </OverlayTrigger>
-
-    //       <OverlayTrigger
-    //         placement="top-start"
-    //         delay={{ show: 250 }}
-    //         overlay={renderTooltip({ msg: "Done Appointment" })}
-    //       >
-    //         <Button
-    //           variant="primary"
-    //           style={{
-    //             marginRight: 5,
-    //           }}
-    //           onClick={() => {
-    //             // setpet_id(row.pet_id);
-    //             // setappointmentID(row.appointment_id);
-    //             // setcategory(row.category);
-    //             // setnotifService_id(row.service_id);
-    //             // handleShowModalFinish();
-    //           }}
-    //         >
-    //           <AiOutlineFileDone style={{ fontSize: 25 }} />
-    //         </Button>
-    //       </OverlayTrigger>
-
-    //       <OverlayTrigger
-    //         placement="top-start"
-    //         delay={{ show: 250 }}
-    //         overlay={renderTooltip({ msg: "Void Appointment" })}
-    //       >
-    //         <Button
-    //           variant="danger"
-    //           onClick={() => {
-    //             // setappointmentID(row.appointment_id);
-    //             // setnotifService_id(row.service_id);
-    //             // handleShowModalDecline();
-    //           }}
-    //         >
-    //           <TiCancel style={{ fontSize: 25 }} />
-    //         </Button>
-    //       </OverlayTrigger>
-    //     </div>
-    //   ),
-    // },
   ];
   return (
     <div>

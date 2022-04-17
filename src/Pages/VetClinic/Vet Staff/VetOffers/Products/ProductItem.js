@@ -22,6 +22,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { hostUrl } from "../../../../../Components/Host";
+import { ToastDelete } from "../../../../../Components/Toast";
 import Axios from "axios";
 function ProductItem(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -44,6 +45,10 @@ function ProductItem(props) {
       vet_id: props.product.vetid,
     });
     props.refreshTable();
+    ToastDelete();
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   }
 
   // Modal Confirmation delete
@@ -182,7 +187,7 @@ function ProductItem(props) {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button variant="info" onClick={handleClose1}>
+            <Button variant="secondary" onClick={handleClose1}>
               Close
             </Button>
           </Modal.Footer>

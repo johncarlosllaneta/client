@@ -18,7 +18,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import MaterialTable from "material-table";
 import { hostUrl } from "../../../../../Components/Host";
 import { useParams } from "react-router-dom";
-import { FormatDateAndTime } from "../../../../../Components/FormatDateTime";
+import { dateConvertion } from "../../../../../Components/FormatDateTime";
 import { IoChevronBack } from "react-icons/io5";
 import getUser from "../../../../../Components/userData";
 import Cardproduct from "./CardProduct";
@@ -135,7 +135,9 @@ function ProductReservationHistory() {
       title: "Date Schedule",
       sorting: true,
       defaultSort: "asc",
-      render: (row) => <div>{formatDate(row.date_reserve)}</div>,
+      render: (row) => (
+        <div>{formatDate(row.date_reserve.toString().split("T")[0])}</div>
+      ),
     },
     {
       title: "Action",
@@ -157,8 +159,10 @@ function ProductReservationHistory() {
                 setreservationID(row.reserve_id);
                 setorderId(row.order_id);
                 setpetOwnerName(row.name);
-                setdate(formatDate(row.date_reserve));
-                setdateClaimed(formatDate(row.date_accomplished));
+                setdate(formatDate(row.date_reserve.toString().split("T")[0]));
+                setdateClaimed(
+                  formatDate(row.date_accomplished.toString().split("T")[0])
+                );
                 setmop(row.mop);
                 setclaimBy(row.claimBy);
                 listProducts(row.order_id);
@@ -318,7 +322,7 @@ function ProductReservationHistory() {
                 <Col>
                   <h5>List of Products:</h5>
                   <h6 style={{ fontWeight: "bolder" }}>
-                    Date reserved: {dateClaimed}
+                    Date claimed: {dateClaimed}
                   </h6>
                   <div
                     style={{

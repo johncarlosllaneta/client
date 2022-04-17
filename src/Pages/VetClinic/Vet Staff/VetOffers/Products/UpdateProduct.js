@@ -21,11 +21,10 @@ import "react-image-crop/dist/ReactCrop.css";
 
 import LinearProgress from "@mui/material/LinearProgress";
 import Box from "@mui/material/Box";
-import { ToastUpdate } from "../../../../../Components/Toast";
 import { apps } from "../../../../../Components/base";
 import { ToastContainer } from "react-toastify";
 import { hostUrl } from "../../../../../Components/Host";
-import { users } from "../../../../../Components/User";
+import { ToastUpdate } from "../../../../../Components/Toast";
 
 function UpdateProduct(props) {
   // Product Attributes
@@ -184,8 +183,12 @@ function UpdateProduct(props) {
           setimageFile("");
           setimageChecker(true);
           setValidated(false);
+          ToastUpdate();
           props.handleCloseUpdateProduct();
           props.refreshTable();
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         }
       });
     } else {
@@ -210,6 +213,9 @@ function UpdateProduct(props) {
           setValidated(false);
           props.handleCloseUpdateProduct();
           props.refreshTable();
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
         }
       });
     }

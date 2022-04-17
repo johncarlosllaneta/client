@@ -38,10 +38,9 @@ function SideNavBarVetDoctor(props) {
     getInfo(userData.vet_doc_id);
     getNotifLength(userData.vetid);
     getReservedLength(userData.vetid);
-    setconsultationChecker(1);
-    setpharmacyChecker(1);
-    setproductChecker(user.enableProduct);
-    setservicesChecker(1);
+    // setconsultationChecker(1);
+    // setpharmacyChecker(1);
+    // setservicesChecker(1);
     // console.log(user);
     // alert(vetID.toString().replace('/', '10##01'))
   }, []);
@@ -51,6 +50,13 @@ function SideNavBarVetDoctor(props) {
     const result = await Axios.get(`${hostUrl}/doc/${id}`);
     // console.log(result.data);
     setuser(result.data);
+
+    if (result.data[0].enablePharmacy == 1) {
+      setpharmacyCheckerEnabler("block");
+    }
+    if (result.data[0].enableServices == 1) {
+      setservicesCheckerEnabler("block");
+    }
   };
 
   const getNotifLength = async (id) => {
@@ -71,17 +77,17 @@ function SideNavBarVetDoctor(props) {
     setnumberOfUnviewedReserved(result.data.view);
   };
 
-  useEffect(() => {
-    if (consultationChecker === 1) {
-      setconsultationCheckerEnabler("block");
-    }
-    if (pharmacyChecker === 1) {
-      setpharmacyCheckerEnabler("block");
-    }
-    if (servicesChecker === 1) {
-      setservicesCheckerEnabler("block");
-    }
-  }, [pharmacyChecker, productChecker, servicesChecker, consultationChecker]);
+  // useEffect(() => {
+  //   if (consultationChecker === 1) {
+  //     setconsultationCheckerEnabler("block");
+  //   }
+  //   if (pharmacyChecker === 1) {
+  //     setpharmacyCheckerEnabler("block");
+  //   }
+  //   if (servicesChecker === 1) {
+  //     setservicesCheckerEnabler("block");
+  //   }
+  // }, [pharmacyChecker, productChecker, servicesChecker, consultationChecker]);
 
   const [dashboard, setdashboard] = useState();
   const [profile, setprofile] = useState();

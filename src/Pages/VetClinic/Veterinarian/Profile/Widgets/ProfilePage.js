@@ -88,6 +88,9 @@ function ProfilePage() {
                         color: "#FFFFFF",
                         width: 117,
                       }}
+                      onClick={() => {
+                        window.location.href = `/veterinarian/settings`;
+                      }}
                     >
                       Edit Profile
                     </Button>

@@ -110,6 +110,17 @@ const ToastUpdateSubscribe = () =>
     progress: undefined,
   });
 
+const ToastAdd = () =>
+  toast.success("Added Successfully", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
 export {
   ToastUpdate,
   ToastDelete,
@@ -121,4 +132,5 @@ export {
   ToastClaim,
   ToastSuccessSubscribe,
   ToastUpdateSubscribe,
+  ToastAdd,
 };

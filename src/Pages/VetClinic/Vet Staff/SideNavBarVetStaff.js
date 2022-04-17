@@ -32,8 +32,8 @@ function SideNavBarVetStaff(props) {
     getInfo(userData.vet_staff_id);
     getNotifLength(userData.vetid);
     getReservedLength(userData.vetid);
-    setpharmacyChecker(1);
-    setproductChecker(1);
+    // setpharmacyChecker(1);
+    // setproductChecker(1);
   }, []);
 
   const getInfo = async (id) => {
@@ -41,6 +41,14 @@ function SideNavBarVetStaff(props) {
     const result = await Axios.get(`${hostUrl}/staff/${id}`);
     // console.log(result.data);
     setuser(result.data);
+    if (result.data[0].enableProduct == 1) {
+      // setproductChecker(false);
+      setproductCheckerEnabler("block");
+    }
+    if (result.data[0].enablePharmacy == 1) {
+      // setpharmacyChecker(false);
+      setpharmacyCheckerEnabler("block");
+    }
   };
 
   const getNotifLength = async (id) => {
