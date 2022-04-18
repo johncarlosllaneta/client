@@ -57,6 +57,7 @@ function NavBarDoc(props) {
 
     notifAppointment(userData.vetid);
     notifDetails(userData.vetid);
+    notifMessage(userData.vetid);
   }, []);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -129,6 +130,17 @@ function NavBarDoc(props) {
   function viewNotif(id) {
     Axios.put(`${hostUrl}/vetclinic/notification/viewed/${id}`);
   }
+
+  const [numberNewThread, setnumberNewThread] = useState(0);
+
+  const notifMessage = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(
+      `${hostUrl}/vetadmin/notification/messages/length/${id}`
+    );
+    // console.log(result.data);
+    setnumberNewThread(result.data.view);
+  };
 
   return (
     <Navbar
@@ -300,6 +312,34 @@ function NavBarDoc(props) {
               )}
             </div>
           </Menu>
+
+
+          <Tooltip title={"Messages"}>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+              hidden={props.showMessage}
+              onClick={() => {
+                Axios.put(`${hostUrl}/vetadmin/notification/messages/viewed/${user.vetid}`)
+                  .then((response) => {
+                    if (response.data.message == 'Correct') {
+                      window.location.href = `/talk to vet`;
+                    }
+                  })
+                  ;
+
+              }}
+            >
+              <Badge badgeContent={numberNewThread} color="error">
+                <MessageIcon
+                  style={{
+                    color: "white",
+                  }}
+                />
+              </Badge>
+            </IconButton>
+          </Tooltip>
 
           <Tooltip
             title={
