@@ -17,6 +17,7 @@ import MaterialTable from "material-table";
 import Axios from "axios";
 import { hostUrl } from "../../../../Components/Host";
 import { useParams } from "react-router-dom";
+import AddAppointment from "./AddAppointment";
 
 const GenReservation = (props) => {
 
@@ -274,8 +275,31 @@ const GenReservation = (props) => {
   const [vaccineNumber, setvaccineNumber] = useState();
   const [weight, setweight] = useState();
 
+
+  // Add appointment modal
+  const [showAddAppointmentModal, setShowAddAppointmentModal] = useState(false);
+  const handleCloseAddAppointmentModal = () => setShowAddAppointmentModal(false);
+  const handleShowModalAddAppointment = () => setShowAddAppointmentModal(true);
+
   return (
     <div>
+
+
+      {/* <Modal
+        show={showAddAppointmentModal}
+        onHide={handleCloseAddAppointmentModal}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Add Appointment</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <AddAppointment />
+        </Modal.Body>
+      </Modal> */}
+
       {/* Finish appointment */}
       <Modal
         show={showVaccinationModal}
@@ -581,6 +605,12 @@ const GenReservation = (props) => {
           pageSize: 10,
         }}
         actions={[
+          // {
+          //   icon: "add",
+          //   tooltip: "Add appointment",
+          //   isFreeAction: true,
+          //   onClick: handleShowModalAddAppointment,
+          // },
           {
             icon: "information",
             tooltip: "Helper",

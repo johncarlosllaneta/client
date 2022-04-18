@@ -34,7 +34,7 @@ function ProductReservation() {
       });
       // console.log(reservation);
 
-      Axios.put(`${hostUrl}/expiration/reservation/${id}`);
+      // Axios.put(`${hostUrl}/expiration/reservation/${id}`);
       setcounter(counter + 1);
     }
   }, []);

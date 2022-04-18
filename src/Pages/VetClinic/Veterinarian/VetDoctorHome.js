@@ -1,6 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import NotFound from "../../../Components/NotFound";
+import VideoChat from "../../../Components/video-call/VideoChat";
 import PharmacyVerified from "../Verified Vet/Vet Offers/Pharmacy/PharmacyVerified";
+import Thread from "../Vet Administrator/Talk to Vet/Thread";
 import AppointmentMain from "./Appointments/AppointmentMain";
 import AppointmentPage from "./Appointments/AppointmentPage";
 import DashboardMain from "./Dashboard/DashboardMain";
@@ -57,6 +60,15 @@ function VetDoctorHome() {
           <Route path="/pharmacy" exact component={PharmacyMain} />
           <Route path="/appointments" exact component={AppointmentMain} />
           <Route path="/veterinarian/settings" exact component={VetSettings} />
+          <Route path="/talk to vet"
+            exact
+            component={Thread} />
+
+          <Route path="/video conference/:code"
+            exact
+            component={VideoChat} />
+
+          <Route path="*" component={NotFound} />
         </Switch>
       </div>
     </Router>

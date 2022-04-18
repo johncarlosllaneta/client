@@ -20,14 +20,18 @@ const Lobby = ({
   useEffect(async () => {
 
     const userData = await getUser();
-
     handleRoomDefault(code);
     var role = localStorage.getItem('role');
     if (role == 1) {
       handleUsernameDefault(userData.name);
     } else if (role == 2) {
       handleUsernameDefault(userData.vet_name);
-    } else {
+    } else if (role == 4) {
+      let gender = userData.vet_doc_gender == "Male" ? 'Dr.' : 'Dra.';
+      let name = userData.vet_doc_fname + " " + userData.vet_doc_lname;
+      handleUsernameDefault(gender + " " + name);
+    }
+    else {
       handleUsernameDefault('');
     }
   }, [])
