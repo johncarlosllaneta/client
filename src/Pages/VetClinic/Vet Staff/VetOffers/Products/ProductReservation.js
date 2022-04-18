@@ -15,7 +15,7 @@ import {
 } from "react-bootstrap";
 import Axios from "axios";
 import { AiOutlineSearch } from "react-icons/ai";
-import { BiPurchaseTagAlt } from "react-icons/bi";
+import { TiCancel } from "react-icons/ti";
 import MaterialTable from "material-table";
 import { hostUrl } from "../../../../../Components/Host";
 import { useParams } from "react-router-dom";
@@ -59,6 +59,16 @@ function ProductReservation() {
     });
   }
 
+  function expiredReservation(id) {
+    Axios.put(`${hostUrl}/staff/reservation/expired/${id}`);
+
+    Axios.post(`${hostUrl}/notification/reserved/purchased`, {
+      order_id: orderId,
+      status: "Expired",
+    });
+    refreshTable();
+    ToastClaim();
+  }
   function formatDateAndTime(dateString) {
     const options = {
       year: "numeric",
@@ -116,6 +126,7 @@ function ProductReservation() {
                 setreservationID(row.reserve_id);
                 setorderId(row.order_id);
                 setpetOwnerName(row.name);
+                setstatus(row.reservation_status);
                 setdate(
                   dateConvertion(row.date_reserve.toString().split("T")[0])
                 );
@@ -123,8 +134,34 @@ function ProductReservation() {
               }}
             >
               <AiOutlineSearch style={{ fontSize: 25, color: "white" }} />
-              View Reservation
+              View
               {/* View Reservation */}
+            </Button>
+          </OverlayTrigger>
+
+          <OverlayTrigger
+            placement="top-start"
+            delay={{ show: 250 }}
+            overlay={renderTooltip({ msg: "Expired reservation" })}
+          >
+            <Button
+              variant="danger"
+              style={{
+                marginRight: 5,
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                // Delete Medicine
+                // setmedicine_id(row.med_id);
+                // handleShowDelete();
+
+                setreservationID(row.reserve_id);
+                setorderId(row.order_id);
+                handleShowExpiredInsert();
+              }}
+            >
+              <TiCancel style={{ fontSize: 25 }} />
+              Expired
             </Button>
           </OverlayTrigger>
         </div>
@@ -156,6 +193,7 @@ function ProductReservation() {
   const [stockUsed, setstockUsed] = useState("");
   const [quantity, setquantity] = useState("");
   const [product_id, setproduct_id] = useState("");
+  const [status, setstatus] = useState();
   const [showProductConfirmation, setShowProductConfirmation] = useState(false);
 
   const handleCloseProductConfirmation = () =>
@@ -208,9 +246,8 @@ function ProductReservation() {
     const result = await getProdList(orderId);
     prodList.push(result);
     // console.log(result);
-    console.log(prodList);
+
     for (var i = 0; i < prodList.length; i++) {
-      alert(prodList[0][i].res_quantity);
       var decreaseStock = prodList[0][i].quantity - prodList[0][i].res_quantity;
       Axios.put(
         `${hostUrl}/stockUsed/decrease/product/${prodList[0][i].product_id}`,
@@ -219,13 +256,11 @@ function ProductReservation() {
         }
       );
     }
-    // prodList.forEach((item) => {
-    //   alert(item.res_quantity + " " + item.quantity + " " + item.product_id);
-    //   var decreaseStock = item.quantity - item.res_quantity;
-    //   // Axios.put(`${hostUrl}/stockUsed/decrease/product/${item.product_id}`, {
-    //   //   decreaseStock: decreaseStock,
-    //   // });
-    // });
+
+    Axios.post(`${hostUrl}/notification/reserved/purchased`, {
+      order_id: orderId,
+      status: "Purchased",
+    });
 
     setmop("");
     setclaimBy("");
@@ -260,6 +295,11 @@ function ProductReservation() {
   const handleCloseConfirmationInsert = () => setshowConfirmationInsert(false);
   const handleShowConfirmationInsert = () => setshowConfirmationInsert(true);
 
+  // Modal Confirmation expired
+  const [showExpiredInsert, setshowExpiredInsert] = useState(false);
+  const handleCloseExpiredInsert = () => setshowExpiredInsert(false);
+  const handleShowExpiredInsert = () => setshowExpiredInsert(true);
+
   const [showUpdate, setShowUpdate] = useState(false);
   const [validated, setValidated] = useState(false);
 
@@ -279,6 +319,31 @@ function ProductReservation() {
   return (
     <div>
       <ToastContainer />
+
+      <Modal show={showExpiredInsert} onHide={handleCloseExpiredInsert}>
+        <Modal.Header closeButton>
+          <Modal.Title>Warning</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want you to expired this reservation?{" "}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseExpiredInsert}>
+            No
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              expiredReservation(reservationID);
+              handleCloseExpiredInsert();
+              refreshTable();
+            }}
+          >
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <Modal
         show={showConfirmationInsert}
         onHide={handleCloseConfirmationInsert}
@@ -319,6 +384,7 @@ function ProductReservation() {
                 <Row>
                   <Col>
                     <h5>Details:</h5>
+                    <h6>Status:{status}</h6>
                     <h6>Date reserved:{date}</h6>
                     <Form.Group
                       controlId="formBasicProduct"

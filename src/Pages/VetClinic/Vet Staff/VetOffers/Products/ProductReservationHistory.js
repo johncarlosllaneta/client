@@ -117,6 +117,7 @@ function ProductReservationHistory() {
   const [dateClaimed, setdateClaimed] = useState();
   const [claimBy, setclaimBy] = useState();
   const [mop, setmop] = useState();
+  const [status, setstatus] = useState();
 
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
 
@@ -157,6 +158,7 @@ function ProductReservationHistory() {
               onClick={(e) => {
                 e.preventDefault();
                 setreservationID(row.reserve_id);
+                setstatus(row.reservation_status);
                 setorderId(row.order_id);
                 setpetOwnerName(row.name);
                 setdate(formatDate(row.date_reserve.toString().split("T")[0]));
@@ -217,6 +219,7 @@ function ProductReservationHistory() {
               <Row>
                 <Col>
                   <h5>Details:</h5>
+                  <h6 style={{ fontWeight: "bolder" }}>Status: {status}</h6>
                   <h6 style={{ fontWeight: "bolder" }}>
                     Date reserved: {date}
                   </h6>
