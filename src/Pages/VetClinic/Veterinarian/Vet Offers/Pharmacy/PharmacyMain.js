@@ -36,7 +36,7 @@ function PharmacyMain() {
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
           {/* navbar */}
-          <NavBarDoc showLogo={false} showHome={false} />
+          <NavBarDoc showLogo={true} showHome={true} />
         </div>
         {user.length == 0 ? (
           <Skeleton variant="rectangular" height={"100%"} width={"100%"} />

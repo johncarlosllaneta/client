@@ -62,7 +62,7 @@ function VisitorMonitoringVerified() {
         }}
       >
         <div style={{ height: "15%", border: "1px ", padding: 0 }}>
-          <NavBarStaff showLogo={false} showHome={false} />
+          <NavBarStaff showLogo={true} showHome={true} />
         </div>
 
         {user.length == 0 ? (
