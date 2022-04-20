@@ -78,22 +78,23 @@ function NavBarStaff(props) {
   };
 
   const logoutUser = () => {
-    Axios.delete(`${hostUrl}/logout`, {
-      token: localStorage.getItem("rjwt"),
+    Axios.put(`${hostUrl}/logout/user/staff/${user.vetid}`).then((response) => {
+      if (response.data.message == "Success") {
+        Axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
+          name:
+            user.vet_staff_fname +
+            " " +
+            user.vet_staff_mname +
+            " " +
+            user.vet_staff_lname,
+        });
+        Axios.delete(`${hostUrl}/logout`, {
+          token: localStorage.getItem("rjwt"),
+        });
+        localStorage.clear();
+        window.location.replace("/");
+      }
     });
-
-    Axios.put(`${hostUrl}/logout/user/vetclinic/${user.vetid}`);
-
-    Axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
-      name:
-        user.vet_staff_fname +
-        " " +
-        user.vet_staff_mname +
-        " " +
-        user.vet_staff_lname,
-    });
-    localStorage.clear();
-    window.location.replace("/");
   };
 
   const [numberNewReserved, setnumberNewReserved] = useState(0);

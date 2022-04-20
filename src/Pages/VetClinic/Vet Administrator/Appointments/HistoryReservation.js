@@ -15,7 +15,6 @@ import { useParams } from "react-router-dom";
 import { users } from "../../../../Components/User";
 
 function HistoryReservation(props) {
-
   function formatDate(dateString) {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -59,6 +58,10 @@ function HistoryReservation(props) {
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
 
   const columns = [
+    {
+      title: "Appointment ID",
+      field: "appointment_id",
+    },
     {
       title: "Pet Owner Name",
       field: "name",

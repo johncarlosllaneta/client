@@ -81,22 +81,23 @@ function NavBarDoc(props) {
   };
 
   const logoutUser = () => {
-    Axios.delete(`${hostUrl}/logout`, {
-      token: localStorage.getItem("rjwt"),
+    Axios.put(`${hostUrl}/logout/user/doc/${user.vetid}`).then((response) => {
+      if (response.data.message == "Success") {
+        Axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
+          name:
+            user.vet_doc_fname +
+            " " +
+            user.vet_doc_mname +
+            " " +
+            user.vet_doc_lname,
+        });
+        Axios.delete(`${hostUrl}/logout`, {
+          token: localStorage.getItem("rjwt"),
+        });
+        localStorage.clear();
+        window.location.replace("/");
+      }
     });
-
-    Axios.put(`${hostUrl}/logout/user/vetclinic/${user.vetid}`);
-
-    Axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
-      name:
-        user.vet_doc_fname +
-        " " +
-        user.vet_doc_mname +
-        " " +
-        user.vet_doc_lname,
-    });
-    localStorage.clear();
-    window.location.replace("/");
   };
 
   const [numberNewAppointment, setnumberNewAppointment] = useState(0);
@@ -313,7 +314,6 @@ function NavBarDoc(props) {
             </div>
           </Menu>
 
-
           <Tooltip title={"Messages"}>
             <IconButton
               size="large"
@@ -321,14 +321,13 @@ function NavBarDoc(props) {
               color="inherit"
               hidden={props.showMessage}
               onClick={() => {
-                Axios.put(`${hostUrl}/vetadmin/notification/messages/viewed/${user.vetid}`)
-                  .then((response) => {
-                    if (response.data.message == 'Correct') {
-                      window.location.href = `/talk to vet`;
-                    }
-                  })
-                  ;
-
+                Axios.put(
+                  `${hostUrl}/vetadmin/notification/messages/viewed/${user.vetid}`
+                ).then((response) => {
+                  if (response.data.message == "Correct") {
+                    window.location.href = `/talk to vet`;
+                  }
+                });
               }}
             >
               <Badge badgeContent={numberNewThread} color="error">

@@ -25,6 +25,10 @@ function HistoryTable() {
   };
   const columns = [
     {
+      title: "Appointment ID",
+      field: "appointment_id",
+    },
+    {
       title: "Pet Owner Name",
       field: "name",
     },

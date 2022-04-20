@@ -43,6 +43,7 @@ function Vaccination() {
   function doneVaccine(immuneId) {
     Axios.put(`${hostUrl}/doc/vaccination/${immuneId}`, {
       weight: petWeight,
+      vaccineName: vaccineName,
       againsts: against,
       vaccineNumber: vaccineNumber,
       manufacturer: manufacturer,
@@ -55,7 +56,7 @@ function Vaccination() {
 
     setpetWeight("");
     setagainst("");
-    setvaccinaName("");
+    setvaccineName("");
     setmanufacturer("");
     setprescription("");
     setTimeout(() => {
@@ -110,7 +111,7 @@ function Vaccination() {
   const [vetAdminId, setvetAdminId] = useState();
   const [vetDocId, setvetDocId] = useState();
   const [petWeight, setpetWeight] = useState();
-  const [vaccinaName, setvaccinaName] = useState();
+  const [vaccineName, setvaccineName] = useState();
   const [against, setagainst] = useState();
   const [manufacturer, setmanufacturer] = useState();
   const [prescription, setprescription] = useState();
@@ -411,6 +412,29 @@ function Vaccination() {
                         placeholder="Manufacturer"
                         onChange={(e) => {
                           setmanufacturer(e.target.value);
+                        }}
+                      />
+                    </FloatingLabel>
+                  </Form.Group>
+
+                  <Form.Group
+                    controlId="formBasicProduct"
+                    className="mb-3"
+                    style={{
+                      marginTop: 10,
+                    }}
+                  >
+                    <FloatingLabel
+                      controlId="floatingInputPrice"
+                      label="Vaccine Name"
+                    >
+                      <Form.Control
+                        type="text"
+                        value={vaccineName}
+                        required
+                        placeholder="Vaccine name"
+                        onChange={(e) => {
+                          setvaccineName(e.target.value);
                         }}
                       />
                     </FloatingLabel>

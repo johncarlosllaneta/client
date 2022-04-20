@@ -108,6 +108,18 @@ function ProductReservationHistory() {
     return month + " " + day + ", " + year;
   }
 
+  function formatAMPM(date) {
+    var formatDate = new Date(date);
+    var hours = formatDate.getHours;
+    var minutes = formatDate.getMinutes();
+    var ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    var strTime = hours + ":" + minutes + " " + ampm;
+    return strTime;
+  }
+
   const [viewDisableField, setviewDisableField] = useState(true);
   //details
   const [reservationID, setreservationID] = useState();
@@ -118,6 +130,7 @@ function ProductReservationHistory() {
   const [claimBy, setclaimBy] = useState();
   const [mop, setmop] = useState();
   const [status, setstatus] = useState();
+  const [time, settime] = useState();
 
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
 
@@ -165,6 +178,7 @@ function ProductReservationHistory() {
                 setdateClaimed(
                   formatDate(row.date_accomplished.toString().split("T")[0])
                 );
+                settime(formatAMPM(row.date_accomplished));
                 setmop(row.mop);
                 setclaimBy(row.claimBy);
                 listProducts(row.order_id);
@@ -327,6 +341,7 @@ function ProductReservationHistory() {
                   <h6 style={{ fontWeight: "bolder" }}>
                     Date claimed: {dateClaimed}
                   </h6>
+                  <h6 style={{ fontWeight: "bolder" }}>Time claimed: {time}</h6>
                   <div
                     style={{
                       height: 400,
