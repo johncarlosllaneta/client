@@ -8,23 +8,23 @@ import { dateConvertion } from "../../../../../Components/FormatDateTime";
 import getUser from "../../../../../Components/userData";
 import { useParams } from "react-router-dom";
 
-function GeneralTable() {
-  const [appointmentConfirm, setappointmentConfirm] = useState([]);
-  const [user, setuser] = useState([]);
-  useEffect(async () => {
-    const userData = await getUser();
-    setuser(userData);
+function GeneralTable(props) {
+  // const [appointmentConfirm, setappointmentConfirm] = useState([]);
+  // const [user, setuser] = useState([]);
+  // useEffect(async () => {
+  //   const userData = await getUser();
+  //   setuser(userData);
 
-    getGeneral(userData.vetid);
-  }, []);
-  //   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
+  //   getGeneral(userData.vetid);
+  // }, []);
+  // //   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
 
-  const getGeneral = async (id) => {
-    // alert(userData.vetid);
-    const result = await Axios.get(`${hostUrl}/general/appointment/${id}`);
-    // console.log(result.data);
-    setappointmentConfirm(result.data);
-  };
+  // const getGeneral = async (id) => {
+  //   // alert(userData.vetid);
+  //   const result = await Axios.get(`${hostUrl}/general/appointment/${id}`);
+  //   // console.log(result.data);
+  //   setappointmentConfirm(result.data);
+  // };
   const columns = [
     {
       title: "Appointment ID",
@@ -61,7 +61,8 @@ function GeneralTable() {
     <div>
       <MaterialTable
         columns={columns}
-        data={appointmentConfirm}
+        data={props.generalTable}
+        // data={appointmentConfirm}
         title={""}
         cellEditable={false}
         options={{

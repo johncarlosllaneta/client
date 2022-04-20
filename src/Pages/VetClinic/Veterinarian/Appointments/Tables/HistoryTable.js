@@ -7,22 +7,22 @@ import { users } from "../../../../../Components/User";
 import { dateConvertion } from "../../../../../Components/FormatDateTime";
 import { useParams } from "react-router-dom";
 import getUser from "../../../../../Components/userData";
-function HistoryTable() {
-  const [appointmentHistoryData, setappointmentHistoryData] = useState([]);
-  const [user, setuser] = useState([]);
-  useEffect(async () => {
-    const userData = await getUser();
-    setuser(userData);
+function HistoryTable(props) {
+  // const [appointmentHistoryData, setappointmentHistoryData] = useState([]);
+  // const [user, setuser] = useState([]);
+  // useEffect(async () => {
+  //   const userData = await getUser();
+  //   setuser(userData);
 
-    getHistory(userData.vetid);
-  }, []);
+  //   getHistory(userData.vetid);
+  // }, []);
 
-  const getHistory = async (id) => {
-    // alert(userData.vetid);
-    const result = await Axios.get(`${hostUrl}/history/appointment/${id}`);
-    // console.log(result.data);
-    setappointmentHistoryData(result.data);
-  };
+  // const getHistory = async (id) => {
+  //   // alert(userData.vetid);
+  //   const result = await Axios.get(`${hostUrl}/history/appointment/${id}`);
+  //   // console.log(result.data);
+  //   setappointmentHistoryData(result.data);
+  // };
   const columns = [
     {
       title: "Appointment ID",
@@ -61,7 +61,8 @@ function HistoryTable() {
     <div>
       <MaterialTable
         columns={columns}
-        data={appointmentHistoryData}
+        data={props.appointmentHistoryData}
+        // data={appointmentHistoryData}
         title={""}
         cellEditable={false}
         options={{

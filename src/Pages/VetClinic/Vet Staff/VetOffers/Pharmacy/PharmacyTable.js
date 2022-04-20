@@ -27,6 +27,7 @@ import {
   ToastSuccess,
   ToastUpdate,
   ToastDelete,
+  ToastAdd,
 } from "../../../../../Components/Toast";
 import { ToastContainer } from "react-toastify";
 
@@ -276,21 +277,19 @@ const PharmacyTable = (props) => {
     Axios.get(`${hostUrl}/pharmacy/${props.id}`).then((response) => {
       setpharmacy(response.data);
     });
-
-    ToastSuccess();
     refreshTable();
+    ToastAdd();
   }
 
   const deleteMedicine = () => {
     Axios.post(`${hostUrl}/pharmacy/delete/${medicine_id}`, {
       vetid: props.id,
     });
-    ToastDelete();
+    Axios.get(`${hostUrl}/pharmacy/${props.id}`).then((response) => {
+      setpharmacy(response.data);
+    });
     refreshTable();
-
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
+    ToastDelete();
   };
 
   const updateMedicine = () => {
@@ -304,12 +303,12 @@ const PharmacyTable = (props) => {
       medicine_number: pharmacyUpdateNumber,
     });
 
+    handleCloseUpdate();
     Axios.get(`${hostUrl}/pharmacy/${props.id}`).then((response) => {
       setpharmacy(response.data);
     });
-    handleCloseUpdate();
-    ToastUpdate();
     refreshTable();
+    ToastUpdate();
   };
 
   // Modal Delete

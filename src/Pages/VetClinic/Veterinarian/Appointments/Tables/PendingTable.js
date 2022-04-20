@@ -7,23 +7,22 @@ import { users } from "../../../../../Components/User";
 import { dateConvertion } from "../../../../../Components/FormatDateTime";
 import { useParams } from "react-router-dom";
 import getUser from "../../../../../Components/userData";
-function PendingTable() {
-  const [appointmentPending, setappointmentPending] = useState([]);
-  const [user, setuser] = useState([]);
-  useEffect(async () => {
-    const userData = await getUser();
-    setuser(userData);
+function PendingTable(props) {
+  // const [appointmentPending, setappointmentPending] = useState([]);
+  // const [user, setuser] = useState([]);
+  // useEffect(async () => {
+  //   const userData = await getUser();
+  //   setuser(userData);
 
-    getPending(userData.vetid);
-  }, []);
-  //   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
+  //   getPending(userData.vetid);
+  // }, []);
 
-  const getPending = async (id) => {
-    // alert(userData.vetid);
-    const result = await Axios.get(`${hostUrl}/pending/appointment/${id}`);
-    // console.log(result.data);
-    setappointmentPending(result.data);
-  };
+  // const getPending = async (id) => {
+  //   // alert(userData.vetid);
+  //   const result = await Axios.get(`${hostUrl}/pending/appointment/${id}`);
+  //   // console.log(result.data);
+  //   setappointmentPending(result.data);
+  // };
   const columns = [
     {
       title: "Appointment ID",
@@ -56,7 +55,8 @@ function PendingTable() {
     <div>
       <MaterialTable
         columns={columns}
-        data={appointmentPending}
+        data={props.pendingTable}
+        // data={appointmentPending}
         title={""}
         cellEditable={false}
         options={{

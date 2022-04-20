@@ -23,7 +23,7 @@ const ToastSuccess = () =>
   });
 
 const ToastDelete = () =>
-  toast.success("Archived Successfully", {
+  toast.error("Archived Successfully", {
     position: "top-right",
     autoClose: 3000,
     hideProgressBar: false,

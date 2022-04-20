@@ -23,22 +23,22 @@ import getUser from "../../../../../../Components/userData";
 import { dateConvertion } from "../../../../../../Components/FormatDateTime";
 import { ToastVaccine } from "../../../../../../Components/Toast";
 import { ToastContainer } from "react-toastify";
-function Vaccination() {
-  const [vaccination, setvaccination] = useState([]);
+function Vaccination(props) {
+  // const [vaccination, setvaccination] = useState([]);
   const [user, setuser] = useState([]);
   useEffect(async () => {
     const userData = await getUser();
     setuser(userData);
 
-    getVaccination(userData.vetid);
+    // getVaccination(userData.vetid);
   }, []);
 
-  const getVaccination = async (id) => {
-    // alert(userData.vetid);
-    const result = await Axios.get(`${hostUrl}/doc/pets/vaccination/${id}`);
-    // console.log(result.data);
-    setvaccination(result.data);
-  };
+  // const getVaccination = async (id) => {
+  //   // alert(userData.vetid);
+  //   const result = await Axios.get(`${hostUrl}/doc/pets/vaccination/${id}`);
+  //   // console.log(result.data);
+  //   setvaccination(result.data);
+  // };
 
   function doneVaccine(immuneId) {
     Axios.put(`${hostUrl}/doc/vaccination/${immuneId}`, {
@@ -50,8 +50,7 @@ function Vaccination() {
       prescription: prescription,
       immuneId: immuneId,
     });
-
-    refreshTable();
+    props.refreshTable(user.vetid);
     ToastVaccine();
 
     setpetWeight("");
@@ -59,18 +58,18 @@ function Vaccination() {
     setvaccineName("");
     setmanufacturer("");
     setprescription("");
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 3000);
   }
 
-  function refreshTable() {
-    Axios.get(`${hostUrl}/doc/pets/vaccination/${user.vetid}`).then(
-      (response) => {
-        setvaccination(response.data);
-      }
-    );
-  }
+  // function refreshTable() {
+  //   Axios.get(`${hostUrl}/doc/pets/vaccination/${user.vetid}`).then(
+  //     (response) => {
+  //       setvaccination(response.data);
+  //     }
+  //   );
+  // }
 
   const [viewDisableField, setviewDisableField] = useState(false);
   //modal
@@ -223,7 +222,7 @@ function Vaccination() {
             onClick={() => {
               doneVaccine(immuneId);
               handleCloseConfirmationInsert();
-              refreshTable();
+              props.refreshTable(user.vetid);
             }}
           >
             Yes
@@ -368,6 +367,29 @@ function Vaccination() {
                       />
                     </FloatingLabel>
                   </Form.Group>
+
+                  <Form.Group
+                    controlId="formBasicProduct"
+                    className="mb-3"
+                    style={{
+                      marginTop: 10,
+                    }}
+                  >
+                    <FloatingLabel
+                      controlId="floatingInputPrice"
+                      label="Vaccine Name"
+                    >
+                      <Form.Control
+                        type="text"
+                        value={vaccineName}
+                        required
+                        placeholder="Vaccine name"
+                        onChange={(e) => {
+                          setvaccineName(e.target.value);
+                        }}
+                      />
+                    </FloatingLabel>
+                  </Form.Group>
                 </Col>
 
                 <Col>
@@ -412,29 +434,6 @@ function Vaccination() {
                         placeholder="Manufacturer"
                         onChange={(e) => {
                           setmanufacturer(e.target.value);
-                        }}
-                      />
-                    </FloatingLabel>
-                  </Form.Group>
-
-                  <Form.Group
-                    controlId="formBasicProduct"
-                    className="mb-3"
-                    style={{
-                      marginTop: 10,
-                    }}
-                  >
-                    <FloatingLabel
-                      controlId="floatingInputPrice"
-                      label="Vaccine Name"
-                    >
-                      <Form.Control
-                        type="text"
-                        value={vaccineName}
-                        required
-                        placeholder="Vaccine name"
-                        onChange={(e) => {
-                          setvaccineName(e.target.value);
                         }}
                       />
                     </FloatingLabel>
@@ -509,7 +508,7 @@ function Vaccination() {
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
             columns={columns}
-            data={vaccination}
+            data={props.vaccineData}
             title={" "}
             cellEditable={false}
             options={{

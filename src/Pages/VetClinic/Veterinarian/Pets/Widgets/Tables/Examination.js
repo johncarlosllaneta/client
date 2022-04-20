@@ -23,22 +23,22 @@ import getUser from "../../../../../../Components/userData";
 import { dateConvertion } from "../../../../../../Components/FormatDateTime";
 import { ToastExamine } from "../../../../../../Components/Toast";
 import { ToastContainer } from "react-toastify";
-function Examination() {
-  const [examination, setexamination] = useState([]);
+function Examination(props) {
+  // const [examination, setexamination] = useState([]);
   const [user, setuser] = useState([]);
   useEffect(async () => {
     const userData = await getUser();
     setuser(userData);
 
-    getExamination(userData.vetid);
+    // getExamination(userData.vetid);
   }, []);
 
-  const getExamination = async (id) => {
-    // alert(userData.vetid);
-    const result = await Axios.get(`${hostUrl}/doc/pets/examination/${id}`);
-    // console.log(result.data);
-    setexamination(result.data);
-  };
+  // const getExamination = async (id) => {
+  //   // alert(userData.vetid);
+  //   const result = await Axios.get(`${hostUrl}/doc/pets/examination/${id}`);
+  //   // console.log(result.data);
+  //   setexamination(result.data);
+  // };
 
   const [viewDisableField, setviewDisableField] = useState(false);
   //modal
@@ -87,29 +87,30 @@ function Examination() {
 
   function insertMedicines(medicalId) {
     Axios.put(`${hostUrl}/doc/examination/${medicalId}`, {
+      vet_doc_id: user.vet_doc_id,
       prescrip: prescription,
       findings: findings,
       medicalId: medicalId,
     });
 
-    setprescription("");
-    setfindings("");
     handleClose2();
-
+    props.refreshTable(user.vetid);
     ToastExamine();
 
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
+    setprescription("");
+    setfindings("");
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 3000);
   }
 
-  function refreshTable() {
-    Axios.get(`${hostUrl}/doc/pets/examination/${user.vetid}`).then(
-      (response) => {
-        setexamination(response.data);
-      }
-    );
-  }
+  // function refreshTable() {
+  //   Axios.get(`${hostUrl}/doc/pets/examination/${user.vetid}`).then(
+  //     (response) => {
+  //       setexamination(response.data);
+  //     }
+  //   );
+  // }
 
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
   const columns = [
@@ -217,7 +218,7 @@ function Examination() {
             onClick={() => {
               insertMedicines(medicalId);
               handleCloseConfirmationInsert();
-              refreshTable();
+              props.refreshTable(user.vetid);
             }}
           >
             Yes
@@ -454,7 +455,7 @@ function Examination() {
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
             columns={columns}
-            data={examination}
+            data={props.examineData}
             title={" "}
             cellEditable={false}
             options={{

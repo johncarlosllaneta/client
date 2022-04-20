@@ -22,22 +22,22 @@ import getUser from "../../../../../../Components/userData";
 import { Skeleton, useMediaQuery } from "@mui/material";
 import { ToastConsultation } from "../../../../../../Components/Toast";
 import { ToastContainer } from "react-toastify";
-function Appointment() {
+function Appointment(props) {
   const [user, setuser] = useState([]);
   useEffect(async () => {
     const userData = await getUser();
     setuser(userData);
 
-    getConsultation(userData.vetid);
+    // getConsultation(userData.vetid);
   }, []);
 
-  const [consultation, setconsultation] = useState([]);
-  const getConsultation = async (id) => {
-    // alert(userData.vetid);
-    const result = await Axios.get(`${hostUrl}/doc/pending/appointment/${id}`);
-    // console.log(result.data);
-    setconsultation(result.data);
-  };
+  // const [consultation, setconsultation] = useState([]);
+  // const getConsultation = async (id) => {
+  //   // alert(userData.vetid);
+  //   const result = await Axios.get(`${hostUrl}/doc/pending/appointment/${id}`);
+  //   // console.log(result.data);
+  //   setconsultation(result.data);
+  // };
 
   function dateConvertion(date) {
     var str = date.split("-");
@@ -120,6 +120,7 @@ function Appointment() {
 
   function insertMedicines(consultId) {
     Axios.put(`${hostUrl}/doc/consultation/${consultId}`, {
+      vet_doc_id: user.vet_doc_id,
       prescrip: prescription,
       findings: findings,
       consultationId: consultId,
@@ -130,21 +131,21 @@ function Appointment() {
     handleClose2();
 
     // window.location.href = `/consultation`;
-    refreshTable();
+    props.refreshTable(user.vetid);
     ToastConsultation();
 
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 3000);
   }
 
-  function refreshTable() {
-    Axios.get(`${hostUrl}/doc/pending/appointment/${user.vetid}`).then(
-      (response) => {
-        setconsultation(response.data);
-      }
-    );
-  }
+  // function refreshTable() {
+  //   Axios.get(`${hostUrl}/doc/pending/appointment/${user.vetid}`).then(
+  //     (response) => {
+  //       setconsultation(response.data);
+  //     }
+  //   );
+  // }
 
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
   const columns = [
@@ -242,7 +243,7 @@ function Appointment() {
             onClick={() => {
               insertMedicines(consultId);
               handleCloseConfirmationInsert();
-              refreshTable();
+              props.refreshTable(user.vetid);
             }}
           >
             Yes
@@ -436,7 +437,7 @@ function Appointment() {
                 "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
             }}
             columns={columns}
-            data={consultation}
+            data={props.consultData}
             title={""}
             cellEditable={false}
             options={{
