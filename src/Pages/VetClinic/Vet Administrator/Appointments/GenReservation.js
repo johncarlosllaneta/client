@@ -276,198 +276,12 @@ const GenReservation = (props) => {
   const [weight, setweight] = useState();
 
 
-  // Add appointment modal
-  const [showAddAppointmentModal, setShowAddAppointmentModal] = useState(false);
-  const handleCloseAddAppointmentModal = () => setShowAddAppointmentModal(false);
-  const handleShowModalAddAppointment = () => setShowAddAppointmentModal(true);
 
   return (
     <div>
 
 
-      {/* <Modal
-        show={showAddAppointmentModal}
-        onHide={handleCloseAddAppointmentModal}
-        backdrop="static"
-        keyboard={false}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Add Appointment</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <AddAppointment />
-        </Modal.Body>
-      </Modal> */}
 
-      {/* Finish appointment */}
-      <Modal
-        show={showVaccinationModal}
-        onHide={handleCloseVaccinationModal}
-        backdrop="static"
-        keyboard={false}
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Pet Health Record</Modal.Title>
-        </Modal.Header>
-        <Row>
-          <Form
-            noValidate
-            validated={validated}
-            onSubmit={insertVaccineInformation}
-          >
-            <Modal.Body>
-              <FloatingLabel
-                controlId="floatingInput"
-                label="Weight (Kg)"
-                className="mb-3"
-              >
-                <Form.Control
-                  type="number"
-                  placeholder="Weight"
-                  required
-                  min={1}
-                  max={100}
-                  onChange={(e) => {
-                    setweight(e.target.value);
-                  }}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid weight.
-                </Form.Control.Feedback>
-                <Form.Control.Feedback>Valid weight</Form.Control.Feedback>
-              </FloatingLabel>
-
-              <FloatingLabel
-                controlId="floatingInput"
-                label="Vaccine Name"
-                className="mb-3"
-              >
-                <Form.Control
-                  type="text"
-                  placeholder="vaccine"
-                  required
-                  minLength={5}
-                  pattern="[a-zA-Z ]*$"
-                  onChange={(e) => {
-                    setvaccineName(e.target.value);
-                  }}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid vaccine name.
-                </Form.Control.Feedback>
-                <Form.Control.Feedback>
-                  Valid vaccine name
-                </Form.Control.Feedback>
-              </FloatingLabel>
-
-              <FloatingLabel
-                controlId="floatingInput"
-                label="Manufacturer"
-                className="mb-3"
-              >
-                <Form.Control
-                  type="text"
-                  placeholder="manufacturer"
-                  required
-                  minLength={5}
-                  onChange={(e) => {
-                    setmanufacturer(e.target.value);
-                  }}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid manufacturer.
-                </Form.Control.Feedback>
-                <Form.Control.Feedback>Valid information</Form.Control.Feedback>
-              </FloatingLabel>
-
-              <FloatingLabel
-                controlId="floatingInput"
-                label="Vaccine Number/Lot.No."
-                className="mb-3"
-              >
-                <Form.Control
-                  type="text"
-                  pattern="\d*"
-                  placeholder="lotno"
-                  required
-                  minLength={5}
-                  onChange={(e) => {
-                    setvaccineNumber(e.target.value);
-                  }}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid information.
-                </Form.Control.Feedback>
-                <Form.Control.Feedback>Valid information</Form.Control.Feedback>
-              </FloatingLabel>
-
-              <FloatingLabel
-                controlId="floatingInput"
-                label="Against"
-                className="mb-3"
-              >
-                <Form.Control
-                  type="text"
-                  placeholder="againts"
-                  required
-                  minLength={5}
-                  onChange={(e) => {
-                    setagaints(e.target.value);
-                  }}
-                />
-
-                {/* <Form.Text id="passwordHelpBlock" muted>
-                Legends:
-                <br />
-                <p>
-                  {" "}
-                  <strong>AR </strong>(Anti-Rabies)
-                </p>
-                <p>
-                  {" "}
-                  <strong>CPV </strong>(Canine Parvovirus)
-                </p>
-                <p>
-                  {" "}
-                  <strong>DHL </strong>(Dispenser-Hepatitis-Leptospirosis)
-                </p>
-                <p>
-                  {" "}
-                  <strong>FDV </strong>(Feline Distemper)
-                </p>
-                <p>
-                  {" "}
-                  <strong>FDV-CVR </strong>(Feline Distemper-Calicivirus
-                  Rhinotracheitis)
-                </p>
-                <p>
-                  {" "}
-                  <strong>L </strong>(Leptospirosis)
-                </p>
-                <p>
-                  {" "}
-                  <strong>P </strong>(Parainfluenza)
-                </p>
-              </Form.Text> */}
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid information.
-                </Form.Control.Feedback>
-                <Form.Control.Feedback>Valid information</Form.Control.Feedback>
-              </FloatingLabel>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleCloseVaccinationModal}>
-                Close
-              </Button>
-              <Button variant="primary" type="submit">
-                Save Changes
-              </Button>
-            </Modal.Footer>
-          </Form>
-        </Row>
-      </Modal>
 
       {/* Finish appointment */}
       <Modal
@@ -492,9 +306,67 @@ const GenReservation = (props) => {
             onClick={() => {
               // alert(category)
               if (category === "Vaccination") {
-                handleShowModalVaccination();
+                Axios.post(`${hostUrl}/pets/vaccination/record/${pet_id}`, {
+                  weight: '',
+                  appointment_id: appointmentID,
+                  vaccineName: '',
+                  againts: '',
+                  manufacturer: '',
+                  vaccineNumber: '',
+                });
+                Axios.put(`${hostUrl}/vetclinic/appointment/done/${appointmentID}`)
+                Axios.post(`${hostUrl}/notification/appointment`, {
+                  appointment_id: appointmentID,
+                  service_id: notifService_id,
+                  status: "Done",
+                });
+                setTimeout(() => {
+                  props.refreshTables(props.vetid);
+                }, 2000);
                 handleCloseFinishModal();
-              } else {
+              }
+              else if (category === "Preventive Controls" || category === "Pet Examination") {
+
+                Axios.post(`${hostUrl}/pets/medicalhistory/record/${pet_id}`, {
+                  appointment_id: appointmentID,
+                  service_id: notifService_id,
+                  vetid: props.vetid
+
+                });
+                Axios.put(`${hostUrl}/vetclinic/appointment/done/${appointmentID}`)
+                Axios.post(`${hostUrl}/notification/appointment`, {
+                  appointment_id: appointmentID,
+                  service_id: notifService_id,
+                  status: "Done",
+                });
+                setTimeout(() => {
+                  props.refreshTables(props.vetid);
+                }, 2000);
+
+                handleCloseFinishModal();
+              }
+
+              else if (category === "Consultation") {
+
+                Axios.post(`${hostUrl}/pets/consultation/records/${pet_id}`, {
+                  appointment_id: appointmentID,
+                  service_id: notifService_id,
+                  vetid: props.vetid
+
+                });
+                Axios.put(`${hostUrl}/vetclinic/appointment/done/${appointmentID}`)
+                Axios.post(`${hostUrl}/notification/appointment`, {
+                  appointment_id: appointmentID,
+                  service_id: notifService_id,
+                  status: "Done",
+                });
+                setTimeout(() => {
+                  props.refreshTables(props.vetid);
+                }, 2000);
+
+                handleCloseFinishModal();
+              }
+              else {
                 finishAppointment();
                 handleCloseFinishModal();
               }

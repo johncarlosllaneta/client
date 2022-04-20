@@ -68,7 +68,7 @@ function ProductSearchBar(props) {
                 }}
             >Product Total Count: {props.products.length}</Typography>
 
-            <Button
+            {/* <Button
                 onClick={handleShowAddProduct}
             >
                 Add Product
@@ -108,7 +108,7 @@ function ProductSearchBar(props) {
                     />
 
                 </IconButton>
-            </Tooltip>
+            </Tooltip> */}
 
 
 

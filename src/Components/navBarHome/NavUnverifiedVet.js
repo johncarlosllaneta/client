@@ -51,7 +51,7 @@ function NavUnverifiedVet(props) {
 
 
   const logoutUser = () => {
-    Axios.put(`${hostUrl}/logout/user/vetclinic/${user.vetid}`).then(
+    Axios.put(`${hostUrl}/logout/user/vetclinic/unverified/${user.vetid}`).then(
       (response) => {
         if (response.data.message == "Success") {
           Axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
@@ -194,7 +194,7 @@ function NavUnverifiedVet(props) {
 
 
               <MenuItem
-                onClick={logoutUser}
+                onClick={() => { logoutUser() }}
                 style={{
                   display: "flex",
                   justifyContent: "start",
