@@ -31,7 +31,7 @@ function ModalSuccessEmailVerification() {
                 >
                     <h4>Email Verification</h4>
                     <p>Verification email has been sent to your email.</p>
-
+                    <p>Confirm your account before signing in again.</p>
                 </div>
 
             </Modal.Body>

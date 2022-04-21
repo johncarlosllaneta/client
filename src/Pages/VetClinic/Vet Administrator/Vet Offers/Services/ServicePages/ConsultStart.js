@@ -29,10 +29,16 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import getUser from "../../../../../../Components/userData";
 import { Skeleton } from "@mui/material";
+import { ToastContainer } from "react-toastify";
+import { ToastAddPhysicalConsultation, ToastAddVirtualConsultation, ToastDelete, ToastServicesUpdate } from "../../../../../../Components/Toast";
 
 const ConsultStart = (props) => {
   const [user, setuser] = useState([]);
   const [consultation, setconsultation] = useState([]);
+
+  const [onlineConsultation, setonlineConsultation] = useState([]);
+  const [physicalConsultation, setphysicalConsultation] = useState([]);
+  const [isLoading, setisLoading] = useState(false);
   useEffect(async () => {
     const userData = await getUser();
     setuser(userData);
@@ -63,9 +69,25 @@ const ConsultStart = (props) => {
       setenableConsultationPhysical(true);
     }
 
+    Axios.get(`${hostUrl}/consultation/physical/${userData.vetid}`).then((response) => {
+      setphysicalConsultation(response.data);
+      console.log(response.data);
+      // console.log(response.data)
+    });
+
+    Axios.get(`${hostUrl}/consultation/virtual/${userData.vetid}`).then((response) => {
+      setonlineConsultation(response.data);
+      console.log(response.data);
+      // console.log(response.data)
+    });
+
+
+
     Axios.get(`${hostUrl}/consultation/${userData.vetid}`).then((response) => {
       setconsultation(response.data);
+      console.log(response.data);
       // console.log(response.data)
+      setisLoading(true);
     });
   }, []);
 
@@ -135,13 +157,14 @@ const ConsultStart = (props) => {
       e.stopPropagation();
     } else {
       e.preventDefault();
-
+      ToastAddPhysicalConsultation();
       Axios.post(`${hostUrl}/services/insert/:${user.vetid}`, {
-        serviceName: "Consultation",
+        serviceName: "Physical Consultation",
         serviceDescription: serviceDescription,
         service_fee: serviceFee,
         category: "Consultation",
       }).then((response) => {
+        refreshData();
         setValidatedInsert(false);
         handleCloseInsert();
       });
@@ -157,12 +180,18 @@ const ConsultStart = (props) => {
       e.stopPropagation();
     } else {
       e.preventDefault();
+      ToastServicesUpdate();
       Axios.put(`${hostUrl}/service/update/${updateServiceId}`, {
         updateServiceName: updateServiceName,
         updateServiceDescription: updateServiceDescription,
         updateServiceFee: updateServiceFee,
         updateServiceCategory: updateServiceCategory,
       }).then((response) => {
+        Axios.get(`${hostUrl}/consultation/physical/${user.vetid}`).then((response) => {
+          setphysicalConsultation(response.data);
+          console.log(response.data);
+          // console.log(response.data)
+        });
         handleCloseUpdate();
       });
     }
@@ -174,9 +203,25 @@ const ConsultStart = (props) => {
     Axios.delete(`${hostUrl}/service/delete/:${updateServiceId}`, {}).then(
       (response) => {
         // alert(response.data.message);
+        refreshData();
+        ToastDelete();
       }
     );
   };
+
+  function refreshData() {
+    Axios.get(`${hostUrl}/consultation/physical/${user.vetid}`).then((response) => {
+      setphysicalConsultation(response.data);
+      console.log(response.data);
+      // console.log(response.data)
+    });
+
+    Axios.get(`${hostUrl}/consultation/virtual/${user.vetid}`).then((response) => {
+      setonlineConsultation(response.data);
+      console.log(response.data);
+      // console.log(response.data)
+    });
+  }
 
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
 
@@ -239,199 +284,219 @@ const ConsultStart = (props) => {
         <Modal.Header closeButton>
           <Modal.Title>Update Service</Modal.Title>
         </Modal.Header>
-        <Form noValidate validated={validated} onSubmit={updatedService}>
-          <Modal.Body>
-            <Form.Group controlId="exampleForm.SelectCustom">
-              <FloatingLabel
-                controlId="floatingInputPrice"
-                label="Service Category"
-              >
-                <Form.Select
-                  custom
-                  defaultValue={updateServiceCategory}
-                  onChange={(e) => {
-                    setupdateServiceCategory(e.target.value);
-                  }}
+        <Row>
+          <Form noValidate validated={validated} onSubmit={updatedService}>
+            <Modal.Body>
+              <Form.Group controlId="exampleForm.SelectCustom">
+                <FloatingLabel
+                  controlId="floatingInputPrice"
+                  label="Service Category"
                 >
-                  <option value="Consultation">Consultation</option>
-                  <option value="Pet Examination">Pet Examination</option>
-                  <option value="Pet Grooming">Pet Grooming </option>
-                  <option value="Preventive Controls">
-                    Preventive Services
-                  </option>
-                  <option value="Vaccination">Vaccination</option>
-                </Form.Select>
-              </FloatingLabel>
-            </Form.Group>
+                  <Form.Select
+                    custom
+                    defaultValue={updateServiceCategory}
+                    onChange={(e) => {
+                      setupdateServiceCategory(e.target.value);
+                    }}
+                  >
+                    <option value="Consultation">Consultation</option>
+                  </Form.Select>
+                </FloatingLabel>
+              </Form.Group>
 
-            <Form.Group controlId="formBasicProduct">
-              <FloatingLabel
-                controlId="floatingInputPrice"
-                label="Service Name"
-              >
-                <Form.Control
-                  type="text"
-                  minLength={5}
-                  required
-                  value={updateServiceName}
-                  placeholder="Sample Service"
-                  onChange={(e) => {
-                    setupdateServiceName(e.target.value);
-                  }}
-                />
-                <Form.Control.Feedback type="valid">
-                  You've input a valid service name.
-                </Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Service name is required in this form.
-                </Form.Control.Feedback>
-              </FloatingLabel>
-            </Form.Group>
+              <Form.Group controlId="formBasicProduct">
+                <FloatingLabel
+                  controlId="floatingInputPrice"
+                  label="Service Name"
+                >
+                  <Form.Control
+                    type="text"
+                    minLength={5}
+                    required
+                    disabled
+                    value={updateServiceName}
+                    placeholder="Sample Service"
+                    onChange={(e) => {
+                      setupdateServiceName(e.target.value);
+                    }}
+                  />
+                  <Form.Control.Feedback type="valid">
+                    You've input a valid service name.
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Service name is required in this form.
+                  </Form.Control.Feedback>
+                </FloatingLabel>
+              </Form.Group>
 
-            <Form.Group controlId="formBasicProductD">
-              <FloatingLabel controlId="floatingInputPrice" label="Description">
-                <Form.Control
-                  type="text"
-                  as="textarea"
-                  style={{ height: 200 }}
-                  required
-                  minLength={10}
-                  value={updateServiceDescription}
-                  placeholder="Sample Service description"
-                  onChange={(e) => {
-                    setupdateServiceDescription(e.target.value);
-                  }}
-                />
-                <Form.Control.Feedback type="valid">
-                  You've input a valid description.
-                </Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please input a valid medicine description.
-                </Form.Control.Feedback>
-              </FloatingLabel>
-            </Form.Group>
+              <Form.Group controlId="formBasicProductD">
+                <FloatingLabel controlId="floatingInputPrice" label="Description">
+                  <Form.Control
+                    type="text"
+                    as="textarea"
+                    style={{ height: 200 }}
+                    required
+                    minLength={10}
+                    value={updateServiceDescription}
+                    placeholder="Sample Service description"
+                    onChange={(e) => {
+                      setupdateServiceDescription(e.target.value);
+                    }}
+                  />
+                  <Form.Control.Feedback type="valid">
+                    You've input a valid description.
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please input a valid medicine description.
+                  </Form.Control.Feedback>
+                </FloatingLabel>
+              </Form.Group>
 
-            <Form.Group controlId="formBasicProduct">
-              <FloatingLabel controlId="floatingInputPrice" label="Service Fee">
-                <Form.Control
-                  type="text"
-                  pattern="\d*"
-                  maxLength={5}
-                  required
-                  minLength={1}
-                  value={updateServiceFee}
-                  placeholder="Sample Service"
-                  onChange={(e) => {
-                    setupdateServiceFee(e.target.value);
-                  }}
-                />
-                <Form.Control.Feedback type="valid">
-                  You've input a valid fee .
-                </Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please input a valid service fee.
-                </Form.Control.Feedback>
-                <Form.Text id="passwordHelpBlock" muted>
-                  Service Fee should be exact. ex. ₱ 100
-                </Form.Text>
-              </FloatingLabel>
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseUpdate}>
-              Close
-            </Button>
-            <Button variant="primary" type="submit">
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Form>
+              <Form.Group controlId="formBasicProduct">
+                <FloatingLabel controlId="floatingInputPrice" label="Service Fee">
+                  <Form.Control
+                    type="text"
+                    pattern="\d*"
+                    maxLength={5}
+                    required
+                    minLength={1}
+                    value={updateServiceFee}
+                    placeholder="Sample Service"
+                    onChange={(e) => {
+                      setupdateServiceFee(e.target.value);
+                    }}
+                  />
+                  <Form.Control.Feedback type="valid">
+                    You've input a valid fee .
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please input a valid service fee.
+                  </Form.Control.Feedback>
+                  <Form.Text id="passwordHelpBlock" muted>
+                    Service Fee should be exact. ex. ₱ 100
+                  </Form.Text>
+                </FloatingLabel>
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseUpdate}>
+                Close
+              </Button>
+              <Button variant="primary" type="submit">
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Row>
       </Modal>
 
       <Modal show={showInsert} onHide={handleCloseInsert}>
         <Modal.Header closeButton>
           <Modal.Title>Add Services</Modal.Title>
         </Modal.Header>
-        <Form noValidate validated={validatedInsert} onSubmit={submitService}>
-          <Modal.Body>
-            <Form.Group controlId="exampleForm.SelectCustom">
-              <FloatingLabel
-                controlId="floatingInputPrice"
-                label="Service Category"
-              >
-                <Form.Select
-                  custom
-                  required
-                  defaultValue={"Consultation"}
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setCategory("Consultation");
-                  }}
+        <Row>
+          <Form noValidate validated={validatedInsert} onSubmit={submitService}>
+            <Modal.Body>
+              <Form.Group controlId="exampleForm.SelectCustom">
+                <FloatingLabel
+                  controlId="floatingInputPrice"
+                  label="Service Category"
                 >
-                  <option value="Consultation">Consultation</option>
-                </Form.Select>
-              </FloatingLabel>
-            </Form.Group>
+                  <Form.Select
+                    custom
+                    required
+                    defaultValue={"Consultation"}
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      setCategory("Consultation");
+                    }}
+                  >
+                    <option value="Consultation">Consultation</option>
+                  </Form.Select>
+                </FloatingLabel>
+              </Form.Group>
 
-            <Form.Group controlId="formBasicProductD">
-              <FloatingLabel controlId="floatingInputPrice" label="Description">
-                <Form.Control
-                  type="text"
-                  as="textarea"
-                  style={{ height: 200 }}
-                  required
-                  minLength={10}
-                  placeholder="Sample Service description"
-                  onChange={(e) => {
-                    setServiceDescription(e.target.value);
-                  }}
-                />
-                <Form.Control.Feedback type="valid">
-                  You've input a valid description.
-                </Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please input a valid medicine description.
-                </Form.Control.Feedback>
-              </FloatingLabel>
-            </Form.Group>
+              <Form.Group controlId="formBasicProduct">
+                <FloatingLabel
+                  controlId="floatingInputPrice"
+                  label="Service Name"
+                >
+                  <Form.Control
+                    type="text"
+                    minLength={5}
+                    required
+                    disabled
+                    value={'Physical Consultation'}
+                    placeholder="Sample Service"
+                    onChange={(e) => {
+                      setServiceName('Physical Consultation');
+                    }}
+                  />
 
-            <Form.Group controlId="formBasicProduct">
-              <FloatingLabel controlId="floatingInputPrice" label="Service Fee">
-                <Form.Control
-                  type="text"
-                  pattern="\d*"
-                  maxLength={5}
-                  required
-                  minLength={1}
-                  // value={updateProductName}
-                  placeholder="Sample Service Fee"
-                  onChange={(e) => {
-                    setserviceFee(e.target.value);
-                  }}
-                />
+                </FloatingLabel>
+              </Form.Group>
 
-                <Form.Control.Feedback type="valid">
-                  You've input a valid fee .
-                </Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please input a valid service fee.
-                </Form.Control.Feedback>
-                <Form.Text id="passwordHelpBlock" muted>
-                  Service Fee should be exact. ex. ₱ 100
-                </Form.Text>
-              </FloatingLabel>
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseInsert}>
-              Close
-            </Button>
-            <Button type="submit" variant="primary">
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Form>
+              <Form.Group controlId="formBasicProductD">
+                <FloatingLabel controlId="floatingInputPrice" label="Description">
+                  <Form.Control
+                    type="text"
+                    as="textarea"
+                    style={{ height: 200 }}
+                    required
+                    minLength={10}
+                    placeholder="Sample Service description"
+                    onChange={(e) => {
+                      setServiceDescription(e.target.value);
+                    }}
+                  />
+                  <Form.Control.Feedback type="valid">
+                    You've input a valid description.
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please input a valid medicine description.
+                  </Form.Control.Feedback>
+                </FloatingLabel>
+              </Form.Group>
+
+              <Form.Group controlId="formBasicProduct">
+                <FloatingLabel controlId="floatingInputPrice" label="Service Fee">
+                  <Form.Control
+                    type="text"
+                    pattern="\d*"
+                    maxLength={5}
+                    required
+                    minLength={1}
+                    // value={updateProductName}
+                    placeholder="Sample Service Fee"
+                    onChange={(e) => {
+                      setserviceFee(e.target.value);
+                    }}
+                  />
+
+                  <Form.Control.Feedback type="valid">
+                    You've input a valid fee .
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please input a valid service fee.
+                  </Form.Control.Feedback>
+                  <Form.Text id="passwordHelpBlock" muted>
+                    Service Fee should be exact. ex. ₱ 100
+                  </Form.Text>
+                </FloatingLabel>
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseInsert}>
+                Close
+              </Button>
+              <Button type="submit" variant="primary">
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Row>
       </Modal>
+      <ToastContainer />
 
       {/* Main Panel */}
       <div
@@ -737,86 +802,128 @@ const ConsultStart = (props) => {
             }}
           >
             <Col>
-              <Card
-                style={{
-                  padding: 20
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <div>
-                    <h6>Physical Consultation</h6>
-                  </div>
 
-                  <div>
-                    <Form.Switch type='switch' checked={enableConsultationPhysical} />
-                  </div>
+              {isLoading == true ?
 
-                </div>
+                physicalConsultation.length != 0
+                  ?
+                  <Card
+                    style={{
+                      padding: 20
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between'
+                      }}
+                    >
+                      <div>
+                        <h6>Physical Consultation</h6>
+                      </div>
 
-                <div>
-                  <p style={{ textAlign: "left" }}>
-                    A trip to the veterinarian’s office with your pet, similar to a
-                    visit to the doctor’s office, often proves costly. It can be
-                    difficult to predict how much a vet visit will cost, and
-                    sometimes, it’s shocking when you see the bill.
-                  </p>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                </div>
-              </Card>
+
+                    </div>
+
+                    <div>
+                      <p style={{ textAlign: "left" }}>
+                        Description: {physicalConsultation[0].service_description}
+                      </p>
+                    </div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between'
+                      }}
+                    >
+                      <p>Price: ₱{physicalConsultation[0].service_fee}.00</p>
+                      <div
+                        style={{
+                          display: 'inline'
+                        }}
+                      >
+                        <Button style={{ marginRight: 5 }} onClick={() => { handleShowUpdate(physicalConsultation[0]) }}> Edit details</Button>
+                        <Button variant="danger" onClick={() => { handleShowDelete(physicalConsultation[0]) }} >Delete</Button>
+                      </div>
+                    </div>
+                  </Card>
+                  : <Card
+                    style={{
+                      padding: 20
+                    }}
+                  >
+                    <Button onClick={handleShowInsert}>Add Physical Consultation</Button>
+                  </Card>
+                :
+                <Skeleton variant="rectangular" height={'20vh'} />
+              }
+
             </Col>
 
             <Col>
-              <Card
-                style={{
-                  padding: 20
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
-                  <div>
-                    <h6>Virtual Consultation</h6>
-                  </div>
+              {
+                isLoading == true ?
+                  onlineConsultation.length != 0 ?
+                    <Card
+                      style={{
+                        padding: 20
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between'
+                        }}
+                      >
+                        <div>
+                          <h6>Virtual Consultation</h6>
+                        </div>
 
-                  <div>
-                    <Form.Switch type='switch' checked={enableConsultationVirtual} />
-                  </div>
 
-                </div>
+                      </div>
 
-                <div>
-                  <p style={{ textAlign: "left" }}>
-                    A virtual consultation for diagnostic of pets using video conference.
-                  </p>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                  }}
-                >
+                      <div>
+                        <p style={{ textAlign: "left" }}>
+                          A virtual consultation for diagnostic of pets using video conference.
+                        </p>
+                      </div>
 
-                  <div style={{ display: "flex", justifyContent: "end" }}>
-                    <Button variant="primary" style={{ width: '100%' }}>
-                      Add virtual appointment
-                    </Button>
-                  </div>
-                </div>
-              </Card>
+
+                      <div style={{ display: "flex", justifyContent: "end" }}>
+
+
+
+                        <Button variant="danger" onClick={() => { handleShowDelete(onlineConsultation[0]) }} >Delete</Button>
+
+
+                      </div>
+                    </Card>
+                    : <Card
+                      style={{
+                        padding: 20
+                      }}
+                    >
+                      <Button variant="primary" style={{ width: '100%' }}
+                        onClick={() => {
+                          ToastAddVirtualConsultation();
+                          Axios.post(`${hostUrl}/services/insert/:${user.vetid}`, {
+                            serviceName: "Online Consultation",
+                            serviceDescription: "A virtual consultation for diagnostic of pets using video conference",
+                            service_fee: "",
+                            category: "Consultation",
+                          }).then((response) => {
+                            refreshData();
+                            setValidatedInsert(false);
+                            handleCloseInsert();
+                          });
+                        }}
+                      >
+                        Add virtual appointment
+                      </Button>
+                    </Card>
+                  :
+                  <Skeleton variant="rectangular" height={'20vh'} />
+              }
             </Col>
           </Row>
           :

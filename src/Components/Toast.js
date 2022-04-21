@@ -23,7 +23,7 @@ const ToastSuccess = () =>
   });
 
 const ToastDelete = () =>
-  toast.error("Archived Successfully", {
+  toast.error("Delete Successfully", {
     position: "top-right",
     autoClose: 3000,
     hideProgressBar: false,
@@ -121,6 +121,41 @@ const ToastAdd = () =>
     progress: undefined,
   });
 
+
+const ToastAddPhysicalConsultation = () =>
+  toast.success("Added Physical Consultation Successfully", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+
+const ToastAddVirtualConsultation = () =>
+  toast.success("Added Virtual Consultation Successfully", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+const ToastServicesUpdate = () =>
+  toast.success("Updated Successfully", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
 export {
   ToastUpdate,
   ToastDelete,
@@ -133,4 +168,7 @@ export {
   ToastSuccessSubscribe,
   ToastUpdateSubscribe,
   ToastAdd,
+  ToastAddPhysicalConsultation,
+  ToastAddVirtualConsultation,
+  ToastServicesUpdate,
 };

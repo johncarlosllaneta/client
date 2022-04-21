@@ -338,216 +338,220 @@ const PetGroomStart = (props) => {
         <Modal.Header closeButton>
           <Modal.Title>Update Service</Modal.Title>
         </Modal.Header>
-        <Form noValidate validated={validated} onSubmit={updatedService}>
-          <Modal.Body>
-            <Form.Group controlId="exampleForm.SelectCustom">
-              <FloatingLabel
-                controlId="floatingInputPrice"
-                label="Service Category"
-              >
-                <Form.Select custom defaultValue={updateServiceCategory}>
-                  <option value="Consultation">Consultation</option>
-                  <option value="Pet Examination">Pet Examination</option>
-                  <option value="Pet Grooming">Pet Grooming </option>
-                  <option value="Preventive Controls">
-                    Preventive Services
-                  </option>
-                  <option value="Vaccination">Vaccination</option>
-                </Form.Select>
-              </FloatingLabel>
-            </Form.Group>
+        <Row>
+          <Form noValidate validated={validated} onSubmit={updatedService}>
+            <Modal.Body>
+              <Form.Group controlId="exampleForm.SelectCustom">
+                <FloatingLabel
+                  controlId="floatingInputPrice"
+                  label="Service Category"
+                >
+                  <Form.Select custom defaultValue={updateServiceCategory}>
+                    <option value="Consultation">Consultation</option>
+                    <option value="Pet Examination">Pet Examination</option>
+                    <option value="Pet Grooming">Pet Grooming </option>
+                    <option value="Preventive Controls">
+                      Preventive Services
+                    </option>
+                    <option value="Vaccination">Vaccination</option>
+                  </Form.Select>
+                </FloatingLabel>
+              </Form.Group>
 
-            <Form.Group controlId="formBasicProduct">
-              <FloatingLabel
-                controlId="floatingInputPrice"
-                label="Service Name"
-              >
-                <Form.Control
-                  type="text"
-                  minLength={5}
-                  required
-                  value={updateServiceName}
-                  placeholder="Sample Service"
-                  onChange={(e) => {
-                    setupdateServiceName(e.target.value);
-                  }}
-                />
-                <Form.Control.Feedback type="valid">
-                  You've input a valid service name.
-                </Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Service name is required in this form.
-                </Form.Control.Feedback>
-              </FloatingLabel>
-            </Form.Group>
+              <Form.Group controlId="formBasicProduct">
+                <FloatingLabel
+                  controlId="floatingInputPrice"
+                  label="Service Name"
+                >
+                  <Form.Control
+                    type="text"
+                    minLength={5}
+                    required
+                    value={updateServiceName}
+                    placeholder="Sample Service"
+                    onChange={(e) => {
+                      setupdateServiceName(e.target.value);
+                    }}
+                  />
+                  <Form.Control.Feedback type="valid">
+                    You've input a valid service name.
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Service name is required in this form.
+                  </Form.Control.Feedback>
+                </FloatingLabel>
+              </Form.Group>
 
-            <Form.Group controlId="formBasicProductD">
-              <FloatingLabel controlId="floatingInputPrice" label="Description">
-                <Form.Control
-                  type="text"
-                  as="textarea"
-                  style={{ height: 200 }}
-                  required
-                  minLength={10}
-                  value={updateServiceDescription}
-                  placeholder="Sample Service description"
-                  onChange={(e) => {
-                    setupdateServiceDescription(e.target.value);
-                  }}
-                />
-                <Form.Control.Feedback type="valid">
-                  You've input a valid description.
-                </Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please input a valid medicine description.
-                </Form.Control.Feedback>
-              </FloatingLabel>
-            </Form.Group>
+              <Form.Group controlId="formBasicProductD">
+                <FloatingLabel controlId="floatingInputPrice" label="Description">
+                  <Form.Control
+                    type="text"
+                    as="textarea"
+                    style={{ height: 200 }}
+                    required
+                    minLength={10}
+                    value={updateServiceDescription}
+                    placeholder="Sample Service description"
+                    onChange={(e) => {
+                      setupdateServiceDescription(e.target.value);
+                    }}
+                  />
+                  <Form.Control.Feedback type="valid">
+                    You've input a valid description.
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please input a valid medicine description.
+                  </Form.Control.Feedback>
+                </FloatingLabel>
+              </Form.Group>
 
-            <Form.Group controlId="formBasicProduct">
-              <FloatingLabel controlId="floatingInputPrice" label="Service Fee">
-                <Form.Control
-                  type="text"
-                  pattern="\d*"
-                  maxLength={5}
-                  required
-                  minLength={1}
-                  value={updateServiceFee}
-                  placeholder="Sample Service"
-                  onChange={(e) => {
-                    setupdateServiceFee(e.target.value);
-                  }}
-                />
-                <Form.Control.Feedback type="valid">
-                  You've input a valid fee .
-                </Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please input a valid service fee.
-                </Form.Control.Feedback>
-                <Form.Text id="passwordHelpBlock" muted>
-                  Service Fee should be exact. ex. ₱ 100
-                </Form.Text>
-              </FloatingLabel>
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseUpdate}>
-              Close
-            </Button>
-            <Button variant="primary" type="submit">
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Form>
+              <Form.Group controlId="formBasicProduct">
+                <FloatingLabel controlId="floatingInputPrice" label="Service Fee">
+                  <Form.Control
+                    type="text"
+                    pattern="\d*"
+                    maxLength={5}
+                    required
+                    minLength={1}
+                    value={updateServiceFee}
+                    placeholder="Sample Service"
+                    onChange={(e) => {
+                      setupdateServiceFee(e.target.value);
+                    }}
+                  />
+                  <Form.Control.Feedback type="valid">
+                    You've input a valid fee .
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please input a valid service fee.
+                  </Form.Control.Feedback>
+                  <Form.Text id="passwordHelpBlock" muted>
+                    Service Fee should be exact. ex. ₱ 100
+                  </Form.Text>
+                </FloatingLabel>
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseUpdate}>
+                Close
+              </Button>
+              <Button variant="primary" type="submit">
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Row>
       </Modal>
 
       <Modal show={showInsert} onHide={handleCloseInsert}>
         <Modal.Header closeButton>
           <Modal.Title>Add Services</Modal.Title>
         </Modal.Header>
-        <Form noValidate validated={validatedInsert} onSubmit={submitService}>
-          <Modal.Body>
-            <Form.Group controlId="exampleForm.SelectCustom">
-              <FloatingLabel
-                controlId="floatingInputPrice"
-                label="Service Category"
-              >
-                <Form.Select
-                  custom
-                  required
-                  defaultValue={"Pet Grooming"}
-                // onSubmit={(e) => {
-                //   e.preventDefault();
-                //   setCategory('Consultation');
-                // }}
+        <Row>
+          <Form noValidate validated={validatedInsert} onSubmit={submitService}>
+            <Modal.Body>
+              <Form.Group controlId="exampleForm.SelectCustom">
+                <FloatingLabel
+                  controlId="floatingInputPrice"
+                  label="Service Category"
                 >
-                  <option value="Pet Grooming">Pet Grooming</option>
-                </Form.Select>
-              </FloatingLabel>
-            </Form.Group>
+                  <Form.Select
+                    custom
+                    required
+                    defaultValue={"Pet Grooming"}
+                  // onSubmit={(e) => {
+                  //   e.preventDefault();
+                  //   setCategory('Consultation');
+                  // }}
+                  >
+                    <option value="Pet Grooming">Pet Grooming</option>
+                  </Form.Select>
+                </FloatingLabel>
+              </Form.Group>
 
-            <Form.Group controlId="formBasicProduct">
-              <FloatingLabel
-                controlId="floatingInputPrice"
-                label="Service Name"
-              >
-                <Form.Control
-                  type="text"
-                  // value={updateProductName}
-                  placeholder="Sample Service"
-                  minLength={5}
-                  required
-                  onChange={(e) => {
-                    setServiceName(e.target.value);
-                  }}
-                />
-                <Form.Control.Feedback type="valid">
-                  You've input a valid service name.
-                </Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Service name is required in this form.
-                </Form.Control.Feedback>
-              </FloatingLabel>
-            </Form.Group>
+              <Form.Group controlId="formBasicProduct">
+                <FloatingLabel
+                  controlId="floatingInputPrice"
+                  label="Service Name"
+                >
+                  <Form.Control
+                    type="text"
+                    // value={updateProductName}
+                    placeholder="Sample Service"
+                    minLength={5}
+                    required
+                    onChange={(e) => {
+                      setServiceName(e.target.value);
+                    }}
+                  />
+                  <Form.Control.Feedback type="valid">
+                    You've input a valid service name.
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Service name is required in this form.
+                  </Form.Control.Feedback>
+                </FloatingLabel>
+              </Form.Group>
 
-            <Form.Group controlId="formBasicProductD">
-              <FloatingLabel controlId="floatingInputPrice" label="Description">
-                <Form.Control
-                  type="text"
-                  as="textarea"
-                  style={{ height: 200 }}
-                  required
-                  minLength={10}
-                  placeholder="Sample Service description"
-                  onChange={(e) => {
-                    setServiceDescription(e.target.value);
-                  }}
-                />
-                <Form.Control.Feedback type="valid">
-                  You've input a valid description.
-                </Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please input a valid medicine description.
-                </Form.Control.Feedback>
-              </FloatingLabel>
-            </Form.Group>
+              <Form.Group controlId="formBasicProductD">
+                <FloatingLabel controlId="floatingInputPrice" label="Description">
+                  <Form.Control
+                    type="text"
+                    as="textarea"
+                    style={{ height: 200 }}
+                    required
+                    minLength={10}
+                    placeholder="Sample Service description"
+                    onChange={(e) => {
+                      setServiceDescription(e.target.value);
+                    }}
+                  />
+                  <Form.Control.Feedback type="valid">
+                    You've input a valid description.
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please input a valid medicine description.
+                  </Form.Control.Feedback>
+                </FloatingLabel>
+              </Form.Group>
 
-            <Form.Group controlId="formBasicProduct">
-              <FloatingLabel controlId="floatingInputPrice" label="Service Fee">
-                <Form.Control
-                  type="text"
-                  pattern="\d*"
-                  maxLength={5}
-                  required
-                  minLength={1}
-                  // value={updateProductName}
-                  placeholder="Sample Service Fee"
-                  onChange={(e) => {
-                    setserviceFee(e.target.value);
-                  }}
-                />
+              <Form.Group controlId="formBasicProduct">
+                <FloatingLabel controlId="floatingInputPrice" label="Service Fee">
+                  <Form.Control
+                    type="text"
+                    pattern="\d*"
+                    maxLength={5}
+                    required
+                    minLength={1}
+                    // value={updateProductName}
+                    placeholder="Sample Service Fee"
+                    onChange={(e) => {
+                      setserviceFee(e.target.value);
+                    }}
+                  />
 
-                <Form.Control.Feedback type="valid">
-                  You've input a valid fee .
-                </Form.Control.Feedback>
-                <Form.Control.Feedback type="invalid">
-                  Please input a valid service fee.
-                </Form.Control.Feedback>
-                <Form.Text id="passwordHelpBlock" muted>
-                  Service Fee should be exact. ex. ₱ 100
-                </Form.Text>
-              </FloatingLabel>
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseInsert}>
-              Close
-            </Button>
-            <Button type="submit" variant="primary">
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Form>
+                  <Form.Control.Feedback type="valid">
+                    You've input a valid fee .
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please input a valid service fee.
+                  </Form.Control.Feedback>
+                  <Form.Text id="passwordHelpBlock" muted>
+                    Service Fee should be exact. ex. ₱ 100
+                  </Form.Text>
+                </FloatingLabel>
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseInsert}>
+                Close
+              </Button>
+              <Button type="submit" variant="primary">
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Row>
       </Modal>
 
       <div

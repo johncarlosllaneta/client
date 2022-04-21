@@ -38,6 +38,20 @@ function DashboardContent() {
         }).then((response) => {
             if (response.data == 'Success') {
                 handleCloseSuccessEmailVerification();
+                axios.put(`${hostUrl}/logout/user/vetclinic/unverified/${user.vetid}`).then(
+                    (response) => {
+                        if (response.data.message == "Success") {
+                            axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
+                                name: user.vet_name,
+                            });
+                            axios.delete(`${hostUrl}/logout`, {
+                                token: localStorage.getItem("rjwt"),
+                            });
+                            localStorage.clear();
+                            window.location.replace("/");
+                        }
+                    }
+                );
             }
         })
     }

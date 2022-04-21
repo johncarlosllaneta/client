@@ -68,8 +68,8 @@ function VetOffersHandler(props) {
             enableGrooming: enableGrooming,
             enableVaccination: enableVaccination,
             enablePreventiveControls: enablePreventiveControls,
-            enableConsultationPhysical: enableConsultationPhysical,
-            enableOnlineConsultation: enableConsultationVirtual,
+            // enableConsultationPhysical: enableConsultationPhysical,
+            // enableOnlineConsultation: enableConsultationVirtual,
 
         }).then((response) => {
             if (response.data.message === "Update Successfully") {
@@ -382,16 +382,16 @@ function VetOffersHandler(props) {
 
                                             }}
                                         >
-                                            <h6>Enable Physical Consultation</h6>
+                                            <h6>Enable Consultation</h6>
                                             <Form.Switch
-                                                checked={enableConsultationPhysical}
-                                                onChange={(e) => setenableConsultationPhysical(e.target.checked)}
+                                                checked={enableConsultation}
+                                                onChange={(e) => setenableConsultation(e.target.checked)}
                                                 type='switch'
 
                                             />
                                         </div>
 
-                                        <div
+                                        {/* <div
 
                                             style={{
                                                 display: 'flex',
@@ -406,7 +406,7 @@ function VetOffersHandler(props) {
                                                 type='switch'
 
                                             />
-                                        </div>
+                                        </div> */}
 
                                         <div
 
