@@ -50,13 +50,7 @@ function ProfilePage() {
                       marginTop: 10,
                     }}
                     src={user.vet_doc_profilePic}
-                    name={
-                      user.vet_doc_fname +
-                      " " +
-                      user.vet_doc_mname +
-                      " " +
-                      user.vet_doc_lname
-                    }
+                    name={user.vet_doc_fname + " " + user.vet_doc_lname}
                   />
                 )}
               </div>
@@ -71,11 +65,7 @@ function ProfilePage() {
                 <div style={{ paddingTop: 40 }}>
                   <Row style={{ fontSize: 20 }}>My name is</Row>
                   <Row style={{ fontSize: 32 }}>
-                    {user.vet_doc_fname +
-                      " " +
-                      user.vet_doc_mname +
-                      " " +
-                      user.vet_doc_lname}
+                    {user.vet_doc_fname + " " + user.vet_doc_lname}
                   </Row>
                   <Row style={{ fontSize: 15, color: "#33C1D2" }}>
                     {"Veterinarian of" + " " + user.vet_name}

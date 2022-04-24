@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
   Col,
   Container,
@@ -16,6 +16,17 @@ import Axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { ToastDelete, ToastUpdate } from "../../../../Components/Toast";
 import { hostUrl, hostUrlWeb } from "../../../../Components/Host";
+import { Badge, Skeleton, Tooltip, Typography } from "@mui/material";
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import IconButton from "@mui/material/IconButton";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
+import { AiOutlineFileJpg } from "react-icons/ai";
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
+import { apps } from "../../../../Components/base";
+import LinearProgress from "@mui/material/LinearProgress";
+import Box from "@mui/material/Box";
 
 const VetSettings = (props) => {
   const [changePass, setChangePass] = useState("none");
@@ -585,6 +596,156 @@ const VetSettings = (props) => {
     value = "100%";
   }
 
+  // upload profile picture
+  const [showUploadProfilePicture, setShowUploadProfilePicture] =
+    useState(false);
+
+  const handleCloseProfilePicture = () => {
+    setimageFile("");
+    setShowUploadProfilePicture(false);
+    setselectImage(false);
+    setdisplayImage(true);
+    setprogressCounterUploadImage(0);
+  };
+  const handleShowProfilePicture = () => setShowUploadProfilePicture(true);
+
+  const [progressCounterUploadImage, setprogressCounterUploadImage] =
+    useState(0);
+  const [progressUploadController, setprogressUploadController] =
+    useState(true);
+
+  function counters() {
+    setInterval(() => {
+      setprogressCounterUploadImage((progressCounterUploadImage) =>
+        progressCounterUploadImage < 100 ? progressCounterUploadImage + 25 : 100
+      );
+    }, 1000);
+  }
+
+  // Upload image controller
+  const [selectImage, setselectImage] = useState(false);
+  const [displayImage, setdisplayImage] = useState(true);
+
+  // Image Picker
+  const inputFileRef = useRef(null);
+  const [imageFile, setimageFile] = useState("");
+  const onFilechange = (e) => {
+    /*Selected files data can be collected here.*/
+    console.log(e.target.files);
+    setimageFile(URL.createObjectURL(e.target.files[0]));
+    setselectImage(true);
+    setdisplayImage(false);
+  };
+  const onBtnClick = () => {
+    /*Collecting node-element and performing click*/
+    inputFileRef.current.click();
+  };
+
+  // Crop
+  const previewCanvasRef = useRef(null);
+  const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 9 / 9 });
+  const [completedCrop, setCompletedCrop] = useState(null);
+
+  const onLoad = useCallback((img) => {
+    inputFileRef.current = img;
+  }, []);
+
+  useEffect(() => {
+    if (!completedCrop || !previewCanvasRef.current || !inputFileRef.current) {
+      return;
+    }
+
+    const image = inputFileRef.current;
+    const canvas = previewCanvasRef.current;
+    const crop = completedCrop;
+
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    const ctx = canvas.getContext("2d");
+    const pixelRatio = window.devicePixelRatio;
+
+    canvas.width = crop.width * pixelRatio * scaleX;
+    canvas.height = crop.height * pixelRatio * scaleY;
+
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.imageSmoothingQuality = "high";
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width * scaleX,
+      crop.height * scaleY
+    );
+  }, [completedCrop]);
+
+  const uploadImage = async (e) => {
+    const storageRef = apps.storage().ref();
+    const filRef = storageRef.child(e.name);
+    await filRef.put(e);
+    // setimageUploadedUrl(await filRef.getDownloadURL());
+    console.log(await filRef.getDownloadURL());
+    updateImage(await filRef.getDownloadURL());
+  };
+
+  function updateImage(imageLink) {
+    Axios.post(`${hostUrl}/doc/update/profile`, {
+      vetid: user.vet_doc_id,
+      imageUrl: imageLink,
+    }).then((response) => {
+      if (response.data.message == "Update Successfully") {
+        Axios.get(`${hostUrl}/vet/uploads`, {
+          params: {
+            email: user.vet_doc_email,
+          },
+        }).then((response) => {
+          if (response.data.message === "Correct") {
+            localStorage.setItem("ajwt", response.data.accessToken);
+            localStorage.setItem("rjwt", response.data.refreshToken);
+            localStorage.setItem("isLogin", true);
+            localStorage.setItem("role", response.data.role);
+            if (response.data.role === 4) {
+              // localStorage.setItem("vetStatus", response.data.vetStatus);
+              localStorage.setItem("id", response.data.id);
+            }
+          }
+          handleCloseHours();
+          ToastUpdate();
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
+        });
+      }
+    });
+  }
+
+  function generateDownload(canvas, crop) {
+    if (!crop || !canvas) {
+      return;
+    }
+
+    canvas.toBlob(
+      (blob) => {
+        var file = new File(
+          [blob],
+          Math.floor(Math.random() * 1000000000000000000),
+          { lastModified: new Date().getTime(), type: blob.type }
+        );
+
+        uploadImage(file);
+      },
+      "image/png",
+      1
+    );
+  }
+  function updateProfilePicture() {
+    generateDownload(previewCanvasRef.current, completedCrop);
+  }
+
   return (
     <div
       style={{
@@ -711,6 +872,149 @@ const VetSettings = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* Upload Picture */}
+      <Modal
+        show={showUploadProfilePicture}
+        backdrop="static"
+        keyboard={false}
+        centered
+        onHide={handleCloseProfilePicture}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Upload Profile Picture</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div
+            hidden={selectImage}
+            onClick={onBtnClick}
+            style={{
+              display: "block",
+              // justifyContent: 'center',
+              alignItems: "center",
+              borderStyle: "dashed",
+              borderColor: "grey",
+              height: "auto",
+              width: "100%",
+              cursor: "pointer",
+            }}
+          >
+            <Container
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginTop: "10vh",
+              }}
+            >
+              <Form.Control
+                type="file"
+                id="imagePicker"
+                hidden={true}
+                ref={inputFileRef}
+                accept="image/png, image/gif, image/jpeg"
+                onChange={onFilechange}
+              />
+              <UploadFileIcon sx={{ fontSize: 50 }} />
+            </Container>
+            <Container
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: "10vh",
+              }}
+            >
+              <Typography>Upload Image File</Typography>
+            </Container>
+          </div>
+
+          <div
+            hidden={displayImage}
+            style={{
+              display: "block",
+              // justifyContent: 'center',
+              alignItems: "center",
+              height: "auto",
+              width: "100%",
+            }}
+          >
+            <Container
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <ReactCrop
+                src={imageFile}
+                onImageLoaded={onLoad}
+                crop={crop}
+                onChange={(c) => setCrop(c)}
+                onComplete={(c) => setCompletedCrop(c)}
+              />
+              <div>
+                <canvas
+                  ref={previewCanvasRef}
+                  // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+                  style={{
+                    width: 300,
+                    height: 300,
+                  }}
+                />
+              </div>
+            </Container>
+            <Container
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginTop: "1vh",
+              }}
+            >
+              <Row>
+                <Col
+                  sm={3}
+                  style={{
+                    display: "flex",
+                  }}
+                >
+                  <AiOutlineFileJpg style={{ fontSize: 50 }} />
+                </Col>
+                <Col sm={9}>
+                  <Typography>Upload Image File</Typography>
+                </Col>
+              </Row>
+
+              <Button
+                onClick={() => {
+                  setprogressUploadController(false);
+                  counters();
+                  updateProfilePicture();
+                }}
+              >
+                Upload
+              </Button>
+            </Container>
+            <Container
+              hidden={progressUploadController}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: "1vh",
+              }}
+            >
+              <Box sx={{ width: "100%" }}>
+                <LinearProgress
+                  value={progressCounterUploadImage}
+                  variant="determinate"
+                />
+              </Box>
+            </Container>
+          </div>
+        </Modal.Body>
+      </Modal>
       <div>
         <Container
           style={{
@@ -764,18 +1068,40 @@ const VetSettings = (props) => {
                     alignItems: "center",
                   }}
                 >
-                  <Avatar
-                    src={user.vet_doc_profilePic}
-                    name={
-                      user.vet_doc_fname +
-                      " " +
-                      user.vet_doc_mname +
-                      " " +
-                      user.vet_doc_lname
-                    }
-                    roundedCircle
-                    style={{ height: 100, width: 100 }}
-                  />
+                  <Tooltip title={"Change Profile Picture"}>
+                    <Badge
+                      overlap="circular"
+                      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                      badgeContent={
+                        <IconButton
+                          color="info"
+                          aria-label="upload picture"
+                          component="span"
+                          onClick={() => {
+                            handleShowProfilePicture();
+                          }}
+                        >
+                          <PhotoCamera color="#314051" />
+                        </IconButton>
+                      }
+                    >
+                      <Avatar
+                        round={true}
+                        name={
+                          user.vet_doc_mname == null
+                            ? user.vet_doc_fname + " " + user.vet_doc_lname
+                            : user.vet_doc_fname +
+                              " " +
+                              user.vet_doc_mname +
+                              " " +
+                              user.vet_doc_lname
+                        }
+                        src={user.vet_doc_profilePic}
+                        size={"10vh"}
+                        style={{ marginBottom: 15 }}
+                      />
+                    </Badge>
+                  </Tooltip>
                   <div style={{ textAlign: "left", marginLeft: 10 }}>
                     <h3 style={{ color: "#8A8A8A", fontWeight: "bold" }}>
                       {user.vet_doc_fname +

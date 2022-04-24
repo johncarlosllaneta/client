@@ -82,11 +82,13 @@ function NavBarStaff(props) {
       if (response.data.message == "Success") {
         Axios.post(`${hostUrl}/vetclinic/verified/logout/system/logs`, {
           name:
-            user.vet_staff_fname +
-            " " +
-            user.vet_staff_mname +
-            " " +
-            user.vet_staff_lname,
+            user.vet_staff_mname == null
+              ? user.vet_staff_fname + " " + user.vet_staff_lname
+              : user.vet_staff_fname +
+                " " +
+                user.vet_staff_mname +
+                " " +
+                user.vet_staff_lname,
         });
         Axios.delete(`${hostUrl}/logout`, {
           token: localStorage.getItem("rjwt"),
@@ -232,7 +234,11 @@ function NavBarStaff(props) {
               {notif.length > 0 ? (
                 notif.map((val) => {
                   return (
-                    <MenuList>
+                    <MenuList
+                      onClick={() => {
+                        window.location.href = `/products`;
+                      }}
+                    >
                       <Row style={{ width: 380 }}>
                         <div style={{ paddingRight: 20, paddingLeft: 30 }}>
                           <Row>
@@ -295,11 +301,13 @@ function NavBarStaff(props) {
 
           <Tooltip
             title={
-              user.vet_staff_fname +
-              " " +
-              user.vet_staff_mname +
-              " " +
-              user.vet_staff_lname
+              user.vet_staff_mname == null
+                ? user.vet_staff_fname + " " + user.vet_staff_lname
+                : user.vet_staff_fname +
+                  " " +
+                  user.vet_staff_mname +
+                  " " +
+                  user.vet_staff_lname
             }
           >
             <IconButton onClick={handleClick}>
@@ -311,11 +319,13 @@ function NavBarStaff(props) {
                 }}
                 src={user.vet_staff_profilePic}
                 name={
-                  user.vet_staff_fname +
-                  " " +
-                  user.vet_staff_mname +
-                  " " +
-                  user.vet_staff_lname
+                  user.vet_staff_mname == null
+                    ? user.vet_staff_fname + " " + user.vet_staff_lname
+                    : user.vet_staff_fname +
+                      " " +
+                      user.vet_staff_mname +
+                      " " +
+                      user.vet_staff_lname
                 }
               />
               <AiFillCaretDown
@@ -370,11 +380,13 @@ function NavBarStaff(props) {
               <p>
                 Signed in as <br />{" "}
                 <strong>
-                  {user.vet_staff_fname +
-                    " " +
-                    user.vet_staff_mname +
-                    " " +
-                    user.vet_staff_lname}
+                  {user.vet_staff_mname == null
+                    ? user.vet_staff_fname + " " + user.vet_staff_lname
+                    : user.vet_staff_fname +
+                      " " +
+                      user.vet_staff_mname +
+                      " " +
+                      user.vet_staff_lname}
                 </strong>
               </p>
               <Divider />
@@ -394,11 +406,13 @@ function NavBarStaff(props) {
                   style={{}}
                   src={user.vet_staff_profilePic}
                   name={
-                    user.vet_staff_fname +
-                    " " +
-                    user.vet_staff_mname +
-                    " " +
-                    user.vet_staff_lname
+                    user.vet_staff_mname == null
+                      ? user.vet_staff_fname + " " + user.vet_staff_lname
+                      : user.vet_staff_fname +
+                        " " +
+                        user.vet_staff_mname +
+                        " " +
+                        user.vet_staff_lname
                   }
                 />
                 {/* <Avatar src={user.vet_picture} sizes="" /> */}

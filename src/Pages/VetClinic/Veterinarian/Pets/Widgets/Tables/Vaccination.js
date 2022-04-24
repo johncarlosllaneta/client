@@ -221,8 +221,8 @@ function Vaccination(props) {
             variant="primary"
             onClick={() => {
               doneVaccine(immuneId);
-              handleCloseConfirmationInsert();
               props.refreshTable(user.vetid);
+              handleCloseConfirmationInsert();
             }}
           >
             Yes

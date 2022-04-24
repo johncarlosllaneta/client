@@ -143,9 +143,27 @@ function ProductItem(props) {
                     <Form.Control
                       type="text"
                       as="textarea"
-                      style={{ height: 200 }}
+                      style={{ height: 130 }}
                       disabled={true}
                       value={props.product.product_desc}
+                    />
+                  </FloatingLabel>
+                </Form.Group>
+
+                <Form.Group
+                  controlId="formBasicMedicineD"
+                  style={{
+                    marginTop: 10,
+                  }}
+                >
+                  <FloatingLabel
+                    controlId="floatingInputPrice"
+                    label="Category"
+                  >
+                    <Form.Control
+                      type="text"
+                      disabled={true}
+                      value={props.product.category}
                     />
                   </FloatingLabel>
                 </Form.Group>
@@ -247,6 +265,7 @@ function ProductItem(props) {
             <MenuItem
               onClick={() => {
                 handleShow();
+                handleClose();
               }}
               style={{
                 display: "flex",

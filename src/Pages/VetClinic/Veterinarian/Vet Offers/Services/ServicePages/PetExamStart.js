@@ -33,7 +33,7 @@ const PetExamStart = (props) => {
   let { vetid } = useParams();
   var id = vetid.toString().replace("10##01", "/");
   //category
-  // const [consulation, setconsulation] = useState(true);
+  const [consulation, setconsulation] = useState(true);
   const [petExamination, setpetExamination] = useState(true);
   const [petGrooming, setpetGrooming] = useState(true);
   const [preventiveControls, setpreventiveControls] = useState(true);
@@ -50,6 +50,9 @@ const PetExamStart = (props) => {
   }, []);
   function getServices(id) {
     Axios.get(`${hostUrl}/doc/${id}`).then((response) => {
+      if (response.data[0].enableConsultation == 1) {
+        setconsulation(false);
+      }
       if (response.data[0].enableExamination == 1) {
         setpetExamination(false);
       }
@@ -554,6 +557,55 @@ const PetExamStart = (props) => {
         }}
       >
         <Row>
+          <Col hidden={consulation}>
+            <Link
+              to={`/services/consultation/${vetid}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  width: "10vw",
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageI}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Consultation
+                  </p>
+                </div>
+              </Container>
+            </Link>
+          </Col>
+
           <Col hidden={petExamination}>
             <Link
               to={`/services/pet&examination/${vetid}`}

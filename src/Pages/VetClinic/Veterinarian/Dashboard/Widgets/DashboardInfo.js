@@ -7,34 +7,26 @@ function DashboardInfo() {
       <Row>
         <Col>
           <div style={{ textAlign: "left", padding: 5 }}>
-            <h2 style={{ fontWeight: "bold" }}>Rabies</h2>
+            <h2 style={{ fontWeight: "bold" }}>Rabies vaccine</h2>
             <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+              For pre-exposure protection, 3 doses of rabies vaccine are
+              recommended. People who may be repeatedly exposed to rabies virus
+              should receive periodic testing for immunity, and booster doses
+              might be necessary. Your health care provider can give you more
+              details.
             </p>
             <p style={{ fontWeight: "bold", marginTop: 5 }}>
               Recommended Rabies{" "}
             </p>
             <p style={{ fontWeight: "bold" }}>Vaccine Schedule for your Dog</p>
             <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+              Rabies vaccine can prevent rabies if given to a person after they
+              have had an exposure. Anyone who has been bitten by an animal
+              suspected to have rabies, or who otherwise may have been exposed
+              to rabies, should clean the wound and see a health care provider
+              immediately regardless of vaccination status. The health care
+              provider can help determine if the person should receive
+              post-exposure rabies vaccination.
             </p>
           </div>
         </Col>

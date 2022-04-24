@@ -253,7 +253,11 @@ function NavBarDoc(props) {
               {notif.length > 0 ? (
                 notif.map((val) => {
                   return (
-                    <MenuList>
+                    <MenuList
+                      onClick={() => {
+                        window.location.href = `/pets`;
+                      }}
+                    >
                       <Row style={{ width: 380 }}>
                         <div style={{ paddingRight: 20, paddingLeft: 30 }}>
                           <Row>
@@ -340,15 +344,7 @@ function NavBarDoc(props) {
             </IconButton>
           </Tooltip>
 
-          <Tooltip
-            title={
-              user.vet_doc_fname +
-              " " +
-              user.vet_doc_mname +
-              " " +
-              user.vet_doc_lname
-            }
-          >
+          <Tooltip title={user.vet_doc_fname + " " + user.vet_doc_lname}>
             <IconButton onClick={handleClick}>
               <Avatar
                 round={true}
@@ -357,13 +353,7 @@ function NavBarDoc(props) {
                   marginBottom: 0,
                 }}
                 src={user.vet_doc_profilePic}
-                name={
-                  user.vet_doc_fname +
-                  " " +
-                  user.vet_doc_mname +
-                  " " +
-                  user.vet_doc_lname
-                }
+                name={user.vet_doc_fname + " " + user.vet_doc_lname}
               />
               <AiFillCaretDown
                 style={{
@@ -416,13 +406,7 @@ function NavBarDoc(props) {
             >
               <p>
                 Signed in as <br />{" "}
-                <strong>
-                  {user.vet_doc_fname +
-                    " " +
-                    user.vet_doc_mname +
-                    " " +
-                    user.vet_doc_lname}
-                </strong>
+                <strong>{user.vet_doc_fname + " " + user.vet_doc_lname}</strong>
               </p>
               <Divider />
               <MenuItem
@@ -440,13 +424,7 @@ function NavBarDoc(props) {
                   size={15}
                   style={{}}
                   src={user.vet_doc_profilePic}
-                  name={
-                    user.vet_doc_fname +
-                    " " +
-                    user.vet_doc_mname +
-                    " " +
-                    user.vet_doc_lname
-                  }
+                  name={user.vet_doc_fname + " " + user.vet_doc_lname}
                 />
                 {/* <Avatar src={user.vet_picture} sizes="" /> */}
                 My profile

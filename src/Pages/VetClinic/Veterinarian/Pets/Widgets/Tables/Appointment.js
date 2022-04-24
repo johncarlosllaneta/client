@@ -125,14 +125,14 @@ function Appointment(props) {
       findings: findings,
       consultationId: consultId,
     });
+    props.refreshTable(user.vetid);
+    ToastConsultation();
 
     setprescription("");
     setfindings("");
     handleClose2();
 
     // window.location.href = `/consultation`;
-    props.refreshTable(user.vetid);
-    ToastConsultation();
 
     // setTimeout(() => {
     //   window.location.reload();
@@ -242,8 +242,8 @@ function Appointment(props) {
             variant="primary"
             onClick={() => {
               insertMedicines(consultId);
-              handleCloseConfirmationInsert();
               props.refreshTable(user.vetid);
+              handleCloseConfirmationInsert();
             }}
           >
             Yes

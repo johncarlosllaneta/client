@@ -12,6 +12,7 @@ import {
   Form,
   Modal,
   FloatingLabel,
+  Card,
 } from "react-bootstrap";
 import Axios from "axios";
 import { useParams, BrowserRouter, Link } from "react-router-dom";
@@ -26,19 +27,59 @@ import imageV from "../../../../../../Images/scopy.png";
 import imageVI from "../../../../../../Images/INHOUSEW.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
+import getUser from "../../../../../../Components/userData";
+import { Skeleton } from "@mui/material";
 
 const ConsultStart = (props) => {
-  let { vetid } = useParams();
-  var id = vetid.toString().replace("10##01", "/");
-  const [counter, setcounter] = useState(0);
-
+  const [user, setuser] = useState([]);
   const [consultation, setconsultation] = useState([]);
-  // useEffect(async () => {
-  //   Axios.get(`${hostUrl}/consultation/${id}`).then((response) => {
-  //     setconsultation(response.data[0]);
-  //     // console.log(response.data)
-  //   });
-  // }, []);
+
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+
+    getServices(userData.vet_doc_id);
+    Axios.get(`${hostUrl}/consultation/physical/${userData.vetid}`).then(
+      (response) => {
+        setphysicalConsultation(response.data);
+        console.log(response.data);
+        // console.log(response.data)
+      }
+    );
+
+    Axios.get(`${hostUrl}/consultation/virtual/${userData.vetid}`).then(
+      (response) => {
+        setonlineConsultation(response.data);
+        console.log(response.data);
+        // console.log(response.data)
+      }
+    );
+    Axios.get(`${hostUrl}/consultation/${userData.vetid}`).then((response) => {
+      setconsultation(response.data);
+      // console.log(response.data)
+    });
+  }, []);
+
+  function getServices(id) {
+    Axios.get(`${hostUrl}/doc/${id}`).then((response) => {
+      if (response.data[0].enableConsultation == 1) {
+        setconsulations(false);
+      }
+      if (response.data[0].enableExamination == 1) {
+        setpetExamination(false);
+      }
+
+      if (response.data[0].enableGrooming == 1) {
+        setpetGrooming(false);
+      }
+      if (response.data[0].enableVaccination == 1) {
+        setvaccination(false);
+      }
+      if (response.data[0].enablePreventiveControls == 1) {
+        setpreventiveControls(false);
+      }
+    });
+  }
 
   const [consulations, setconsulations] = useState(true);
   const [petExamination, setpetExamination] = useState(true);
@@ -46,40 +87,13 @@ const ConsultStart = (props) => {
   const [preventiveControls, setpreventiveControls] = useState(true);
   const [vaccination, setvaccination] = useState(true);
   const [inHouseLab, setinHouseLab] = useState(true);
+  const [enableConsultationPhysical, setenableConsultationPhysical] =
+    useState(false);
+  const [enableConsultationVirtual, setenableConsultationVirtual] =
+    useState(false);
 
-  const [user, setuser] = useState([]);
-  // useEffect(() => {
-  //   if (counter < 1) {
-  //     var token = localStorage.getItem("ajwt");
-  //     Axios.get(`${hostUrl}/home`, {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     }).then((response) => {
-  //       setuser(response.data.result[0]);
-
-  //       if (response.data.result[0].enableConsultation == 1) {
-  //         setconsulations(false);
-  //       }
-  //       if (response.data.result[0].enableExamination == 1) {
-  //         setpetExamination(false);
-  //       }
-
-  //       if (response.data.result[0].enableGrooming == 1) {
-  //         setpetGrooming(false);
-  //       }
-  //       if (response.data.result[0].enableVaccination == 1) {
-  //         setvaccination(false);
-  //       }
-  //       if (response.data.result[0].enablePreventiveControls == 1) {
-  //         setpreventiveControls(false);
-  //       }
-
-  //       if (response.data.result[0].enableInHouseLab == 1) {
-  //         setinHouseLab(false);
-  //       }
-  //     });
-  //     setcounter(counter + 1);
-  //   }
-  // }, [user]);
+  const [onlineConsultation, setonlineConsultation] = useState([]);
+  const [physicalConsultation, setphysicalConsultation] = useState([]);
 
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();
@@ -136,8 +150,8 @@ const ConsultStart = (props) => {
       e.stopPropagation();
     } else {
       e.preventDefault();
-      var id = vetid.toString().replace("10##01", "/");
-      Axios.post(`${hostUrl}/services/insert/:${id}`, {
+
+      Axios.post(`${hostUrl}/services/insert/:${user.vetid}`, {
         serviceName: "Consultation",
         serviceDescription: serviceDescription,
         service_fee: serviceFee,
@@ -180,88 +194,6 @@ const ConsultStart = (props) => {
   };
 
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
-
-  const columns = [
-    {
-      title: "Service Name",
-      field: "service_name",
-      sorting: true,
-      defaultSort: "asc",
-    },
-    {
-      title: "Description",
-      // field: "category",
-      sorting: true,
-      render: (row) => <p>{row.service_description}</p>,
-    },
-    {
-      title: "Fee",
-      field: "service_fee",
-      render: (rowData) =>
-        rowData.price !== "" && "₱" + rowData.service_fee + ".00",
-    },
-    {
-      title: "Action",
-      render: (row) => (
-        <div>
-          <OverlayTrigger
-            placement="top-start"
-            delay={{ show: 250 }}
-            overlay={renderTooltip({ msg: "View Information" })}
-          >
-            <Button
-              variant="info"
-              className="mr-3"
-              style={{
-                color: "white",
-                marginRight: 10,
-              }}
-              onClick={() => {
-                handleShowServices(row);
-              }}
-            >
-              <AiOutlineSearch style={{ fontSize: 25 }} />
-            </Button>
-          </OverlayTrigger>
-
-          <OverlayTrigger
-            placement="top-start"
-            delay={{ show: 250 }}
-            overlay={renderTooltip({ msg: "Edit Details" })}
-          >
-            <Button
-              variant="primary"
-              className="mr-3"
-              style={{
-                color: "white",
-                marginRight: 10,
-              }}
-              onClick={() => {
-                handleShowUpdate(row);
-              }}
-            >
-              <FaRegEdit style={{ fontSize: 25 }} />
-            </Button>
-          </OverlayTrigger>
-
-          <OverlayTrigger
-            placement="top-start"
-            delay={{ show: 250 }}
-            overlay={renderTooltip({ msg: "Delete Details" })}
-          >
-            <Button
-              variant="danger"
-              onClick={() => {
-                handleShowDelete(row);
-              }}
-            >
-              <AiOutlineDelete style={{ fontSize: 25 }} />
-            </Button>
-          </OverlayTrigger>
-        </div>
-      ),
-    },
-  ];
 
   // Popover Overlay
   const [showPopover, setShowPopover] = useState(false);
@@ -514,6 +446,7 @@ const ConsultStart = (props) => {
         </Form>
       </Modal>
 
+      {/* Main Panel */}
       <div
         style={{
           display: "flex",
@@ -534,7 +467,7 @@ const ConsultStart = (props) => {
         </h5>
 
         <Button
-          href={`/services/${vetid}`}
+          href={`/services`}
           style={{
             backgroundColor: "#19B9CC",
             borderColor: "white",
@@ -560,7 +493,7 @@ const ConsultStart = (props) => {
         <Row>
           <Col hidden={consulations}>
             <Link
-              to={`/services/consultation/${vetid}`}
+              to={`/services/consultation/${user.vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -570,7 +503,6 @@ const ConsultStart = (props) => {
                   backgroundColor: "white",
                   height: "15vh",
                   width: "10vw",
-                  padding: 10,
                   borderColor: "#3BD2E3",
                   borderStyle: "solid",
                   borderWidth: 5,
@@ -592,6 +524,7 @@ const ConsultStart = (props) => {
                     }}
                   />
                 </div>
+
                 <div>
                   <p
                     style={{
@@ -609,7 +542,7 @@ const ConsultStart = (props) => {
 
           <Col hidden={petExamination}>
             <Link
-              to={`/services/pet&examination/${vetid}`}
+              to={`/services/pet&examination/${user.vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -619,7 +552,6 @@ const ConsultStart = (props) => {
                   backgroundColor: "#3BD2E3",
                   height: "15vh",
                   width: "10vw",
-                  padding: 10,
                   borderColor: "white",
                   borderStyle: "solid",
                   borderWidth: 5,
@@ -636,11 +568,12 @@ const ConsultStart = (props) => {
                   <Image
                     src={imageII}
                     style={{
-                      height: "8vh",
+                      height: "7vh",
                       width: "5vw",
                     }}
                   />
                 </div>
+
                 <div>
                   <p
                     style={{
@@ -658,7 +591,7 @@ const ConsultStart = (props) => {
 
           <Col hidden={petGrooming}>
             <Link
-              to={`/services/pet&grooming/${vetid}`}
+              to={`/services/pet&grooming/${user.vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -707,7 +640,7 @@ const ConsultStart = (props) => {
 
           <Col hidden={preventiveControls}>
             <Link
-              to={`/services/preventive&control/${vetid}`}
+              to={`/services/preventive&control/${user.vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -756,7 +689,7 @@ const ConsultStart = (props) => {
 
           <Col hidden={vaccination}>
             <Link
-              to={`/services/vaccination/${vetid}`}
+              to={`/services/vaccination/${user.vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -805,55 +738,105 @@ const ConsultStart = (props) => {
         </Row>
       </div>
 
-      {/* Data Table */}
+      {/* Content */}
 
-      {/* tables */}
-      <Row>
-        <Overlay
-          show={showPopover}
-          target={target}
-          placement="bottom"
-          container={ref.current}
-          containerPadding={20}
-        >
-          <Popover id="popover-contained">
-            <Popover.Header as="h3">Helper</Popover.Header>
-            <Popover.Body>
-              <p>This table shows the consultation services. </p>
-            </Popover.Body>
-          </Popover>
-        </Overlay>
-        <MaterialTable
+      {user.length != 0 ? (
+        <Row
           style={{
-            boxShadow:
-              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-            width: "75vw",
-            marginTop: 10,
-            marginLeft: 20,
+            marginTop: "2vh",
+            padding: 10,
           }}
-          columns={columns}
-          data={consultation}
-          title={"Consultation Services"}
-          cellEditable={false}
-          options={{
-            sorting: true,
-          }}
-          actions={[
-            {
-              icon: "add",
-              tooltip: "Add Services",
-              isFreeAction: true,
-              onClick: (event) => handleShowInsert(),
-            },
-            {
-              icon: "information",
-              tooltip: "Helper",
-              isFreeAction: true,
-              onClick: handleClick,
-            },
-          ]}
-        />
-      </Row>
+        >
+          <Col>
+            <Card
+              style={{
+                padding: 20,
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>
+                  <h6>Physical Consultation</h6>
+                </div>
+
+                <div>
+                  <Form.Switch
+                    type="switch"
+                    checked={enableConsultationPhysical}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <p style={{ textAlign: "left" }}>
+                  A trip to the veterinarian’s office with your pet, similar to
+                  a visit to the doctor’s office, often proves costly. It can be
+                  difficult to predict how much a vet visit will cost, and
+                  sometimes, it’s shocking when you see the bill.
+                </p>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              ></div>
+            </Card>
+          </Col>
+
+          <Col>
+            <Card
+              style={{
+                padding: 20,
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>
+                  <h6>Virtual Consultation</h6>
+                </div>
+
+                <div>
+                  <Form.Switch
+                    type="switch"
+                    checked={enableConsultationVirtual}
+                    disabled={true}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <p style={{ textAlign: "left" }}>
+                  A virtual consultation for diagnostic of pets using video
+                  conference.
+                </p>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "end" }}>
+                  <Button variant="primary" style={{ width: "100%" }}>
+                    Add virtual appointment
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          </Col>
+        </Row>
+      ) : (
+        <Skeleton variant="rectangular" height={"30vh"} />
+      )}
     </div>
   );
 };

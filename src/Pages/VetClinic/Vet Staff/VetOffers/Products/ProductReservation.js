@@ -59,16 +59,6 @@ function ProductReservation() {
     });
   }
 
-  function expiredReservation(id) {
-    Axios.put(`${hostUrl}/staff/reservation/expired/${id}`);
-
-    Axios.post(`${hostUrl}/notification/reserved/purchased`, {
-      order_id: orderId,
-      status: "Expired",
-    });
-    refreshTable();
-    ToastClaim();
-  }
   function formatDateAndTime(dateString) {
     const options = {
       year: "numeric",
@@ -261,12 +251,11 @@ function ProductReservation() {
       order_id: orderId,
       status: "Purchased",
     });
-
+    refreshTable();
+    ToastClaim();
     setmop("");
     setclaimBy("");
     handleClose2();
-    refreshTable();
-    ToastClaim();
   }
 
   const getProdList = async (id) => {
@@ -316,6 +305,20 @@ function ProductReservation() {
 
     setValidated(true);
   };
+
+  async function expiredReservation(id) {
+    Axios.put(`${hostUrl}/staff/reservation/expired/${id}`).then((response) => {
+      if (response.data.message == "Sucessfully updated") {
+        refreshTable();
+        ToastClaim();
+      }
+    });
+
+    Axios.post(`${hostUrl}/notification/reserved/purchased`, {
+      order_id: orderId,
+      status: "Expired",
+    });
+  }
   return (
     <div>
       <ToastContainer />
@@ -335,8 +338,8 @@ function ProductReservation() {
             variant="primary"
             onClick={() => {
               expiredReservation(reservationID);
-              handleCloseExpiredInsert();
               refreshTable();
+              handleCloseExpiredInsert();
             }}
           >
             Yes
@@ -360,8 +363,8 @@ function ProductReservation() {
             variant="primary"
             onClick={() => {
               insertClaim(reservationID);
-              handleCloseConfirmationInsert();
               refreshTable();
+              handleCloseConfirmationInsert();
             }}
           >
             Yes

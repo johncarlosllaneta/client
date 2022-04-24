@@ -22,6 +22,7 @@ function ProfilePage() {
     const result = await Axios.get(`${hostUrl}/staff/${id}`);
     setuser(result.data[0]);
   };
+
   return (
     <div
       style={{
@@ -54,11 +55,13 @@ function ProfilePage() {
                     }}
                     src={user.vet_staff_profilePic}
                     name={
-                      user.vet_staff_fname +
-                      " " +
-                      user.vet_staff_mname +
-                      " " +
-                      user.vet_staff_lname
+                      user.vet_staff_mname == null
+                        ? user.vet_staff_fname + " " + user.vet_staff_lname
+                        : user.vet_staff_fname +
+                          " " +
+                          user.vet_staff_mname +
+                          " " +
+                          user.vet_staff_lname
                     }
                   />
                 )}
@@ -74,11 +77,13 @@ function ProfilePage() {
                 <div style={{ paddingTop: 40 }}>
                   <Row style={{ fontSize: 20 }}>My name is</Row>
                   <Row style={{ fontSize: 32 }}>
-                    {user.vet_staff_fname +
-                      " " +
-                      user.vet_staff_mname +
-                      " " +
-                      user.vet_staff_lname}
+                    {user.vet_staff_mname == null
+                      ? user.vet_staff_fname + " " + user.vet_staff_lname
+                      : user.vet_staff_fname +
+                        " " +
+                        user.vet_staff_mname +
+                        " " +
+                        user.vet_staff_lname}
                   </Row>
                   <Row style={{ fontSize: 15, color: "#33C1D2" }}>
                     {"Staff of" + " " + user.vet_name}

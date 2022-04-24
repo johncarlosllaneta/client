@@ -12,6 +12,7 @@ import { IoChevronBack } from "react-icons/io5";
 import PetProfile from "./PetProfile";
 import ConsultationPetCard from "./ConsultationPetCard";
 import AppointmentPetCard from "./AppointmentPetCard";
+import { Skeleton } from "@mui/material";
 
 function PetRecord(props) {
   let { petid } = useParams();
@@ -98,19 +99,35 @@ function PetRecord(props) {
           </TabList>
         </Box>
         <TabPanel value="1">
-          <HealthPetCard pets={petid} vetid={props.user.vetid} />
+          {props.user.vetid == null || 0 ? (
+            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+          ) : (
+            <HealthPetCard pets={petid} vetid={props.user.vetid} />
+          )}
         </TabPanel>
 
         <TabPanel value="2">
-          <VaccinePetCard pet={petid} vetid={props.user.vetid} />
+          {props.user.vetid == null || 0 ? (
+            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+          ) : (
+            <VaccinePetCard pet={petid} vetid={props.user.vetid} />
+          )}
         </TabPanel>
 
         <TabPanel value="3">
-          <ConsultationPetCard pet={petid} vetid={props.user.vetid} />
+          {props.user.vetid == null || 0 ? (
+            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+          ) : (
+            <ConsultationPetCard pet={petid} vetid={props.user.vetid} />
+          )}
         </TabPanel>
 
         <TabPanel value="4">
-          <AppointmentPetCard pet={petid} vetid={props.user.vetid} />
+          {props.user.vetid == null || 0 ? (
+            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+          ) : (
+            <AppointmentPetCard pet={petid} vetid={props.user.vetid} />
+          )}
         </TabPanel>
       </TabContext>
     </div>

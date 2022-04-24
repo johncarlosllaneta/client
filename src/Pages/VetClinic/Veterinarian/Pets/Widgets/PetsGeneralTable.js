@@ -12,7 +12,7 @@ import Appointment from "./Tables/Appointment";
 import Axios from "axios";
 import { hostUrl } from "../../../../../Components/Host";
 import getUser from "../../../../../Components/userData";
-
+import { Skeleton } from "@mui/material";
 function PetsGeneralTable() {
   const [value, setValue] = React.useState("1");
   const handleChange = (event, newValue) => {
@@ -89,24 +89,36 @@ function PetsGeneralTable() {
             </TabList>
           </Box>
           <TabPanel value="1">
-            <Vaccination
-              vaccineData={vaccination}
-              refreshTable={vaccinationData}
-            />
+            {vaccination == 0 ? (
+              <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+            ) : (
+              <Vaccination
+                vaccineData={vaccination}
+                refreshTable={vaccinationData}
+              />
+            )}
           </TabPanel>
 
           <TabPanel value="2">
-            <Examination
-              examineData={examination}
-              refreshTable={examinationData}
-            />
+            {examination == 0 ? (
+              <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+            ) : (
+              <Examination
+                examineData={examination}
+                refreshTable={examinationData}
+              />
+            )}
           </TabPanel>
 
           <TabPanel value="3">
-            <Appointment
-              consultData={consultation}
-              refreshTable={consultationData}
-            />
+            {consultation == 0 ? (
+              <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+            ) : (
+              <Appointment
+                consultData={consultation}
+                refreshTable={consultationData}
+              />
+            )}
           </TabPanel>
         </TabContext>
       </Row>

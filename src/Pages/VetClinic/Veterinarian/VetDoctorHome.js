@@ -37,6 +37,11 @@ function VetDoctorHome() {
           <Route path="/consultation" exact component={ConsultationMain} />
           <Route path="/services" exact component={ServicesVerified} />
           <Route
+            path="/services/consultation/:vetid"
+            exact
+            component={ConsultStartHolder}
+          />
+          <Route
             path="/services/preventive&control/:vetid"
             exact
             component={PreControlStartHolder}
@@ -60,13 +65,9 @@ function VetDoctorHome() {
           <Route path="/pharmacy" exact component={PharmacyMain} />
           <Route path="/appointments" exact component={AppointmentMain} />
           <Route path="/veterinarian/settings" exact component={VetSettings} />
-          <Route path="/talk to vet"
-            exact
-            component={Thread} />
+          <Route path="/talk to vet" exact component={Thread} />
 
-          <Route path="/video conference/:code"
-            exact
-            component={VideoChat} />
+          <Route path="/video conference/:code" exact component={VideoChat} />
 
           <Route path="*" component={NotFound} />
         </Switch>
