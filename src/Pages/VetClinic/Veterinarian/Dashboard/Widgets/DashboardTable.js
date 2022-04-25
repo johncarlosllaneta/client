@@ -26,7 +26,7 @@ function DashboardTable(props) {
 
   // alert(props.vetid);
   useEffect(async () => {
-    Axios.get(`${hostUrl}/doc/pending/appointment/${props.data}`).then(
+    Axios.get(`${hostUrl}/approved/appointment/today/${props.data}`).then(
       (response) => {
         setappointment(response.data);
       }
@@ -38,7 +38,9 @@ function DashboardTable(props) {
   const [vaccination, setvaccination] = useState([]);
   const getVaccination = async (id) => {
     // alert(userData.vetid);
-    const result = await Axios.get(`${hostUrl}/doc/pets/vaccination/${id}`);
+    const result = await Axios.get(
+      `${hostUrl}/approved/vaccination/today/${id}`
+    );
     // console.log(result.data);
     setvaccination(result.data);
   };

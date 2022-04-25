@@ -49,9 +49,12 @@ function Vaccination(props) {
       manufacturer: manufacturer,
       prescription: prescription,
       immuneId: immuneId,
+    }).then((response) => {
+      if (response.data.message == "Success") {
+        props.refreshTable(user.vetid);
+        ToastVaccine();
+      }
     });
-    props.refreshTable(user.vetid);
-    ToastVaccine();
 
     setpetWeight("");
     setagainst("");

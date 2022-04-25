@@ -124,10 +124,12 @@ function Appointment(props) {
       prescrip: prescription,
       findings: findings,
       consultationId: consultId,
+    }).then((response) => {
+      if (response.data.message == "Success") {
+        props.refreshTable(user.vetid);
+        ToastConsultation();
+      }
     });
-    props.refreshTable(user.vetid);
-    ToastConsultation();
-
     setprescription("");
     setfindings("");
     handleClose2();

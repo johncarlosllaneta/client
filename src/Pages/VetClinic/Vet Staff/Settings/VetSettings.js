@@ -1105,11 +1105,13 @@ const VetSettings = (props) => {
                   </Tooltip>
                   <div style={{ textAlign: "left", marginLeft: 10 }}>
                     <h3 style={{ color: "#8A8A8A", fontWeight: "bold" }}>
-                      {user.vet_staff_fname +
-                        " " +
-                        user.vet_staff_mname +
-                        " " +
-                        user.vet_staff_lname}
+                      {user.vet_staff_mname == null
+                        ? user.vet_staff_fname + " " + user.vet_staff_lname
+                        : user.vet_staff_fname +
+                          " " +
+                          user.vet_staff_mname +
+                          " " +
+                          user.vet_staff_lname}
                     </h3>
                     <h5 style={{ color: "#19B9CC", fontWeight: "bold" }}>
                       Vet Staff

@@ -250,9 +250,12 @@ function ProductReservation() {
     Axios.post(`${hostUrl}/notification/reserved/purchased`, {
       order_id: orderId,
       status: "Purchased",
+    }).then((response) => {
+      if (response.data.message == "Reserved Notification") {
+        refreshTable();
+        ToastClaim();
+      }
     });
-    refreshTable();
-    ToastClaim();
     setmop("");
     setclaimBy("");
     handleClose2();

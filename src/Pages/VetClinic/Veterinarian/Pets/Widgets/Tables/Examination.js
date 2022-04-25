@@ -91,12 +91,14 @@ function Examination(props) {
       prescrip: prescription,
       findings: findings,
       medicalId: medicalId,
+    }).then((response) => {
+      if (response.data.message == "Success") {
+        props.refreshTable(user.vetid);
+        ToastExamine();
+      }
     });
 
     handleClose2();
-    props.refreshTable(user.vetid);
-    ToastExamine();
-
     setprescription("");
     setfindings("");
     // setTimeout(() => {

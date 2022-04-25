@@ -109,12 +109,12 @@ function ProfilePage() {
               paddingTop: 20,
             }}
           >
-            {user.email == null ? (
+            {user.vet_doc_email == null ? (
               <Skeleton variant="rectangular" height={"100%"} />
             ) : (
               <ProfileContainer
                 icon={<MdEmail style={{ color: "#62D7FF", fontSize: 90 }} />}
-                title={user.email}
+                title={user.vet_doc_email}
                 subtext={"Email Address"}
               />
             )}

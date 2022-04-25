@@ -238,6 +238,7 @@ function NavBarStaff(props) {
                       onClick={() => {
                         window.location.href = `/products`;
                       }}
+                      style={{ cursor: "pointer" }}
                     >
                       <Row style={{ width: 380 }}>
                         <div style={{ paddingRight: 20, paddingLeft: 30 }}>

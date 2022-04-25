@@ -5,6 +5,7 @@ import { hostUrl } from "../../../../../Components/Host";
 import SideNavBarVetDoctor from "../../SideNavBarVetDoctor";
 import NavBarDoc from "../../NavBarDoc";
 import getUser from "../../../../../Components/userData";
+import { Skeleton } from "@mui/material";
 function PetPanelTableController() {
   const [user, setuser] = useState([]);
 
@@ -39,7 +40,11 @@ function PetPanelTableController() {
           <NavBarDoc showLogo={true} showHome={true} user={user} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
-          <PetRecord user={user} />
+          {user.length == 0 ? (
+            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+          ) : (
+            <PetRecord user={user} />
+          )}
         </div>
       </div>
     </div>
