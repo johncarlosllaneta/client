@@ -1,25 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, OverlayTrigger, Popover } from "react-bootstrap";
-import { AiOutlineDelete, AiOutlineSearch } from "react-icons/ai";
-import { FaRegEdit } from "react-icons/fa";
 import MaterialTable from "material-table";
-import Axios from "axios";
-import { hostUrl } from "../../../../../Components/Host";
-import { useParams } from "react-router";
+import { AiOutlineSearch } from "react-icons/ai";
 
 function HealthPetCard(props) {
-  const [counter, setcounter] = useState(0);
-  const [healthCard, sethealthCard] = useState([]);
-  useEffect(async () => {
-    // alert(props.pets);
-
-    Axios.get(
-      `${hostUrl}/pet/medical/history/record/${props.vetid}/${props.pets}`
-    ).then((response) => {
-      sethealthCard(response.data);
-    });
-  }, []);
-
   function dateConvertion(date) {
     var str = date.split("-");
     var year = str[0];
@@ -152,6 +136,29 @@ function HealthPetCard(props) {
       field: "findings",
       sorting: true,
     },
+    {
+      title: "Action",
+      render: (row) => (
+        <div>
+          <OverlayTrigger
+            placement="top-start"
+            delay={{ show: 250 }}
+            overlay={renderTooltip({ msg: "View details" })}
+          >
+            <Button
+              style={{
+                marginRight: 5,
+                color: "white",
+                fontWeight: "bold",
+              }}
+              onClick={(e) => {}}
+            >
+              <AiOutlineSearch style={{ fontSize: 25 }} /> View Details
+            </Button>
+          </OverlayTrigger>
+        </div>
+      ),
+    },
   ];
 
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
@@ -161,7 +168,7 @@ function HealthPetCard(props) {
       <MaterialTable
         title={"Health Record"}
         columns={columns}
-        data={healthCard}
+        data={props.healthData}
         cellEditable={false}
         options={{
           sorting: true,

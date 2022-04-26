@@ -12,14 +12,66 @@ import { IoChevronBack } from "react-icons/io5";
 import PetProfile from "./PetProfile";
 import ConsultationPetCard from "./ConsultationPetCard";
 import AppointmentPetCard from "./AppointmentPetCard";
+import getUser from "../../../../../Components/userData";
 import { Skeleton } from "@mui/material";
+import Axios from "axios";
+import { hostUrl } from "../../../../../Components/Host";
 
 function PetRecord(props) {
   let { petid } = useParams();
   const [value, setValue] = React.useState("1");
-
+  const [isLoading, setisLoading] = useState(false);
+  const [user, setuser] = useState([]);
+  const [healthCard, sethealthCard] = useState([]);
+  const [vaccine, setvaccine] = useState([]);
+  const [consult, setconsult] = useState([]);
+  const [grooming, setgrooming] = useState([]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+    healthData(userData.vetid);
+    vaccineData(userData.vetid);
+    consultData(userData.vetid);
+    groomingData(userData.vetid);
+  }, []);
+
+  const healthData = async (vetid) => {
+    Axios.get(`${hostUrl}/pet/medical/history/record/${vetid}/${petid}`).then(
+      (response) => {
+        sethealthCard(response.data);
+        setisLoading(true);
+      }
+    );
+  };
+
+  const vaccineData = async (vetid) => {
+    Axios.get(`${hostUrl}/pet/vaccine/record/${vetid}/${petid}`).then(
+      (response) => {
+        setvaccine(response.data);
+        setisLoading(true);
+      }
+    );
+  };
+
+  const consultData = async (vetid) => {
+    Axios.get(`${hostUrl}/pet/consultation/record/${vetid}/${petid}`).then(
+      (response) => {
+        setconsult(response.data);
+        setisLoading(true);
+      }
+    );
+  };
+  const groomingData = async (vetid) => {
+    Axios.get(`${hostUrl}/pet/grooming/record/${vetid}/${petid}`).then(
+      (response) => {
+        setgrooming(response.data);
+        setisLoading(true);
+      }
+    );
   };
   return (
     <div
@@ -65,7 +117,16 @@ function PetRecord(props) {
 
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
+          <TabList
+            onChange={handleChange}
+            aria-label="lab API tabs example"
+            onClick={() => {
+              healthData(user.vetid);
+              vaccineData(user.vetid);
+              consultData(user.vetid);
+              groomingData(user.vetid);
+            }}
+          >
             <Tab
               label="Health Record"
               value="1"
@@ -99,34 +160,50 @@ function PetRecord(props) {
           </TabList>
         </Box>
         <TabPanel value="1">
-          {props.user.vetid == null || 0 ? (
-            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+          {isLoading == true ? (
+            healthCard.length != 0 ? (
+              <HealthPetCard healthData={healthCard} />
+            ) : (
+              <HealthPetCard healthData={healthCard} />
+            )
           ) : (
-            <HealthPetCard pets={petid} vetid={props.user.vetid} />
+            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
           )}
         </TabPanel>
 
         <TabPanel value="2">
-          {props.user.vetid == null || 0 ? (
-            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+          {isLoading == true ? (
+            vaccine.length != 0 ? (
+              <VaccinePetCard vaccineData={vaccine} />
+            ) : (
+              <VaccinePetCard vaccineData={vaccine} />
+            )
           ) : (
-            <VaccinePetCard pet={petid} vetid={props.user.vetid} />
+            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
           )}
         </TabPanel>
 
         <TabPanel value="3">
-          {props.user.vetid == null || 0 ? (
-            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+          {isLoading == true ? (
+            consult.length != 0 ? (
+              <ConsultationPetCard consultData={consult} />
+            ) : (
+              <ConsultationPetCard consultData={consult} />
+            )
           ) : (
-            <ConsultationPetCard pet={petid} vetid={props.user.vetid} />
+            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
           )}
         </TabPanel>
 
         <TabPanel value="4">
-          {props.user.vetid == null || 0 ? (
-            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+          {isLoading == true ? (
+            grooming.length != 0 ? (
+              <AppointmentPetCard groomingData={grooming} />
+            ) : (
+              <AppointmentPetCard groomingData={grooming} />
+            )
           ) : (
-            <AppointmentPetCard pet={petid} vetid={props.user.vetid} />
+            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
           )}
         </TabPanel>
       </TabContext>

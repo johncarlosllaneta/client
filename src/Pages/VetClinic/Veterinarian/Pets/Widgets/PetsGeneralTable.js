@@ -13,6 +13,7 @@ import Axios from "axios";
 import { hostUrl } from "../../../../../Components/Host";
 import getUser from "../../../../../Components/userData";
 import { Skeleton } from "@mui/material";
+
 function PetsGeneralTable() {
   const [value, setValue] = React.useState("1");
   const handleChange = (event, newValue) => {
@@ -22,7 +23,7 @@ function PetsGeneralTable() {
   const [consultation, setconsultation] = useState([]);
   const [examination, setexamination] = useState([]);
   const [vaccination, setvaccination] = useState([]);
-
+  const [isLoading, setisLoading] = useState(false);
   const [user, setuser] = useState([]);
   useEffect(async () => {
     const userData = await getUser();
@@ -36,6 +37,7 @@ function PetsGeneralTable() {
     Axios.get(`${hostUrl}/doc/pending/appointment/${vetid}`).then(
       (response) => {
         setconsultation(response.data);
+        setisLoading(true);
       }
     );
   };
@@ -43,12 +45,14 @@ function PetsGeneralTable() {
   const examinationData = async (vetid) => {
     Axios.get(`${hostUrl}/doc/pets/examination/${vetid}`).then((response) => {
       setexamination(response.data);
+      setisLoading(true);
     });
   };
 
   const vaccinationData = async (vetid) => {
     Axios.get(`${hostUrl}/doc/pets/vaccination/${vetid}`).then((response) => {
       setvaccination(response.data);
+      setisLoading(true);
     });
   };
   return (
@@ -89,35 +93,56 @@ function PetsGeneralTable() {
             </TabList>
           </Box>
           <TabPanel value="1">
-            {vaccination == 0 ? (
-              <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+            {isLoading == true ? (
+              vaccination.length != 0 ? (
+                <Vaccination
+                  vaccineData={vaccination}
+                  refreshTable={vaccinationData}
+                />
+              ) : (
+                <Vaccination
+                  vaccineData={vaccination}
+                  refreshTable={vaccinationData}
+                />
+              )
             ) : (
-              <Vaccination
-                vaccineData={vaccination}
-                refreshTable={vaccinationData}
-              />
+              <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
             )}
           </TabPanel>
 
           <TabPanel value="2">
-            {examination == 0 ? (
-              <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+            {isLoading == true ? (
+              examination.length != 0 ? (
+                <Examination
+                  examineData={examination}
+                  refreshTable={examinationData}
+                />
+              ) : (
+                <Examination
+                  examineData={examination}
+                  refreshTable={examinationData}
+                />
+              )
             ) : (
-              <Examination
-                examineData={examination}
-                refreshTable={examinationData}
-              />
+              <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
             )}
           </TabPanel>
 
           <TabPanel value="3">
-            {consultation == 0 ? (
-              <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+            {isLoading == true ? (
+              consultation.length != 0 ? (
+                <Appointment
+                  consultData={consultation}
+                  refreshTable={consultationData}
+                />
+              ) : (
+                <Appointment
+                  consultData={consultation}
+                  refreshTable={consultationData}
+                />
+              )
             ) : (
-              <Appointment
-                consultData={consultation}
-                refreshTable={consultationData}
-              />
+              <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
             )}
           </TabPanel>
         </TabContext>

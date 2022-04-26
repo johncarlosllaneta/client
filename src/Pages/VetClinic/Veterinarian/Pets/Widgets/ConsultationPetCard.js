@@ -1,22 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Popover } from "react-bootstrap";
+import { Popover, OverlayTrigger, Button } from "react-bootstrap";
 import MaterialTable from "material-table";
-import Axios from "axios";
-import { hostUrl } from "../../../../../Components/Host";
+import { AiOutlineSearch } from "react-icons/ai";
 
 function ConsultationPetCard(props) {
-  const [counter, setcounter] = useState(0);
-  const [vaccine, setvaccine] = useState([]);
-  useEffect(async () => {
-    // alert(props.pet);
-
-    Axios.get(
-      `${hostUrl}/pet/consultation/record/${props.vetid}/${props.pet}`
-    ).then((response) => {
-      setvaccine(response.data);
-    });
-  }, []);
-
   const columns = [
     {
       title: "Consultation Type",
@@ -43,6 +30,29 @@ function ConsultationPetCard(props) {
       title: "Findings",
       field: "findings",
       sorting: true,
+    },
+    {
+      title: "Action",
+      render: (row) => (
+        <div>
+          <OverlayTrigger
+            placement="top-start"
+            delay={{ show: 250 }}
+            overlay={renderTooltip({ msg: "View details" })}
+          >
+            <Button
+              style={{
+                marginRight: 5,
+                color: "white",
+                fontWeight: "bold",
+              }}
+              onClick={(e) => {}}
+            >
+              <AiOutlineSearch style={{ fontSize: 25 }} /> View Details
+            </Button>
+          </OverlayTrigger>
+        </div>
+      ),
     },
   ];
 
@@ -141,7 +151,7 @@ function ConsultationPetCard(props) {
     <div>
       <MaterialTable
         columns={columns}
-        data={vaccine}
+        data={props.consultData}
         title={"Consultation Record"}
         cellEditable={false}
         options={{

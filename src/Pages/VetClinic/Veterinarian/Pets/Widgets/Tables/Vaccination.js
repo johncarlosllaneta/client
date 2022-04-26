@@ -48,6 +48,7 @@ function Vaccination(props) {
       vaccineNumber: vaccineNumber,
       manufacturer: manufacturer,
       prescription: prescription,
+      vetDocId: vetDocId,
       immuneId: immuneId,
     }).then((response) => {
       if (response.data.message == "Success") {

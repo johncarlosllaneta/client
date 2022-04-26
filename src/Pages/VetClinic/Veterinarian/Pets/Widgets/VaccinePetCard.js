@@ -1,21 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Popover } from "react-bootstrap";
+import { Popover, OverlayTrigger, Button } from "react-bootstrap";
 import MaterialTable from "material-table";
-import Axios from "axios";
-import { hostUrl } from "../../../../../Components/Host";
+import { AiOutlineSearch } from "react-icons/ai";
 
 function VaccinePetCard(props) {
-  const [counter, setcounter] = useState(0);
-  const [vaccine, setvaccine] = useState([]);
-  useEffect(async () => {
-    // alert(props.pet);
-    Axios.get(`${hostUrl}/pet/vaccine/record/${props.vetid}/${props.pet}`).then(
-      (response) => {
-        setvaccine(response.data);
-      }
-    );
-  }, []);
-
   const columns = [
     {
       title: "Vaccine Name",
@@ -65,6 +53,29 @@ function VaccinePetCard(props) {
       title: "Prescription",
       field: "prescription",
       sorting: true,
+    },
+    {
+      title: "Action",
+      render: (row) => (
+        <div>
+          <OverlayTrigger
+            placement="top-start"
+            delay={{ show: 250 }}
+            overlay={renderTooltip({ msg: "View details" })}
+          >
+            <Button
+              style={{
+                marginRight: 5,
+                color: "white",
+                fontWeight: "bold",
+              }}
+              onClick={(e) => {}}
+            >
+              <AiOutlineSearch style={{ fontSize: 25 }} /> View Details
+            </Button>
+          </OverlayTrigger>
+        </div>
+      ),
     },
   ];
 
@@ -163,7 +174,7 @@ function VaccinePetCard(props) {
     <div>
       <MaterialTable
         columns={columns}
-        data={vaccine}
+        data={props.vaccineData}
         title={"Vaccine Record"}
         cellEditable={false}
         options={{
