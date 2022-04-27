@@ -22,7 +22,7 @@ import { useParams } from "react-router-dom";
 import getUser from "../../../../../Components/userData";
 import Cardproduct from "./CardProduct";
 import { autocompleteClasses } from "@mui/material";
-import { ToastClaim } from "../../../../../Components/Toast";
+import { ToastClaim, ToastExpired } from "../../../../../Components/Toast";
 import { dateConvertion } from "../../../../../Components/FormatDateTime";
 import { ToastContainer } from "react-toastify";
 
@@ -229,6 +229,11 @@ function ProductReservation() {
     Axios.put(`${hostUrl}/staff/reservation/claim/${id}`, {
       mop: mop,
       claimBy: claimBy,
+    }).then((response) => {
+      if (response.data.message == "Claimed Successfully") {
+        refreshTable();
+        ToastClaim();
+      }
     });
 
     var prodList = [];
@@ -250,11 +255,6 @@ function ProductReservation() {
     Axios.post(`${hostUrl}/notification/reserved/purchased`, {
       order_id: orderId,
       status: "Purchased",
-    }).then((response) => {
-      if (response.data.message == "Reserved Notification") {
-        refreshTable();
-        ToastClaim();
-      }
     });
     setmop("");
     setclaimBy("");
@@ -313,7 +313,7 @@ function ProductReservation() {
     Axios.put(`${hostUrl}/staff/reservation/expired/${id}`).then((response) => {
       if (response.data.message == "Sucessfully updated") {
         refreshTable();
-        ToastClaim();
+        ToastExpired();
       }
     });
 

@@ -16,38 +16,29 @@ function AppointmentPetCard(props) {
       sorting: true,
     },
     {
-      title: "Date",
+      title: "Category",
+      field: "category",
+      sorting: true,
+    },
+    {
+      title: "Date accomplished",
       render: (row) =>
-        dateConvertion(row.date_scheduled.toString().split("T")[0]),
+        dateConvertion(row.date_accomplished.toString().split("T")[0]),
       sorting: true,
     },
     {
-      title: "Time",
-      field: "time_scheduled",
+      title: "Time accomplished",
+      render: (row) =>
+        timeFormatter(
+          row.date_accomplished
+            .substring()
+            .split("T")[1]
+            .substring(
+              0,
+              row.date_accomplished.substring().split("T")[1].length - 5
+            )
+        ),
       sorting: true,
-    },
-    {
-      title: "Action",
-      render: (row) => (
-        <div>
-          <OverlayTrigger
-            placement="top-start"
-            delay={{ show: 250 }}
-            overlay={renderTooltip({ msg: "View details" })}
-          >
-            <Button
-              style={{
-                marginRight: 5,
-                color: "white",
-                fontWeight: "bold",
-              }}
-              onClick={(e) => {}}
-            >
-              <AiOutlineSearch style={{ fontSize: 25 }} /> View Details
-            </Button>
-          </OverlayTrigger>
-        </div>
-      ),
     },
   ];
 

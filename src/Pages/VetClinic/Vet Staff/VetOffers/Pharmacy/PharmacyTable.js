@@ -265,6 +265,11 @@ const PharmacyTable = (props) => {
       insertMedicineDescription: updateMedicineDescription,
       insertMedicinePrice: updateMedicinePrice,
       insertMedicineNumber: updateMedicineNumber,
+    }).then((response) => {
+      if (response.data.message == "Success") {
+        refreshTable();
+        ToastAdd();
+      }
     });
 
     setimageUploadedUrl("");
@@ -274,22 +279,17 @@ const PharmacyTable = (props) => {
     setUpdateMedicinePrice("");
     setupdateMedicineNumber("");
     handleClose2();
-    Axios.get(`${hostUrl}/pharmacy/${props.id}`).then((response) => {
-      setpharmacy(response.data);
-    });
-    refreshTable();
-    ToastAdd();
   }
 
   const deleteMedicine = () => {
     Axios.post(`${hostUrl}/pharmacy/delete/${medicine_id}`, {
       vetid: props.id,
+    }).then((response) => {
+      if (response.data.message == "Success") {
+        refreshTable();
+        ToastDelete();
+      }
     });
-    Axios.get(`${hostUrl}/pharmacy/${props.id}`).then((response) => {
-      setpharmacy(response.data);
-    });
-    refreshTable();
-    ToastDelete();
   };
 
   const updateMedicine = () => {
@@ -301,14 +301,13 @@ const PharmacyTable = (props) => {
       medicine_price: pharmacyUpdatePrice,
       status: pharmacyUpdateStatus,
       medicine_number: pharmacyUpdateNumber,
+    }).then((response) => {
+      if (response.data.message == "Success") {
+        refreshTable();
+        ToastUpdate();
+      }
     });
-
     handleCloseUpdate();
-    Axios.get(`${hostUrl}/pharmacy/${props.id}`).then((response) => {
-      setpharmacy(response.data);
-    });
-    refreshTable();
-    ToastUpdate();
   };
 
   // Modal Delete

@@ -40,11 +40,11 @@ function PetPanelTableController() {
           <NavBarDoc showLogo={true} showHome={true} user={user} />
         </div>
         <div style={{ height: "85%", border: "1px", padding: 5 }}>
-          {user.length == 0 ? (
+          {/* {user.length == 0 ? (
             <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
-          ) : (
-            <PetRecord user={user} />
-          )}
+          ) : ( */}
+          <PetRecord user={user} />
+          {/* )} */}
         </div>
       </div>
     </div>

@@ -121,7 +121,6 @@ const ToastAdd = () =>
     progress: undefined,
   });
 
-
 const ToastAddPhysicalConsultation = () =>
   toast.success("Added Physical Consultation Successfully", {
     position: "top-right",
@@ -132,7 +131,6 @@ const ToastAddPhysicalConsultation = () =>
     draggable: true,
     progress: undefined,
   });
-
 
 const ToastAddVirtualConsultation = () =>
   toast.success("Added Virtual Consultation Successfully", {
@@ -147,6 +145,17 @@ const ToastAddVirtualConsultation = () =>
 
 const ToastServicesUpdate = () =>
   toast.success("Updated Successfully", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+const ToastExpired = () =>
+  toast.error("Expired Successfully", {
     position: "top-right",
     autoClose: 3000,
     hideProgressBar: false,
@@ -171,4 +180,5 @@ export {
   ToastAddPhysicalConsultation,
   ToastAddVirtualConsultation,
   ToastServicesUpdate,
+  ToastExpired,
 };

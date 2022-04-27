@@ -33,6 +33,8 @@ import { Skeleton } from "@mui/material";
 const ConsultStart = (props) => {
   const [user, setuser] = useState([]);
   const [consultation, setconsultation] = useState([]);
+  const [online, setonline] = useState(false);
+  const [physical, setphysical] = useState(false);
 
   useEffect(async () => {
     const userData = await getUser();
@@ -64,6 +66,12 @@ const ConsultStart = (props) => {
     Axios.get(`${hostUrl}/doc/${id}`).then((response) => {
       if (response.data[0].enableConsultation == 1) {
         setconsulations(false);
+      }
+      if (response.data[0].enableOnlineConsultation == 1) {
+        setonline(true);
+      }
+      if (response.data[0].enablePhysicalConsultation == 1) {
+        setphysical(true);
       }
       if (response.data[0].enableExamination == 1) {
         setpetExamination(false);
@@ -766,7 +774,8 @@ const ConsultStart = (props) => {
                 <div>
                   <Form.Switch
                     type="switch"
-                    checked={enableConsultationPhysical}
+                    checked={physical}
+                    disabled={true}
                   />
                 </div>
               </div>
@@ -792,6 +801,7 @@ const ConsultStart = (props) => {
             <Card
               style={{
                 padding: 20,
+                height: 160,
               }}
             >
               <div
@@ -805,11 +815,7 @@ const ConsultStart = (props) => {
                 </div>
 
                 <div>
-                  <Form.Switch
-                    type="switch"
-                    checked={enableConsultationVirtual}
-                    disabled={true}
-                  />
+                  <Form.Switch type="switch" checked={online} disabled={true} />
                 </div>
               </div>
 
@@ -824,13 +830,7 @@ const ConsultStart = (props) => {
                   display: "flex",
                   justifyContent: "space-between",
                 }}
-              >
-                <div style={{ display: "flex", justifyContent: "end" }}>
-                  <Button variant="primary" style={{ width: "100%" }}>
-                    Add virtual appointment
-                  </Button>
-                </div>
-              </div>
+              ></div>
             </Card>
           </Col>
         </Row>

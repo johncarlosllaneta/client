@@ -1,9 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { Button, OverlayTrigger, Popover } from "react-bootstrap";
+import {
+  Col,
+  Button,
+  Modal,
+  Row,
+  Form,
+  OverlayTrigger,
+  Popover,
+  FloatingLabel,
+} from "react-bootstrap";
 import MaterialTable from "material-table";
 import { AiOutlineSearch } from "react-icons/ai";
 
 function HealthPetCard(props) {
+  const [serviceName, setserviceName] = useState();
+  const [vetDocFname, setvetDocFname] = useState();
+  const [vetDocMname, setvetDocMname] = useState();
+  const [vetDocLname, setvetDocLname] = useState();
+  const [prescription, setprescription] = useState();
+  const [findings, setfindings] = useState();
+  const [date, setdate] = useState();
+  const [time, settime] = useState();
+  const [category, setcategory] = useState();
+  const [desc, setdesc] = useState();
+
+  const [show2, setShow2] = useState(false);
+  const handleClose2 = () => setShow2(false);
+  const handleShow2 = () => {
+    setShow2(true);
+  };
+
   function dateConvertion(date) {
     var str = date.split("-");
     var year = str[0];
@@ -127,16 +153,6 @@ function HealthPetCard(props) {
         ),
     },
     {
-      title: "Prescription",
-      field: "prescription",
-      sorting: true,
-    },
-    {
-      title: "Findings",
-      field: "findings",
-      sorting: true,
-    },
-    {
       title: "Action",
       render: (row) => (
         <div>
@@ -151,7 +167,32 @@ function HealthPetCard(props) {
                 color: "white",
                 fontWeight: "bold",
               }}
-              onClick={(e) => {}}
+              onClick={(e) => {
+                setprescription(row.prescription);
+                setfindings(row.findings);
+                setserviceName(row.service_name);
+                setdesc(row.service_description);
+                setcategory(row.category);
+                setdate(
+                  dateConvertion(row.date_accomplished.toString().split("T")[0])
+                );
+                settime(
+                  timeFormatter(
+                    row.date_accomplished
+                      .substring()
+                      .split("T")[1]
+                      .substring(
+                        0,
+                        row.date_accomplished.substring().split("T")[1].length -
+                          5
+                      )
+                  )
+                );
+                setvetDocFname(row.vet_doc_fname);
+                setvetDocMname(row.vet_doc_mname);
+                setvetDocLname(row.vet_doc_lname);
+                handleShow2();
+              }}
             >
               <AiOutlineSearch style={{ fontSize: 25 }} /> View Details
             </Button>
@@ -165,6 +206,225 @@ function HealthPetCard(props) {
 
   return (
     <div>
+      <Modal show={show2} onHide={handleClose2} size="xl" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Health Record Details</Modal.Title>
+        </Modal.Header>
+        <Row>
+          <Modal.Body>
+            <Row>
+              <Row style={{ padding: 0, margin: 0 }}>
+                <Form.Group
+                  controlId="formBasicProduct"
+                  style={{
+                    marginTop: 10,
+                  }}
+                >
+                  <FloatingLabel
+                    controlId="floatingInputPrice"
+                    label="Service Name"
+                  >
+                    <Form.Control
+                      type="text"
+                      value={serviceName}
+                      disabled={true}
+                    />
+                  </FloatingLabel>
+                </Form.Group>
+                <Form.Group
+                  controlId="formBasicProduct"
+                  style={{
+                    marginTop: 10,
+                  }}
+                >
+                  <FloatingLabel
+                    controlId="floatingInputPrice"
+                    label="Service Description"
+                  >
+                    <Form.Control
+                      as="textarea"
+                      style={{ height: "155px" }}
+                      value={desc}
+                      disabled={true}
+                    />
+                  </FloatingLabel>
+                </Form.Group>
+              </Row>
+              <Col>
+                <Form.Group
+                  controlId="formBasicProduct"
+                  style={{
+                    marginTop: 10,
+                  }}
+                >
+                  <FloatingLabel
+                    controlId="floatingInputPrice"
+                    label="Doctor Name"
+                  >
+                    <Form.Control
+                      type="text"
+                      value={
+                        vetDocMname == null
+                          ? vetDocFname + " " + vetDocLname
+                          : vetDocFname + " " + vetDocMname + " " + vetDocLname
+                      }
+                      disabled={true}
+                    />
+                  </FloatingLabel>
+                </Form.Group>
+
+                <Form.Group
+                  controlId="formBasicProduct"
+                  style={{
+                    marginTop: 10,
+                  }}
+                >
+                  <FloatingLabel
+                    controlId="floatingInputPrice"
+                    label="Service Category "
+                  >
+                    <Form.Control
+                      type="text"
+                      value={category}
+                      disabled={true}
+                    />
+                  </FloatingLabel>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group
+                  controlId="formBasicProduct"
+                  style={{
+                    marginTop: 10,
+                  }}
+                >
+                  <FloatingLabel
+                    controlId="floatingInputPrice"
+                    label="Date accomplished"
+                  >
+                    <Form.Control type="text" value={date} disabled={true} />
+                  </FloatingLabel>
+                </Form.Group>
+
+                <Form.Group
+                  controlId="formBasicProduct"
+                  style={{
+                    marginTop: 10,
+                  }}
+                >
+                  <FloatingLabel
+                    controlId="floatingInputPrice"
+                    label="Time accomplished"
+                  >
+                    <Form.Control type="text" value={time} disabled={true} />
+                  </FloatingLabel>
+                </Form.Group>
+              </Col>
+
+              {category == "Pet Examination" ? (
+                <Row style={{ padding: 0, margin: 0 }}>
+                  <Form.Group
+                    controlId="formBasicProduct"
+                    style={{
+                      marginTop: 10,
+                    }}
+                  >
+                    <FloatingLabel
+                      controlId="floatingInputPrice"
+                      label="Findings"
+                    >
+                      <Form.Control
+                        as="textarea"
+                        style={{ height: "155px" }}
+                        type="text"
+                        required
+                        disabled={true}
+                        value={findings}
+                        placeholder="Sample Prescription"
+                        onChange={(e) => {
+                          setfindings(e.target.value);
+                        }}
+                      />
+                    </FloatingLabel>
+                  </Form.Group>
+
+                  <Form.Group
+                    controlId="formBasicProduct"
+                    className="mb-3"
+                    style={{
+                      marginTop: 10,
+                    }}
+                  >
+                    <FloatingLabel
+                      controlId="floatingInputPrice"
+                      label="Prescription"
+                    >
+                      <Form.Control
+                        as="textarea"
+                        style={{ height: "155px" }}
+                        value={prescription}
+                        required
+                        disabled={true}
+                        placeholder="Sample Prescription"
+                        onChange={(e) => {
+                          setprescription(e.target.value);
+                        }}
+                      />
+
+                      {/* <Form.Control.Feedback type="valid">
+                        You've input a valid name.
+                      </Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">
+                        Please input a valid medicine name.
+                      </Form.Control.Feedback> */}
+                    </FloatingLabel>
+                  </Form.Group>
+                </Row>
+              ) : (
+                <Row style={{ padding: 0, margin: 0 }}>
+                  <Form.Group
+                    controlId="formBasicProduct"
+                    className="mb-3"
+                    style={{
+                      marginTop: 10,
+                    }}
+                  >
+                    <FloatingLabel
+                      controlId="floatingInputPrice"
+                      label="Prescription"
+                    >
+                      <Form.Control
+                        as="textarea"
+                        style={{ height: "155px" }}
+                        value={prescription}
+                        disabled={true}
+                        required
+                        placeholder="Sample Prescription"
+                        onChange={(e) => {
+                          setprescription(e.target.value);
+                        }}
+                      />
+
+                      {/* <Form.Control.Feedback type="valid">
+                        You've input a valid name.
+                      </Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">
+                        Please input a valid medicine name.
+                      </Form.Control.Feedback> */}
+                    </FloatingLabel>
+                  </Form.Group>
+                </Row>
+              )}
+            </Row>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose2}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Row>
+      </Modal>
+
       <MaterialTable
         title={"Health Record"}
         columns={columns}
