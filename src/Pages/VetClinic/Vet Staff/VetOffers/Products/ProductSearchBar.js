@@ -110,21 +110,6 @@ function ProductSearchBar(props) {
             </Badge>
           </IconButton>
         </Tooltip>
-
-        <Tooltip title={"Filter"}>
-          <IconButton
-            size="large"
-            aria-label="show 4 new mails"
-            color="inherit"
-            onClick={() => {}}
-          >
-            <FilterListIcon
-              style={{
-                color: "#354A5F",
-              }}
-            />
-          </IconButton>
-        </Tooltip>
       </div>
     </div>
   );
