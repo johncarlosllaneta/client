@@ -56,17 +56,58 @@ const HistoryTab = (props) => {
 
     return month + " " + day + ", " + year;
   }
+  function timeFormatter(time) {
+    var timeCurrent = time.split(":");
 
-  function formatAMPM(date) {
-    var formatDate = new Date(date);
-    var hours = formatDate.getHours;
-    var minutes = formatDate.getMinutes();
-    var ampm = hours >= 12 ? "pm" : "am";
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    var strTime = hours + ":" + minutes + " " + ampm;
-    return strTime;
+    if (timeCurrent[0] == "00") {
+      return "12:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+    } else if (timeCurrent[0] == "01") {
+      return "1:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+    } else if (timeCurrent[0] == "02") {
+      return "2:" + timeCurrent[1 + ":"] + timeCurrent[2] + "AM ";
+    } else if (timeCurrent[0] == "03") {
+      return "3:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+    } else if (timeCurrent[0] == "04") {
+      return "4:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+    } else if (timeCurrent[0] == "05") {
+      return "5:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+    } else if (timeCurrent[0] == "06") {
+      return "6:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+    } else if (timeCurrent[0] == "07") {
+      return "7:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+    } else if (timeCurrent[0] == "08") {
+      return "8:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+    } else if (timeCurrent[0] == "09") {
+      return "9:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+    } else if (timeCurrent[0] == "10") {
+      return "10:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+    } else if (timeCurrent[0] == "11") {
+      return "11:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+    } else if (timeCurrent[0] == "12") {
+      return "12:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+    } else if (timeCurrent[0] == "13") {
+      return "1:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+    } else if (timeCurrent[0] == "14") {
+      return "2:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+    } else if (timeCurrent[0] == "15") {
+      return "3:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+    } else if (timeCurrent[0] == "16") {
+      return "4:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+    } else if (timeCurrent[0] == "17") {
+      return "5:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+    } else if (timeCurrent[0] == "18") {
+      return "6:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+    } else if (timeCurrent[0] == "19") {
+      return "7:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+    } else if (timeCurrent[0] == "20") {
+      return "8:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+    } else if (timeCurrent[0] == "21") {
+      return "9:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+    } else if (timeCurrent[0] == "22") {
+      return "10:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+    } else if (timeCurrent[0] == "23") {
+      return "11:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
+    }
   }
 
   function tempMeter(temp) {
@@ -99,7 +140,13 @@ const HistoryTab = (props) => {
       title: "Time",
       // field: "time",
       sorting: true,
-      render: (row) => formatAMPM(row.time_visited),
+      render: (row) =>
+        timeFormatter(
+          row.time_visited
+            .substring()
+            .split("T")[1]
+            .substring(0, row.time_visited.substring().split("T")[1].length - 5)
+        ),
     },
   ];
   return (

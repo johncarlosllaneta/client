@@ -50,7 +50,15 @@ function ProfilePage() {
                       marginTop: 10,
                     }}
                     src={user.vet_doc_profilePic}
-                    name={user.vet_doc_fname + " " + user.vet_doc_lname}
+                    name={
+                      user.vet_doc_mname == null
+                        ? user.vet_doc_fname + " " + user.vet_doc_lname
+                        : user.vet_doc_fname +
+                          " " +
+                          user.vet_doc_mname +
+                          " " +
+                          user.vet_doc_lname
+                    }
                   />
                 )}
               </div>
