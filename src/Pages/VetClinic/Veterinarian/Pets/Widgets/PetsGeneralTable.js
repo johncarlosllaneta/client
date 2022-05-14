@@ -84,7 +84,7 @@ function PetsGeneralTable() {
                 }}
               />
               <Tab
-                label="Appointment"
+                label="Consultation"
                 value="3"
                 style={{
                   marginRight: 15,

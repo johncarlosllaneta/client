@@ -12,6 +12,7 @@ function ProfilePage() {
   const [user, setuser] = useState([]);
   const [user1, setuser1] = useState([]);
   const [imgProfile, setimgProfile] = useState("");
+  const [isLoading, setisLoading] = useState(false);
 
   useEffect(async () => {
     const userData = await getUser();
@@ -21,6 +22,7 @@ function ProfilePage() {
   const getInfo = async (id) => {
     const result = await Axios.get(`${hostUrl}/staff/${id}`);
     setuser(result.data[0]);
+    setisLoading(true);
   };
 
   return (
@@ -44,25 +46,49 @@ function ProfilePage() {
                   display: "flex",
                 }}
               >
-                {user.vet_staff_profilePic == null ? (
-                  <Skeleton variant="circular" height={"100%"} />
+                {isLoading == true ? (
+                  user.vet_staff_profilePic == null || " " ? (
+                    <Avatar
+                      round={true}
+                      size={210}
+                      style={{
+                        marginTop: 10,
+                      }}
+                      src={user.vet_staff_profilePic}
+                      name={
+                        user.vet_staff_mname == null
+                          ? user.vet_staff_fname + " " + user.vet_staff_lname
+                          : user.vet_staff_fname +
+                            " " +
+                            user.vet_staff_mname +
+                            " " +
+                            user.vet_staff_lname
+                      }
+                    />
+                  ) : (
+                    <Avatar
+                      round={true}
+                      size={210}
+                      style={{
+                        marginTop: 10,
+                      }}
+                      src={user.vet_staff_profilePic}
+                      name={
+                        user.vet_staff_mname == null
+                          ? user.vet_staff_fname + " " + user.vet_staff_lname
+                          : user.vet_staff_fname +
+                            " " +
+                            user.vet_staff_mname +
+                            " " +
+                            user.vet_staff_lname
+                      }
+                    />
+                  )
                 ) : (
-                  <Avatar
-                    round={true}
-                    size={210}
-                    style={{
-                      marginTop: 10,
-                    }}
-                    src={user.vet_staff_profilePic}
-                    name={
-                      user.vet_staff_mname == null
-                        ? user.vet_staff_fname + " " + user.vet_staff_lname
-                        : user.vet_staff_fname +
-                          " " +
-                          user.vet_staff_mname +
-                          " " +
-                          user.vet_staff_lname
-                    }
+                  <Skeleton
+                    variant="rectangular"
+                    height={"100%"}
+                    width={"100%"}
                   />
                 )}
               </div>

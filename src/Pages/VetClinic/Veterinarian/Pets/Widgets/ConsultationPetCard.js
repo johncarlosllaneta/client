@@ -144,53 +144,53 @@ function ConsultationPetCard(props) {
   function timeFormatter(time) {
     var timeCurrent = time.split(":");
 
-    if (timeCurrent[0] == "00") {
+    if (timeCurrent[0] === "16") {
       return "12:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
-    } else if (timeCurrent[0] == "01") {
+    } else if (timeCurrent[0] === "17") {
       return "1:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
-    } else if (timeCurrent[0] == "02") {
-      return "2:" + timeCurrent[1 + ":"] + timeCurrent[2] + "AM ";
-    } else if (timeCurrent[0] == "03") {
+    } else if (timeCurrent[0] === "18") {
+      return "2:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
+    } else if (timeCurrent[0] === "19") {
       return "3:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
-    } else if (timeCurrent[0] == "04") {
+    } else if (timeCurrent[0] === "20") {
       return "4:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
-    } else if (timeCurrent[0] == "05") {
+    } else if (timeCurrent[0] === "21") {
       return "5:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
-    } else if (timeCurrent[0] == "06") {
+    } else if (timeCurrent[0] === "22") {
       return "6:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
-    } else if (timeCurrent[0] == "07") {
+    } else if (timeCurrent[0] === "23") {
       return "7:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
-    } else if (timeCurrent[0] == "08") {
+    } else if (timeCurrent[0] === "24") {
       return "8:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
-    } else if (timeCurrent[0] == "09") {
+    } else if (timeCurrent[0] === "01") {
       return "9:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
-    } else if (timeCurrent[0] == "10") {
+    } else if (timeCurrent[0] === "02") {
       return "10:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
-    } else if (timeCurrent[0] == "11") {
+    } else if (timeCurrent[0] === "03") {
       return "11:" + timeCurrent[1] + ":" + timeCurrent[2] + "AM ";
-    } else if (timeCurrent[0] == "12") {
+    } else if (timeCurrent[0] === "04") {
       return "12:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
-    } else if (timeCurrent[0] == "13") {
+    } else if (timeCurrent[0] === "05") {
       return "1:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
-    } else if (timeCurrent[0] == "14") {
+    } else if (timeCurrent[0] === "06") {
       return "2:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
-    } else if (timeCurrent[0] == "15") {
+    } else if (timeCurrent[0] === "07") {
       return "3:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
-    } else if (timeCurrent[0] == "16") {
+    } else if (timeCurrent[0] === "08") {
       return "4:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
-    } else if (timeCurrent[0] == "17") {
+    } else if (timeCurrent[0] === "09") {
       return "5:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
-    } else if (timeCurrent[0] == "18") {
+    } else if (timeCurrent[0] === "10") {
       return "6:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
-    } else if (timeCurrent[0] == "19") {
+    } else if (timeCurrent[0] === "11") {
       return "7:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
-    } else if (timeCurrent[0] == "20") {
+    } else if (timeCurrent[0] === "12") {
       return "8:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
-    } else if (timeCurrent[0] == "21") {
+    } else if (timeCurrent[0] === "13") {
       return "9:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
-    } else if (timeCurrent[0] == "22") {
+    } else if (timeCurrent[0] === "14") {
       return "10:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
-    } else if (timeCurrent[0] == "23") {
+    } else if (timeCurrent[0] === "15") {
       return "11:" + timeCurrent[1] + ":" + timeCurrent[2] + "PM ";
     }
   }
