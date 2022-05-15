@@ -16,6 +16,7 @@ import Axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { ToastDelete, ToastUpdate } from "../../../../Components/Toast";
 import { hostUrl, hostUrlWeb } from "../../../../Components/Host";
+import getUser from "../../../../Components/userData";
 
 const VetSettings = (props) => {
   const [changePass, setChangePass] = useState("none");
@@ -161,19 +162,11 @@ const VetSettings = (props) => {
 
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
-  useEffect(() => {
-    if (counter < 6) {
-      var token = localStorage.getItem("ajwt");
-      Axios.get(`${hostUrl}/home`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
-        setuser(response.data.result[0]);
-        console.log(user);
-      });
 
-      setcounter(counter + 1);
-    }
-  }, [counter, user]);
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+  }, []);
 
   function UpdateVetClinic(e) {
     const form = e.currentTarget;
@@ -234,10 +227,10 @@ const VetSettings = (props) => {
       setOpeningMonday(Monday.split(" - ")[0]);
       setClosingMonday(Monday.split(" - ")[1]);
       setCheckerMonday(false);
-      setCheckerSwitchMonday(false);
+      setCheckerSwitchMonday(true);
     } else {
       setCheckerMonday(true);
-      setCheckerSwitchMonday(true);
+      setCheckerSwitchMonday(false);
     }
 
     // alert(ClosingMonday);
@@ -247,10 +240,10 @@ const VetSettings = (props) => {
       setOpeningTuesday(Tuesday.split(" - ")[0]);
       setClosingTuesday(Tuesday.split(" - ")[1]);
       setCheckerTuesday(false);
-      setCheckerSwitchTuesday(false);
+      setCheckerSwitchTuesday(true);
     } else {
       setCheckerTuesday(true);
-      setCheckerSwitchTuesday(true);
+      setCheckerSwitchTuesday(false);
     }
     // alert(ClosingMonday);
 
@@ -259,10 +252,10 @@ const VetSettings = (props) => {
       setOpeningWednesday(Wednesday.split(" - ")[0]);
       setClosingWednesday(Wednesday.split(" - ")[1]);
       setCheckerWednesday(false);
-      setCheckerSwitchWednesday(false);
+      setCheckerSwitchWednesday(true);
     } else {
       setCheckerWednesday(true);
-      setCheckerSwitchWednesday(true);
+      setCheckerSwitchWednesday(false);
     }
 
     // alert(ClosingMonday);
@@ -272,10 +265,10 @@ const VetSettings = (props) => {
       setOpeningThursday(Thursday.split(" - ")[0]);
       setClosingThursday(Thursday.split(" - ")[1]);
       setCheckerThursday(false);
-      setCheckerSwitchThursday(false);
+      setCheckerSwitchThursday(true);
     } else {
       setCheckerThursday(true);
-      setCheckerSwitchThursday(true);
+      setCheckerSwitchThursday(false);
     }
 
     // alert(ClosingMonday);
@@ -285,10 +278,10 @@ const VetSettings = (props) => {
       setOpeningFriday(Friday.split(" - ")[0]);
       setClosingFriday(Friday.split(" - ")[1]);
       setCheckerFriday(false);
-      setCheckerSwitchFriday(false);
+      setCheckerSwitchFriday(true);
     } else {
       setCheckerFriday(true);
-      setCheckerSwitchFriday(true);
+      setCheckerSwitchFriday(false);
     }
 
     // alert(ClosingMonday);
@@ -298,10 +291,10 @@ const VetSettings = (props) => {
       setOpeningSaturday(Saturday.split(" - ")[0]);
       setClosingSaturday(Saturday.split(" - ")[1]);
       setCheckerSaturday(false);
-      setCheckerSwitchSaturday(false);
+      setCheckerSwitchSaturday(true);
     } else {
       setCheckerSaturday(true);
-      setCheckerSwitchSaturday(true);
+      setCheckerSwitchSaturday(false);
     }
 
     // alert(ClosingMonday);
@@ -311,10 +304,10 @@ const VetSettings = (props) => {
       setOpeningSunday(Sunday.split(" - ")[0]);
       setClosingSunday(Sunday.split(" - ")[1]);
       setCheckerSunday(false);
-      setCheckerSwitchSunday(false);
+      setCheckerSwitchSunday(true);
     } else {
       setCheckerSunday(true);
-      setCheckerSwitchSunday(true);
+      setCheckerSwitchSunday(false);
     }
   }
 
@@ -1049,15 +1042,15 @@ const VetSettings = (props) => {
                             <Col sm="2">
                               <Form.Check
                                 type="switch"
-                                label="Close"
+                                label={CheckerSwitchSunday == true ? "Open" : "Close"}
                                 checked={CheckerSwitchSunday}
                                 onChange={(e) => {
                                   // alert(e.target.checked);
-                                  if (e.target.checked !== true) {
-                                    setCheckerSwitchSunday(false);
+                                  if (e.target.checked === true) {
+                                    setCheckerSwitchSunday(true);
                                     setCheckerSunday(false);
                                   } else {
-                                    setCheckerSwitchSunday(true);
+                                    setCheckerSwitchSunday(false);
                                     setCheckerSunday(true);
                                     setOpeningSunday("");
                                     setClosingSunday("");
@@ -1095,14 +1088,14 @@ const VetSettings = (props) => {
                             <Col sm="2">
                               <Form.Check
                                 type="switch"
-                                label="Close"
+                                label={CheckerSwitchMonday == true ? "Open" : "Close"}
                                 checked={CheckerSwitchMonday}
                                 onChange={(e) => {
-                                  if (e.target.checked !== true) {
-                                    setCheckerSwitchMonday(false);
+                                  if (e.target.checked === true) {
+                                    setCheckerSwitchMonday(true);
                                     setCheckerMonday(false);
                                   } else {
-                                    setCheckerSwitchMonday(true);
+                                    setCheckerSwitchMonday(false);
                                     setCheckerMonday(true);
                                     setOpeningMonday("");
                                     setClosingMonday("");
@@ -1140,14 +1133,14 @@ const VetSettings = (props) => {
                             <Col sm="2">
                               <Form.Check
                                 type="switch"
-                                label="Close"
+                                label={CheckerSwitchTuesday == true ? "Open" : "Close"}
                                 checked={CheckerSwitchTuesday}
                                 onChange={(e) => {
-                                  if (e.target.checked !== true) {
-                                    setCheckerSwitchTuesday(false);
+                                  if (e.target.checked === true) {
+                                    setCheckerSwitchTuesday(true);
                                     setCheckerTuesday(false);
                                   } else {
-                                    setCheckerSwitchTuesday(true);
+                                    setCheckerSwitchTuesday(false);
                                     setCheckerTuesday(true);
                                     setOpeningTuesday("");
                                     setClosingTuesday("");
@@ -1185,15 +1178,15 @@ const VetSettings = (props) => {
                             <Col sm="2">
                               <Form.Check
                                 type="switch"
-                                label="Close"
+                                label={CheckerSwitchWednesday == true ? "Open" : "Close"}
                                 checked={CheckerSwitchWednesday}
                                 onChange={(e) => {
                                   // alert(e.target.checked);
-                                  if (e.target.checked !== true) {
-                                    setCheckerSwitchWednesday(false);
+                                  if (e.target.checked === true) {
+                                    setCheckerSwitchWednesday(true);
                                     setCheckerWednesday(false);
                                   } else {
-                                    setCheckerSwitchWednesday(true);
+                                    setCheckerSwitchWednesday(false);
                                     setCheckerWednesday(true);
                                     setOpeningWednesday("");
                                     setClosingWednesday("");
@@ -1231,15 +1224,15 @@ const VetSettings = (props) => {
                             <Col sm="2">
                               <Form.Check
                                 type="switch"
-                                label="Close"
+                                label={CheckerSwitchThursday == true ? "Open" : "Close"}
                                 checked={CheckerSwitchThursday}
                                 onChange={(e) => {
                                   // alert(e.target.checked);
-                                  if (e.target.checked !== true) {
-                                    setCheckerSwitchThursday(false);
+                                  if (e.target.checked === true) {
+                                    setCheckerSwitchThursday(true);
                                     setCheckerThursday(false);
                                   } else {
-                                    setCheckerSwitchThursday(true);
+                                    setCheckerSwitchThursday(false);
                                     setCheckerThursday(true);
                                     setOpeningThursday("");
                                     setClosingThursday("");
@@ -1277,16 +1270,16 @@ const VetSettings = (props) => {
                             <Col sm="2">
                               <Form.Check
                                 type="switch"
-                                label="Close"
+                                label={CheckerSwitchFriday == true ? "Open" : "Close"}
                                 checked={CheckerSwitchFriday}
 
                                 onChange={(e) => {
                                   // alert(e.target.checked);
-                                  if (e.target.checked !== true) {
-                                    setCheckerSwitchFriday(false);
+                                  if (e.target.checked === true) {
+                                    setCheckerSwitchFriday(true);
                                     setCheckerFriday(false);
                                   } else {
-                                    setCheckerSwitchFriday(true);
+                                    setCheckerSwitchFriday(false);
                                     setCheckerFriday(true);
                                     setOpeningFriday("");
                                     setClosingFriday("");
@@ -1324,15 +1317,15 @@ const VetSettings = (props) => {
                             <Col sm="2">
                               <Form.Check
                                 type="switch"
-                                label="Close"
+                                label={CheckerSwitchSaturday == true ? "Open" : "Close"}
                                 checked={CheckerSwitchSaturday}
                                 onChange={(e) => {
                                   // alert(e.target.checked);
-                                  if (e.target.checked !== true) {
-                                    setCheckerSwitchSaturday(false);
+                                  if (e.target.checked === true) {
+                                    setCheckerSwitchSaturday(true);
                                     setCheckerSaturday(false);
                                   } else {
-                                    setCheckerSwitchSaturday(true);
+                                    setCheckerSwitchSaturday(false);
                                     setCheckerSaturday(true);
                                     setOpeningSaturday("");
                                     setClosingSaturday("");

@@ -120,13 +120,14 @@ const PharmacyTab = (props) => {
     },
     {
       title: "Lot Number",
-      field: "lot_id",
-      defaultSort: "asc",
+      field: "med_id",
+
     },
     {
       title: "Medicine Name",
       field: "medicine_name",
       sorting: true,
+      defaultSort: "asc",
     },
     {
       title: "Status",

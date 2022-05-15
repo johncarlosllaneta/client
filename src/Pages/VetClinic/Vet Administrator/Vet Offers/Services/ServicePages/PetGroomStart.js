@@ -27,6 +27,9 @@ import imageVI from "../../../../../../Images/INHOUSEW.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import { users } from "../../../../../../Components/User";
+import { ToastContainer } from "react-toastify";
+import { ToastAddPhysicalConsultation, ToastSuccess, ToastDelete, ToastServicesUpdate, ToastAdd } from "../../../../../../Components/Toast";
+import getUser from "../../../../../../Components/userData";
 
 const PetGroomStart = (props) => {
   let { vetid } = useParams();
@@ -40,25 +43,31 @@ const PetGroomStart = (props) => {
   const [inHouseLab, setinHouseLab] = useState(true);
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
-  useEffect(() => {
-    if (users[0].enableConsultation == 1) {
+  useEffect(async () => {
+    const userData = await getUser();
+    setuser(userData);
+    Axios.get(`${hostUrl}/petGrooming/${userData.vetid}`).then((response) => {
+      setpetGroomings(response.data);
+      // console.log(response.data)
+    });
+    if (userData.enableConsultation == 1) {
       setconsulation(false);
     }
-    if (users[0].enableExamination == 1) {
+    if (userData.enableExamination == 1) {
       setpetExamination(false);
     }
 
-    if (users[0].enableGrooming == 1) {
+    if (userData.enableGrooming == 1) {
       setpetGrooming(false);
     }
-    if (users[0].enableVaccination == 1) {
+    if (userData.enableVaccination == 1) {
       setvaccination(false);
     }
-    if (users[0].enablePreventiveControls == 1) {
+    if (userData.enablePreventiveControls == 1) {
       setpreventiveControls(false);
     }
 
-    if (users[0].enableInHouseLab == 1) {
+    if (userData.enableInHouseLab == 1) {
       setinHouseLab(false);
     }
   }, []);
@@ -114,79 +123,15 @@ const PetGroomStart = (props) => {
   };
 
   const [petGroomings, setpetGroomings] = useState([]);
-  useEffect(() => {
-    Axios.get(`${hostUrl}/petGrooming/${users[0].vetid}`).then((response) => {
-      setpetGroomings(response.data);
-      // console.log(response.data)
-    });
-    // alert(props.data.vet_admin_id);
-  }, []);
+
 
   function reloadPetGrooming() {
-    Axios.get(`${hostUrl}/petGrooming/${users[0].vetid}`).then((response) => {
+    Axios.get(`${hostUrl}/petGrooming/${user.vetid}`).then((response) => {
       setpetGroomings(response.data);
       // console.log(response.data)
     });
   }
 
-  const submitService = (e) => {
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    } else {
-      e.preventDefault();
-      Axios.post(`${hostUrl}/services/insert/:${users[0].vetid}`, {
-        serviceName: serviceName,
-        serviceDescription: serviceDescription,
-        service_fee: serviceFee,
-        category: "Pet Grooming",
-      }).then((response) => {
-
-        if (response.data.message == 'Success') {
-          setValidatedInsert(false);
-          handleCloseInsert();
-          reloadPetGrooming();
-        }
-      });
-    }
-    setValidatedInsert(true);
-  };
-
-  const updatedService = (e) => {
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    } else {
-      e.preventDefault();
-      Axios.put(`${hostUrl}/service/update/${updateServiceId}`, {
-        updateServiceName: updateServiceName,
-        updateServiceDescription: updateServiceDescription,
-        updateServiceFee: updateServiceFee,
-        updateServiceCategory: "Pet Grooming",
-      }).then((response) => {
-        if (response.data.message == 'Success') {
-          handleCloseUpdate();
-          reloadPetGrooming();
-        }
-      });
-    }
-
-    setValidated(true);
-  };
-
-  const deleteService = () => {
-    Axios.delete(`${hostUrl}/service/delete/:${updateServiceId}`, {}).then(
-      (response) => {
-        // alert(response.data.message);
-        if (response.data.message == 'Success') {
-
-          reloadPetGrooming();
-        }
-      }
-    );
-  };
 
   const [validated, setValidated] = useState(false);
   const [validatedInsert, setValidatedInsert] = useState(false);
@@ -290,12 +235,135 @@ const PetGroomStart = (props) => {
     setTarget(event.target);
   };
 
+
+
+  const submitService = (e) => {
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    } else {
+      e.preventDefault();
+      handleCloseInsert();
+      handleShowModalConfirmation();
+    }
+    setValidatedInsert(true);
+  };
+
+
+  const submitServiceConfirm = () => {
+    Axios.post(`${hostUrl}/services/insert/:${user.vetid}`, {
+      serviceName: serviceName,
+      serviceDescription: serviceDescription,
+      service_fee: serviceFee,
+      category: "Pet Grooming",
+    }).then((response) => {
+
+      if (response.data.message == 'Success') {
+        ToastAdd();
+        setValidatedInsert(false);
+        handleCloseInsert();
+        reloadPetGrooming();
+      }
+    });
+  }
+
+  const updatedService = (e) => {
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    } else {
+      e.preventDefault();
+      handleCloseUpdate();
+      handleShowModalUpdate();
+    }
+
+    setValidated(true);
+  };
+
+  const updateServiceConfirm = () => {
+    Axios.put(`${hostUrl}/service/update/${updateServiceId}`, {
+      updateServiceName: updateServiceName,
+      updateServiceDescription: updateServiceDescription,
+      updateServiceFee: updateServiceFee,
+      updateServiceCategory: "Pet Grooming",
+    }).then((response) => {
+      if (response.data.message == 'Success') {
+        handleCloseUpdate();
+        handleCloseModalUpdate();
+        reloadPetGrooming();
+        ToastServicesUpdate();
+      }
+    });
+  }
+
+  const deleteService = () => {
+    Axios.delete(`${hostUrl}/service/delete/:${updateServiceId}`, {}).then(
+      (response) => {
+        // alert(response.data.message);
+        if (response.data.message == 'Success') {
+          ToastDelete();
+          reloadPetGrooming();
+        }
+      }
+    );
+  };
+
+
+  // Modal insert Confirmation
+  const [showModalConfirmation, setShowModalConfirmation] = useState(false);
+
+  const handleCloseModalConfirmation = () => setShowModalConfirmation(false);
+  const handleShowModalConfirmation = () => setShowModalConfirmation(true);
+
+
+  // Modal Update Confirmation
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
+
+  const handleCloseModalUpdate = () => setShowModalUpdate(false);
+  const handleShowModalUpdate = () => setShowModalUpdate(true);
+
   return (
     <div
       style={{
         padding: 20,
       }}
     >
+      <ToastContainer />
+
+      <Modal show={showModalUpdate} onHide={handleCloseModalUpdate} centered backdrop="static" keyboard={false} >
+        <Modal.Header closeButton>
+          <Modal.Title>Update Service</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to update this service? </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModalUpdate}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={updateServiceConfirm}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+
+      </Modal>
+
+      <Modal show={showModalConfirmation} onHide={handleCloseModalConfirmation} centered backdrop="static" keyboard={false} >
+        <Modal.Header closeButton>
+          <Modal.Title>Save Service</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to save this service? </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModalConfirmation}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={submitServiceConfirm}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+
+      </Modal>
+
       <Modal show={showServices} onHide={handleCloseServices}>
         <Modal.Header closeButton>
           <Modal.Title>Service Information</Modal.Title>
