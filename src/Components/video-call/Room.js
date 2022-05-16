@@ -105,7 +105,7 @@ const Room = ({ roomName, room, handleLogout }) => {
           {/* <h3>Remote Participants</h3> */}
           <div
 
-            className="remote-participants">{participants.length > 0 ? remoteParticipants :
+            className="remote-participants">{participants.length > 0 ? <div style={{ height: '30vh' }}> {remoteParticipants} </div> :
               <div
                 style={{
                   width: '50vw',

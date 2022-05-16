@@ -1,4 +1,7 @@
+import { IconButton } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
+import MicIcon from '@mui/icons-material/Mic';
+import MicOffIcon from '@mui/icons-material/MicOff';
 
 const Participant = ({ participant }) => {
   const [videoTracks, setVideoTracks] = useState([]);
@@ -61,6 +64,7 @@ const Participant = ({ participant }) => {
       };
     }
   }, [audioTracks]);
+  const [mic, setmic] = useState(false)
 
   return (
     <div className="participant">
@@ -68,8 +72,9 @@ const Participant = ({ participant }) => {
       <h3 className={'bottom-right'}>{participant.identity}</h3>
 
 
-      <video ref={videoRef} autoPlay={true} />
-      <audio ref={audioRef} autoPlay={true} muted={false} />
+      <video ref={videoRef} autoPlay={true} style={{ height: '50vh' }} />
+      <audio ref={audioRef} autoPlay={true} muted={mic} />
+
     </div>
   );
 };

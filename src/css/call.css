@@ -100,7 +100,7 @@
     padding: 20px;
   }
   .remote-participants {
-    padding: 20px;
+    padding: 20px;    
   }
   .participant {
     background: #333e5a;
@@ -109,6 +109,8 @@
     display: inline-block;
     margin-right: 10px;
     position: relative;
+    
+    
   }
   .participant:last-child {
     margin-right: 0;
@@ -126,6 +128,7 @@
     margin: 0 auto;
     border-radius: 6px;
     box-shadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)";
+
   }
   
   footer {

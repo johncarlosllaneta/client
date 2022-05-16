@@ -130,6 +130,7 @@ const GenReservation = (props) => {
                 setappointmentID(row.appointment_id);
                 setcategory(row.category);
                 setnotifService_id(row.service_id);
+                setserviceName(row.service_name);
                 handleShowModalFinish();
               }}
             >
@@ -275,7 +276,7 @@ const GenReservation = (props) => {
   const [vaccineNumber, setvaccineNumber] = useState();
   const [weight, setweight] = useState();
 
-
+  const [serviceName, setserviceName] = useState();
 
   return (
     <div>
@@ -351,8 +352,8 @@ const GenReservation = (props) => {
                 Axios.post(`${hostUrl}/pets/consultation/records/${pet_id}`, {
                   appointment_id: appointmentID,
                   service_id: notifService_id,
-                  vetid: props.vetid
-
+                  vetid: props.vetid,
+                  consultationType: serviceName
                 });
                 Axios.put(`${hostUrl}/vetclinic/appointment/done/${appointmentID}`)
                 Axios.post(`${hostUrl}/notification/appointment`, {
