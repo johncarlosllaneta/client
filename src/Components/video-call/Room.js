@@ -97,6 +97,7 @@ const Room = ({ roomName, room, handleLogout }) => {
               <Participant
                 key={room.localParticipant.sid}
                 participant={room.localParticipant}
+                isMe={true}
               />
             ) : (
               ""

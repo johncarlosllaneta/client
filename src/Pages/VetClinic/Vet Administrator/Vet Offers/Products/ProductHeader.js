@@ -14,25 +14,6 @@ function ProductHeader() {
 
             <h1>Products</h1>
         </div>
-        <div
-            style={{
-                display: 'flex',
-
-                alignItems: 'center'
-            }}
-        >
-            <Button
-                onClick={() => {
-                    messages(users[0].vetid);
-                }}
-                style={{
-                    height: '50%'
-                }}
-            >
-                Order History
-            </Button>
-
-        </div>
 
 
     </div>;

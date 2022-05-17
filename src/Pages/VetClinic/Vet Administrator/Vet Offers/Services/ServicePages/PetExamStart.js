@@ -389,7 +389,7 @@ const PetExamStart = (props) => {
         <Modal.Body>Are you sure you want to delete this service?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseDelete}>
-            Close
+            No
           </Button>
           <Button
             variant="danger"
@@ -399,7 +399,7 @@ const PetExamStart = (props) => {
               // updateProduct(updateProductId);
             }}
           >
-            Save Changes
+            Yes
           </Button>
         </Modal.Footer>
       </Modal>
@@ -417,13 +417,9 @@ const PetExamStart = (props) => {
                   label="Service Category"
                 >
                   <Form.Select custom defaultValue={updateServiceCategory}>
-                    <option value="Consultation">Consultation</option>
+
                     <option value="Pet Examination">Pet Examination</option>
-                    <option value="Pet Grooming">Pet Grooming </option>
-                    <option value="Preventive Controls">
-                      Preventive Services
-                    </option>
-                    <option value="Vaccination">Vaccination</option>
+
                   </Form.Select>
                 </FloatingLabel>
               </Form.Group>

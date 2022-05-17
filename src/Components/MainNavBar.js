@@ -51,7 +51,7 @@ const MainNavBar = () => {
         padding: 20,
       }}
       id="mainNavBar"
-      // expand="sm"
+    // expand="sm"
     >
       <Navbar.Brand href="/" style={landingPageName}>
         <Image src={logo} style={logocss} /> TERRAVET
@@ -68,7 +68,7 @@ const MainNavBar = () => {
         </Button>
         <Button
           id="landingPageButton"
-          href="/register"
+          href="/vetReg"
           style={landingPageButton}
         >
           Register

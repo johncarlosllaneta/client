@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
 
-const Participant = ({ participant }) => {
+const Participant = ({ participant, isMe }) => {
   const [videoTracks, setVideoTracks] = useState([]);
   const [audioTracks, setAudioTracks] = useState([]);
 
@@ -66,14 +66,36 @@ const Participant = ({ participant }) => {
   }, [audioTracks]);
   const [mic, setmic] = useState(false)
 
+
   return (
-    <div className="participant">
+    <div>
+      <div className="participant">
 
-      <h3 className={'bottom-right'}>{participant.identity}</h3>
+        <h3 className={'bottom-right'}>{participant.identity}</h3>
 
 
-      <video ref={videoRef} autoPlay={true} style={{ height: '50vh' }} />
-      <audio ref={audioRef} autoPlay={true} muted={mic} />
+        <video ref={videoRef} autoPlay={true} style={{ height: '50vh' }} />
+        <audio ref={audioRef} autoPlay={true} muted={true} />
+
+        {
+          isMe == true
+            ? <div style={{ borderRadius: 15, backgroundColor: 'blue', color: 'white' }}><IconButton color="primary" title={mic != true ? "Mute" : "Unmute"} onClick={() => {
+
+
+              const audioTrack = audioTracks[0];
+              if (audioTrack.isEnabled) {
+                audioTrack.disable()
+              } else {
+                audioTrack.enable()
+              }
+
+              console.log(audioTrack);
+              setmic(!mic)
+            }} >{mic == true ? <MicOffIcon /> : <MicIcon />}</IconButton> </div>
+            : <></>
+        }
+
+      </div>
 
     </div>
   );

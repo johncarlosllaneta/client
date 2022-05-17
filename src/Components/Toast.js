@@ -165,6 +165,50 @@ const ToastExpired = () =>
     progress: undefined,
   });
 
+const ToastConfirmAppointment = () =>
+  toast.success("Appointment Successfully Confirm", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+const ToastDoneAppointment = () =>
+  toast.success("Appointment Successfully Done", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+const ToastDeclineAppointment = () =>
+  toast.error("Appointment Successfully Decline", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+const ToastCancelAppointment = () =>
+  toast.error("Appointment Successfully Cancel", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
 export {
   ToastUpdate,
   ToastDelete,
@@ -181,4 +225,9 @@ export {
   ToastAddVirtualConsultation,
   ToastServicesUpdate,
   ToastExpired,
+  ToastConfirmAppointment,
+  ToastDoneAppointment,
+  ToastDeclineAppointment,
+  ToastCancelAppointment
+
 };

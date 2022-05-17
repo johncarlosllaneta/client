@@ -126,7 +126,7 @@ function VetStaffRegistration(props) {
                                 marginBottom: 0,
                                 marginLeft: 10
                             }}
-                        >Registering Veterinarian, Please wait!</p>
+                        >Registering Vet Staff, Please wait!</p>
                     </Container>
 
                 </Modal.Body>

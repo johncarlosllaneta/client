@@ -223,9 +223,9 @@ const VetSettings = (props) => {
     setvetEmail(user.email);
 
     var Monday = user.scheduleMonday;
-    if (Monday.length > 1) {
-      setOpeningMonday(Monday.split(" - ")[0]);
-      setClosingMonday(Monday.split(" - ")[1]);
+    if (user.scheduleMonday !== "" && user.scheduleMonday !== null) {
+      setOpeningMonday(user.scheduleMonday.split(" - ")[0]);
+      setClosingMonday(user.scheduleMonday.split(" - ")[1]);
       setCheckerMonday(false);
       setCheckerSwitchMonday(true);
     } else {
@@ -236,9 +236,9 @@ const VetSettings = (props) => {
     // alert(ClosingMonday);
 
     var Tuesday = user.scheduleTuesday;
-    if (Tuesday.length > 1) {
-      setOpeningTuesday(Tuesday.split(" - ")[0]);
-      setClosingTuesday(Tuesday.split(" - ")[1]);
+    if (user.scheduleTuesday !== "" && user.scheduleTuesday !== null) {
+      setOpeningTuesday(user.scheduleTuesday.split(" - ")[0]);
+      setClosingTuesday(user.scheduleTuesday.split(" - ")[1]);
       setCheckerTuesday(false);
       setCheckerSwitchTuesday(true);
     } else {
@@ -248,9 +248,9 @@ const VetSettings = (props) => {
     // alert(ClosingMonday);
 
     var Wednesday = user.scheduleWednesday;
-    if (Wednesday.length > 1) {
-      setOpeningWednesday(Wednesday.split(" - ")[0]);
-      setClosingWednesday(Wednesday.split(" - ")[1]);
+    if (user.scheduleWednesday !== "" && user.scheduleWednesday !== null) {
+      setOpeningWednesday(user.scheduleWednesday.split(" - ")[0]);
+      setClosingWednesday(user.scheduleWednesday.split(" - ")[1]);
       setCheckerWednesday(false);
       setCheckerSwitchWednesday(true);
     } else {
@@ -261,9 +261,9 @@ const VetSettings = (props) => {
     // alert(ClosingMonday);
 
     var Thursday = user.scheduleThursday;
-    if (Thursday.length > 1) {
-      setOpeningThursday(Thursday.split(" - ")[0]);
-      setClosingThursday(Thursday.split(" - ")[1]);
+    if (user.scheduleThursday !== "" && user.scheduleThursday !== null) {
+      setOpeningThursday(user.scheduleThursday.split(" - ")[0]);
+      setClosingThursday(user.scheduleThursday.split(" - ")[1]);
       setCheckerThursday(false);
       setCheckerSwitchThursday(true);
     } else {
@@ -274,9 +274,9 @@ const VetSettings = (props) => {
     // alert(ClosingMonday);
 
     var Friday = user.scheduleFriday;
-    if (Friday.length > 1) {
-      setOpeningFriday(Friday.split(" - ")[0]);
-      setClosingFriday(Friday.split(" - ")[1]);
+    if (user.scheduleFriday !== "" && user.scheduleFriday !== null) {
+      setOpeningFriday(user.scheduleFriday.split(" - ")[0]);
+      setClosingFriday(user.scheduleFriday.split(" - ")[1]);
       setCheckerFriday(false);
       setCheckerSwitchFriday(true);
     } else {
@@ -287,9 +287,9 @@ const VetSettings = (props) => {
     // alert(ClosingMonday);
 
     var Saturday = user.scheduleSaturday;
-    if (Saturday.length > 1) {
-      setOpeningSaturday(Saturday.split(" - ")[0]);
-      setClosingSaturday(Saturday.split(" - ")[1]);
+    if (user.scheduleSaturday !== "" && user.scheduleSaturday !== null) {
+      setOpeningSaturday(user.scheduleSaturday.split(" - ")[0]);
+      setClosingSaturday(user.scheduleSaturday.split(" - ")[1]);
       setCheckerSaturday(false);
       setCheckerSwitchSaturday(true);
     } else {
@@ -300,9 +300,9 @@ const VetSettings = (props) => {
     // alert(ClosingMonday);
 
     var Sunday = user.scheduleSunday;
-    if (Sunday.length > 1) {
-      setOpeningSunday(Sunday.split(" - ")[0]);
-      setClosingSunday(Sunday.split(" - ")[1]);
+    if (user.scheduleSunday !== "" && user.scheduleSunday !== null) {
+      setOpeningSunday(user.scheduleSunday.split(" - ")[0]);
+      setClosingSunday(user.scheduleSunday.split(" - ")[1]);
       setCheckerSunday(false);
       setCheckerSwitchSunday(true);
     } else {
@@ -323,43 +323,43 @@ const VetSettings = (props) => {
     var saturday;
     var sunday;
 
-    if (CheckerSwitchMonday) {
+    if (!CheckerSwitchMonday) {
       monday = null;
     } else {
       monday = OpeningMonday + " - " + ClosingMonday;
     }
 
-    if (CheckerSwitchTuesday) {
+    if (!CheckerSwitchTuesday) {
       tuesday = null;
     } else {
       tuesday = OpeningTuesday + " - " + ClosingTuesday;
     }
 
-    if (CheckerSwitchWednesday) {
+    if (!CheckerSwitchWednesday) {
       wednesday = null;
     } else {
       wednesday = OpeningWednesday + " - " + ClosingWednesday;
     }
 
-    if (CheckerThursday) {
+    if (!CheckerSwitchThursday) {
       thursday = null;
     } else {
       thursday = OpeningThursday + " - " + ClosingThursday;
     }
 
-    if (CheckerSwitchFriday) {
+    if (!CheckerSwitchFriday) {
       friday = null;
     } else {
       friday = OpeningFriday + " - " + ClosingFriday;
     }
 
-    if (CheckerSwitchSaturday) {
+    if (!CheckerSwitchSaturday) {
       saturday = null;
     } else {
       saturday = OpeningSaturday + " - " + ClosingSaturday;
     }
 
-    if (CheckerSwitchSunday) {
+    if (!CheckerSwitchSunday) {
       sunday = null;
     } else {
       sunday = OpeningSunday + " - " + ClosingSunday;

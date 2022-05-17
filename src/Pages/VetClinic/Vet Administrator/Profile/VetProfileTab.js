@@ -65,93 +65,96 @@ function VetProfileTab() {
     const userData = await getUser();
     setuser(userData);
 
-
-    if (
-      userData.scheduleMonday !== "" ||
-      userData.scheduleTuesday !== "" ||
-      userData.scheduleWednesday !== "" ||
-      userData.scheduleThursday !== "" ||
-      userData.scheduleFriday !== "" ||
-      userData.scheduleSaturday !== "" ||
-      userData.scheduleSunday !== ""
-
-      // user.scheduleMonday !== "" ||
-      // user.scheduleTuesday !== "" ||
-      // user.scheduleWednesday !== "" ||
-      // user.scheduleThursday !== "" ||
-      // user.scheduleFriday !== "" ||
-      // user.scheduleSaturday !== "" ||
-      // user.scheduleSunday !== ""
-    ) {
+    if (userData.scheduleMonday !== "" && userData.scheduleMonday !== null) {
       setOpeningMonday(
-        timeConvertion(
-          userData.scheduleMonday.split(" - ")[0]
-        )
+        // timeConvertion(
+        userData.scheduleMonday.split(" - ")[0]
+        // )
       );
       setClosingMonday(
-        timeConvertion(
-          userData.scheduleMonday.split(" - ")[1]
-        )
+        // timeConvertion(
+        userData.scheduleMonday.split(" - ")[1]
+        // )
       );
+    }
+
+    if (userData.scheduleTuesday !== "" && userData.scheduleTuesday !== null) {
       setOpeningTuesday(
-        timeConvertion(
-          userData.scheduleTuesday.split(" - ")[0]
-        )
+        // timeConvertion(
+        userData.scheduleTuesday.split(" - ")[0]
+        // )
       );
       setClosingTuesday(
-        timeConvertion(
-          userData.scheduleTuesday.split(" - ")[1]
-        )
+        // timeConvertion(
+        userData.scheduleTuesday.split(" - ")[1]
+        // )
       );
+    }
+
+    if (userData.scheduleWednesday !== "" && userData.scheduleWednesday !== null) {
       setOpeningWednesday(
-        timeConvertion(
-          userData.scheduleWednesday.split(" - ")[0]
-        )
+        // timeConvertion(
+        userData.scheduleWednesday.split(" - ")[0]
+        // )
       );
       setClosingWednesday(
-        timeConvertion(
-          userData.scheduleWednesday.split(" - ")[1]
-        )
+        // timeConvertion(
+        userData.scheduleWednesday.split(" - ")[1]
+        // )
       );
+    }
+
+    if (userData.scheduleThursday !== "" && userData.scheduleThursday !== null) {
       setOpeningThursday(
-        timeConvertion(
-          userData.scheduleThursday.split(" - ")[0]
-        )
+        // timeConvertion(
+        userData.scheduleThursday.split(" - ")[0]
+        // )
       );
       setClosingThursday(
-        timeConvertion(
-          userData.scheduleThursday.split(" - ")[1]
-        )
+        // timeConvertion(
+        userData.scheduleThursday.split(" - ")[1]
+        // )
       );
+    }
+
+    if (userData.scheduleFriday !== "" && userData.scheduleFriday !== null) {
       setOpeningFriday(
-        timeConvertion(
-          userData.scheduleFriday.split(" - ")[0]
-        )
+        // timeConvertion(
+        userData.scheduleFriday.split(" - ")[0]
+        // )
       );
       setClosingFriday(
-        timeConvertion(
-          userData.scheduleFriday.split(" - ")[1]
-        )
+        // timeConvertion(
+        userData.scheduleFriday.split(" - ")[1]
+        // )
       );
+    }
+
+
+    if (userData.scheduleSaturday !== "" && userData.scheduleSaturday !== null) {
       setOpeningSaturday(
-        timeConvertion(
-          userData.scheduleSaturday.split(" - ")[0]
-        )
+        // timeConvertion(
+        userData.scheduleSaturday.split(" - ")[0]
+        // )
       );
       setClosingSaturday(
-        timeConvertion(
-          userData.scheduleSaturday.split(" - ")[1]
-        )
+        // timeConvertion(
+        userData.scheduleSaturday.split(" - ")[1]
+        // )
       );
+    }
+
+
+    if (userData.scheduleSunday !== "" && userData.scheduleSunday !== null) {
       setOpeningSunday(
-        timeConvertion(
-          userData.scheduleSunday.split(" - ")[0]
-        )
+        // timeConvertion(
+        userData.scheduleSunday.split(" - ")[0]
+        // )
       );
       setClosingSunday(
-        timeConvertion(
-          userData.scheduleSunday.split(" - ")[1]
-        )
+        // timeConvertion(
+        userData.scheduleSunday.split(" - ")[1]
+        // )
       );
     }
 

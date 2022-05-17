@@ -88,7 +88,7 @@ function VeterinarianTable(props) {
                     overflowY: 'auto',
                     display: 'flex',
                     justifyContent: 'start',
-
+                    paddingTop: '3vh'
                 }}
             >
 

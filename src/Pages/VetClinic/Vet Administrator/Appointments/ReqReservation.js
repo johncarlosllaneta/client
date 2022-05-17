@@ -15,6 +15,9 @@ import MaterialTable from "material-table";
 import { hostUrl } from "../../../../Components/Host";
 import { useParams } from "react-router-dom";
 
+import { ToastContainer } from "react-toastify";
+import { ToastConfirmAppointment, ToastDeclineAppointment } from "../../../../Components/Toast";
+
 const ReqReservation = (props) => {
   const [showView, setShowView] = useState(false);
   const handleCloseView = () => setShowView(false);
@@ -191,6 +194,7 @@ const ReqReservation = (props) => {
   const acceptAppointment = () => {
     Axios.put(`${hostUrl}/vetclinic/appointment/accept/${appointmentID}`).then(
       (response) => {
+        ToastConfirmAppointment();
         props.refreshTables(props.vetid);
         Axios.post(`${hostUrl}/notification/appointment`, {
           appointment_id: appointmentID,
@@ -204,6 +208,7 @@ const ReqReservation = (props) => {
   const declinedAppointment = () => {
     Axios.put(`${hostUrl}/vetclinic/appointment/decline/${appointmentID}`).then(
       (response) => {
+        ToastDeclineAppointment();
         props.refreshTables(props.vetid);
         Axios.post(`${hostUrl}/notification/appointment`, {
           appointment_id: appointmentID,
@@ -226,6 +231,10 @@ const ReqReservation = (props) => {
 
   return (
     <div>
+
+      {/* Toast container */}
+      <ToastContainer />
+
       {/* Accept appointment */}
       <Modal
         show={showAcceptModal}

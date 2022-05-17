@@ -19,6 +19,12 @@ import { hostUrl } from "../../../../Components/Host";
 import { useParams } from "react-router-dom";
 import AddAppointment from "./AddAppointment";
 
+
+import { ToastContainer } from "react-toastify";
+import { ToastCancelAppointment, ToastDoneAppointment } from "../../../../Components/Toast";
+
+
+
 const GenReservation = (props) => {
 
   const [notifService_id, setnotifService_id] = useState();
@@ -196,6 +202,7 @@ const GenReservation = (props) => {
   const declinedAppointment = () => {
     Axios.put(`${hostUrl}/vetclinic/appointment/decline/${appointmentID}`).then(
       (response) => {
+        ToastCancelAppointment()
         props.refreshTables(props.vetid);
         Axios.post(`${hostUrl}/notification/appointment`, {
           appointment_id: appointmentID,
@@ -215,6 +222,7 @@ const GenReservation = (props) => {
   const finishAppointment = () => {
     Axios.put(`${hostUrl}/vetclinic/appointment/done/${appointmentID}`).then(
       (response) => {
+        ToastDoneAppointment()
         props.refreshTables(props.vetid);
         Axios.post(`${hostUrl}/notification/appointment`, {
           appointment_id: appointmentID,
@@ -281,6 +289,8 @@ const GenReservation = (props) => {
   return (
     <div>
 
+      {/* Toast container */}
+      <ToastContainer />
 
 
 

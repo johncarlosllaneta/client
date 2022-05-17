@@ -166,7 +166,7 @@ const PharmacyTab = (props) => {
                 setpharmacyUpdateDescription(row.medicine_description);
                 setpharmacyUpdateStatus(row.status);
                 setpharmacyUpdatePrice(row.price);
-                setlotId(row.lot_id);
+                setlotId(row.med_id);
                 handleShowUpdate();
                 setviewDisableField(true);
                 setviewMedicine("none");

@@ -36,8 +36,8 @@ function HomeTab(props) {
   const [averageRating, setaverageRating] = useState();
 
   function getPet(id) {
-    axios.get(`${hostUrl}/pets/vetclinic/length/${id}`).then((response) => {
-      setNumberOfPets(response.data.pets);
+    axios.get(`${hostUrl}/vetclinic/registered/pets/${id}`).then((response) => {
+      setNumberOfPets(response.data);
     });
   }
 
@@ -89,7 +89,7 @@ function HomeTab(props) {
             <DashboardContainer
               icon={<FaPaw style={{ fontSize: 100 }} />}
               category={"Pet Population"}
-              quantity={numberOfPets}
+              quantity={numberOfPets == null ? 0 : numberOfPets.length}
             />
           )}
         </Col>

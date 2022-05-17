@@ -39,26 +39,28 @@ function ProductDescription(props) {
                         }}
                     />
                 </Container>
-                <h2
+                <h4
                     style={{
                         fontWeight: "bold",
                         color: "#19B9CC",
-                        marginBottom: 0
+                        marginBottom: 0,
+                        textAlign: 'center',
                     }}
                 >
                     Product Name
-                </h2>
+                </h4>
                 <p
                     style={{
                         fontWeight: "bold",
                         marginBottom: 0,
-                        textAlign: 'center'
+                        textAlign: 'center',
+                        fontSize: 14
                     }}
                 >
                     {props.productInfo.product_name}
                 </p>
 
-                <h4
+                <h6
                     style={{
                         fontWeight: "bold",
                         color: "#19B9CC",
@@ -66,11 +68,12 @@ function ProductDescription(props) {
                     }}
                 >
                     Product Description
-                </h4>
+                </h6>
                 <p
                     style={{
                         fontWeight: "bold",
-                        marginBottom: 0
+                        marginBottom: 0,
+                        fontSize: 12
                     }}
                 >
                     {props.productInfo.product_desc}
@@ -85,7 +88,7 @@ function ProductDescription(props) {
                     }}
                 >
                     <div>
-                        <h4
+                        <h6
                             style={{
                                 fontWeight: "bold",
                                 color: "#19B9CC",
@@ -93,18 +96,19 @@ function ProductDescription(props) {
                             }}
                         >
                             Quantity
-                        </h4>
+                        </h6>
                         <p
                             style={{
                                 fontWeight: "bold",
-                                marginBottom: 0
+                                marginBottom: 0,
+                                fontSize: 14
                             }}
                         >
                             {props.productInfo.quantity}
                         </p>
                     </div>
                     <div>
-                        <h4
+                        <h6
                             style={{
                                 fontWeight: "bold",
                                 color: "#19B9CC",
@@ -112,11 +116,12 @@ function ProductDescription(props) {
                             }}
                         >
                             Total Price
-                        </h4>
+                        </h6>
                         <p
                             style={{
                                 fontWeight: "bold",
-                                marginBottom: 0
+                                marginBottom: 0,
+                                fontSize: 14
                             }}
                         >
                             {"₱ " +

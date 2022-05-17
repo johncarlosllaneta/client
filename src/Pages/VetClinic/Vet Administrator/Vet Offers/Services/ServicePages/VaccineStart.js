@@ -385,10 +385,10 @@ const VaccineStart = (props) => {
         <Modal.Header closeButton>
           <Modal.Title>Delete Service</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure? you want to delete this service?</Modal.Body>
+        <Modal.Body>Are you sure do you want to delete this service?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseDelete}>
-            Close
+            No
           </Button>
           <Button
             variant="primary"
@@ -398,7 +398,7 @@ const VaccineStart = (props) => {
               // updateProduct(updateProductId);
             }}
           >
-            Save Changes
+            Yes
           </Button>
         </Modal.Footer>
       </Modal>
@@ -416,12 +416,7 @@ const VaccineStart = (props) => {
                   label="Service Category"
                 >
                   <Form.Select custom defaultValue={updateServiceCategory}>
-                    <option value="Consultation">Consultation</option>
-                    <option value="Pet Examination">Pet Examination</option>
-                    <option value="Pet Grooming">Pet Grooming </option>
-                    <option value="Preventive Controls">
-                      Preventive Services
-                    </option>
+
                     <option value="Vaccination">Vaccination</option>
                   </Form.Select>
                 </FloatingLabel>
