@@ -12,67 +12,47 @@ import {
   Form,
   Modal,
   FloatingLabel,
-  Card,
 } from "react-bootstrap";
 import Axios from "axios";
 import { useParams, BrowserRouter, Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import MaterialTable from "material-table";
 import { hostUrl } from "../../../../../../Components/Host";
-import imageI from "../../../../../../Images/PetOwner/Consultation.png";
+import imageI from "../../../../../../Images/CHECKUP.png";
 import imageII from "../../../../../../Images/examination copy.png";
 import imageIII from "../../../../../../Images/baths.png";
 import imageIV from "../../../../../../Images/preventive.png";
 import imageV from "../../../../../../Images/scopy.png";
-import imageVI from "../../../../../../Images/Surgery_White.png";
+import imageVI from "../../../../../../Images/Surgery_Colored.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import getUser from "../../../../../../Components/userData";
-import { Skeleton } from "@mui/material";
+import { Skeleton, useMediaQuery } from "@mui/material";
 
-const ConsultStart = (props) => {
-  const [user, setuser] = useState([]);
-  const [consultation, setconsultation] = useState([]);
-  const [online, setonline] = useState(false);
-  const [physical, setphysical] = useState(false);
+const SurgeryStart = (props) => {
+  let { vetid } = useParams();
+  var id = vetid.toString().replace("10##01", "/");
+  //category
+  const [consulation, setconsulation] = useState(true);
+  const [petExamination, setpetExamination] = useState(true);
+  const [petGrooming, setpetGrooming] = useState(true);
+  const [preventiveControls, setpreventiveControls] = useState(true);
+  const [vaccination, setvaccination] = useState(true);
   const [surgery, setsurgery] = useState(true);
-
+  // const [inHouseLab, setinHouseLab] = useState(true);
+  // const [counter, setcounter] = useState(0);
+  const [user, setuser] = useState([]);
   useEffect(async () => {
     const userData = await getUser();
     setuser(userData);
 
     getServices(userData.vet_doc_id);
-    Axios.get(`${hostUrl}/consultation/physical/${userData.vetid}`).then(
-      (response) => {
-        setphysicalConsultation(response.data);
-        console.log(response.data);
-        // console.log(response.data)
-      }
-    );
-
-    Axios.get(`${hostUrl}/consultation/virtual/${userData.vetid}`).then(
-      (response) => {
-        setonlineConsultation(response.data);
-        console.log(response.data);
-        // console.log(response.data)
-      }
-    );
-    Axios.get(`${hostUrl}/consultation/${userData.vetid}`).then((response) => {
-      setconsultation(response.data);
-      // console.log(response.data)
-    });
+    getSurgery(userData.vetid);
   }, []);
-
   function getServices(id) {
     Axios.get(`${hostUrl}/doc/${id}`).then((response) => {
       if (response.data[0].enableConsultation == 1) {
-        setconsulations(false);
-      }
-      if (response.data[0].enableOnlineConsultation == 1) {
-        setonline(true);
-      }
-      if (response.data[0].enablePhysicalConsultation == 1) {
-        setphysical(true);
+        setconsulation(false);
       }
       if (response.data[0].enableExamination == 1) {
         setpetExamination(false);
@@ -92,20 +72,12 @@ const ConsultStart = (props) => {
       }
     });
   }
-
-  const [consulations, setconsulations] = useState(true);
-  const [petExamination, setpetExamination] = useState(true);
-  const [petGrooming, setpetGrooming] = useState(true);
-  const [preventiveControls, setpreventiveControls] = useState(true);
-  const [vaccination, setvaccination] = useState(true);
-  const [inHouseLab, setinHouseLab] = useState(true);
-  const [enableConsultationPhysical, setenableConsultationPhysical] =
-    useState(false);
-  const [enableConsultationVirtual, setenableConsultationVirtual] =
-    useState(false);
-
-  const [onlineConsultation, setonlineConsultation] = useState([]);
-  const [physicalConsultation, setphysicalConsultation] = useState([]);
+  const getSurgery = async (id) => {
+    // alert(userData.vetid);
+    const result = await Axios.get(`${hostUrl}/surgery/${id}`);
+    // console.log(result.data);
+    setsurgerys(result.data);
+  };
 
   const [serviceName, setServiceName] = useState();
   const [serviceDescription, setServiceDescription] = useState();
@@ -115,6 +87,7 @@ const ConsultStart = (props) => {
   const handleCloseInsert = () => setShowInsert(false);
   const handleShowInsert = () => setShowInsert(true);
 
+  const [services, setservices] = useState([]);
   const [updateService, setupdateService] = useState([]);
 
   const [updateServiceId, setupdateServiceId] = useState();
@@ -126,22 +99,26 @@ const ConsultStart = (props) => {
   const [showServices, setShowServices] = useState(false);
   const handleCloseServices = () => setShowServices(false);
   const handleShowServices = (val) => {
+    // setupdateService(val);
     setupdateServiceId(val.service_id);
     setupdateServiceName(val.service_name);
     setupdateServiceDescription(val.service_description);
     setupdateServiceFee(val.service_fee);
     setupdateServiceCategory(val.category);
+    console.log(updateService);
     setShowServices(true);
   };
 
   const [showUpdate, setShowUpdate] = useState(false);
   const handleCloseUpdate = () => setShowUpdate(false);
   const handleShowUpdate = (val) => {
+    // setupdateService(val);
     setupdateServiceId(val.service_id);
     setupdateServiceName(val.service_name);
     setupdateServiceDescription(val.service_description);
     setupdateServiceFee(val.service_fee);
     setupdateServiceCategory(val.category);
+    console.log(updateService);
     setShowUpdate(true);
   };
 
@@ -152,8 +129,14 @@ const ConsultStart = (props) => {
     setShowDelete(true);
   };
 
-  const [validated, setValidated] = useState(false);
-  const [validatedInsert, setValidatedInsert] = useState(false);
+  const [surgerys, setsurgerys] = useState([]);
+
+  function reloadPetExamination() {
+    Axios.get(`${hostUrl}/surgery/${id}`).then((response) => {
+      setsurgerys(response.data);
+      // console.log(response.data)
+    });
+  }
 
   const submitService = (e) => {
     const form = e.currentTarget;
@@ -163,18 +146,19 @@ const ConsultStart = (props) => {
     } else {
       e.preventDefault();
 
-      Axios.post(`${hostUrl}/services/insert/:${user.vetid}`, {
-        serviceName: "Consultation",
+      Axios.post(`${hostUrl}/services/insert/:${id}`, {
+        serviceName: serviceName,
         serviceDescription: serviceDescription,
         service_fee: serviceFee,
-        category: "Consultation",
+        category: "Pet Examination",
       }).then((response) => {
-        setValidatedInsert(false);
-        handleCloseInsert();
+        if (response.data.message == "Success") {
+          setValidatedInsert(false);
+          handleCloseInsert();
+          reloadPetExamination();
+        }
       });
     }
-
-    setValidatedInsert(true);
   };
 
   const updatedService = (e) => {
@@ -190,7 +174,10 @@ const ConsultStart = (props) => {
         updateServiceFee: updateServiceFee,
         updateServiceCategory: updateServiceCategory,
       }).then((response) => {
-        handleCloseUpdate();
+        if (response.data.message == "Success") {
+          handleCloseUpdate();
+          reloadPetExamination();
+        }
       });
     }
 
@@ -201,11 +188,65 @@ const ConsultStart = (props) => {
     Axios.delete(`${hostUrl}/service/delete/:${updateServiceId}`, {}).then(
       (response) => {
         // alert(response.data.message);
+        if (response.data.message == "Success") {
+          reloadPetExamination();
+        }
       }
     );
   };
 
+  const [validated, setValidated] = useState(false);
+  const [validatedInsert, setValidatedInsert] = useState(false);
+
   const renderTooltip = (props) => <Popover>{props.msg}</Popover>;
+
+  const columns = [
+    {
+      title: "Service Name",
+      field: "service_name",
+      sorting: true,
+      defaultSort: "asc",
+    },
+    {
+      title: "Description",
+      // field: "category",
+      sorting: true,
+      render: (row) => <p>{row.service_description}</p>,
+    },
+    {
+      title: "Fee",
+      field: "service_fee",
+      render: (rowData) =>
+        rowData.price !== "" && "₱" + rowData.service_fee + ".00",
+    },
+    {
+      title: "Action",
+      render: (row) => (
+        <div>
+          <OverlayTrigger
+            placement="top-start"
+            delay={{ show: 250 }}
+            overlay={renderTooltip({ msg: "View Information" })}
+          >
+            <Button
+              variant="info"
+              className="mr-3"
+              style={{
+                color: "white",
+                margin: 5,
+              }}
+              onClick={() => {
+                handleShowServices(row);
+              }}
+            >
+              <AiOutlineSearch style={{ fontSize: 25 }} />
+              View Details
+            </Button>
+          </OverlayTrigger>
+        </div>
+      ),
+    },
+  ];
 
   // Popover Overlay
   const [showPopover, setShowPopover] = useState(false);
@@ -271,13 +312,7 @@ const ConsultStart = (props) => {
                 controlId="floatingInputPrice"
                 label="Service Category"
               >
-                <Form.Select
-                  custom
-                  defaultValue={updateServiceCategory}
-                  onChange={(e) => {
-                    setupdateServiceCategory(e.target.value);
-                  }}
-                >
+                <Form.Select custom defaultValue={updateServiceCategory}>
                   <option value="Consultation">Consultation</option>
                   <option value="Pet Examination">Pet Examination</option>
                   <option value="Pet Grooming">Pet Grooming </option>
@@ -387,14 +422,38 @@ const ConsultStart = (props) => {
                 <Form.Select
                   custom
                   required
-                  defaultValue={"Consultation"}
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    setCategory("Consultation");
-                  }}
+                  defaultValue={"Pet Examination"}
+                  // onSubmit={(e) => {
+                  //   e.preventDefault();
+                  //   setCategory('Consultation');
+                  // }}
                 >
-                  <option value="Consultation">Consultation</option>
+                  <option value="Pet Examination">Pet Examination</option>
                 </Form.Select>
+              </FloatingLabel>
+            </Form.Group>
+
+            <Form.Group controlId="formBasicProduct">
+              <FloatingLabel
+                controlId="floatingInputPrice"
+                label="Service Name"
+              >
+                <Form.Control
+                  type="text"
+                  // value={updateProductName}
+                  placeholder="Sample Service"
+                  minLength={5}
+                  required
+                  onChange={(e) => {
+                    setServiceName(e.target.value);
+                  }}
+                />
+                <Form.Control.Feedback type="valid">
+                  You've input a valid service name.
+                </Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">
+                  Service name is required in this form.
+                </Form.Control.Feedback>
               </FloatingLabel>
             </Form.Group>
 
@@ -458,7 +517,6 @@ const ConsultStart = (props) => {
         </Form>
       </Modal>
 
-      {/* Main Panel */}
       <div
         style={{
           display: "flex",
@@ -503,19 +561,19 @@ const ConsultStart = (props) => {
         }}
       >
         <Row>
-          <Col hidden={consulations}>
+          <Col hidden={consulation}>
             <Link
-              to={`/services/consultation/${user.vetid}`}
+              to={`/services/consultation/${vetid}`}
               style={{
                 textDecoration: "none",
               }}
             >
               <Container
                 style={{
-                  backgroundColor: "white",
+                  backgroundColor: "#3BD2E3",
                   height: "15vh",
                   width: "10vw",
-                  borderColor: "#3BD2E3",
+                  borderColor: "white",
                   borderStyle: "solid",
                   borderWidth: 5,
                   borderRadius: 30,
@@ -540,7 +598,7 @@ const ConsultStart = (props) => {
                 <div>
                   <p
                     style={{
-                      color: "#3BD2E3",
+                      color: "white",
                       fontWeight: "bolder",
                       margin: 0,
                     }}
@@ -554,7 +612,7 @@ const ConsultStart = (props) => {
 
           <Col hidden={petExamination}>
             <Link
-              to={`/services/pet&examination/${user.vetid}`}
+              to={`/services/pet&examination/${vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -563,6 +621,7 @@ const ConsultStart = (props) => {
                 style={{
                   backgroundColor: "#3BD2E3",
                   height: "15vh",
+                  padding: 10,
                   width: "10vw",
                   borderColor: "white",
                   borderStyle: "solid",
@@ -603,7 +662,7 @@ const ConsultStart = (props) => {
 
           <Col hidden={petGrooming}>
             <Link
-              to={`/services/pet&grooming/${user.vetid}`}
+              to={`/services/pet&grooming/${vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -652,7 +711,7 @@ const ConsultStart = (props) => {
 
           <Col hidden={preventiveControls}>
             <Link
-              to={`/services/preventive&control/${user.vetid}`}
+              to={`/services/preventive&control/${vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -701,7 +760,7 @@ const ConsultStart = (props) => {
 
           <Col hidden={vaccination}>
             <Link
-              to={`/services/vaccination/${user.vetid}`}
+              to={`/services/vaccination/${vetid}`}
               style={{
                 textDecoration: "none",
               }}
@@ -750,18 +809,17 @@ const ConsultStart = (props) => {
 
           <Col hidden={surgery}>
             <Link
-              to={`/services/surgery/${user.vetid}`}
+              to={`/services/surgery/${vetid}`}
               style={{
                 textDecoration: "none",
               }}
             >
               <Container
                 style={{
-                  backgroundColor: "#3BD2E3",
+                  backgroundColor: "white",
                   height: "15vh",
                   width: "10vw",
-                  padding: 10,
-                  borderColor: "white",
+                  borderColor: "#3BD2E3",
                   borderStyle: "solid",
                   borderWidth: 5,
                   borderRadius: 30,
@@ -777,15 +835,16 @@ const ConsultStart = (props) => {
                   <Image
                     src={imageVI}
                     style={{
-                      height: "8vh",
+                      height: "7vh",
                       width: "5vw",
                     }}
                   />
                 </div>
+
                 <div>
                   <p
                     style={{
-                      color: "white",
+                      color: "#3BD2E3",
                       fontWeight: "bolder",
                       margin: 0,
                     }}
@@ -799,99 +858,61 @@ const ConsultStart = (props) => {
         </Row>
       </div>
 
-      {/* Content */}
+      {/* Data Table */}
 
-      {user.length != 0 ? (
-        <Row
-          style={{
-            marginTop: "2vh",
-            padding: 10,
-          }}
-        >
-          <Col>
-            <Card
-              style={{
-                padding: 20,
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div>
-                  <h6>Physical Consultation</h6>
-                </div>
-
-                <div>
-                  <Form.Switch
-                    type="switch"
-                    checked={physical}
-                    disabled={true}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <p style={{ textAlign: "left" }}>
-                  A trip to the veterinarian’s office with your pet, similar to
-                  a visit to the doctor’s office, often proves costly. It can be
-                  difficult to predict how much a vet visit will cost, and
-                  sometimes, it’s shocking when you see the bill.
-                </p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              ></div>
-            </Card>
-          </Col>
-
-          <Col>
-            <Card
-              style={{
-                padding: 20,
-                height: 160,
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div>
-                  <h6>Virtual Consultation</h6>
-                </div>
-
-                <div>
-                  <Form.Switch type="switch" checked={online} disabled={true} />
-                </div>
-              </div>
-
-              <div>
-                <p style={{ textAlign: "left" }}>
-                  A virtual consultation for diagnostic of pets using video
-                  conference.
-                </p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              ></div>
-            </Card>
-          </Col>
-        </Row>
+      {/* tables */}
+      {user.length == 0 ? (
+        <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
       ) : (
-        <Skeleton variant="rectangular" height={"30vh"} />
+        <Row>
+          <Overlay
+            show={showPopover}
+            target={target}
+            placement="bottom"
+            container={ref.current}
+            containerPadding={20}
+          >
+            <Popover id="popover-contained">
+              <Popover.Header as="h3">Helper</Popover.Header>
+              <Popover.Body>
+                <p>This table shows the pet examination services. </p>
+              </Popover.Body>
+            </Popover>
+          </Overlay>
+          <MaterialTable
+            style={{
+              boxShadow:
+                "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+              width: "75vw",
+              marginTop: 10,
+              marginLeft: 20,
+            }}
+            columns={columns}
+            data={surgerys}
+            title={"Surgery Services"}
+            cellEditable={false}
+            options={{
+              sorting: true,
+            }}
+            actions={[
+              // {
+              //   icon: "add",
+              //   tooltip: "Add Services",
+              //   isFreeAction: true,
+              //   onClick: (event) => handleShowInsert(),
+              // },
+              {
+                icon: "information",
+                tooltip: "Helper",
+                isFreeAction: true,
+                onClick: handleClick,
+              },
+            ]}
+          />
+        </Row>
       )}
     </div>
   );
 };
 
-export default ConsultStart;
+export default SurgeryStart;

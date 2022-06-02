@@ -13,6 +13,7 @@ import Axios from "axios";
 import { hostUrl } from "../../../../../Components/Host";
 import getUser from "../../../../../Components/userData";
 import { Skeleton } from "@mui/material";
+import Surgery from "./Tables/Surgery";
 
 function PetsGeneralTable() {
   const [value, setValue] = React.useState("1");
@@ -23,6 +24,7 @@ function PetsGeneralTable() {
   const [consultation, setconsultation] = useState([]);
   const [examination, setexamination] = useState([]);
   const [vaccination, setvaccination] = useState([]);
+  const [surgery, setsurgery] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [user, setuser] = useState([]);
   useEffect(async () => {
@@ -31,6 +33,7 @@ function PetsGeneralTable() {
     consultationData(userData.vetid);
     examinationData(userData.vetid);
     vaccinationData(userData.vetid);
+    surgeryData(userData.vetid);
   }, []);
 
   const consultationData = async (vetid) => {
@@ -55,6 +58,13 @@ function PetsGeneralTable() {
       setisLoading(true);
     });
   };
+
+  const surgeryData = async (vetid) => {
+    Axios.get(`${hostUrl}/doc/pending/surgery/${vetid}`).then((response) => {
+      setsurgery(response.data);
+      setisLoading(true);
+    });
+  };
   return (
     <div>
       <Row>
@@ -67,6 +77,7 @@ function PetsGeneralTable() {
                 consultationData(user.vetid);
                 examinationData(user.vetid);
                 vaccinationData(user.vetid);
+                surgeryData(user.vetid);
               }}
             >
               <Tab
@@ -86,6 +97,13 @@ function PetsGeneralTable() {
               <Tab
                 label="Consultation"
                 value="3"
+                style={{
+                  marginRight: 15,
+                }}
+              />
+              <Tab
+                label="Surgery"
+                value="4"
                 style={{
                   marginRight: 15,
                 }}
@@ -140,6 +158,18 @@ function PetsGeneralTable() {
                   consultData={consultation}
                   refreshTable={consultationData}
                 />
+              )
+            ) : (
+              <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+            )}
+          </TabPanel>
+
+          <TabPanel value="4">
+            {isLoading == true ? (
+              surgery.length != 0 ? (
+                <Surgery surgeryData={surgery} refreshTable={surgeryData} />
+              ) : (
+                <Surgery surgeryData={surgery} refreshTable={surgeryData} />
               )
             ) : (
               <Skeleton variant="rectangular" height={"100%"} width={"100%"} />

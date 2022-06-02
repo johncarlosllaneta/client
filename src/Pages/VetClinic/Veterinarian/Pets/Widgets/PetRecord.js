@@ -16,6 +16,7 @@ import getUser from "../../../../../Components/userData";
 import { Skeleton } from "@mui/material";
 import Axios from "axios";
 import { hostUrl } from "../../../../../Components/Host";
+import SurgeryPetCard from "./SurgeryPetCard";
 
 function PetRecord(props) {
   let { petid } = useParams();
@@ -26,6 +27,7 @@ function PetRecord(props) {
   const [vaccine, setvaccine] = useState([]);
   const [consult, setconsult] = useState([]);
   const [grooming, setgrooming] = useState([]);
+  const [surgery, setsurgery] = useState([]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -37,6 +39,7 @@ function PetRecord(props) {
     vaccineData(userData.vetid);
     consultData(userData.vetid);
     groomingData(userData.vetid);
+    surgeryData(userData.vetid);
   }, []);
 
   const healthData = async (vetid) => {
@@ -69,6 +72,14 @@ function PetRecord(props) {
     Axios.get(`${hostUrl}/pet/grooming/record/${vetid}/${petid}`).then(
       (response) => {
         setgrooming(response.data);
+        setisLoading(true);
+      }
+    );
+  };
+  const surgeryData = async (vetid) => {
+    Axios.get(`${hostUrl}/pet/surgery/record/${vetid}/${petid}`).then(
+      (response) => {
+        setsurgery(response.data);
         setisLoading(true);
       }
     );
@@ -125,17 +136,18 @@ function PetRecord(props) {
               vaccineData(user.vetid);
               consultData(user.vetid);
               groomingData(user.vetid);
+              surgeryData(user.vetid);
             }}
           >
             <Tab
-              label="Health Record"
+              label="Health"
               value="1"
               style={{
                 marginRight: 15,
               }}
             />
             <Tab
-              label="Vaccine Record"
+              label="Vaccine"
               value="2"
               style={{
                 marginRight: 15,
@@ -153,6 +165,14 @@ function PetRecord(props) {
             <Tab
               label="Appointments"
               value="4"
+              style={{
+                marginRight: 15,
+              }}
+            />
+
+            <Tab
+              label="Surgery"
+              value="5"
               style={{
                 marginRight: 15,
               }}
@@ -201,6 +221,18 @@ function PetRecord(props) {
               <AppointmentPetCard groomingData={grooming} />
             ) : (
               <AppointmentPetCard groomingData={grooming} />
+            )
+          ) : (
+            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+          )}
+        </TabPanel>
+
+        <TabPanel value="5">
+          {isLoading == true ? (
+            surgery.length != 0 ? (
+              <SurgeryPetCard surgeryData={surgery} />
+            ) : (
+              <SurgeryPetCard surgeryData={surgery} />
             )
           ) : (
             <Skeleton variant="rectangular" height={"100%"} width={"100%"} />

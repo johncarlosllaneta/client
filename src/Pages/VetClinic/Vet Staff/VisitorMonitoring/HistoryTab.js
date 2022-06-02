@@ -138,14 +138,14 @@ const HistoryTab = (props) => {
     },
     {
       title: "Time",
-      // field: "time",
+      // field: "time_visited",
       sorting: true,
       render: (row) =>
         timeFormatter(
           row.time_visited
             .substring()
-            .split("T")[1]
-            .substring(0, row.time_visited.substring().split("T")[1].length - 5)
+            .split(" ")[1]
+            .substring(0, row.time_visited.substring().split(" ")[1].length)
         ),
     },
   ];

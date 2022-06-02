@@ -17,6 +17,7 @@ import ConsultStartHolder from "./Vet Offers/Services/ServicePages/ConsultStartH
 import PetExamStartHolder from "./Vet Offers/Services/ServicePages/PetExamStartHolder";
 import PetGroomStartHolder from "./Vet Offers/Services/ServicePages/PetGroomStartHolder";
 import PreControlStartHolder from "./Vet Offers/Services/ServicePages/PreControlStartHolder";
+import SurgeryStartHolder from "./Vet Offers/Services/ServicePages/SurgeryStartHolder";
 import VaccineStartHolder from "./Vet Offers/Services/ServicePages/VaccineStartHolder";
 import ServicesVerified from "./Vet Offers/Services/ServicesVerified";
 
@@ -61,6 +62,11 @@ function VetDoctorHome() {
             path="/services/vaccination/:vetid"
             exact
             component={VaccineStartHolder}
+          />
+          <Route
+            path="/services/surgery/:vetid"
+            exact
+            component={SurgeryStartHolder}
           />
           <Route path="/pharmacy" exact component={PharmacyMain} />
           <Route path="/appointments" exact component={AppointmentMain} />

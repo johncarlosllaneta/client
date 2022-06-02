@@ -88,6 +88,17 @@ const ToastConsultation = () =>
     progress: undefined,
   });
 
+const ToastSurgery = () =>
+  toast.success("Surgery Successfully", {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
 const ToastClaim = () =>
   toast.success("Claim Successfully", {
     position: "top-right",
@@ -228,6 +239,6 @@ export {
   ToastConfirmAppointment,
   ToastDoneAppointment,
   ToastDeclineAppointment,
-  ToastCancelAppointment
-
+  ToastCancelAppointment,
+  ToastSurgery,
 };

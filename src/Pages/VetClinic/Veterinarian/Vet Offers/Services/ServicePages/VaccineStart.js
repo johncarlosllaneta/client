@@ -23,7 +23,7 @@ import imageII from "../../../../../../Images/examination copy.png";
 import imageIII from "../../../../../../Images/baths.png";
 import imageIV from "../../../../../../Images/preventive.png";
 import imageV from "../../../../../../Images/PetOwner/Vaccination.png";
-import imageVI from "../../../../../../Images/INHOUSEW.png";
+import imageVI from "../../../../../../Images/Surgery_White.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import getUser from "../../../../../../Components/userData";
@@ -37,6 +37,7 @@ const VaccineStart = (props) => {
   const [petGrooming, setpetGrooming] = useState(true);
   const [preventiveControls, setpreventiveControls] = useState(true);
   const [vaccination, setvaccination] = useState(true);
+  const [surgery, setsurgery] = useState(true);
   const [inHouseLab, setinHouseLab] = useState(true);
   const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
@@ -63,6 +64,9 @@ const VaccineStart = (props) => {
       }
       if (response.data[0].enablePreventiveControls == 1) {
         setpreventiveControls(false);
+      }
+      if (response.data[0].enableSurgery == 1) {
+        setsurgery(false);
       }
     });
   }
@@ -799,6 +803,56 @@ const VaccineStart = (props) => {
                     }}
                   >
                     Vaccination
+                  </p>
+                </div>
+              </Container>
+            </Link>
+          </Col>
+
+          <Col hidden={surgery}>
+            <Link
+              to={`/services/surgery/${vetid}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  padding: 10,
+                  width: "10vw",
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageVI}
+                    style={{
+                      height: "7vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Surgery
                   </p>
                 </div>
               </Container>
