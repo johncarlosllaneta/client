@@ -47,6 +47,7 @@ function ProductSearchBar(props) {
 
 
             <Form.Control type="text" placeholder="search"
+                onChange={(e) => props.setsearch(e.target.value)}
                 style={{
                     width: '20vw'
                 }}

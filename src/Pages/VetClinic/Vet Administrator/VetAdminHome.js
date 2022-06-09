@@ -28,6 +28,7 @@ import { Skeleton } from '@mui/material';
 import Profile from '../Unverified Vet/Profile/Profile';
 import VetOffers from '../Unverified Vet/Vet Offers/VetOffers';
 import Subscription from '../Unverified Vet/Subscription/Subscription';
+import SurgeryStartHolder from './Vet Offers/Services/ServicePages/SurgeryStartHolder';
 
 
 function VetAdminHome() {
@@ -85,6 +86,11 @@ function VetAdminHome() {
                     path="/services/vaccination/:vetid"
                     exact
                     component={VaccineStartHolder}
+                />
+                <Route
+                    path="/services/surgery/:vetid"
+                    exact
+                    component={SurgeryStartHolder}
                 />
                 <Route
                     path="/appointments/:vetid"

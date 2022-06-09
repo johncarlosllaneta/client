@@ -24,7 +24,10 @@ import imageII from "../../../../../Images/examination copy.png";
 import imageIII from "../../../../../Images/baths.png";
 import imageIV from "../../../../../Images/preventive.png";
 import imageV from "../../../../../Images/scopy.png";
+import imageVI from "../../../../../Images/surgeryWhite.png"
 import getUser from "../../../../../Components/userData";
+import { ToastContainer } from "react-toastify";
+import { ToastDelete, ToastServicesUpdate } from "../../../../../Components/Toast";
 
 
 const ServiceTab = (props) => {
@@ -158,6 +161,11 @@ const ServiceTab = (props) => {
         updateServiceCategory: updateServiceCategory,
       }).then((response) => {
         handleCloseUpdate();
+        Axios.get(`${hostUrl}/services/:${user.vetid}`).then((response) => {
+          setservices(response.data);
+          // console.log(response.data)
+          ToastServicesUpdate();
+        });
       });
     }
 
@@ -168,6 +176,11 @@ const ServiceTab = (props) => {
     Axios.delete(`${hostUrl}/service/delete/:${updateServiceId}`, {}).then(
       (response) => {
         // alert(response.data.message);
+        Axios.get(`${hostUrl}/services/:${user.vetid}`).then((response) => {
+          setservices(response.data);
+          // console.log(response.data)
+          ToastDelete();
+        });
       }
     );
   };
@@ -267,6 +280,8 @@ const ServiceTab = (props) => {
 
   return (
     <div style={{ padding: 20 }}>
+
+      <ToastContainer />
       <Modal show={showServices} onHide={handleCloseServices}>
         <Modal.Header closeButton>
           <Modal.Title>Service Information</Modal.Title>
@@ -330,6 +345,7 @@ const ServiceTab = (props) => {
                     Preventive Services
                   </option>
                   <option value="Vaccination">Vaccination</option>
+                  <option value="Surgery">Surgery</option>
                 </Form.Select>
               </FloatingLabel>
             </Form.Group>
@@ -795,6 +811,55 @@ const ServiceTab = (props) => {
                     }}
                   >
                     Vaccination
+                  </p>
+                </div>
+              </Container>
+            </Link>
+          </Col>
+
+          <Col hidden={inHouseLab}>
+            <Link
+              to={`/services/surgery/${user.vetid}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  width: "10vw",
+                  padding: 10,
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageVI}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Surgery
                   </p>
                 </div>
               </Container>

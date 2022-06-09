@@ -37,62 +37,77 @@ function VetDetailsTab(props) {
     if (counter < 6) {
       Axios.get(`${hostUrl}/vet-details/${props.email}`).then((response) => {
         setvet_clinic(response.data[0]);
-        if (
-          response.data[0].scheduleMonday !== "" ||
-          response.data[0].scheduleTuesday !== "" ||
-          response.data[0].scheduleWednesday !== "" ||
-          response.data[0].scheduleThursday !== "" ||
-          response.data[0].scheduleFriday !== "" ||
-          response.data[0].scheduleSaturday !== "" ||
-          response.data[0].scheduleSunday !== ""
-        ) {
-          setOpeningMonday(
-            timeConvertion(response.data[0].scheduleMonday.split(" - ")[0])
-          );
-          setClosingMonday(
-            timeConvertion(response.data[0].scheduleMonday.split(" - ")[1])
-          );
-          setOpeningTuesday(
-            timeConvertion(response.data[0].scheduleTuesday.split(" - ")[0])
-          );
-          setClosingTuesday(
-            timeConvertion(response.data[0].scheduleTuesday.split(" - ")[1])
-          );
-          setOpeningWednesday(
-            timeConvertion(response.data[0].scheduleWednesday.split(" - ")[0])
-          );
-          setClosingWednesday(
-            timeConvertion(response.data[0].scheduleWednesday.split(" - ")[1])
-          );
-          setOpeningThursday(
-            timeConvertion(response.data[0].scheduleThursday.split(" - ")[0])
-          );
-          setClosingThursday(
-            timeConvertion(response.data[0].scheduleThursday.split(" - ")[1])
-          );
-          setOpeningFriday(
-            timeConvertion(response.data[0].scheduleFriday.split(" - ")[0])
-          );
-          setClosingFriday(
-            timeConvertion(response.data[0].scheduleFriday.split(" - ")[1])
-          );
-          setOpeningSaturday(
-            timeConvertion(response.data[0].scheduleSaturday.split(" - ")[0])
-          );
-          setClosingSaturday(
-            timeConvertion(response.data[0].scheduleSaturday.split(" - ")[1])
-          );
-          setOpeningSunday(
-            timeConvertion(response.data[0].scheduleSunday.split(" - ")[0])
-          );
-          setClosingSunday(
-            timeConvertion(response.data[0].scheduleSunday.split(" - ")[1])
-          );
+
+        var Monday = response.data[0].scheduleMonday;
+        if (response.data[0].scheduleMonday != "" && response.data[0].scheduleMonday != null) {
+          setOpeningMonday(Monday.split(" - ")[0]);
+          setClosingMonday(Monday.split(" - ")[1]);
+
+
+        }
+
+        // alert(ClosingMonday);
+
+        var Tuesday = response.data[0].scheduleTuesday;
+        if (response.data[0].scheduleTuesday != "" && response.data[0].scheduleTuesday != null) {
+          setOpeningTuesday(Tuesday.split(" - ")[0]);
+          setClosingTuesday(Tuesday.split(" - ")[1]);
+
+
+        }
+        // alert(ClosingMonday);
+
+        var Wednesday = response.data[0].scheduleWednesday;
+        if (response.data[0].scheduleWednesday != "" && response.data[0].scheduleWednesday != null) {
+          setOpeningWednesday(Wednesday.split(" - ")[0]);
+          setClosingWednesday(Wednesday.split(" - ")[1]);
+
+
+        }
+
+        // alert(ClosingMonday);
+
+
+        var Thursday = response.data[0].scheduleThursday;
+        if (response.data[0].scheduleThursday != "" && response.data[0].scheduleThursday != null) {
+          setOpeningThursday(Thursday.split(" - ")[0]);
+          setClosingThursday(Thursday.split(" - ")[1]);
+
+
+        }
+
+        // alert(ClosingMonday);
+
+        var Friday = response.data[0].scheduleFriday;
+        if (response.data[0].scheduleFriday != "" && response.data[0].scheduleFriday != null) {
+          setOpeningFriday(Friday.split(" - ")[0]);
+          setClosingFriday(Friday.split(" - ")[1]);
+
+        }
+
+        // alert(ClosingMonday);
+
+        var Saturday = response.data[0].scheduleSaturday;
+        if (response.data[0].scheduleSaturday != "" && response.data[0].scheduleSaturday != null) {
+          setOpeningSaturday(Saturday.split(" - ")[0]);
+          setClosingSaturday(Saturday.split(" - ")[1]);
+
+
+        }
+
+        // alert(ClosingMonday);
+
+        var Sunday = response.data[0].scheduleSunday;
+        if (response.data[0].scheduleSunday != "" && response.data[0].scheduleSunday != null) {
+          setOpeningSunday(Sunday.split(" - ")[0]);
+          setClosingSunday(Sunday.split(" - ")[1]);
+
+
         }
       });
       setcounter(counter + 1);
     }
-  }, [vet_clinic]);
+  }, []);
 
   function timeConvertion(time) {
     const timeString12hr = new Date(

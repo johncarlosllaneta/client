@@ -44,7 +44,7 @@ function VetOffersHandler(props) {
     const [enableGrooming, setenableGrooming] = useState(false);
     const [enableVaccination, setenableVaccination] = useState(false);
     const [enablePreventiveControls, setenablePreventiveControls] = useState(false);
-
+    const [enableSurgery, setenableSurgery] = useState(false);
 
 
     const SaveVetOffers = (e) => {
@@ -58,6 +58,7 @@ function VetOffersHandler(props) {
             setenableGrooming(false);
             setenableVaccination(false);
             setenablePreventiveControls(false);
+            setenableSurgery(false);
         }
         axios.put(`${hostUrl}/vetclinic/offers/update/${props.user.vet_admin_id}`, {
             enableProduct: enableProduct,
@@ -68,6 +69,7 @@ function VetOffersHandler(props) {
             enableGrooming: enableGrooming,
             enableVaccination: enableVaccination,
             enablePreventiveControls: enablePreventiveControls,
+            enableSurgery: enableSurgery
             // enableConsultationPhysical: enableConsultationPhysical,
             // enableOnlineConsultation: enableConsultationVirtual,
 
@@ -148,6 +150,10 @@ function VetOffersHandler(props) {
 
         if (props.user.enablePreventiveControls != '0' && props.user.enablePreventiveControls != null) {
             setenablePreventiveControls(true);
+        }
+
+        if (props.user.enableInHouseLab != '0' && props.user.enableInHouseLab != null) {
+            setenableSurgery(true);
         }
     }, [])
 
@@ -471,6 +477,23 @@ function VetOffersHandler(props) {
                                             <Form.Switch
                                                 checked={enableGrooming}
                                                 onChange={(e) => setenableGrooming(e.target.checked)}
+                                                type='switch'
+
+                                            />
+                                        </div>
+
+                                        <div
+
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'space-between'
+
+                                            }}
+                                        >
+                                            <h6>Enable Surgery</h6>
+                                            <Form.Switch
+                                                checked={enableSurgery}
+                                                onChange={(e) => setenableSurgery(e.target.checked)}
                                                 type='switch'
 
                                             />

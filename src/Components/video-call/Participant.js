@@ -2,6 +2,8 @@ import { IconButton } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
+import VideocamIcon from '@mui/icons-material/Videocam';
+import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 
 const Participant = ({ participant, isMe }) => {
   const [videoTracks, setVideoTracks] = useState([]);
@@ -65,6 +67,7 @@ const Participant = ({ participant, isMe }) => {
     }
   }, [audioTracks]);
   const [mic, setmic] = useState(false)
+  const [video, setvideo] = useState(false)
 
 
   return (
@@ -75,26 +78,40 @@ const Participant = ({ participant, isMe }) => {
 
 
         <video ref={videoRef} autoPlay={true} style={{ height: '50vh' }} />
-        <audio ref={audioRef} autoPlay={true} muted={true} />
+        <audio ref={audioRef} autoPlay={true} muted={false} />
 
-        {
-          isMe == true
-            ? <div style={{ borderRadius: 15, backgroundColor: 'blue', color: 'white' }}><IconButton color="primary" title={mic != true ? "Mute" : "Unmute"} onClick={() => {
+        <div style={{ display: 'inline', width: 100 }}>
+          {
+            isMe == true
+              ? <div ><IconButton color="primary" title={mic != true ? "Mute" : "Unmute"} style={{ borderRadius: 15, backgroundColor: 'blue', color: 'white', marginRight: 75 }} onClick={() => {
+                const audioTrack = audioTracks[0];
+                if (audioTrack.isEnabled) {
+
+                  audioTrack.disable()
+                } else {
+                  audioTrack.enable()
+                }
+                setmic(!mic)
+              }} >{mic == true ? <MicOffIcon /> : <MicIcon />}</IconButton> </div>
+              : <></>
+          }
 
 
-              const audioTrack = audioTracks[0];
-              if (audioTrack.isEnabled) {
-                audioTrack.disable()
-              } else {
-                audioTrack.enable()
-              }
+          {
+            isMe == true
+              ? <div ><IconButton style={{ borderRadius: 15, backgroundColor: 'blue', color: 'white' }} color="primary" title={mic != true ? "Mute" : "Unmute"} onClick={() => {
+                const videoTrack = videoTracks[0];
+                if (videoTrack.isEnabled) {
 
-              console.log(audioTrack);
-              setmic(!mic)
-            }} >{mic == true ? <MicOffIcon /> : <MicIcon />}</IconButton> </div>
-            : <></>
-        }
-
+                  videoTrack.disable()
+                } else {
+                  videoTrack.enable()
+                }
+                setvideo(!video)
+              }} >{video == true ? <VideocamOffIcon /> : <VideocamIcon />}</IconButton> </div>
+              : <></>
+          }
+        </div>
       </div>
 
     </div>

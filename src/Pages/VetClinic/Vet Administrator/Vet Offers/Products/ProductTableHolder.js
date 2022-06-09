@@ -15,7 +15,7 @@ function ProductTableHolder(props) {
     const handleCloseUpdateProduct = () => setShowUpdateProduct(false);
     const handleShowUpdateProduct = () => setShowUpdateProduct(true);
 
-
+    const [search, setsearch] = useState("");
 
     // view details
     const [productInfo, setproductInfo] = useState([]);
@@ -54,7 +54,7 @@ function ProductTableHolder(props) {
         </Offcanvas>
 
 
-        <ProductSearchBar changeShow={props.changeShow} refreshTable={props.refreshTable} products={props.products} />
+        <ProductSearchBar setsearch={setsearch} changeShow={props.changeShow} refreshTable={props.refreshTable} products={props.products} />
         <hr />
         <Row
             style={{
@@ -72,7 +72,15 @@ function ProductTableHolder(props) {
 
             }}
         >
-            {props.products.map((item) => {
+            {props.products.filter((val) => {
+                if (search == "") {
+                    return val;
+                } else if (
+                    val.product_name.toLowerCase().includes(search.toLowerCase())
+                ) {
+                    return val;
+                }
+            }).map((item) => {
                 return (
                     <Col sm={3}><ProductItem product={item} handleShowUpdateProduct={handleShowUpdateProduct} setproductInfo={setproductInfo} handleShowProductDetails={handleShowProductDetails} /></Col>
                 )

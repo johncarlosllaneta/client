@@ -10,6 +10,7 @@ function ConversationHeader(props) {
     const sendMessage = () => {
         var videoCode = Math.floor(Math.random() * 1000000000);
         var messageSent = `https://terravet-website.web.app/video%20conference/` + `${videoCode}`;
+        // var messageSent = `http://localhost:3000/video%20conference/` + `${videoCode}`;
 
         axios.post(`${hostUrl}/talktovet/vetclinic/messages/sent`, {
             thread_id: props.petOwnerData.thread_id,

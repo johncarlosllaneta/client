@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Container, Image, Modal, Button } from "react-bootstrap";
 import Participant from "./Participant";
 import logo from "../../Images/logo.png";
+import { IconButton } from "@mui/material";
+import CallEndIcon from '@mui/icons-material/CallEnd';
+import MicIcon from '@mui/icons-material/Mic';
 
-const Room = ({ roomName, room, handleLogout }) => {
+const Room = ({ roomName, room, handleLogout, handleMute }) => {
   const [participants, setParticipants] = useState([]);
 
   useEffect(() => {
@@ -136,16 +139,20 @@ const Room = ({ roomName, room, handleLogout }) => {
         </Container>
 
       </div>
-      <button style={{ backgroundColor: 'red' }} onClick={() => {
-        handleShow();
+      <div style={{ display: 'inline-flex' }}>
 
-        setTimeout(() => {
-          handleClose();
-          handleLogout();
-          window.close();
-        }, 3000);
+        <IconButton style={{ backgroundColor: 'red' }} title='End Call' onClick={() => {
+          handleShow();
 
-      }}>Leave meeting</button>
+          setTimeout(() => {
+            handleClose();
+            handleLogout();
+            window.close();
+          }, 3000);
+
+        }}><CallEndIcon style={{ color: "white" }} /></IconButton>
+      </div>
+
     </div>
   );
 };

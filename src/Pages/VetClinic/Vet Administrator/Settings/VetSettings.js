@@ -38,6 +38,7 @@ const VetSettings = (props) => {
   const [enableGrooming, setenableGrooming] = useState("0");
   const [enableVaccination, setenableVaccination] = useState("0");
   const [enablePreventiveControls, setenablePreventiveControls] = useState("0");
+  const [enableInHouseLab, setenableInHouseLab] = useState("0");
   const [servicesEnable, setservicesEnable] = useState("none");
 
   const [OpeningMonday, setOpeningMonday] = useState();
@@ -451,6 +452,12 @@ const VetSettings = (props) => {
     } else {
       setenablePreventiveControls(false);
     }
+
+    if (user.enableInHouseLab === 1) {
+      setenableInHouseLab(true);
+    } else {
+      setenableInHouseLab(false);
+    }
     setvetId(user.vet_admin_id);
     setvetEmail(user.email);
   }
@@ -468,6 +475,7 @@ const VetSettings = (props) => {
       enableGrooming: enableGrooming,
       enableVaccination: enableVaccination,
       enablePreventiveControls: enablePreventiveControls,
+      enableSurgery: enableInHouseLab
     }).then((response) => {
       if (response.data.message === "Update Successfully") {
         Axios.get(`${hostUrl}/vet/uploads`, {
@@ -1464,10 +1472,8 @@ const VetSettings = (props) => {
                               <Form.Control
                                 type="text"
                                 placeholder="Email Address"
-                                value={vetEmail}
-                                onChange={(e) => {
-                                  setvetEmail(e.target.value);
-                                }}
+                                readOnly={true}
+                                disabled={true}
                               />
                             </Col>
                           </Form.Group>
@@ -1670,6 +1676,30 @@ const VetSettings = (props) => {
                                   checked={enablePreventiveControls}
                                   onChange={(e) => {
                                     setenablePreventiveControls(
+                                      e.target.checked
+                                    );
+                                  }}
+                                />
+                              </Col>
+
+                              <Form.Label
+                                column
+                                sm="4"
+                                htmlFor="surgery"
+                              >
+                                Surgery
+                              </Form.Label>
+                              <Col sm="7">
+                                <Form.Check
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "start",
+                                  }}
+                                  type="switch"
+                                  id="inHouseLab"
+                                  checked={enableInHouseLab}
+                                  onChange={(e) => {
+                                    setenableInHouseLab(
                                       e.target.checked
                                     );
                                   }}

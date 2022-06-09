@@ -1091,10 +1091,10 @@ const VetSettings = (props) => {
                           user.vet_doc_mname == null
                             ? user.vet_doc_fname + " " + user.vet_doc_lname
                             : user.vet_doc_fname +
-                              " " +
-                              user.vet_doc_mname +
-                              " " +
-                              user.vet_doc_lname
+                            " " +
+                            user.vet_doc_mname +
+                            " " +
+                            user.vet_doc_lname
                         }
                         src={user.vet_doc_profilePic}
                         size={"10vh"}
@@ -1430,9 +1430,9 @@ const VetSettings = (props) => {
                                 type="text"
                                 placeholder="Email Address"
                                 value={vetEmail}
-                                onChange={(e) => {
-                                  setvetEmail(e.target.value);
-                                }}
+
+                                readOnly={true}
+                                disabled={true}
                               />
                             </Col>
                           </Form.Group>

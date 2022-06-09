@@ -377,6 +377,26 @@ const GenReservation = (props) => {
 
                 handleCloseFinishModal();
               }
+
+              else if (category == "Surgery") {
+
+                Axios.post(`${hostUrl}/pets/surgery/records/${pet_id}`, {
+                  appointment_id: appointmentID,
+                  service_id: notifService_id,
+                  vetid: props.vetid,
+                });
+                Axios.put(`${hostUrl}/vetclinic/appointment/done/${appointmentID}`)
+                Axios.post(`${hostUrl}/notification/appointment`, {
+                  appointment_id: appointmentID,
+                  service_id: notifService_id,
+                  status: "Done",
+                });
+                setTimeout(() => {
+                  props.refreshTables(props.vetid);
+                }, 2000);
+
+                handleCloseFinishModal();
+              }
               else {
                 finishAppointment();
                 handleCloseFinishModal();

@@ -1092,10 +1092,10 @@ const VetSettings = (props) => {
                           user.vet_staff_mname == null
                             ? user.vet_staff_fname + " " + user.vet_staff_lname
                             : user.vet_staff_fname +
-                              " " +
-                              user.vet_staff_mname +
-                              " " +
-                              user.vet_staff_lname
+                            " " +
+                            user.vet_staff_mname +
+                            " " +
+                            user.vet_staff_lname
                         }
                         src={user.vet_staff_profilePic}
                         size={"10vh"}
@@ -1108,10 +1108,10 @@ const VetSettings = (props) => {
                       {user.vet_staff_mname == null
                         ? user.vet_staff_fname + " " + user.vet_staff_lname
                         : user.vet_staff_fname +
-                          " " +
-                          user.vet_staff_mname +
-                          " " +
-                          user.vet_staff_lname}
+                        " " +
+                        user.vet_staff_mname +
+                        " " +
+                        user.vet_staff_lname}
                     </h3>
                     <h5 style={{ color: "#19B9CC", fontWeight: "bold" }}>
                       Vet Staff
@@ -1428,12 +1428,12 @@ const VetSettings = (props) => {
                             </Form.Label>
                             <Col sm="7">
                               <Form.Control
+
                                 type="text"
                                 placeholder="Email Address"
                                 value={vetEmail}
-                                onChange={(e) => {
-                                  setvetEmail(e.target.value);
-                                }}
+                                readOnly={true}
+                                disabled={true}
                               />
                             </Col>
                           </Form.Group>

@@ -307,7 +307,7 @@ function LoginUpdated() {
             <hr></hr>
             <p>
               Haven't an account?{" "}
-              <a id="registerHref" href="/register">
+              <a id="registerHref" href="/vetReg">
                 Register
               </a>
             </p>

@@ -23,7 +23,7 @@ import imageII from "../../../../../../Images/examination copy.png";
 import imageIII from "../../../../../../Images/baths.png";
 import imageIV from "../../../../../../Images/preventive.png";
 import imageV from "../../../../../../Images/PetOwner/Vaccination.png";
-import imageVI from "../../../../../../Images/INHOUSEW.png";
+import imageVI from "../../../../../../Images/surgeryWhite.png";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import { users } from "../../../../../../Components/User";
@@ -899,6 +899,55 @@ const VaccineStart = (props) => {
                     }}
                   >
                     Vaccination
+                  </p>
+                </div>
+              </Container>
+            </Link>
+          </Col>
+
+          <Col hidden={inHouseLab}>
+            <Link
+              to={`/services/surgery/${user.vetid}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Container
+                style={{
+                  backgroundColor: "#3BD2E3",
+                  height: "15vh",
+                  width: "10vw",
+                  padding: 10,
+                  borderColor: "white",
+                  borderStyle: "solid",
+                  borderWidth: 5,
+                  borderRadius: 30,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                }}
+              >
+                <div>
+                  <Image
+                    src={imageVI}
+                    style={{
+                      height: "8vh",
+                      width: "5vw",
+                    }}
+                  />
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: "white",
+                      fontWeight: "bolder",
+                      margin: 0,
+                    }}
+                  >
+                    Surgery
                   </p>
                 </div>
               </Container>

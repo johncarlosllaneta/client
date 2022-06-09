@@ -47,7 +47,7 @@ function ViewVetVerifiedProfile(props) {
 
     useEffect(() => {
         var Monday = props.viewProfileVetData.scheduleMonday;
-        if (Monday.length > 1) {
+        if (props.viewProfileVetData.scheduleMonday != "" && props.viewProfileVetData.scheduleMonday != null) {
             setOpeningMonday(Monday.split(" - ")[0]);
             setClosingMonday(Monday.split(" - ")[1]);
             setCheckerMonday(false);
@@ -60,7 +60,7 @@ function ViewVetVerifiedProfile(props) {
         // alert(ClosingMonday);
 
         var Tuesday = props.viewProfileVetData.scheduleTuesday;
-        if (Tuesday.length > 1) {
+        if (props.viewProfileVetData.scheduleTuesday != "" && props.viewProfileVetData.scheduleTuesday != null) {
             setOpeningTuesday(Tuesday.split(" - ")[0]);
             setClosingTuesday(Tuesday.split(" - ")[1]);
             setCheckerTuesday(false);
@@ -72,7 +72,7 @@ function ViewVetVerifiedProfile(props) {
         // alert(ClosingMonday);
 
         var Wednesday = props.viewProfileVetData.scheduleWednesday;
-        if (Wednesday.length > 1) {
+        if (props.viewProfileVetData.scheduleWednesday != "" && props.viewProfileVetData.scheduleWednesday != null) {
             setOpeningWednesday(Wednesday.split(" - ")[0]);
             setClosingWednesday(Wednesday.split(" - ")[1]);
             setCheckerWednesday(false);
@@ -86,7 +86,7 @@ function ViewVetVerifiedProfile(props) {
 
 
         var Thursday = props.viewProfileVetData.scheduleThursday;
-        if (Thursday.length > 1) {
+        if (props.viewProfileVetData.scheduleThursday != "" && props.viewProfileVetData.scheduleThursday != null) {
             setOpeningThursday(Thursday.split(" - ")[0]);
             setClosingThursday(Thursday.split(" - ")[1]);
             setCheckerThursday(false);
@@ -99,7 +99,7 @@ function ViewVetVerifiedProfile(props) {
         // alert(ClosingMonday);
 
         var Friday = props.viewProfileVetData.scheduleFriday;
-        if (Friday.length > 1) {
+        if (props.viewProfileVetData.scheduleFriday != "" && props.viewProfileVetData.scheduleFriday != null) {
             setOpeningFriday(Friday.split(" - ")[0]);
             setClosingFriday(Friday.split(" - ")[1]);
             setCheckerFriday(false);
@@ -112,7 +112,7 @@ function ViewVetVerifiedProfile(props) {
         // alert(ClosingMonday);
 
         var Saturday = props.viewProfileVetData.scheduleSaturday;
-        if (Saturday.length > 1) {
+        if (props.viewProfileVetData.scheduleSaturday != "" && props.viewProfileVetData.scheduleSaturday != null) {
             setOpeningSaturday(Saturday.split(" - ")[0]);
             setClosingSaturday(Saturday.split(" - ")[1]);
             setCheckerSaturday(false);
@@ -125,7 +125,7 @@ function ViewVetVerifiedProfile(props) {
         // alert(ClosingMonday);
 
         var Sunday = props.viewProfileVetData.scheduleSunday;
-        if (Sunday.length > 1) {
+        if (props.viewProfileVetData.scheduleSunday != "" && props.viewProfileVetData.scheduleSunday != null) {
             setOpeningSunday(Sunday.split(" - ")[0]);
             setClosingSunday(Sunday.split(" - ")[1]);
             setCheckerSunday(false);
@@ -135,7 +135,7 @@ function ViewVetVerifiedProfile(props) {
 
         }
 
-    }, [showViewer])
+    }, [])
 
     function closeScheduleViewer() {
         setshowViewer(false);

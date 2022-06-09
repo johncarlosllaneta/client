@@ -35,8 +35,8 @@ const ServiceTab = (props) => {
   const [petGrooming, setpetGrooming] = useState(true);
   const [preventiveControls, setpreventiveControls] = useState(true);
   const [vaccination, setvaccination] = useState(true);
-  const [surgery, setsurgery] = useState(true);
-  // const [inHouseLab, setinHouseLab] = useState(true);
+  // const [surgery, setsurgery] = useState(true);
+  const [inHouseLab, setinHouseLab] = useState(true);
   // const [counter, setcounter] = useState(0);
   const [user, setuser] = useState([]);
   useEffect(async () => {
@@ -65,8 +65,8 @@ const ServiceTab = (props) => {
       if (response.data[0].enablePreventiveControls == 1) {
         setpreventiveControls(false);
       }
-      if (response.data[0].enableSurgery == 1) {
-        setsurgery(false);
+      if (response.data[0].enableInHouseLab == 1) {
+        setinHouseLab(false);
       }
     });
   }
@@ -768,7 +768,7 @@ const ServiceTab = (props) => {
             </Link>
           </Col>
 
-          <Col hidden={surgery}>
+          <Col hidden={inHouseLab}>
             <Link
               to={`/services/surgery/${user.vetid}`}
               style={{
