@@ -1091,10 +1091,10 @@ const VetSettings = (props) => {
                           user.vet_doc_mname == null
                             ? user.vet_doc_fname + " " + user.vet_doc_lname
                             : user.vet_doc_fname +
-                            " " +
-                            user.vet_doc_mname +
-                            " " +
-                            user.vet_doc_lname
+                              " " +
+                              user.vet_doc_mname +
+                              " " +
+                              user.vet_doc_lname
                         }
                         src={user.vet_doc_profilePic}
                         size={"10vh"}
@@ -1186,7 +1186,7 @@ const VetSettings = (props) => {
                                   width: "50vw",
                                   backgroundColor: "white",
                                 }}
-                                type="text"
+                                type="password"
                                 placeholder="Password"
                                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                 title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
@@ -1430,7 +1430,6 @@ const VetSettings = (props) => {
                                 type="text"
                                 placeholder="Email Address"
                                 value={vetEmail}
-
                                 readOnly={true}
                                 disabled={true}
                               />
