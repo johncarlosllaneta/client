@@ -236,29 +236,7 @@ function ProductReservation() {
       }
     });
 
-    var prodList = [];
-
-    const result = await getProdList(orderId);
-    prodList.push(result);
-    // console.log(result);
-
-    for (var i = 0; i < prodList.length; i++) {
-      var decreaseStock = prodList[0][i].quantity - prodList[0][i].res_quantity;
-      Axios.put(
-        `${hostUrl}/stockUsed/decrease/product/${prodList[0][i].product_id}`,
-        {
-          decreaseStock: decreaseStock,
-        }
-      );
-    }
-
-    Axios.post(`${hostUrl}/notification/reserved/purchased`, {
-      order_id: orderId,
-      status: "Purchased",
-    });
-    setmop("");
-    setclaimBy("");
-    handleClose2();
+    await getProdList(orderId);
   }
 
   const getProdList = async (id) => {
@@ -266,6 +244,21 @@ function ProductReservation() {
     const result = await Axios.get(`${hostUrl}/staff/order/${id}`);
     // console.log(result.data);
     console.log(result.data);
+    result.data.forEach((i, x) => {
+      var decreaseStock = i.quantity - i.res_quantity;
+      Axios.put(`${hostUrl}/stockUsed/decrease/product/${i.product_id}`, {
+        decreaseStock: decreaseStock,
+      });
+      if (x == result.data.length) {
+        Axios.post(`${hostUrl}/notification/reserved/purchased`, {
+          order_id: orderId,
+          status: "Purchased",
+        });
+        setmop("");
+        setclaimBy("");
+        handleClose2();
+      }
+    });
     return result.data;
   };
 
