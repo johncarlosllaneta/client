@@ -1279,7 +1279,6 @@ const VetSettings = (props) => {
                                 type="switch"
                                 label="Close"
                                 checked={CheckerSwitchFriday}
-                                checked={CheckerSwitchFriday}
                                 onChange={(e) => {
                                   // alert(e.target.checked);
                                   if (e.target.checked !== true) {

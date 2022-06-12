@@ -520,7 +520,7 @@ const VetSettings = (props) => {
     }).then((response) => {
       setresultVerify(response.data);
       if (password != undefined) {
-        if (resultVerify === true) {
+        if (resultVerify == true) {
           setpasswordVerify("none");
         } else {
           setpasswordVerify("block");
@@ -852,11 +852,12 @@ const VetSettings = (props) => {
                                 required
                                 minLength={8}
                                 onChange={(e) => {
-                                  setpassword(e.target.value);
                                   e.preventDefault();
-                                  if (password !== undefined) {
-                                    currentComparePass(password);
-                                  }
+                                  setpassword(e.target.value);
+
+                                  // if (password != undefined) {
+                                  //   currentComparePass(password);
+                                  // }
                                 }}
                               />
                               <Form.Control.Feedback type="invalid">
@@ -1472,6 +1473,7 @@ const VetSettings = (props) => {
                               <Form.Control
                                 type="text"
                                 placeholder="Email Address"
+                                value={vetEmail}
                                 readOnly={true}
                                 disabled={true}
                               />

@@ -118,7 +118,7 @@ const HistoryTab = (props) => {
       title: "Temperature",
       sorting: true,
       render: (row) =>
-        row.temperature >= 37.5 ? <p style={{ color: 'red' }}> {row.temperature}</p> : <p style={{ color: 'green' }}> {row.temperature}</p>
+        row.temperature >= 37.8 ? <p style={{ color: 'red' }}> {row.temperature}</p> : <p style={{ color: 'green' }}> {row.temperature}</p>
 
 
     },

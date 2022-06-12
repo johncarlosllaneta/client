@@ -20,7 +20,8 @@ function ThreadList(props) {
 
     }, [])
 
-
+    //   Search User
+    const [search, setsearch] = useState("");
     return (
         <div
             style={{
@@ -64,6 +65,9 @@ function ThreadList(props) {
                         borderColor: 'transparent',
                         backgroundColor: '#F5F5F5',
                     }}
+                    onChange={(e) => {
+                        setsearch(e.target.value);
+                    }}
                     placeholder='Search Pet Owner'
                 >
 
@@ -78,7 +82,15 @@ function ThreadList(props) {
                 }}
             >
                 {threads != 0 ?
-                    threads.map((item) => {
+                    threads.filter((val) => {
+                        if (search === "") {
+                            return val;
+                        } else if (
+                            val.name.toLowerCase().includes(search.toLowerCase())
+                        ) {
+                            return val;
+                        }
+                    }).reverse().map((item) => {
                         return <ThreadUser convoUser={item} setconversationID={props.setconversationID} setpetOwnerData={props.setpetOwnerData} getMessage={props.getMessage} />
                     }
                     )
