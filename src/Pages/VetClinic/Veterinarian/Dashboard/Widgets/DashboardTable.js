@@ -66,9 +66,17 @@ function DashboardTable(props) {
     },
     {
       title: "Date Schedule",
+      // field: "date_scheduled",
       sorting: true,
       defaultSort: "desc",
-      render: (row) => dateConvertion(String(row.date_scheduled).split("T")[0]),
+      render: (row) => {
+        let currDate = new Date(row.date_scheduled);
+        let newDate = currDate.setHours(currDate.getHours() + 8);
+        // alert(new Date(newDate));
+        return dateConvertion(
+          String(new Date(newDate).toISOString()).split("T")[0]
+        );
+      },
     },
     {
       title: "Time Schedule",
@@ -107,9 +115,15 @@ function DashboardTable(props) {
     },
     {
       title: "Date",
-      render: (row) =>
-        dateConvertion(row.date_scheduled.toString().split("T")[0]),
       sorting: true,
+      render: (row) => {
+        let currDate = new Date(row.date_scheduled);
+        let newDate = currDate.setHours(currDate.getHours() + 8);
+        // alert(new Date(newDate));
+        return dateConvertion(
+          String(new Date(newDate).toISOString()).split("T")[0]
+        );
+      },
     },
     {
       title: "Time",
