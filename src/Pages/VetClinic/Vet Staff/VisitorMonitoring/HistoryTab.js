@@ -111,7 +111,7 @@ const HistoryTab = (props) => {
   }
 
   function tempMeter(temp) {
-    if (temp >= 38) {
+    if (temp >= 37.8) {
       return <h5 style={{ color: "red" }}>{temp}</h5>;
     } else {
       return <h5 style={{ color: "green" }}>{temp}</h5>;
